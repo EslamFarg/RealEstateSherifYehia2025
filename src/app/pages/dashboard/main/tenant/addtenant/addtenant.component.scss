@@ -1,0 +1,11 @@
+@use '../../../../../../../public/styles/abstracts/vars' as * ;
+.head_forms_dashboard{
+    font-size: 18px;
+    font-weight: 700;
+    color: $main-color;
+    margin-bottom: 15px !important;
+}
+
+.table-responsive{
+    min-height: 100px;
+}

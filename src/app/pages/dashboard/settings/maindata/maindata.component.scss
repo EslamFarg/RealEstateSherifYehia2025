@@ -1,0 +1,39 @@
+@use '../../../../../../public/styles/abstracts/vars' as *;
+@use '../../../../../../public/styles/abstracts/mixins' as *;
+.links{
+    // display: ;
+    @include flex_box(flex,null,center,10px);
+    flex-wrap: wrap;
+    margin: 10px 0px;
+    a{
+        font-size: 18px;
+        font-weight: 700;
+        color: #86AC88;
+        margin: 20px;
+        padding-bottom: 10px;
+
+        position: relative;
+      
+            &::after{
+                content: '';
+                position: absolute;
+                left: 50%;
+                bottom: 0px;
+                transform: translateX(-50%);
+                width: 70%;
+                height: 4px;
+                background-color: $main_color;
+                border-radius: 4px;
+                display: none;
+            } 
+        &.active{
+
+            color: $main_color;
+            &::after{
+                display: block;
+            }
+      
+
+        }
+    }
+}

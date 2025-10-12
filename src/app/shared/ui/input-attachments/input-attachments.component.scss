@@ -1,0 +1,23 @@
+@use '../../../../../public/styles/abstracts/vars' as *;
+@use '../../../../../public/styles/abstracts/mixins' as *;
+.attachments{
+    // width: 100%;
+    position: relative;
+
+    .item_attachments{
+        @include flex_box(flex,null,center,10px);
+        position: absolute;
+        left: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+
+    }
+
+    .download_attachments{
+        cursor: pointer;
+    }
+
+    .show_attachments{
+        cursor: pointer;
+    }
+}

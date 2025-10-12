@@ -1,0 +1,88 @@
+<app-page-heading [title]="'المحاسبه'" [subtitle]="'كشف الحساب'"></app-page-heading>
+
+
+<form action="" class="forms_dashboard">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="mb-3">
+                <label for="accounts" class="form-label">الحساب</label>
+
+                <ng-select [items]="[]" bindLabel="bankName" bindValue="bankValue" placeholder="الحساب"></ng-select>
+
+
+            </div>
+        </div>
+        <div class="col-sm-12 col-lg-6">
+            <div class="mb-3">
+                <label for="fromdate" class="form-label">من</label>
+                <input type="date" class="form-control" id="fromdate" placeholder="التاريخ">
+            </div>
+        </div>
+        <div class="col-sm-12 col-lg-6">
+            <div class="mb-3">
+                <label for="fromdate" class="form-label">إلي</label>
+                <input type="date" class="form-control" id="fromdate" placeholder="التاريخ">
+            </div>
+        </div>
+    </div>
+
+
+
+      <div class="btns_add_edit ">
+ <button data-type="save">بحث</button>
+
+  </div>
+
+
+</form>
+
+
+
+
+ <div class="table-responsive">
+<table>
+  <thead>
+    <tr>
+      <th scope="col">م</th>
+      <th scope="col">اسم الحساب</th>
+      <th scope="col">التاريخ</th>
+      <th scope="col">البيان</th>
+      <th scope="col">مدين</th>
+      <th scope="col">دائن</th>
+      <th scope="col">الاجمالي</th>
+      <!-- <th scope="col">Handle</th> -->
+    </tr>
+  </thead>
+  <tbody>
+    @for (item of accountStatement; track $index) {
+<tr>
+      <td scope="row">{{$index + 1}}</td>
+      <td>{{item.accountName}}</td>
+      <td>{{item.date}}</td>
+      <td>{{item.description}} </td>
+      <td>{{item.debit}}</td>
+      <td>{{item.credit}}</td>
+      <td>{{item.total}}</td>
+
+    </tr>
+    }@empty {
+       <tr>
+      <td colspan="8" class="text-center py-5" style="color: #888; font-size: 18px;">
+        <i class="fa-solid fa-circle-exclamation fa-2x mb-2" style="color: #ccc;"></i><br>
+        لا توجد بيانات حتى الآن
+      </td>
+    </tr>
+    }
+
+    
+  </tbody>
+</table>   
+
+
+</div>
+
+<app-pagination
+  [totalPages]="10"
+  [currentPage]="pageIndex"
+  (pageChange)="onPageChanged($event)">
+</app-pagination>

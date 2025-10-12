@@ -1,0 +1,132 @@
+<app-page-heading [title]="'الرسايل'" [subtitle]="'اعداد الرسايل'"></app-page-heading>
+
+
+
+<div class="messageSettings">
+<ul ngbNav #nav="ngbNav" [(activeId)]="active" class="nav-tabs">
+	<li [ngbNavItem]="1">
+		<button ngbNavLink>SMS</button>
+		<ng-template ngbNavContent>
+		<form class="forms_dashboard">
+            <div class="row">
+                <div class="col-sm-12 col-lg-6">
+                    <div class="mb-3">
+                        <label for="usernamesend" class="form-label">اسم المرسل </label>
+                        <input type="text" name="" class="form-control" id="usernamesend" placeholder="اسم المرسل">
+                    </div>
+                </div>
+                <div class="col-sm-12 col-lg-6">
+                    <div class="mb-3">
+                        <label for="phonenumber" class="form-label">رقم الجوال</label>
+                        <input type="text" name="" class="form-control" id="phonenumber" placeholder="رقم الجوال">
+                    </div>
+                </div>
+
+                   <div class="col-sm-12 col-lg-6">
+                    <div class="mb-3">
+                        <label for="username" class="form-label">اسم المستخدم </label>
+                        <input type="text" name="" class="form-control" id="username" placeholder="اسم المستخدم">
+                    </div>
+                </div>
+                   <div class="col-sm-12 col-lg-6">
+                    <div class="mb-3">
+                        <label for="password" class="form-label">كلمه المرور</label>
+                        <input type="password" name="" class="form-control" id="password" placeholder="كلمه المرور">
+                    </div>
+                </div>
+            </div>
+
+              <div class="btns_add_edit ">
+ <button data-type="save">حفظ</button>
+ <button>جديد</button>
+
+  </div>
+        </form>
+		</ng-template>
+	</li>
+	<li [ngbNavItem]="2">
+		<button ngbNavLink>واتساب</button>
+		<ng-template ngbNavContent>
+		<form class="forms_dashboard">
+            <div class="row">
+                <div class="col-sm-12 col-lg-6">
+                    <div class="mb-3">
+                        <label for="usernamesend" class="form-label">اسم المرسل </label>
+                        <input type="text" name="" class="form-control" id="usernamesend" placeholder="اسم المرسل">
+                    </div>
+                </div>
+                <div class="col-sm-12 col-lg-6">
+                    <div class="mb-3">
+                        <label for="phonenumber" class="form-label">رقم الواتساب</label>
+                        <input type="text" name="" class="form-control" id="phonenumber" placeholder="رقم الجوال">
+                    </div>
+                </div>
+
+                   <div class="col-sm-12 col-lg-6">
+                    <div class="mb-3">
+                        <label for="username" class="form-label">اسم المستخدم </label>
+                        <input type="text" name="" class="form-control" id="username" placeholder="اسم المستخدم">
+                    </div>
+                </div>
+                   <div class="col-sm-12 col-lg-6">
+                    <div class="mb-3">
+                        <label for="password" class="form-label">كلمه المرور</label>
+                        <input type="password" name="" class="form-control" id="password" placeholder="كلمه المرور">
+                    </div>
+                </div>
+            </div>
+
+              <div class="btns_add_edit ">
+ <button data-type="save">حفظ</button>
+ <button>جديد</button>
+
+  </div>
+        </form>
+		</ng-template>
+	</li>
+	<li [ngbNavItem]="3">
+		<button ngbNavLink>البريد الالكتروني</button>
+		<ng-template ngbNavContent>
+		<form class="forms_dashboard">
+            <div class="row">
+                <div class="col-sm-12 col-lg-6">
+                    <div class="mb-3">
+                        <label for="usernamesend" class="form-label">اسم المرسل </label>
+                        <input type="text" name="" class="form-control" id="usernamesend" placeholder="اسم المرسل">
+                    </div>
+                </div>
+                <div class="col-sm-12 col-lg-6">
+                    <div class="mb-3">
+                        <label for="phonenumber" class="form-label">البريد الالكتروني</label>
+                        <input type="email" name="" class="form-control" id="phonenumber" placeholder="البريد الالكتروني">
+                    </div>
+                </div>
+
+                   <div class="col-sm-12 col-lg-6">
+                    <div class="mb-3">
+                        <label for="username" class="form-label">اسم المستخدم </label>
+                        <input type="text" name="" class="form-control" id="username" placeholder="اسم المستخدم">
+                    </div>
+                </div>
+                   <div class="col-sm-12 col-lg-6">
+                    <div class="mb-3">
+                        <label for="password" class="form-label">كلمه المرور</label>
+                        <input type="password" name="" class="form-control" id="password" placeholder="كلمه المرور">
+                    </div>
+                </div>
+            </div>
+
+              <div class="btns_add_edit ">
+ <button data-type="save">حفظ</button>
+ <button>جديد</button>
+
+  </div>
+        </form>
+		</ng-template>
+	</li>
+</ul>
+
+</div>
+
+<div [ngbNavOutlet]="nav" class="mt-5"></div>
+

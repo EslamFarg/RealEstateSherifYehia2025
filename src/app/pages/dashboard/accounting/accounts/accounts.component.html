@@ -1,0 +1,111 @@
+<app-page-heading [title]="'الحسابات'" [subtitle]="'الحسابات'"></app-page-heading>
+
+
+<form class="forms_dashboard">
+<div class="row">
+    <div class="col-sm-12 col-lg-6">
+        <div class="mb-3">
+            <label for="username" class="form-label">الاسم</label>
+            <input type="text" name="" placeholder="الاسم" id="username" class="form-control">
+        </div>
+
+    </div>
+    <div class="col-sm-12 col-lg-6">
+        <div class="mb-3">
+            <label for="type" class="form-label">النوع</label>
+            <ng-select [items]="[]" bindLabel="name" placeholder="نوع الحساب"></ng-select>
+        </div>
+
+    </div>
+    <div class="col-sm-12 col-lg-6">
+        <div class="mb-3">
+            <label for="numberaccount" class="form-label">رقم الحساب</label>
+           <input type="text" placeholder="رقم الحساب" id="numberaccount" class="form-control">
+        </div>
+
+    </div>
+    <div class="col-sm-12 col-lg-6">
+        <div class="mb-3">
+            <label for="iban" class="form-label">الايبان</label>
+           <input type="text" placeholder="الرقم" id="iban" class="form-control">
+        </div>
+
+    </div>
+</div>
+
+
+
+  <div class="btns_add_edit ">
+ <button data-type="save">حفظ</button>
+ <button>جديد</button>
+
+  </div>
+
+</form>
+
+
+
+
+ <div class="table-responsive">
+<table>
+  <thead>
+    <tr>
+      <th scope="col">م</th>
+      <th scope="col">اسم الحساب</th>
+      <th scope="col">نوع الحساب</th>
+      <th scope="col">رقم الحساب</th>
+      <th scope="col">الايبان</th>
+      <th scope="col">الادوات</th>
+      <!-- <th scope="col">Handle</th> -->
+    </tr>
+  </thead>
+  <tbody>
+    @for (item of accountsData; track $index) {
+<tr>
+      <td scope="row">{{$index + 1}}</td>
+      <td>{{item.accountName}}</td>
+      <td>{{item.accountType}}</td>
+      <td>{{item.accountNumber}} </td>
+      <td>{{item.iban}}</td>
+      
+    
+    
+       <td>
+      
+            <div class="btn_edit">
+                    <button type="button" data-button="edit"><svg width="33" height="26" viewBox="0 0 33 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect y="0.5" width="33.0001" height="25.0001" rx="2" fill="#E0ECE1"/>
+<path d="M11 8.5H10C9.46957 8.5 8.96086 8.71071 8.58579 9.08579C8.21071 9.46086 8 9.96957 8 10.5V19.5C8 20.0304 8.21071 20.5391 8.58579 20.9142C8.96086 21.2893 9.46957 21.5 10 21.5H19C19.5304 21.5 20.0391 21.2893 20.4142 20.9142C20.7893 20.5391 21 20.0304 21 19.5V18.5" stroke="#16601A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M20 6.50011L23 9.50011M24.385 8.08511C24.7788 7.69126 25.0001 7.15709 25.0001 6.60011C25.0001 6.04312 24.7788 5.50895 24.385 5.11511C23.9912 4.72126 23.457 4.5 22.9 4.5C22.343 4.5 21.8088 4.72126 21.415 5.11511L13 13.5001V16.5001H16L24.385 8.08511Z" stroke="#16601A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+</button>
+                    <button type="button" data-button="delete"><svg width="33" height="26" viewBox="0 0 33 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect y="0.5" width="33" height="25" rx="2" fill="#FFE5E5"/>
+<path d="M23.5 5H20L19 4H14L13 5H9.5V7H23.5M10.5 20C10.5 20.5304 10.7107 21.0391 11.0858 21.4142C11.4609 21.7893 11.9696 22 12.5 22H20.5C21.0304 22 21.5391 21.7893 21.9142 21.4142C22.2893 21.0391 22.5 20.5304 22.5 20V8H10.5V20Z" fill="#FF3D00"/>
+</svg>
+</button>
+                </div>
+
+       </td>
+    </tr>
+    }@empty {
+       <tr>
+      <td colspan="8" class="text-center py-5" style="color: #888; font-size: 18px;">
+        <i class="fa-solid fa-circle-exclamation fa-2x mb-2" style="color: #ccc;"></i><br>
+        لا توجد بيانات حتى الآن
+      </td>
+    </tr>
+    }
+
+    
+  </tbody>
+</table>   
+
+
+</div>
+
+<app-pagination
+  [totalPages]="10"
+  [currentPage]="pageIndex"
+  (pageChange)="onPageChanged($event)">
+</app-pagination>

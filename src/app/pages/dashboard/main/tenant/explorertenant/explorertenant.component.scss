@@ -1,0 +1,8 @@
+.table-responsive{
+    height: 443px;
+
+    @media (max-width:992px) {
+        height: 500px;
+        
+    }
+}

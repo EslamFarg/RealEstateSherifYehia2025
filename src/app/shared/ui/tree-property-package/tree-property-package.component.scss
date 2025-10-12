@@ -1,0 +1,191 @@
+.property_tree{
+    width: 100%;
+        margin: 20px;
+    
+}
+
+.city_info{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    // margin: 10px 0px;
+    padding: 8px 0px;
+    p{
+        margin: 0px !important;
+    }
+}
+
+.hay_container{
+    margin-right: 40px ;
+    position: relative;
+    // margin: 10px 0px;
+    &::after{
+        content: "";
+        width: 2px;
+        height: 100%;
+        background-color: #86AC88;
+        position: absolute;
+        top: 0;
+        right: -28px;
+    }
+
+    .hay_info{
+       position: relative;
+           display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            // margin: 10px 0px ;
+ padding: 8px 0px;
+        p{
+            margin: 0px !important;
+        }
+
+       &::after{
+        content: "";
+        width:17px;
+        height: 2px;
+        background-color: #86AC88;
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        right: -28px;
+       }
+    }
+
+
+
+    .street_container{
+        margin-right: 50px ;
+        position: relative;
+        &::after{
+            content: "";
+            width: 2px;
+            height: 100%;
+            background-color: #86AC88;
+            position: absolute;
+            top: 0;
+            right: -39px;
+        }
+
+        .street{
+            .street_info{
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                position: relative;
+                // margin: 10px 0px ;
+                 padding: 8px 0px;
+                p{
+                    margin-bottom: 0 !important;
+                }
+
+                &::after{
+                    content: '';
+              width:17px;
+        height: 2px;
+        background-color: #86AC88;
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        // right: -28px;
+        right: -37px;
+                }
+            }
+        }
+
+        .property_container{
+            margin-right: 40px;
+            position: relative;
+
+
+            &::after{
+                content: '';
+                width:2px;
+                height: 100%;
+                background-color: #86AC88;
+                position: absolute;
+                top: 0;
+                right: -30px;
+            }
+            .property{
+                .property_info{
+                    display: flex;
+                    align-items: center;
+                    gap: 10px;
+                    position: relative;
+                    // margin: 10px 0px ;
+                     padding: 8px 0px;
+                    p{
+                        margin-bottom: 0px !important;
+                    }
+
+                    &::after{
+                      content: '';
+              width:17px;
+        height: 2px;
+        background-color: #86AC88;
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        // right: -28px;
+        right: -30px;
+                        
+                    }
+
+                  
+                }
+
+                  .loneliness_container{
+                        position: relative;
+                        margin-right: 40px;
+
+                        &::after{
+                            content: '';
+                            width:2px;
+                            height: 100%;
+                            background-color: #86AC88;
+                            position: absolute;
+                            top: 0;
+                            right: -30px;
+                        }
+
+                        .loneliness{
+                            .loneliness_info{
+                                display: flex;
+                                align-items: center;
+                                gap: 10px;
+                                // position: relative;
+                                // margin: 10px 0px ;
+                                padding: 8px 0px;                                  
+                                p{
+                                    margin-bottom: 0px !important;
+                                }
+
+                                position: relative;
+
+                                &::after{
+                                    content: '';
+                                    width:17px;
+                                    height: 2px;
+                                    background-color: #86AC88;
+                                    position: absolute;
+                                    top: 50%;
+                                    transform: translateY(-50%);
+                                    // right: -28px;
+                                    right: -30px;
+                                }
+                            }
+                        }
+                    }
+            }
+        }
+    }
+
+ 
+     
+    
+    
+}
+

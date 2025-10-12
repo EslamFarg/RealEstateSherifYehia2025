@@ -1,0 +1,213 @@
+
+    <form class="forms_dashboard mb-3" appIntersection="fade-in">
+        <div class="row align-items-center">
+
+     
+
+<div class="mb-3 col-sm-12 col-lg-6">
+                 <label for="nameara" class="form-label">اسم الشركه بالعربي</label>
+                 <input type="text" class="form-control" id="nameara" formControlName="nameAr" placeholder="اسم الشركه بالعربي" >
+                  
+        </div>
+<div class="mb-3 col-sm-12 col-lg-6 ">
+                 <label for="nameeng" class="form-label">اسم الشركه بالانجليزي</label>
+                 <input type="text" class="form-control" id="nameeng" placeholder="اسم الشركه بالانجليزي" formControlName="nameEn" >
+                 
+        </div>
+     
+             <div class="mb-3 col-sm-12 col-lg-3">
+                 <label for="numberdarebe" class="form-label">الرقم الضريبي</label>
+                 <input type="text"  class="form-control" id="numberdarebe" placeholder="الرقم الضريبي " formControlName="taxNumber" >
+                 
+        </div> 
+
+             <div class="mb-3 col-sm-12 col-lg-3">
+                 <label for="segltogare" class="form-label">السجل التجاري </label>
+                 <input type="text" class="form-control" id="segltogare" placeholder="السجل التجاري" formControlName="commercialRegister">
+               
+
+        </div> 
+
+               <div class="mb-3 col-sm-12 col-lg-3">
+                 <label for="email" class="form-label"> البريد الالكتروني</label>
+                 <input type="text" appNoPaste class="form-control" id="email" placeholder="البريد الالكتروني " formControlName="email">
+                  
+        </div>
+               <div class="mb-3 col-sm-12 col-lg-3">
+                 <label for="email" class="form-label"> الموقع الالكتروني</label>
+                 <input type="text" class="form-control" id="email" placeholder="الموقع الالكتروني " >
+                  <!-- <ng-container *ngIf="companyForm.controls['email'].invalid && companyForm.controls['email'].touched">
+                      <small *ngIf="companyForm.controls['email'].hasError('required')">  الايميل مطلوب</small>
+                      <small *ngIf="companyForm.controls['email'].hasError('email')">الرجاء إدخال بريد إلكتروني صحيح</small>
+                 </ng-container> -->
+        </div>
+
+        </div>
+      </form>
+
+      <form class="forms_dashboard mb-3" >
+
+        <div class="row">
+        <div class="mb-3 col-sm-12 col-lg-4">
+                 <label for="phonenumber" class="form-label">رقم الهاتف</label>
+                 <input type="text" appNoStringPaste class="form-control" id="phonenumber" placeholder="رقم الهاتف" >
+
+                     <!-- <ng-container *ngIf="companyForm.controls['phoneNumber'].invalid && companyForm.controls['phoneNumber'].touched">
+                      <small *ngIf="companyForm.controls['phoneNumber'].hasError('required')">رقم الجوال مطلوب</small>
+                 </ng-container> -->
+        </div>
+        <div class="mb-3 col-sm-12 col-lg-4">
+                 <label for="fax" class="form-label">رقم الفاكس</label>
+                 <input type="text" appNoStringPaste class="form-control" id="fax" placeholder="رقم الفاكس"  >
+
+                     <!-- <ng-container *ngIf="companyForm.controls['fax'].invalid && companyForm.controls['fax'].touched">
+                      <small *ngIf="companyForm.controls['fax'].hasError('required')">رقم الفاكس مطلوب</small>
+                 </ng-container> -->
+        </div>
+
+                <div class="mb-3 col-sm-12 col-lg-4">
+                 <label for="phonenumber" class="form-label">رقم الجوال</label>
+                 <input type="text" appNoStringPaste class="form-control" id="phonenumber" placeholder="رقم الهاتف" formControlName="phoneNumber" >
+
+        </div>
+
+        
+</div>
+      </form>
+ 
+      <form class="forms_dashboard mb-3" >
+
+        <div class="row">
+   
+   
+                <div class="mb-3 col-sm-12 col-lg-3">
+                 <label for="address" class="form-label">المنطقه</label>
+                 <ng-select [items]="[]" bindLabel="name" placeholder="المنطقه" ></ng-select>
+                 <!-- <input type="text" appNoStringPaste class="form-control" id="address" placeholder="المنطقه" formControlName="address">
+                     <ng-container appNoPaste *ngIf="companyForm.controls['address'].invalid && companyForm.controls['address'].touched">
+                      <small *ngIf="companyForm.controls['address'].hasError('required')"> العنوان مطلوب</small>
+                 </ng-container> -->
+
+               
+        </div> 
+
+            <div class="mb-3 col-sm-12 col-lg-3">
+                 <label for="city" class="form-label">المدينه</label>
+               
+                  <ng-select [items]="[]" bindLabel="name" placeholder="المدينه" ></ng-select>
+
+        </div> 
+
+
+          <div class="mb-3 col-sm-12 col-lg-3">
+                 <label for="hay" class="form-label">الحي</label>
+                 <ng-select [items]="[]" bindLabel="name" placeholder="الحي" ></ng-select>
+
+        </div> 
+
+                <div class="mb-3 col-sm-12 col-lg-3">
+                 <label for="street" class="form-label">الشارع</label>
+                 <ng-select [items]="[]" bindLabel="name" placeholder="الشارع" ></ng-select>
+
+        </div> 
+              
+            
+                <div class="mb-3 col-sm-12 col-lg-6">
+                 <label for="codebared" class="form-label">الرمز البريدي</label>
+                 <input type="text"  class="form-control" id="codebared" placeholder="الرمز البريدي" >
+                     <!-- <ng-container appNoPaste *ngIf="companyForm.controls['street'].invalid && companyForm.controls['street'].touched">
+                      <small *ngIf="companyForm.controls['street'].hasError('required')"> ا مطلوب</small>
+                 </ng-container> -->
+
+        </div> 
+
+
+
+                     <div class="mb-3 col-sm-12 col-lg-6">
+                 <label for="fax" class="form-label">رقم المبني</label>
+                 <input type="text" appNoStringPaste class="form-control" id="fax" placeholder="رقم المبني"  >
+
+                 
+
+        </div>
+
+<!--         
+        <div class="mb-3 col-sm-12 col-lg-6">
+                 <label for="hesap" class="form-label">الحساب البنكي</label>
+                 <input type="text" class="form-control" id="hesap" placeholder="الحساب البنكي" formControlName="bankAccount">
+                   <ng-container appNoPaste *ngIf="companyForm.controls['bankAccount'].invalid && companyForm.controls['bankAccount'].touched">
+                      <small *ngIf="companyForm.controls['bankAccount'].hasError('required')">    الحساب البنكي مطلوب</small>
+
+                 </ng-container>
+
+        </div>  -->
+
+</div>
+</form>
+        <form class="forms_dashboard" >
+          <div class="row">
+
+        <div class="mb-3 col-sm-12 col-lg-6">
+                 <label for="nespaDareba" class="form-label">نسبه الضريبه</label>
+                 <div class="nesba_dareba">
+                  
+                      
+                     <ng-select [items]="['معفي','15 %','5%','ضريبه صفريه']" bindLabel="name" placeholder="نسبه الضريبه" ></ng-select>
+                  
+                     <!-- <div class="icon">
+                     <svg width="7" height="10" viewBox="0 0 7 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M2.72116 9.228L2.12116 9.048L4.60516 0.816L5.20516 1.008L2.72116 9.228ZM1.94116 4.32C1.66916 4.32 1.43316 4.26 1.23316 4.14C1.04116 4.012 0.889156 3.824 0.777156 3.576C0.673156 3.32 0.621156 3 0.621156 2.616C0.621156 2.232 0.673156 1.92 0.777156 1.68C0.889156 1.432 1.04116 1.252 1.23316 1.14C1.43316 1.02 1.66916 0.96 1.94116 0.96C2.21316 0.96 2.44516 1.02 2.63716 1.14C2.83716 1.252 2.98916 1.432 3.09316 1.68C3.20516 1.92 3.26116 2.232 3.26116 2.616C3.26116 3 3.20516 3.32 3.09316 3.576C2.98916 3.824 2.83716 4.012 2.63716 4.14C2.44516 4.26 2.21316 4.32 1.94116 4.32ZM1.94116 3.684C2.08516 3.684 2.19716 3.644 2.27716 3.564C2.36516 3.484 2.42516 3.364 2.45716 3.204C2.49716 3.044 2.51716 2.848 2.51716 2.616C2.51716 2.384 2.49716 2.192 2.45716 2.04C2.42516 1.888 2.36516 1.776 2.27716 1.704C2.19716 1.624 2.08516 1.584 1.94116 1.584C1.79716 1.584 1.68116 1.624 1.59316 1.704C1.51316 1.776 1.45316 1.888 1.41316 2.04C1.38116 2.192 1.36516 2.384 1.36516 2.616C1.36516 2.848 1.38116 3.044 1.41316 3.204C1.45316 3.364 1.51316 3.484 1.59316 3.564C1.68116 3.644 1.79716 3.684 1.94116 3.684ZM5.36116 9.12C5.08916 9.12 4.85316 9.06 4.65316 8.94C4.45316 8.812 4.29716 8.624 4.18516 8.376C4.08116 8.12 4.02916 7.8 4.02916 7.416C4.02916 7.032 4.08116 6.72 4.18516 6.48C4.29716 6.232 4.45316 6.052 4.65316 5.94C4.85316 5.82 5.08916 5.76 5.36116 5.76C5.63316 5.76 5.86516 5.82 6.05716 5.94C6.25716 6.052 6.40916 6.232 6.51316 6.48C6.62516 6.72 6.68116 7.036 6.68116 7.428C6.68116 7.812 6.62516 8.132 6.51316 8.388C6.40916 8.636 6.25716 8.82 6.05716 8.94C5.86516 9.06 5.63316 9.12 5.36116 9.12ZM5.36116 8.496C5.50516 8.496 5.61716 8.456 5.69716 8.376C5.78516 8.296 5.84516 8.176 5.87716 8.016C5.91716 7.856 5.93716 7.66 5.93716 7.428C5.93716 7.188 5.91716 6.992 5.87716 6.84C5.84516 6.688 5.78516 6.576 5.69716 6.504C5.61716 6.432 5.50516 6.396 5.36116 6.396C5.21716 6.396 5.10116 6.432 5.01316 6.504C4.93316 6.576 4.87316 6.688 4.83316 6.84C4.79316 6.992 4.77316 7.184 4.77316 7.416C4.77316 7.648 4.79316 7.848 4.83316 8.016C4.87316 8.176 4.93316 8.296 5.01316 8.376C5.10116 8.456 5.21716 8.496 5.36116 8.496Z" fill="#7F7F7F"/>
+</svg>
+                     </div> -->
+
+
+                     
+                
+                
+                    </div>
+              
+
+        </div> 
+
+        
+       
+            <!-- </div> -->
+ 
+
+
+
+
+
+
+
+  <div class="mt-3 col-sm-12 col-lg-6">
+
+   <div class="col-sm-12 col-lg-6">
+                <label for=""></label>
+                <div class="parent_checkbox d-flex align-items-center gap-2 align-self-end">
+                        <input type="checkbox" name="" checked class="checkedBox_shared" id="statususer" readonly>
+                        <label for="statususer">تفعيل الضريبه</label>
+                </div>
+              
+            
+
+        </div>
+                
+        </div>
+
+       
+
+
+           
+</div>
+      
+            
+          
+         
+        
+    </form>
+
+      <div class="btn_add_reset">
+                <button type="submit" class="ms-0" data-button="send">حفظ</button>
+                
+            </div>

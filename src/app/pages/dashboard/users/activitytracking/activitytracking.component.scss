@@ -1,0 +1,21 @@
+.table-responsive{
+        height: 355px;
+}
+
+.forms_dashboard{
+    min-height: 90px;
+    background-color: transparent;
+    padding: 0;
+    .form-control{
+        background-color: #F5F5F5 !important;
+    }
+
+    .search_btn{
+        width: 90px;
+        height: 32px;
+        background-color: #16601A;
+        border: 0;
+        border-radius: 4px;
+        color: #fff;
+    }
+}

@@ -1,0 +1,137 @@
+<app-page-heading [title]="'الموظفين'" [subtitle]="'صرف الرواتب'" [AddBtn]="true" [ExplorerRoute]="'/dashboard/salarydisbursement/explorerdisbursement'" [TitlePageAddBtn]="'مستكشف صرف الرواتب'"></app-page-heading>
+
+
+<form class="forms_dashboard">
+    <div class="row">
+     <div class="col-sm-12 col-lg-2 mb-3">
+        <label for="numberbala" class="form-label">رقم السند</label>
+        <input type="text" name="" readonly value="123" class="form-control" placeholder="رقم الوحده" id="numberbala">
+    </div>
+  <div class="col-sm-12 col-lg-2 mb-3" style="align-self: flex-end;">
+        <label  class="form-label" ></label>
+        <div class="search_number_component">
+<input type="text" name="" placeholder="بحث برقم السند"  class="form-control">
+
+<div class="search">
+    <svg width="21" height="20" viewBox="0 0 21 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M10.7501 17.4998C6.37783 17.4998 2.83342 13.9554 2.83342 9.58317C2.83342 5.21092 6.37783 1.6665 10.7501 1.6665C15.1223 1.6665 18.6667 5.21092 18.6667 9.58317C18.6667 13.9554 15.1223 17.4998 10.7501 17.4998Z" stroke="#7F7F7F" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M2.00008 18.3332L3.66675 16.6665" stroke="#7F7F7F" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+
+</div>
+        </div>
+        
+    </div>
+
+       <div class="col-sm-12 col-lg-3 mb-3">
+        <label for="numberbala" class="form-label">رقم الدفتري</label>
+        <input type="text" name="" readonly value="123" class="form-control number_notes" placeholder="رقم الوحده" id="numberbala">
+    </div>
+       <div class="col-sm-12 col-lg-3 mb-3">
+        <label for="numberbala" class="form-label">الشهر</label>
+        <ng-select [items]="[]" bindLabel="name" placeholder="اختر" bindValue="id"></ng-select>
+    </div>
+       <div class="col-sm-12 col-lg-2 mb-3">
+        <label for="numberbala" class="form-label">التاريخ</label>
+        <input type="date" name=""  class="form-control" placeholder="التاريخ" id="numberbala">
+    </div>
+
+      <div class="col-sm-12">
+            <div class="mb-3">
+                <label for="exampleFormControlTextarea1" class="form-label">البيان</label>
+                <textarea class="form-control textarea" id="exampleFormControlTextarea1" placeholder="اكتب المحتوي"></textarea>
+            </div>
+        </div>
+    </div>
+
+
+    </form>
+
+  <div class="table-responsive" >
+    <table>
+      <thead> 
+        <tr>
+          <th>م</th>
+          <th>اسم الموظف</th>
+          <th>الراتب</th>
+          <th>الصندوق</th>
+          <th>عدد ايام الغياب</th>
+          <th>تسديد سلفه</th>
+          <th>جزاءات</th>
+          <th>مكافاءات</th>
+          <th>صافي الراتب</th>
+          <th>العمليات</th>
+        </tr>
+      </thead>
+   <tbody>
+    <tr>
+          <th><p style="font-size: 14px; font-weight: 700; color: #a7a7A7;">م</p></th>
+             <td>
+            <ng-select
+appendTo="body"
+  [items]="[]"
+  bindLabel="fullName"
+  bindValue="id"
+  placeholder="اسم الموظف"
+  class="ng_selectin_table"
+  >
+</ng-select>
+          </td>
+
+           <td><input type="text" class="form-control text-center salary" placeholder="0" readonly></td>
+            <td>
+                <ng-select appendTo="body" class="ng_selectin_table" [items]="[]" bindLabel="name" placeholder="-----------" bindValue="id"></ng-select>
+            </td>
+          <td><input type="text" class="form-control text-center" placeholder="0"  ></td>
+          <td><input type="text" class="form-control text-center" placeholder="0" ></td>
+          <td><input type="text" class="form-control text-center" placeholder="0" ></td>
+           <td><input type="text" class="form-control text-center" placeholder="0" readonly></td>
+           <td><input type="text" class="form-control text-center" placeholder="0"  readonly></td>
+
+            <td>
+                <div class="btn_add_reset mt-0">
+ <button type="button" data-button="send" class=""
+         
+            >اضافه</button>
+                </div>
+           
+          </td>
+    </tr>
+
+
+
+    @for(item of employeesSalary; track $index){
+        <tr>
+            <td>{{$index + 1}}</td>
+            <td>{{item.name}}</td>
+            <td>{{item.salary}}</td>
+            <td>{{item.fund}}</td>
+            <td>{{item.absenceDays}}</td>
+            <td>{{item.loanRepayment}}</td>
+            <td>{{item.penalties}}</td>
+            <td>{{item.bonuses}}</td>
+            <td>{{item.netSalary}}</td>
+            <td><button class="delete border-0">
+                <svg width="33" height="26" viewBox="0 0 33 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect y="0.5" width="33" height="25" rx="2" fill="#FFE5E5"/>
+<path d="M23.5 5H20L19 4H14L13 5H9.5V7H23.5M10.5 20C10.5 20.5304 10.7107 21.0391 11.0858 21.4142C11.4609 21.7893 11.9696 22 12.5 22H20.5C21.0304 22 21.5391 21.7893 21.9142 21.4142C22.2893 21.0391 22.5 20.5304 22.5 20V8H10.5V20Z" fill="#FF3D00"/>
+</svg>
+
+            </button></td>
+        </tr>
+    }
+
+      </tbody>
+    </table>
+   
+  </div>
+
+  <div class="btn_add_reset">
+ <button type="button" data-button="send">حفظ</button>
+ <button type="button" data-button="reset">تعديل</button>
+ <button type="button" data-button="reset">حذف</button>
+ <button type="button" data-button="reset">طباعه بالسند</button>
+ <button  type="button" data-button="reset" (click)="showEmployeePopup = !showEmployeePopup">طباعه بالموظف</button>
+  </div>
+
+<app-printemployee [showPopup]="showEmployeePopup"></app-printemployee>

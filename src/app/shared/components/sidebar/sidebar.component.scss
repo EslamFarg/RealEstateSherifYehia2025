@@ -1,0 +1,41 @@
+@use '../../../../../public/styles/abstracts/vars' as *;
+@use '../../../../../public/styles/abstracts/mixins' as *;
+
+aside{
+    width: 256px;
+    // height: 100v;
+    position: fixed;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    background-color: $background_form;
+    transition: 0.3s;
+    z-index: 999;
+    overflow-x: hidden;
+    overflow-y: scroll;
+
+    &::-webkit-scrollbar{
+        width: 0.2px !important;
+       
+        
+    }
+
+
+
+        
+
+    &.active{
+        right: -100%;
+        
+
+
+       
+    }
+    
+
+    .logo{
+        @media (max-width:768px) {
+                margin-top: 65px;
+        }
+    }
+}

@@ -1,0 +1,505 @@
+
+ <accordion [isAnimated]="true" class="accordion_contract">
+  <accordion-group heading="العقد" [isOpen]="true">
+
+       <form class="forms_dashboard" [formGroup]="this.formData"  appIntersection="fade-in">
+        <div class="row row_part">
+
+     
+
+          <div class="row">
+<div class="mb-3 col-sm-12  col-lg-3 pe-0">
+                 <label for="contractnumber" class="form-label">رقم العقد</label>
+                 <input type="text" class="form-control"  id="contractnumber" placeholder="رقم العقد" formControlName="ContractNumber">
+                  <ng-container *ngIf="formData.controls['ContractNumber'].invalid && formData.controls['ContractNumber'].touched">
+                      <small *ngIf="formData.controls['ContractNumber'].hasError('required')"> رقم العقد مطلوب</small>
+                 </ng-container>
+        </div>
+<div class="mb-3 col-sm-12  col-lg-3 " style="align-self: flex-end;">
+                 <label for="searchNumberContract" class="form-label"> </label>
+                 <div class="searchNumberContract">
+      <input type="text" class="form-control"  id="searchNumberContract" placeholder="بحث برقم العقد" >
+
+                 <div class="icon_search">
+                 <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M10.4163 17.5013C6.04409 17.5013 2.49967 13.9569 2.49967 9.58464C2.49967 5.21238 6.04409 1.66797 10.4163 1.66797C14.7886 1.66797 18.333 5.21238 18.333 9.58464C18.333 13.9569 14.7886 17.5013 10.4163 17.5013Z" stroke="#7F7F7F" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M1.66634 18.3346L3.33301 16.668" stroke="#7F7F7F" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+ 
+                 </div>
+                 </div>
+           
+                
+        </div>
+          </div>
+
+
+
+
+
+        <div class="mb-3 col-sm-12 col-lg-6">
+                 <label for="placecontract" class="form-label">مكان ابرام العقد</label>
+                 <input type="text" class="form-control" readonly id="placecontract" placeholder="مكان ابرام العقد" formControlName="ContractAddress">
+                  <ng-container *ngIf="formData.controls['ContractAddress'].invalid && formData.controls['ContractAddress'].touched">
+                      <small *ngIf="formData.controls['ContractAddress'].hasError('required')"> مكان العقد مطلوب</small>
+                 </ng-container>
+        </div>
+        <div class="mb-3 col-sm-12  col-lg-6">
+                 <label for="dateebramcontract"  class="form-label">تاريخ ابرام العقد</label>
+
+        <input type="date"  class="form-control" id="dateebramcontract" formControlName="ContractDate">
+
+          <ng-container *ngIf="formData.controls['ContractDate'].invalid && formData.controls['ContractDate'].touched">
+                      <small *ngIf="formData.controls['ContractDate'].hasError('required')"> تاريخ ابرام العقد مطلوب</small>
+                 </ng-container>
+ </div>  
+        <div class="mb-3 col-sm-12 col-lg-3 ">
+                 <label for="date1" class="form-label">تاريخ بداية مده الايجار</label>
+                <input type="date"  class="form-control" appGetmincurrentyear  id="date1" formControlName="StartDate">
+
+                   <ng-container *ngIf="formData.controls['StartDate'].invalid && formData.controls['StartDate'].touched">
+                      <small *ngIf="formData.controls['StartDate'].hasError('required')"> تاريخ بدايه الايجار مطلوب</small>
+                 </ng-container>
+ </div>  
+        <div class="mb-3 col-sm-12  col-lg-3">
+                 <label for="date2" class="form-label">تاريخ نهايه مده الايجار</label>
+ 
+
+            <input type="date"   class="form-control" id="date2" formControlName="EndDate" appGetmincurrentyear>
+              <ng-container *ngIf="formData.controls['EndDate'].invalid && formData.controls['EndDate'].touched">
+                      <small *ngIf="formData.controls['EndDate'].hasError('required')"> تاريخ نهايه الايجار مطلوب</small>
+              </ng-container>
+
+ </div>  
+        <div class="mb-3 col-sm-12  col-lg-6">
+                 <label for="date2" class="form-label">شهور الايجار</label>
+ 
+
+            <input type="text"  id="monthsInput"  class="form-control"   readonly style="background-color: #BED2BF;">
+              <!-- <ng-container *ngIf="formData.controls['EndDate'].invalid && formData.controls['EndDate'].touched">
+                      <small *ngIf="formData.controls['EndDate'].hasError('required')"> تاريخ نهايه الايجار مطلوب</small>
+              </ng-container> -->
+
+ </div>  
+
+ <div class="mb-3 col-sm-12 col-lg-6">
+                 <label for="mara" class="form-label">رقم دفتري</label>
+                 <input type="text" class="form-control" id="mara" placeholder="رقم دفتري" formControlName="ReferenceName">
+                    <ng-container *ngIf="formData.controls['ReferenceName'].invalid && formData.controls['ReferenceName'].touched">
+                      <small *ngIf="formData.controls['ReferenceName'].hasError('required')"> المرجع مطلوب</small>
+              </ng-container>
+        </div>
+       
+            <div class="mb-3 col-sm-12  col-lg-6 px-0">
+                <div class="row">
+                  <div class="col-sm-12">
+                 <label for="copy" class="form-label d-block"> المرفقات
+                 </label>
+                  </div>
+                  <div class="col-sm-12 ps-0">
+                  
+
+   <input type="file" id="download_file" accept=".jpg,.jpeg,.png,.gif,.pdf,.doc,.docx" class="d-none" (change)="onFileSelected($event)">
+                 <div  class="form-label d-flex copy_identity" >
+                    <div class="icon">
+                      <label for="download_file">
+                                         <div class="download">
+ <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M9.58332 12.9802V5.77185L7.64166 7.71352L7.05166 7.11518L9.99999 4.16602L12.9492 7.11518L12.3592 7.71435L10.4167 5.77185V12.9802H9.58332ZM5.51332 15.8327C5.12943 15.8327 4.80916 15.7043 4.55249 15.4477C4.29582 15.191 4.16721 14.8705 4.16666 14.486V12.4668H4.99999V14.486C4.99999 14.6144 5.05332 14.7321 5.15999 14.8393C5.26666 14.9466 5.38416 14.9999 5.51249 14.9993H14.4875C14.6153 14.9993 14.7328 14.946 14.84 14.8393C14.9472 14.7327 15.0005 14.6149 15 14.486V12.4668H15.8333V14.486C15.8333 14.8699 15.705 15.1902 15.4483 15.4468C15.1917 15.7035 14.8711 15.8321 14.4867 15.8327H5.51332Z" fill="black"/>
+</svg>
+
+
+                    </div>  
+
+                    </label>
+
+                    <span>|</span>
+                    <div class="eye" (click)="previewImg()">
+                      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M10.3866 7.99995C10.3866 9.31995 9.31995 10.3866 7.99995 10.3866C6.67995 10.3866 5.61328 9.31995 5.61328 7.99995C5.61328 6.67995 6.67995 5.61328 7.99995 5.61328C9.31995 5.61328 10.3866 6.67995 10.3866 7.99995Z" stroke="#0D1B2A" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M7.9999 13.5138C10.3532 13.5138 12.5466 12.1271 14.0732 9.72713C14.6732 8.78713 14.6732 7.20713 14.0732 6.26713C12.5466 3.86713 10.3532 2.48047 7.9999 2.48047C5.64656 2.48047 3.45323 3.86713 1.92656 6.26713C1.32656 7.20713 1.32656 8.78713 1.92656 9.72713C3.45323 12.1271 5.64656 13.5138 7.9999 13.5138Z" stroke="#0D1B2A" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+
+                    </div>
+                    
+                    
+                    
+                    
+                    </div>
+                     <input type="text" class="form-control" id="download_file" placeholder="مرفق" [value]="fileName" readonly style="pointer-events: none;">
+                  </div>
+
+
+   
+                  </div>
+                </div>
+
+              
+
+                 
+
+     
+
+
+            </div> 
+
+       
+
+             <div class="mb-3 col-sm-12 ">
+                 <label for="bayan" class="form-label">البيان</label>
+                 <textarea type="text" class="form-control"  style="height: 124px;"id="bayan" placeholder="اكتب المحتوي" formControlName="ContractNotes"></textarea>
+                <ng-container *ngIf="formData.controls['ContractNotes'].invalid && formData.controls['ContractNotes'].touched">
+                      <small *ngIf="formData.controls['ContractNotes'].hasError('required')"> محتوي البيان مطلوب</small>
+              </ng-container>
+        </div>
+            <!-- </div> -->
+ 
+
+
+
+
+
+
+           
+</div>
+      </form>
+
+  </accordion-group>
+  <accordion-group heading="العقار">
+    <div class="forms_dashboard ">
+      <div class="row">
+        <div class="col-sm-12 mb-3">
+          <div class="search_akar">
+
+             <input type="text" class="form-control" placeholder="بحث">
+
+             <div class="icon">
+                          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M10.4163 17.5013C6.04409 17.5013 2.49967 13.9569 2.49967 9.58464C2.49967 5.21238 6.04409 1.66797 10.4163 1.66797C14.7886 1.66797 18.333 5.21238 18.333 9.58464C18.333 13.9569 14.7886 17.5013 10.4163 17.5013Z" stroke="#7F7F7F" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M1.66634 18.3346L3.33301 16.668" stroke="#7F7F7F" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+             </div>
+
+
+          </div>
+         
+        </div>
+
+        <div class="col-lg-4">
+          <div class="mb-3">
+            <label for="loneliness" class="form-label">الوحده</label>
+            <input type="text" readonly placeholder="الوحده" id="loneliness" class="form-control">
+
+
+          </div>
+        </div>
+        <div class="col-lg-4">
+          <div class="mb-3">
+            <label for="door" class="form-label">الدور</label>
+            <input type="text" readonly placeholder="الدور" id="door" class="form-control">
+
+
+          </div>
+        </div>
+        <div class="col-lg-4">
+          <div class="mb-3">
+            <label for="building" class="form-label">العماره</label>
+            <input type="text" placeholder="العماره" id="building" class="form-control" readonly>
+          </div>
+        </div>
+        <div class="col-lg-4">
+          <div class="mb-3">
+            <label for="city" class="form-label">المدينه</label>
+            <input type="text" placeholder="المدينه" id="city" class="form-control" readonly>
+          </div>
+        </div>
+        <div class="col-lg-4">
+          <div class="mb-3">
+            <label for="hay" class="form-label">الحي</label>
+            <input type="text" placeholder="الحي" id="hay" class="form-control" readonly>
+          </div>
+        </div>
+        <div class="col-lg-4">
+          <div class="mb-3">
+            <label for="street" class="form-label">الشارع</label>
+            <input type="text" placeholder="الشارع" id="street" class="form-control" readonly>
+          </div>
+        </div>
+        <div class="col-sm-12">
+
+          <div class="input_and_label mb-3 mt-2">
+                      <label for="ownerName" class="form-label">اسم المالك</label>
+            <input type="text" placeholder="اسم المالك" id="ownerName" class="form-control" readonly value="شريف يحيي جادالله">
+
+          </div>
+          <!-- <div class="mb-3">
+  
+          </div> -->
+        </div>
+      </div>
+    </div>
+  </accordion-group>
+  <accordion-group heading="المستأجر">
+
+    <form class="forms_dashboard">
+    <div class="row">
+         <div class="col-sm-12 mb-3">
+          <div class="search_akar">
+
+             <input type="text" class="form-control" placeholder="بحث">
+
+             <div class="icon">
+                          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M10.4163 17.5013C6.04409 17.5013 2.49967 13.9569 2.49967 9.58464C2.49967 5.21238 6.04409 1.66797 10.4163 1.66797C14.7886 1.66797 18.333 5.21238 18.333 9.58464C18.333 13.9569 14.7886 17.5013 10.4163 17.5013Z" stroke="#7F7F7F" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M1.66634 18.3346L3.33301 16.668" stroke="#7F7F7F" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+             </div>
+
+
+          </div>
+         
+        </div>
+
+           <div class="row row_part">
+
+     
+<div class="p-3 readonly_container" style="border: 1px solid #BFDBC9; border-radius: 4px; ">
+    <div class="row">
+<div class="mb-3 col-sm-12  col-lg-4 readonly_input">
+                 <label for="username" class="form-label">الاسم</label>
+                 <input type="text" style="padding-right: 50px;"  class="form-control" id="username" readonly   
+        name="fullName" [value]="'شريف يحيي جادالله'">
+        </div>
+        <div class="mb-3 col-sm-12  col-lg-4 readonly_input">
+                 <label for="phonenumber" class="form-label"  >رقم الجوال</label>
+              
+                 <input type="text" [value]="'01026381737'" name="phonenumber" readonly style="padding-right: 74px;" id="phonenumber"  class="form-control" >
+        </div>
+
+         <div class="mb-3 col-sm-12  col-lg-4 readonly_input">
+                 <label for="nationality" class="form-label" >الجنسيه</label>
+                 <input type="text" class="form-control" [value]="'سعودي'" readonly id="nationality"  style="padding-right: 60px;" >
+        </div>
+                <div class="mb-3 col-sm-12  col-lg-4 readonly_input">
+                 <label for="email" class="form-label">البريد الالكتروني</label>
+ 
+
+        <input type="email" class="form-control" id="email" [value]="'sherifyehia11@gmail.com'"  readonly style="padding-right: 105px;">
+ </div>  
+
+       <div class="mb-3 col-sm-12  col-lg-4 readonly_input">
+                 <label  class="form-label" >رقم الهويه </label>
+ 
+
+            <input type="text" class="form-control" [value]="'30008181601316'" style="padding-right: 75px;" id="idnumber" >
+ </div>  
+
+
+       <div class="mb-3 col-sm-12  col-lg-4 readonly_input">
+                 <label  class="form-label d-block"> عدد المرافقين    
+                 </label>      
+                 <input type="text" class="form-control" id="copy" value="2"    readonly style="pointer-events: none; padding-right    : 100px;"> 
+                 
+               
+            </div>   
+
+       
+
+
+  
+
+      </div>
+      </div>
+      </div>
+      <!-- </div>  -->
+<!-- </div>  -->
+   
+    <!-- </div> -->
+
+
+    </div>
+    </form>
+
+  </accordion-group>
+  <accordion-group heading="السمسار (الوسيط)">
+   <form class="forms_dashboard">
+    <div class="row">
+         <div class="col-sm-12 mb-3">
+          <div class="search_akar">
+
+             <input type="text" class="form-control" placeholder="بحث">
+
+             <div class="icon">
+                          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M10.4163 17.5013C6.04409 17.5013 2.49967 13.9569 2.49967 9.58464C2.49967 5.21238 6.04409 1.66797 10.4163 1.66797C14.7886 1.66797 18.333 5.21238 18.333 9.58464C18.333 13.9569 14.7886 17.5013 10.4163 17.5013Z" stroke="#7F7F7F" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M1.66634 18.3346L3.33301 16.668" stroke="#7F7F7F" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+             </div>
+
+
+          </div>
+         
+        </div>
+
+           <div class="row row_part">
+
+     
+<div class="p-3 readonly_container" style="border: 1px solid #BFDBC9; border-radius: 4px; ">
+    <div class="row">
+<div class="mb-3 col-sm-12  col-lg-6 readonly_input">
+                 <label for="username" class="form-label">الاسم</label>
+                 <input type="text" style="padding-right: 50px;"  class="form-control" id="username" readonly   
+        name="fullName" [value]="'شريف يحيي جادالله'">
+        </div>
+        <div class="mb-3 col-sm-12  col-lg-6 readonly_input">
+                 <label for="phonenumber" class="form-label"  >رقم الجوال</label>
+              
+                 <input type="text" [value]="'01026381737'" name="phonenumber" readonly style="padding-right: 74px;" id="phonenumber"  class="form-control" >
+        </div>
+
+         <div class="mb-3 col-sm-12  col-lg-6 readonly_input">
+                 <label for="commissionRealtor" class="form-label" >عموله السمسار</label>
+                 <input type="text" class="form-control" [value]="'5%'" readonly id="commissionRealtor"  style="padding-right: 110px;" >
+        </div>
+        
+
+       <div class="mb-3 col-sm-12  col-lg-6 readonly_input">
+                 <label  class="form-label" >رقم الهويه </label>
+ 
+
+            <input type="text" class="form-control" [value]="'30008181601316'" style="padding-right: 75px;" id="idnumber" >
+ </div>  
+
+
+      
+
+       
+
+
+  
+
+      </div>
+      </div>
+      </div>
+      <!-- </div>  -->
+<!-- </div>  -->
+   
+    <!-- </div> -->
+
+
+    </div>
+    </form>
+  </accordion-group>
+  <accordion-group heading="الماليه">
+   <form class="forms_dashboard">
+    <div class="row">
+        <div class="col-lg-4">
+          <div class="mb-3">
+            <label for="valueEgar" class="form-label">قيمه الايجار</label>
+            <input type="text" placeholder="قيمه الايجار" id="valueEgar" class="form-control" readonly>
+          </div>
+        </div>
+        <div class="col-lg-4">
+          <div class="mb-3">
+            <label for="dareba" class="form-label">الضريبه</label>
+            <input type="text" placeholder="الضريبه" id="dareba" class="form-control" readonly>
+          </div>
+        </div>
+        <div class="col-lg-4">
+          <div class="mb-3">
+            <label for="total" class="form-label">الاجمالي</label>
+            <input type="text" placeholder="الاجمالي" id="total" class="form-control" readonly>
+          </div>
+        </div>
+        <div class="col-lg-4">
+          <div class="mb-3">
+            <label for="commisionAkra" class="form-label">عموله اخري</label>
+            <input type="text" placeholder="عموله اخري" id="commisionAkra" class="form-control" readonly>
+          </div>
+        </div>
+        <div class="col-lg-4">
+          <div class="mb-3">
+            <label for="Tamen" class="form-label">قيمه التأمين</label>
+            <input type="text" placeholder="قيمه التأمين" id="Tamen" class="form-control" readonly>
+          </div>
+        </div>
+        <div class="col-lg-4">
+          <div class="mb-3">
+            <label for="safi" class="form-label">الصافي</label>
+            <input type="text" placeholder="الصافي" id="safi" class="form-control" readonly>
+          </div>
+        </div>
+
+
+
+    </div>
+    </form>
+  </accordion-group>
+  <accordion-group heading="الرسائل">
+   <form class="forms_dashboard">
+    <div class="row">
+       <div class="col-sm-12 " style="margin-bottom: 30px;"> 
+        <label for="message" class="form-label">اسم الرساله</label>
+        <ng-select [items]="datamsg" bindLabel="messageName" bindValue="messageValue"  placeholder="اسم الرساله"></ng-select>
+       </div>
+
+       <div class="col-sm-12">
+        <textarea name="" id="" style="font-size: 15px; font-weight: 400; color: #16601A; 
+        border: 1px solid #BED2BF !important;
+        border-radius: 5px;
+        width: 100%; height: 78px;
+        margin-bottom: 30px;
+        ">
+
+        </textarea>
+       </div>
+
+       <div class="col-lg-6">
+        <label for="day" class="form-label">ارسال قبل موعد السداد بمدة</label>
+        <div class="name_day">
+<input type="number" class="form-control" id="day">
+<p>يوم</p>
+        </div>
+        
+       </div>
+
+       <div class="col-lg-6">
+        <label for="tareka" class="form-label">طريقه الارسال </label>
+
+        <div class="tareka_send">
+          <div class="d-flex algin-items-center justify-content-between flex-wrap">
+           <div class="d-flex align-items-center gap-2">
+         
+             <input type="checkbox" class="form-check" name="" id="sms">
+                 <label for="sms">SMS</label>
+           </div>
+           <div class="d-flex align-items-center gap-2">
+            <input type="checkbox" class="form-check" name="" id="whatsapp"> 
+            <label for="whatsapp">واتساب</label>
+             
+           </div>
+           <div class="d-flex align-items-center gap-2">
+            <input type="checkbox" class="form-check" name="" id="email"> 
+            <label for="email">البريد الالكتروني</label>
+             
+           </div>
+            
+
+          </div>
+          
+        </div>
+       </div>
+    </div>
+    </form>
+  </accordion-group>
+</accordion> 
+
+  <div class="btns_add_edit">
+ <button data-type="save">حفظ</button>
+ <button>جديد</button>
+ <button>حذف</button>
+ <button>طباعه </button>
+ <button>تعديل </button>
+  </div>
+
+

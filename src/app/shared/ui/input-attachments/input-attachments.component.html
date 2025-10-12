@@ -1,0 +1,42 @@
+
+            <div class="mb-3">
+                    <label for="attachments" class="form-label">المرفقات</label>
+                    <div class="attachments">
+                         <input type="text" class="form-control" style="pointer-events: none;" id="attachments" readonly placeholder="المرفقات">
+
+                         <div class="item_attachments">
+               <label class="download_attachments" for="download_attachments">
+                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M9.58329 12.9808V5.77246L7.64163 7.71413L7.05163 7.11579L9.99996 4.16663L12.9491 7.11579L12.3591 7.71496L10.4166 5.77246V12.9808H9.58329ZM5.51329 15.8333C5.1294 15.8333 4.80913 15.705 4.55246 15.4483C4.29579 15.1916 4.16718 14.8711 4.16663 14.4866V12.4675H4.99996V14.4866C4.99996 14.615 5.05329 14.7327 5.15996 14.84C5.26663 14.9472 5.38413 15.0005 5.51246 15H14.4875C14.6152 15 14.7327 14.9466 14.84 14.84C14.9472 14.7333 15.0005 14.6155 15 14.4866V12.4675H15.8333V14.4866C15.8333 14.8705 15.705 15.1908 15.4483 15.4475C15.1916 15.7041 14.8711 15.8327 14.4866 15.8333H5.51329Z" fill="black"/>
+</svg>
+
+</label>
+
+                        <input type="file" name="attachments" accept="image/*pdf/*docx/*" id="download_attachments" (change)="onSelectFiles($event)" multiple style="display: none;">
+
+                         <div class="line_attachments">
+                            <svg width="2" height="16" viewBox="0 0 2 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <rect y="0.5" width="2" height="15" rx="1" fill="#BED2BF"/>
+                            </svg>
+
+                         </div>
+
+
+                         <div class="show_attachments" (click)="showAttachments()">
+                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M10.3866 7.99995C10.3866 9.31995 9.31995 10.3866 7.99995 10.3866C6.67995 10.3866 5.61328 9.31995 5.61328 7.99995C5.61328 6.67995 6.67995 5.61328 7.99995 5.61328C9.31995 5.61328 10.3866 6.67995 10.3866 7.99995Z" stroke="#0D1B2A" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M7.9999 13.5133C10.3532 13.5133 12.5466 12.1266 14.0732 9.72665C14.6732 8.78665 14.6732 7.20665 14.0732 6.26665C12.5466 3.86665 10.3532 2.47998 7.9999 2.47998C5.64656 2.47998 3.45323 3.86665 1.92656 6.26665C1.32656 7.20665 1.32656 8.78665 1.92656 9.72665C3.45323 12.1266 5.64656 13.5133 7.9999 13.5133Z" stroke="#0D1B2A" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+
+                         </div>
+                         </div>
+          
+                    </div>
+                 
+            </div>
+
+
+<app-popup-attachments [dataFile]="nameFiles" [showPopupAttachment]="showPopupAttachment" (closeAttachments)="showPopupAttachment=$event"></app-popup-attachments>
+
+<!-- <app-toastr []></app-toastr> -->
+ <app-toastr></app-toastr>

@@ -1,0 +1,53 @@
+.forms_dashboard{
+        min-height: 240px;
+
+
+
+}
+
+
+.table-responsive{
+
+
+    height:240px;
+    table{
+        //   border-collapse: separate; 
+//   border-spacing: 6px;   
+  th,td{
+      padding: 6px;
+  vertical-align: middle;
+
+
+  
+  }
+
+  td{
+
+    ng-select{
+            .ng-select-container{
+                border: 0 !important;
+            }
+    }
+    input{
+    font-size: 14px;
+    font-weight: 400;
+    border: 0;
+
+    &:focus{
+        box-shadow: none !important;
+        outline: 0 !important; 
+    }
+
+    &:not(.salary){
+        color: #A7A7A7 !important;
+
+        &::placeholder{
+            color: #A7A7A7 !important;
+        }
+    }
+    }
+
+
+  }
+}
+}

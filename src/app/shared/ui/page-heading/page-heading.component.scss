@@ -1,0 +1,64 @@
+@use '../../../../../public/styles/abstracts/vars' as * ;
+@use '../../../../../public/styles/abstracts/mixins' as * ;
+.page_heading{
+    @include flex_box(flex,null,center,16px);
+    transition: 0.5s ;
+    // margin-bottom: 20px;
+         @include responsive('small') {
+            gap: 3px;
+        }
+    .section_title{
+        color: $main_color;
+        font-size: 18px;
+        font-weight: 700;
+     @include responsive('small') {
+            font-size: 12px;
+        }
+    }
+
+    .page_title{
+        font-size: 16px;
+        font-weight: 400;
+        color: #619363;
+        transition: 0.5s;
+        @include responsive('small') {
+            font-size: 12px;
+        }
+    }
+
+
+
+
+    // padding: 10px 20px;
+    // border-bottom: 1px solid $secondary_color;
+}
+
+
+.showDescription{
+    @include flex_box(flex,null,center,16px);
+         @include responsive('small') {
+            gap: 3px;
+        }
+}
+
+    .btns_header{
+        a{
+        min-width: 200px;
+        max-width: 282px;
+        background-color: $btn_color;
+        height: 44px;
+        border-radius: 4px;
+        text-align: center;
+        line-height: 44px;
+        font-size: 14px;
+        font-weight: 700;
+        color:$white-color;
+
+            @include responsive('small') {
+            font-size: 10px;
+            min-width: 145px;
+        }
+        }
+        
+        
+    }

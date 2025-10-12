@@ -1,0 +1,176 @@
+<app-page-heading [title]="'المحاسبه'" [subtitle]="'استلام الدفعات'" [explorerBtn]="true" [AddRoute]="'/dashboard/paymentreceiptvoucher/explorerpaymentreceiptvoucher'" [TitlePageExplorerBtn]="'مستكشف الاستلام'"></app-page-heading>
+<app-searchinforms [dataFilter]="dataFilter"></app-searchinforms>
+
+
+<form action="" class="forms_dashboard">
+         <div class="row row_part m-auto px-0">
+
+     
+<div class="pt-3 readonly_container" style="border: 1px solid #BFDBC9; border-radius: 4px; ">
+    <div class="row">
+<div class="mb-3 col-sm-12  col-lg-6 readonly_input">
+                 <label for="numbercontract" class="form-label">رقم العقد</label>
+                 <input type="text" style="padding-right: 75px;"  class="form-control" id="numbercontract" readonly   
+        name="fullName" [value]="'320'">
+        </div>
+        <div class="mb-3 col-sm-12  col-lg-6 readonly_input">
+                 <label for="nametenant" class="form-label"  >اسم المستاجر</label>
+              
+                 <input type="text" [value]="'يوسف نبيل'" name="nametenant" readonly style="padding-right: 100px;" id="nametenant"  class="form-control" >
+        </div>
+
+         <div class="mb-3 col-sm-12  col-lg-3 readonly_input">
+                 <label for="loneliness" class="form-label" >الوحده</label>
+                 <input type="text" class="form-control" [value]="'12'" readonly id="loneliness"  style="padding-right: 60px;" >
+        </div>
+         <div class="mb-3 col-sm-12  col-lg-3 readonly_input">
+                 <label for="property" class="form-label" >العقار</label>
+                 <input type="text" class="form-control" [value]="'123'" readonly id="property"  style="padding-right: 60px;" >
+        </div>
+         <div class="mb-3 col-sm-12  col-lg-3 readonly_input">
+                 <label for="enddate" class="form-label" >تاريخ نهايه العقد</label>
+                 <input type="text" class="form-control" [value]="'20 يناير 2026'" readonly id="enddate"  style="padding-right: 115px;" >
+        </div>
+              
+
+       <div class="mb-3 col-sm-12  col-lg-3 readonly_input">
+                 <label  class="form-label" >مبلغ العقد </label>
+ 
+
+            <input type="text" class="form-control" [value]="'12000'" style="padding-right: 80px;" id="idnumber" >
+ </div>  
+
+
+
+       
+
+
+  
+
+      </div>
+      </div>
+      </div>
+</form>
+
+
+<form class="forms_dashboard mt-4">
+<div class="row">
+     <div class="row ">
+<div class=" col-sm-12  col-lg-3 ">
+                 <label for="vouchernumber" class="form-label">رقم السند</label>
+                 <input type="text" class="form-control"  id="vouchernumber" placeholder="رقم السند" readonly [value]="'12345'">
+                
+        </div>
+  <div class="col-sm-12 col-lg-3 mb-3 search_contract" style="align-self: flex-end;">
+        <label  class="form-label" ></label>
+        <div class="search_number_component">
+<input type="text" name="" placeholder="بحث برقم السند"  class="form-control">
+
+<div class="search">
+    <svg width="21" height="20" viewBox="0 0 21 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M10.7501 17.4998C6.37783 17.4998 2.83342 13.9554 2.83342 9.58317C2.83342 5.21092 6.37783 1.6665 10.7501 1.6665C15.1223 1.6665 18.6667 5.21092 18.6667 9.58317C18.6667 13.9554 15.1223 17.4998 10.7501 17.4998Z" stroke="#7F7F7F" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M2.00008 18.3332L3.66675 16.6665" stroke="#7F7F7F" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+
+</div>
+        </div>
+        
+    </div>
+
+    <div class="col-sm-12 col-lg-3">
+        <div class="mb-3">
+            <label for="numbernotes" class="form-label">رقم الدفتري</label>
+            <input type="text" class="form-control" id="numbernotes" placeholder="رقم الدفتري">
+          </div>
+    </div>
+
+    <div class="col-sm-12 col-lg-3">
+        <div class="mb-3">
+            <label for="date" class="form-label">التاريخ</label>
+            <input type="date" class="form-control" id="date" placeholder="التاريخ" >
+          </div>
+    </div>
+    <div class="col-sm-12 col-lg-4">
+        <div class="mb-3">
+            <label for="box" class="form-label">صندوق / بنك</label>
+            <ng-select [items]="[]" bindLabel="bankName" bindValue="bankValue"  placeholder="صندوق / بنك"></ng-select>
+          </div>
+    </div>
+    <div class="col-sm-12 col-lg-4">
+        <div class="mb-3">
+            <label for="box" class="form-label">اختيار الشهر</label>
+           <!-- <div>
+            <input type="text" class="form-control" id="box" >
+           </div> -->
+             <div class="input_rent_container">
+                <input type="text"  id="monthsInput"  class="form-control"   readonly >
+
+                <div class="months">
+
+                  <div class="prev_month">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect x="16" y="16" width="16" height="16" rx="2" transform="rotate(180 16 16)" fill="#D4AF37"/>
+<path d="M10.0605 2.72003L5.71388 7.0667C5.20055 7.58003 5.20055 8.42003 5.71388 8.93336L10.0605 13.28" stroke="white" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+
+                  </div>
+                  <div class="container_months">
+   <div class="box">
+                    يناير
+                    2025
+                  </div>
+                  <div class="box">
+                    ديسمبر
+                    2025
+                  </div>
+                  <div class="box">
+                    ديسمبر
+                    2025
+                  </div>
+                  </div>
+
+
+                  <div class="next_months">
+                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <rect width="16" height="16" rx="2" transform="matrix(1 0 0 -1 0 16)" fill="#D4AF37"/>
+                      <path d="M5.93945 2.72003L10.2861 7.0667C10.7995 7.58003 10.7995 8.42003 10.2861 8.93336L5.93945 13.28" stroke="white" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+
+                  </div>
+               
+                </div>
+              
+            </div>
+          </div>
+    </div>
+      <div class="col-sm-12 col-lg-4">
+        <div class="mb-3">
+            <label for="numbernotes" class="form-label">المبلغ</label>
+            <input type="text" class="form-control" id="numbernotes" placeholder="المبلغ">
+          </div>
+    </div>
+    <div class="col-sm-12">
+        <div class="mb-3">
+            <label for="byan" class="form-label">البيان</label>
+            <textarea class="form-control" id="byan" rows="3" placeholder="اكتب المحتوي" style="height: 109px !important;"></textarea>
+          </div>
+    </div>
+          </div>
+
+   
+
+</div>
+
+
+  <div class="btns_add_edit ">
+ <button data-type="save">حفظ</button>
+ <button>جديد</button>
+ <button>حذف</button>
+ <button>طباعه </button>
+  </div>
+
+
+
+
+
+</form>

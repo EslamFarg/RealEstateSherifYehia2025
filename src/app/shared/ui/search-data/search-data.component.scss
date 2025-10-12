@@ -1,0 +1,127 @@
+@use '../../../../../public/styles/abstracts/vars' as *; 
+@use '../../../../../public/styles/abstracts/mixins' as *;
+
+
+.search_data{
+    .input_search{
+        position: relative;
+        input{
+            height:38px ;
+            border: 1px solid $border-color;
+            border-radius: 4px;
+            background-color:$color_hover_white; 
+            font-size: 12px;
+            font-weight: 400;
+            color:$input_color;
+            padding-inline:18px; 
+
+        }
+
+        .search{
+            cursor: pointer;
+        }
+
+        .filter_data{
+            cursor: pointer;
+            position: relative;
+            .data_search{
+                position: absolute;
+                top:calc(100% + 10px);
+                left: 0;
+                width: 120px;
+                min-height: 5px;
+                background-color: $white-color;
+                border-radius: 4px;
+                border: 1px solid $border-color;
+                box-shadow: $shadow-sm;
+                opacity: 0;
+                transform: translateY(-10px);
+                visibility: hidden;
+                transition: 0.3s;
+
+
+                &.active{
+                    opacity: 1;
+                    transform: translateY(0);
+                    visibility: visible;
+                }
+                a{
+                                     padding: 9px;
+  color: $black-color;
+    font-size: 12px;
+    font-weight: 400;
+    margin: 2px 0px;
+    &.active{
+        color: $white-color;
+        background-color: $main-color;
+    }
+                }
+                }
+
+        }
+
+        .icon_search{
+            @include flex_box(flex,center,center,10px);
+            position: absolute;
+            left: 10px;
+            top: 48%;
+            transform: translateY(-50%);
+            z-index: 200;
+
+        }
+    }
+}
+
+.content_search{
+    
+    @include flex_box(flex,center,center,5px);
+
+         @include responsive('small') {
+            margin-top: 10px;
+        }
+         @include responsive('meduim') {
+            margin-top: 10px;
+        }
+    p{
+        color: $black-color;
+        font-size: 14px;
+        font-weight: 700;
+    }
+.custom_select{
+    position: relative;
+ &::after{
+    content: '▼';
+    
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 14px;
+    font-weight: 700;
+    color: #A7A7A7;
+    
+  }
+}
+
+    select{
+       width: 100px !important;
+       border-radius: 8px;
+       border: 1px solid #BED2BF;
+       font-size: 14px;
+       color: $main-color;
+       font-weight: 700;
+       padding-inline: 16px;
+       appearance: none;
+       
+       padding-block: 8px;
+    //    --webkit-
+    -webkit-appearance: none;
+  -moz-appearance: none;
+
+  position: relative;
+
+
+ 
+    }
+ 
+}

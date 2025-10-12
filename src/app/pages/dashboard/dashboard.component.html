@@ -1,0 +1,13 @@
+
+<div class="sidebar_component">
+    <app-sidebar [showSidebar]="showAndHideSidebar" (handlehideoverlay)="showAndHideSidebarInDashboard($event)"></app-sidebar>
+</div>
+<div class="content_dashboard">
+<app-header (toggleSidebarForMe)="showAndHideSidebarInDashboard($event)" [fullWidthMode]="showAndHideSidebar"></app-header>
+<div class="content_page" [ngClass]="{'active':!this.showAndHideSidebar}">
+    <div class="mt-4 me-4 ms-4">
+<router-outlet></router-outlet>  
+    </div>
+  
+</div>
+</div>

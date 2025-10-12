@@ -1,0 +1,198 @@
+@use '../../../../../../public/styles/abstracts/vars' as *;
+@use '../../../../../../public/styles/abstracts/mixins' as *;
+.input_rent_container{
+    position: relative;
+    input{
+        background-color: #BED2BF !important;
+        color: #7F7F7F !important;
+        font-size: 12px !important;
+        font-weight: 400;
+    }
+
+    .count_months{
+        position: absolute;
+        left: 0px;
+        top: 0px;
+        background-color:#16601A !important ;
+        // height: 100%;
+        width: 69px;
+        height: 32px;
+        color: #fff;
+        text-align: center;
+        line-height: 32px !important;
+        border-radius: 4px 0px 0px 4px;
+        font-size: 12px;
+        font-weight: 400;
+
+    }
+
+    .months{
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%,-50%);
+        @include flex_box(flex,space-between,center);
+        // width: ;
+        flex-direction: row-reverse;
+
+        .container_months{
+            @include flex_box(flex,space-between,center);
+
+            .box{
+                text-align: center;
+                font-size: 8px;
+                font-weight: 400;
+                width: 31px;
+                height: 24px;
+                border: 1px solid #619363;
+                border-radius: 2px;
+                margin: 0px 4px;
+                color: $main_color;
+
+            }
+            
+        }
+
+        .next_months,.prev_month{
+            cursor: pointer;
+            font-size: 16px;
+            color: $main_color;
+        }
+       
+    }
+}
+
+
+.show_contract{
+    // display: ;
+    @include flex_box(flex,flex-end,center,16px);
+
+    h5{
+        font-size: 12px;
+        font-weight: 700;
+        color: #0E4320;
+    }
+}
+
+ input{
+        // background-color: #BED2BF !important;
+
+        &.form-control{
+        
+        color: #7F7F7F !important;
+        font-size: 12px !important;
+        font-weight: 400;
+        }
+      
+    }
+
+
+.modal_popup{
+    width: 260px;
+    height: 110px;
+    background-color: #FFFFFF;
+    border-radius: 4px;
+    padding: 16px 32px 16px 32px;
+    position: relative;
+    z-index: 900000000;
+    padding: 24px;
+
+    @media (max-width:768px) {
+        width: 80% !important;
+        
+    }
+
+  
+
+}
+
+.modal_overlay{
+    position: fixed;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 900000000;
+    opacity: 0;
+    visibility: hidden;
+    transition: 0.3s;
+
+
+    &.active{
+        opacity: 1;
+        visibility: visible;
+    }
+    .table-responsive{
+            max-height: 187px !important;
+    }
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .head_popup{
+        // width: ;
+        // margin-right: auto;
+        text-align: left;
+        margin-bottom: 16px;
+        svg{
+            cursor: pointer;
+        }
+    }
+
+
+    .body_popup{
+        h4{
+            text-align: center;
+            font-size: 14px;
+            color: #1B803D;
+            font-weight: 700;
+
+        }
+
+        .table-responsive{
+            table{
+                tr{
+                    min-width: 100px !important;
+                }
+                tr:nth-child(1){
+                    td{
+                        border: 0 !important;
+                    }
+                }
+            }
+        }
+    }
+
+
+    .btns{
+        @include flex_box(flex,center,center,16px);
+        margin-top: 16px;
+
+        button{
+            width: 100px;
+            height: 32px;
+            border-radius: 4px;
+            border: 0;
+            font-size: 14px;
+            font-weight: 700;
+            color: #FFFFFF;
+            background-color: #1B803D;
+            cursor: pointer;
+
+            &:last-child{
+                background-color: transparent;
+                color: $main_color;
+                border: 2px solid $main_color;
+            }
+        }
+    }
+}
+
+
+.check_box{
+    &:checked{
+        background-color: #4C6D5F;
+        border: 0;
+    }
+}

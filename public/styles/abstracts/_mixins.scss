@@ -1,0 +1,66 @@
+
+@mixin flex_box($d:flex,$ju:null,$al:null,$gap:0){
+    display: $d;
+
+   @if($ju != null){
+    justify-content: $ju;   
+   }
+
+   @if($al != null){
+    align-items: $al;
+   }
+    
+    gap: $gap;
+}
+
+@mixin width_height($w,$h){
+    width:$w ;
+    height: $h;
+}
+
+
+@mixin circle($c){
+    width: $c;
+    height: $c;
+    border-radius: 50%;
+}
+@mixin square($c,$b){
+    width: $c;
+    height: $c;
+    border-radius: $b;
+}
+
+
+@mixin overlay(){
+    position: fixed;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    background-color: rgba($color: #000000, $alpha: 0.5);
+}
+
+
+@mixin responsive($points){
+
+    @if($points == 'small'){
+        @media (max-width:767px) {
+            @content;
+            
+        }
+    }
+    @if($points == 'meduim'){
+        @media(min-width:768px) and (max-width:992px) {
+            @content;
+            
+        }
+    }
+    @if($points == 'large'){
+        @media(min-width:993px) and (max-width:1200px) {
+            @content;
+        }
+    }
+
+}
+
+

@@ -1,0 +1,549 @@
+@use '../../../../public/styles/abstracts/vars' as *;
+@use '../../../../public/styles/abstracts/mixins' as *;
+.login{
+
+    @include width_height(100%,100vh);
+    background-color:#EEF5EF;
+  
+    
+aside{
+  transition: 0.6s;
+  height: 100vh;
+
+        @include responsive('small'){
+            display: none;
+        }
+        @include responsive('meduim'){
+            display: none;
+        }
+  img{
+        height: 100vh;
+
+    }
+
+}
+
+
+.logo{
+    text-align: right;
+    // width: 100%;
+    height: 200px;
+    position: fixed;
+    right: 0;
+    top: 0;
+    transition: 0.6s;
+ 
+
+}
+
+
+
+
+
+.login_card{
+    // width: 484px;
+    // height: 448px;
+       width: 394px;
+    min-height: 339px; 
+    background-color: #EEF5EF;
+    box-shadow: 0px 0px 25px #D3E2D5;
+    border-radius: $border-radius-lg;
+    margin-top: 50px;
+    transition: 0.6s;
+    flex-direction: column;
+    text-align: right;
+    padding: 40px;
+    transition: 0.6s;
+
+     z-index: 1; // فقط لو ضروري
+
+     margin: auto !important;
+
+    position: relative;
+
+
+    .icon_back{
+          position: absolute;
+    right: 20px;
+    top: 20px;
+
+    i{
+      font-size: 22px;
+      color:#16601A ;
+      transform: translateX(0);
+
+      animation: left_right 0.5s linear infinite alternate;
+      cursor: pointer;
+      @keyframes left_right {
+
+        0%{
+
+          transform: translateX(0);
+        }
+        100%{
+          transform: translateX(-5px);
+
+        }
+        
+      }
+    }
+
+
+
+    }
+
+  
+  
+
+    @include responsive('small'){
+        width: 94%;
+        // padding: 15px;
+        margin: auto;
+        margin-top: 160px;
+        align-items: center;
+       
+
+
+    }
+    @include responsive('meduim'){
+
+        width: 90%;
+         
+        margin: auto;
+        margin-top: 160px;
+    }
+
+
+    h3{
+        // margin: 0;
+
+        font-weight: $heading-weight;
+        font-size: 20px;
+        margin-bottom: 32px !important;
+        color: $main-color;
+            text-align: center;
+    }
+
+
+    // .input_icon_email{
+    //     width: 89% !important;;
+    // }
+
+    // .input_icon_password{
+    //   width: 89% !important;
+    // }
+
+    input[type='text'] , input[type='password']{
+        // padding-right: 35px ;
+            padding-right: 27px;
+        text-align: right;
+        font-size: 12px;
+        font-weight: 400;
+        color: #555C60;
+        padding-left: 32px;
+        height: 37.9px !important;
+        margin: auto;
+
+        border: 0.89px solid #BED2BF !important;
+
+        
+
+
+    }
+
+
+    .input_icon_email{
+        position: relative;
+        // &::before{
+        //     content: '';
+        //     position: absolute;
+        //     top: 8px;
+        //     content:'\f007';
+        //     font-family: 'Font Awesome 5 Free';
+        //     font-weight: 900;
+        //     font-size: 12px;
+        //     color: #212121;
+        //     opacity: 0.6;
+        //     right: 26px;         
+        // }
+    }
+    .input_icon_password{
+        position: relative;
+        // &::before{
+        //     content: '';
+        //     position: absolute;
+        //     right: 9px;
+        //     top: 8px;
+        //     content:'\f023';
+        //     font-family: 'Font Awesome 5 Free';
+        //     font-weight: 900;
+        //     font-size: 12px;
+        //     opacity: 0.6;
+        //     right: 26px;
+        // }
+        .toggle-eye{
+          position: absolute;
+      left: 7px;
+    top: 7px;
+          opacity: 0.5;
+        }
+    }
+    .foot_input{
+        width: 100% !important;
+        @include flex_box(flex,space-between,center);
+        flex-direction: row-reverse;
+        
+        margin: auto;
+
+        @media (max-width:768px) {
+          width: 100% !important;
+
+          
+        }
+    }
+
+
+      .btn_login{
+            width: 100% !important;
+            height: 42px;
+            background-color: $main-color;
+            color: $white-color;
+            border-radius: $border-radius-sm;
+            border: 0;
+            margin: auto !important;
+            display: block;
+            font-weight: bold;
+            @media (max-width:768px) {
+              // width: 227px !important;
+              width: 100% !important;
+              
+            }
+        }
+
+}
+
+
+
+}
+
+
+.login_card:not(.otp-container){
+   @media (min-width:768px) and (max-width:992px) {
+      width: 50% !important;
+      left: 50% !important;
+      top: 50% !important;
+      // transform: translate(-50%,-100%) !important;
+      // margin: auto !important;
+      // transform: translate(-100%, -136%) !important;
+              transform: translate(-97%, -136%) !important;
+
+      
+    }
+}
+
+
+ .nesset{
+        color: $main-color !important;
+    }
+.checkbox_login{
+    position: relative;
+
+
+    input[type="checkbox"]{
+        appearance: none;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+     position: absolute;
+            right: 0;
+            top: 23%;
+            width: 15px;
+            height: 15px;
+            // border-radius: 5px;
+            border: 1px solid $main-color;
+
+        &:checked{
+
+        &::before{
+         content: '';
+         position: absolute;
+         left: 0;
+         top: 0;
+         width: 100%;
+         height: 100%;
+         background-color: $main-color;
+
+        }
+        &::after{
+         content: '✓';
+         position: absolute;
+        left: 2px;
+    top: -4px;
+    font-size: 14px;
+         color: white;
+
+        }
+        }
+
+
+    }
+     label{
+            margin-right:20px ;
+        }
+}
+
+
+
+
+
+
+
+
+
+
+    .otp-container h2 {
+      color: #2e7d32;
+    }
+
+    .otp-container p {
+      color: #7F7F7F;
+      font-size: 12px;
+      font-weight: 400;
+      margin: 16px 0;
+          // color: #7F7F7F;
+    font-size: 12px;
+    }
+
+
+
+    .otp-inputs {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .otp-inputs input {
+      padding: 0 !important;
+      width: 48px !important;
+      height: 48px !important;
+      font-size: 16px !important;
+      font-weight: 600;
+      text-align: center !important;
+      border: 2px solid #c4c4c4;
+      color: $main-color !important;
+      border-radius: 8px;
+      transition: border-color 0.3s;
+
+      // &:{
+      //   border-color:$main-color ;
+      // }
+      input:not(:placeholder-shown) {
+  border-color: red;
+}
+
+.has-value {
+  border-color: red;
+}
+    }
+
+    .otp-inputs input:focus {
+      border-color: $main-color;
+      outline: none;
+    }
+
+    .resend-text {
+      font-size: 14px;
+      font-weight: 600;
+      color: #7F7F7F;
+      margin-bottom: 10px;
+      span{
+        color: $main-color;
+      }
+    }
+
+    .resend-link {
+      color: $main-color;
+      text-decoration: underline;
+      cursor: pointer;
+      text-decoration: none;
+      margin: 24px 0px;
+    }
+
+    .submit-btn {
+      background-color: $main-color;
+      color: white;
+      border: none;
+      padding: 12px 0;
+      width: 100%;
+      font-size: 16px;
+      font-weight: 700;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    .submit-btn:hover {
+      background-color: #256429;
+    }
+
+
+    .otpcode_content{
+      width: 350px;
+      text-align: center;
+      margin: 16px 0px;
+          color: #7F7F7F;
+    font-size: 12px;  
+    margin-bottom: 20px !important;
+
+    @media (max-width:768px) {
+      width: 100% !important;
+      
+    }
+    }
+.Email_Send{
+  padding-right: 26px;
+  text-align: right;
+}
+
+.input_icon_email{
+  &::before{
+    content: '';
+    top: 11px !important;
+    right: 19px !important;
+  }
+}
+
+
+
+img{
+ transform: scaleX(-1);
+    top: -123px;
+    position: absolute;
+    width: 100%;
+    left: 0;
+    height: calc(100vh + 121px) !important;
+
+}
+
+.form-control{
+      // width: 95% !important;
+          
+    margin: auto !important;
+    color: #555C60;
+        // right: 19px;
+
+        &::before{
+          right: 19px !important;
+        }
+}
+
+.btn_cancel{
+      cursor: pointer;
+    width: 100%;
+    margin: auto;
+    display: block;
+    margin-top: 8px;
+    // width: 308px;
+      height: 42px;
+    border-radius: 4px;
+    border: 1px solid $main-color;
+    color: $main-color;
+    background-color: #FCFCFC;
+
+
+
+  }
+
+  // .input_icon_emailforget{
+
+    // &::before{
+    //      content:'\f0e0' !important;
+    //         font-family: 'Font Awesome 5 Free' !important;
+    //         // font-weight: 900 !important;
+    //   top: 11px !important;
+    //   right: 26px !important;
+    // }
+  // }
+
+  .input_icon_email,.input_icon_password{
+    position: relative;
+    width: 100% !important;
+    margin: auto;
+  &::before{
+          right: 10px !important;
+
+    } 
+    
+    
+    .icon{
+      position: absolute;
+          right: 4px;
+    top: 11%;
+
+    }
+  }
+
+
+  .input_icon_emailforget{
+    position: relative;
+    margin-bottom: 16px;
+
+
+    .icon{
+      position: absolute;
+      right: 5px;
+      top: 3px;
+
+      width: 18px;
+    }
+
+
+  }
+
+  .otp-input{
+    width: 48px !important;
+    height: 48px !important;
+
+  }
+
+  .otp-container{
+
+    display: flex !important;
+    padding: 40px 10px !important;
+
+    @media (min-width:768px)  and (max-width:992px) {
+      // padding: 40px !important;
+      // width: 60% !important;
+              width: 53% !important;
+      
+    }
+  }
+
+
+  .input_icon_password{
+    position: relative;
+    .lock{
+      position: absolute;
+          right: 3px;
+    top: 5px;
+      opacity: 0.5;
+    }
+  }
+
+
+  input{
+    &:focus{
+      border-color: #619363 !important;
+      outline: none !important;
+      box-shadow: none !important;
+      color: #619363 !important;
+
+    ~ .lock svg path {
+      stroke: #619363 !important;
+    }
+    ~ .icon svg path {
+      stroke: #619363 !important;
+    }
+    }
+  }

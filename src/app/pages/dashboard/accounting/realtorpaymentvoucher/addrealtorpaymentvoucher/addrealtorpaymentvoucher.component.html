@@ -1,0 +1,177 @@
+<app-page-heading [title]="'المحاسبه'" [subtitle]="'سند الصرف'" [AddBtn]="true" [ExplorerRoute]="'/dashboard/paymentvoucher/explorepaymentvoucher'" [TitlePageAddBtn]="'مستكشف سند الصرف'"></app-page-heading>
+
+
+<form action="" class="forms_dashboard">
+           <div class="row ">
+<div class=" col-sm-12  col-lg-3 ">
+                 <label for="vouchernumber" class="form-label">رقم السند</label>
+                 <input type="text" class="form-control"  id="vouchernumber" placeholder="رقم السند" readonly [value]="'12345'">
+                
+        </div>
+  <div class="col-sm-12 col-lg-3 mb-3 search_contract" style="align-self: flex-end;">
+        <label  class="form-label" ></label>
+        <div class="search_number_component">
+<input type="text" name="" placeholder="بحث برقم السند"  class="form-control">
+
+<div class="search">
+    <svg width="21" height="20" viewBox="0 0 21 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M10.7501 17.4998C6.37783 17.4998 2.83342 13.9554 2.83342 9.58317C2.83342 5.21092 6.37783 1.6665 10.7501 1.6665C15.1223 1.6665 18.6667 5.21092 18.6667 9.58317C18.6667 13.9554 15.1223 17.4998 10.7501 17.4998Z" stroke="#7F7F7F" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M2.00008 18.3332L3.66675 16.6665" stroke="#7F7F7F" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+
+</div>
+        </div>
+        
+    </div>
+
+    <div class="col-sm-12 col-lg-3">
+        <div class="mb-3">
+            <label for="numbernotes" class="form-label">رقم الدفتري</label>
+            <input type="text" class="form-control" id="numbernotes" placeholder="رقم الدفتري" readonly value="123" style="background-color: #F5F5F5 !important;">
+          </div>
+    </div>
+
+    <div class="col-sm-12 col-lg-3">
+        <div class="mb-3">
+            <label for="date" class="form-label">التاريخ</label>
+            <input type="date" class="form-control" id="date" placeholder="التاريخ" >
+          </div>
+    </div>
+    <div class="col-sm-12">
+        <div class="mb-3">
+            <label for="box" class="form-label">صندوق / بنك</label>
+            <ng-select [items]="[]" bindLabel="bankName" bindValue="bankValue"  placeholder="صندوق / بنك"></ng-select>
+          </div>
+    </div>
+    <div class="col-sm-12">
+        <div class="mb-3">
+            <label for="byan" class="form-label">البيان</label>
+            <textarea class="form-control" id="byan" rows="3" placeholder="اكتب المحتوي" style="height: 75px !important;"></textarea>
+          </div>
+    </div>
+          </div>
+</form>
+
+
+
+<form action="" class="forms_dashboard mt-4">
+    <div class="row">
+        <div class="col-sm-12 mb-3">
+            <app-searchinforms></app-searchinforms>
+        </div>
+
+        <div class="col-sm-12 col-lg-6 readonly_input mb-3">
+            <label for="" class="form-label">اسم السمسار</label>
+            <input type="text" class="form-control"  placeholder="الاسم" readonly [value]="'محمد أحمد'" style="padding-right: 105px;">
+        </div>
+        <div class="col-sm-12 col-lg-6 readonly_input mb-3">
+            <label for="" class="form-label">رقم الجوال</label>
+            <input type="text" class="form-control"  placeholder="رقم الجوال" readonly [value]="'01026381737'" style="padding-right: 80px;">
+        </div>
+        <div class="col-sm-12 col-lg-6 readonly_input mb-3">
+            <label for="" class="form-label">البريد الالكتروني</label>
+            <input type="text" class="form-control"  placeholder="رقم الجوال" readonly [value]="'gts@gmail.com'" style="padding-right: 105px;">
+        </div>
+        <div class="col-sm-12 col-lg-6 readonly_input mb-3">
+            <label for="" class="form-label">رقم الهويه </label>
+            <input type="text" class="form-control"  placeholder="رقم الهويه" readonly [value]="'987654321234567'" style="padding-right: 80px;">
+        </div>
+    </div>
+
+
+
+
+ <div class="table-responsive">
+<table>
+  <thead>
+    <tr>
+      <th scope="col">
+
+        <div class="d-flex align-items-center justify-content-center">
+        <input type="checkbox" aria-label="Checkbox for following text input" style="width: 16px; height: 16px; margin-left: 8px;">
+        م     
+        </div>
+        
+      </th>
+      <th scope="col">رقم العقد</th>
+      <th scope="col">العقار</th>
+      <th scope="col">الوحده</th>
+      <th scope="col">الشهر</th>
+      <th scope="col">المبلغ</th>
+      <th scope="col">المدفوع</th>
+      <th scope="col">الضريبه</th>
+      <th scope="col">المتبقي</th>
+    </tr>
+  </thead>
+   <tbody>
+    @for (item of paymentData; track $index) {
+<tr>
+      <td scope="row">
+        <div class="d-flex align-items-center justify-content-center">
+<input type="checkbox" aria-label="Checkbox for following text input" >
+        {{$index + 1}}
+        </div>
+         
+    </td>
+      <td>{{item.contractNumber}}</td>
+      <td>{{item.property}}</td>
+      <td>{{item.unit}} </td>
+      <td><input type="text" class="form-control" value="{{item.month}}" readonly></td>
+      <td>{{item.amount}}</td>
+      <td><input type="text" class="form-control" value="{{item.paid}}"></td>
+      <td>{{item.tax}}</td>
+      <td>{{item.remaining}}</td>
+      
+    
+    
+    </tr>
+    }@empty {
+       <tr>
+      <td colspan="8" class="text-center py-5" style="color: #888; font-size: 18px;">
+        <i class="fa-solid fa-circle-exclamation fa-2x mb-2" style="color: #ccc;"></i><br>
+        لا توجد بيانات حتى الآن
+      </td>
+    </tr>
+    }
+
+    
+  </tbody>
+
+</table>   
+
+ <table class="table2">
+        <tbody>
+            <tr>
+   <td></td>
+        <td><p>الاجمالي</p></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>3000</td>
+        <td>0</td>
+        <td></td>
+        <td>3000</td>
+            </tr>
+        </tbody>
+    </table>
+
+
+</div>
+
+
+<!-- <div class="table-responsive table2">
+   
+</div> -->
+
+  
+</form>
+
+
+  <div class="btns_add_edit">
+ <button data-type="save">حفظ</button>
+ <button>جديد</button>
+ <button>حذف</button>
+ <button>طباعه </button>
+  </div>
+
+

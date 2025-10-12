@@ -1,0 +1,216 @@
+@use '../../../../../../../public/styles/abstracts/vars' as *;
+@use '../../../../../../../public/styles/abstracts/mixins' as *;
+
+.forms_dashboard{
+    padding: 0px 24px !important;
+}
+
+.input_rent_container{
+    position: relative;
+    input{
+        background-color: #BED2BF !important;
+    }
+
+    .count_months{
+        position: absolute;
+        left: 0px;
+        top: 0px;
+        background-color:#16601A !important ;
+        // height: 100%;
+        width: 69px;
+        height: 32px;
+        color: #fff;
+        text-align: center;
+        line-height: 32px !important;
+        border-radius: 4px 0px 0px 4px;
+        font-size: 12px;
+        font-weight: 400;
+
+    }
+
+    .months{
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%,-50%);
+        @include flex_box(flex,space-between,center);
+        // width: ;
+        flex-direction: row-reverse;
+
+        .container_months{
+            @include flex_box(flex,space-between,center);
+
+            .box{
+                text-align: center;
+                font-size: 8px;
+                font-weight: 400;
+                width: 31px;
+                height: 24px;
+                border: 1px solid #619363;
+                border-radius: 2px;
+                margin: 0px 4px;
+                color: $main_color;
+
+            }
+            
+        }
+
+        .next_months,.prev_month{
+            cursor: pointer;
+            font-size: 16px;
+            color: $main_color;
+        }
+       
+    }
+}
+
+
+.search_Input{
+    position: relative;
+    input{
+        
+    height: 38px !important;
+    background-color: #FBFBFB;
+
+    }
+
+    .icon{
+        position: absolute;
+        left: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+    }
+}
+
+
+.forms_dashboard{
+    min-height: 100px !important;
+}
+
+
+.name_day{
+    position: relative;
+
+    input{
+     
+    font-size: 12px;
+    color: #7F7F7F;
+    font-weight: 400;   
+    }
+    p{
+        position: absolute;
+    left: 36px;
+    top: 7px;
+    font-size: 12px;
+    color: #7F7F7F;
+    font-weight: 400;
+    }
+}
+
+.tareka_send{
+    input[type="checkbox"]{
+        all: unset;
+     -webkit-appearance: none;
+-moz-appearance: none;
+appearance: none;
+display: inline-block;
+        width: 16px !important;
+        height: 16px !important;
+        // background-color: ;
+        border: 1px solid #B8B8C7;
+        border-radius: 4px;
+        position: relative;
+
+      
+
+        &:checked{
+            background-color: $main_color !important;
+            border: 1px solid $main_color !important;
+
+         &::after{
+                content: '✓';
+                position: absolute;
+                left: 50%;
+                top: 50%;
+                transform: translate(-50%,-50%);
+                color: $white-color;
+                
+                // background-color: $white-color;
+                // color: white;
+              
+            }
+           
+        }
+
+        
+    }
+}
+
+
+
+
+
+.btns_add_edit{
+    // margin-left: auto;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 13px;
+    flex-wrap: wrap;
+
+    @media (max-width:768px) {
+
+        gap: 10px !important;
+        
+    }
+
+    
+    button{
+
+        // margin: auto;
+        
+            min-width: 113px;
+            height: 32px;
+            border-radius: 4px;
+            border: 1px solid #16601A   ;
+            background-color: transparent;
+            color: #16601A;
+            font-size: 14px;
+            font-weight: 700;
+            margin: 10px 0px !important;
+
+            
+        
+    }
+
+    button[data-type='save']{
+        border: 0 !important;
+        color: white;
+        background-color: #16601A !important;
+    }
+
+}
+
+.number_search{
+    @media (max-width:992px) {
+        // margin-bottom: 10px !important;
+        padding-left: 0px !important;
+        
+    }
+.number_contract{
+    @media (max-width:992px) {
+        margin-bottom: 10px !important;
+        padding-left: 0px !important;
+        
+    
+    }
+}
+
+.search_contract{
+    @media (max-width:992px) {
+        margin-bottom: 10px !important;
+        padding-left: 0px !important;
+        
+    }
+}
+}

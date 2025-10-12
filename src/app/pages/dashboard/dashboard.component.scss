@@ -1,0 +1,43 @@
+@use '../../../../public/styles/abstracts/vars' as *;
+@use '../../../../public/styles/abstracts/mixins' as *;
+
+.content_page{
+    width: calc(100% - 256px);
+    margin-right: auto;
+
+
+    transition: 0.3s;
+
+
+    @include responsive('small') {
+        width: 100%;
+    }
+
+    &::after{
+        content: '';
+        position: fixed;
+        left: 0;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        background-color: rgba($color: #000000, $alpha: 0.5);
+        // width: 100%;
+        // height: 100%;;
+        z-index: 800;
+    }
+
+
+    @media (min-width:768px) {
+        &::after{
+            display: none;
+        }
+    }
+    &.active{
+        width: 100%;
+        margin-right: 0;
+        transition: 0.3s;
+        &::after{
+            display: none;
+        }
+    }
+}

@@ -1,0 +1,95 @@
+@use '../../../../../../public/styles/abstracts/vars' as *;
+@use '../../../../../../public/styles/abstracts/mixins' as *;
+.profile_head_container{
+@include flex_box(flex,null,center,20px);
+position: relative;
+.profile_img{
+    position: relative;
+    
+
+    .icon_change_profile{
+        position: absolute;
+        right: 5px;
+        bottom: 5px;
+        width: 16px;
+        height: 16px;
+        border-radius: 50%;
+        background-color: #BED2BF;
+        @include flex_box(flex,center,center);
+        cursor: pointer;
+    }
+
+    
+}
+.profile_content{
+        h5{
+            font-size: 18px;
+            font-weight: 700;
+            color: $main_color;
+            opacity:70% ;
+            margin-bottom: 16px !important;
+
+        }
+        p{
+            font-size: 12px;
+            font-weight: 600;
+            opacity: 70%;
+            font-weight: 600;
+            color: $main_color;
+        }
+    }
+
+}
+
+
+.container_profile{
+@include flex_box(flex,null,flex-start,16px);
+margin-top: 20px;
+
+@include responsive('small'){
+    flex-direction: column;
+}
+@include responsive('meduim'){
+    flex-direction: column;
+}
+
+    aside{
+    width: 252px;
+    min-height: 337px;
+    padding: 24px;
+    background-color: #EAF2EA;
+    @include responsive('small'){
+        width: 100%;
+        min-height: 50px;
+    }
+
+    @include responsive('meduim'){
+        width: 100%;
+         min-height: 50px;
+    }
+    a{
+        width: 100%;
+        height: 43px;
+        line-height: 43px;
+        text-align: center;
+        color: $main_color;
+        font-size: 18px;
+        font-weight: 700;
+        
+        &.active{
+  background-color: $main_color;
+  color: $white-color;
+        margin-bottom: 10px;
+        opacity: 70%;
+        }
+      
+        
+
+
+    }
+}
+
+section{
+    width: 100%;
+}
+}

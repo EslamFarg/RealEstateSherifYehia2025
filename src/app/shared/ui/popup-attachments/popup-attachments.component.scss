@@ -1,0 +1,76 @@
+@use '../../../../../public/styles/abstracts/vars' as *;
+@use '../../../../../public/styles/abstracts/mixins' as *;
+
+.overlay_popup{
+   
+    .popup_attachment{
+        @include width_height(397px,276px);
+        background-color:$white_color ;
+        border-radius: 15px;
+        padding: 16px 32px 32px 32px;
+        @media (max-width:768px) {
+            width: 90% !important;
+            
+        }
+
+        .close{
+            text-align: left;
+            cursor: pointer;
+        }
+        
+        .title_popup{
+            margin-top: 12px;
+            text-align: center;
+            font-size: 16px;
+            font-weight: 700;
+            color: $main_color;
+        }
+
+        .content_info{
+            overflow: scroll;
+            height: 200px;
+               &::-webkit-scrollbar{
+                    width: 2px !important;
+                }
+                &::-webkit-scrollbar-thumb{
+                    background-color: $main_color !important;
+                }
+                &::-webkit-scrollbar{
+                    width: 2px !important;
+                }
+            .box{
+                width: 100%;
+                margin-top: 20px;
+                background-color: #BED2BF;
+                border: 1px solid #86AC88;
+                height: 66px;
+                border-radius: 4px;
+                padding: 0px 10px;
+                @include flex_box(flex,space-between,center,10px);
+             
+
+                .content_img{
+                    @include flex_box(flex,null,center,10px);
+                    .square{
+                        @include square(50px,8px);
+                        background-color: $main_color;
+                    }
+
+                    .name_img{
+                        font-size: 14px;
+                        font-weight: 400;
+                        color: $main_color;
+                        cursor: pointer;
+                        width: 200px;
+                    }
+                }
+
+                .close_img{
+                    cursor: pointer;
+                }
+            }
+        }
+
+
+    }
+}

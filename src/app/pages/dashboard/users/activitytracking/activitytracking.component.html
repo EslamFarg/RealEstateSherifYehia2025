@@ -1,0 +1,63 @@
+<app-page-heading [title]="'المستخدمين'" [subtitle]="'تتبع النشاط'"></app-page-heading>
+
+<app-searchinforms [dataFilter]="dataFilter"></app-searchinforms>
+
+
+<form class="forms_dashboard">
+
+    <div class="row">
+        <div class="col-sm-12 col-lg-6">
+            <div class="mb-3">
+                <label for="startdate" class="form-label">من تاريخ</label>
+                <input type="date" class="form-control" id="startdate" placeholder="التاريخ">
+            </div>
+        </div>
+        <div class="col-sm-12 col-lg-6">
+            <div class="mb-3">
+                <label for="enddate" class="form-label">الي تاريخ</label>
+                    <div class="d-flex align-content-center gap-3">
+                            <input type="date" class="form-control" id="enddate" placeholder="التاريخ">
+                     <button class="search_btn">بحث</button>
+                </div>
+            </div>
+        </div>
+       
+    </div>
+</form>
+
+
+
+<div class="table-responsive">
+    <table>
+        <thead>
+            <tr>
+                <th>م</th>
+                <th>رقم السند</th>
+                <th>التاريخ</th>
+                <th>اسم الشاشه</th>
+                <th>نوع العمليه</th>
+                <th>اسم المستخدم</th>
+            </tr>
+        </thead>
+        <tbody>
+      @for (item of activityTrackingData; track $index) {
+        <tr>
+            <td>{{$index+1}}</td>
+            <td>{{item.voucher_no}}</td>
+            <td>{{item.date}}</td>
+            <td>{{item.screen_name}}</td>
+            <td>{{item.operation_type}}</td>
+            <td>{{item.username}}</td>
+ 
+        </tr>
+      }
+        </tbody>
+    </table>
+</div>
+
+
+<app-pagination
+  [totalPages]="10"
+  [currentPage]="pageIndex"
+  (pageChange)="onPageChanged($event)">
+</app-pagination>

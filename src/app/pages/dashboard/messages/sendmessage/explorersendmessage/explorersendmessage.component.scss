@@ -1,0 +1,27 @@
+input{
+    &[type=checkbox]{
+        width: 16px;
+        height: 16px;
+        box-shadow: none;
+        outline: none;
+        pointer-events: none;
+
+        &:focus{
+            outline: none;
+        }
+        &:checked{
+            background-color: #4C6D5F;
+            border-color: transparent;
+            box-shadow: none;
+            outline: none;
+        }
+
+
+        // background-color: #4C6D5F;
+    }
+}
+
+.table-responsive{
+    height: 443px;
+   
+}

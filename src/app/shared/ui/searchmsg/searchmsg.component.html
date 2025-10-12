@@ -1,0 +1,100 @@
+<div class="modal_overlay" [class.active]="showPopup">
+  <div class="modal_popup">
+    <div class="head_popup">
+      <svg
+        width="24"
+        (click)="showPopup = !showPopup"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          fill-rule="evenodd"
+          clip-rule="evenodd"
+          d="M12.9009 1.49906C15.3009 1.64906 17.5509 2.84906 19.2009 4.49906C21.1509 6.59906 22.2009 9.14906 22.2009 12.1491C22.2009 14.5491 21.3009 16.7991 19.8009 18.7491C18.3009 20.5491 16.2009 21.8991 13.8009 22.3491C11.4009 22.7991 9.00091 22.4991 6.90091 21.2991C4.80091 20.0991 3.15091 18.2991 2.25091 16.0491C1.35091 13.7991 1.20091 11.2491 1.95091 8.99906C2.70091 6.59906 4.05091 4.64906 6.15091 3.29906C8.10091 1.94906 10.5009 1.34906 12.9009 1.49906ZM13.6509 20.8491C15.6009 20.3991 17.4009 19.3491 18.7509 17.6991C19.9509 16.0491 20.7009 14.0991 20.5509 11.9991C20.5509 9.59906 19.6509 7.19906 18.0009 5.54906C16.5009 4.04906 14.7009 3.14906 12.6009 2.99906C10.6509 2.84906 8.55091 3.29906 6.90091 4.49906C5.25091 5.69906 4.05091 7.34906 3.45091 9.44906C2.85091 11.3991 2.85091 13.4991 3.75091 15.4491C4.65091 17.3991 6.00091 18.8991 7.80091 19.9491C9.60091 20.9991 11.7009 21.2991 13.6509 20.8491ZM11.8509 11.2491L15.4509 7.49906L16.5009 8.54906L12.9009 12.2991L16.5009 16.0491L15.4509 17.0991L11.8509 13.3491L8.25091 17.0991L7.20091 16.0491L10.8009 12.2991L7.20091 8.54906L8.25091 7.49906L11.8509 11.2491Z"
+          fill="black"
+        />
+      </svg>
+    </div>
+
+    <div class="body_popup">
+     <form action="" class="forms_dashboard send_msg_forms">
+
+        <div class="row">
+            <div class="col-sm-12 col-lg-4">
+                <label for="city" class="form-label">المدينه</label>
+                <ng-select [items]="[]" bindLabel="name" placeholder="اختر" bindValue="id" placeholder="المدينه"></ng-select>
+
+            </div>
+            <div class="col-sm-12 col-lg-4">
+                <label for="hay" class="form-label">الحي</label>
+                <ng-select [items]="[]" bindLabel="name" placeholder="اختر" bindValue="id" placeholder="الحي"></ng-select>
+
+            </div>
+            <div class="col-sm-12 col-lg-4">
+                <label for="property" class="form-label">العقار</label>
+                <ng-select [items]="[]" bindLabel="name" placeholder="اختر" bindValue="id" placeholder="العقار"></ng-select>
+
+            </div>
+        </div>
+
+        <div class="btn_add_reset">
+            <button type="button" data-button="send">بحث</button>
+        </div>
+        </form>
+
+      <div class="table-responsive" style="max-height: 350px">
+        <table>
+          <thead>
+            <tr>
+              <th>
+                <input
+                  type="checkbox"
+                  name=""
+                  (change)="toggleAll()"
+                  class="form-check-input check_box "
+                  style="margin-left: 5px;"
+                  id=""
+                />
+                م
+              </th>
+              <th>الاسم</th>
+              <th>الرقم الاول</th>
+              <th>البريد الالكتروني</th>
+            </tr>
+          </thead>
+          <tbody>
+
+            @for(item of dataSearch; track $index){
+            <tr>
+              <td>
+               
+                <input
+                  type="checkbox"
+                  class="form-check-input check_box"
+                 [(ngModel)]="item.checked"
+                 (change)="onChange($event, item)"
+                  style="margin-left: 5px;"
+                />
+
+                 <span>{{$index + 1}}</span>
+              </td>
+              <td>{{item.name}}</td>
+              <td>{{item.phone}}</td>
+              <td>{{item.email}}</td>
+            </tr>   
+            }
+           
+          </tbody>
+        </table>
+
+      </div>
+      <div class="btn_add_reset">
+        <button type="button" data-button="send" (click)="addItems()">اضافه</button>
+      </div>
+    </div>
+  </div>
+  <!-- </svg> -->
+</div>
+

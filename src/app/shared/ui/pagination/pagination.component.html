@@ -1,0 +1,47 @@
+
+<nav aria-label="Page navigation" class="pagination_page_style" style="margin-top: 15px;">
+    <div class="pagination-wrapper">
+  <ul class="pagination">
+
+    <li class="page-item" [class.disabled]="currentPage === 1">
+      <a class="page-link btn-previous"  (click)="previous()">
+
+        <i class="fa-solid fa-arrow-left"></i>
+
+
+
+      </a>
+    </li>
+
+    <!-- <li> -->
+      
+    <!-- </li> -->
+     <div class="max-pagination" style="margin: 0px 16px;">
+    <li
+      class="page-item circle_pagination"
+      *ngFor="let page of pages()"
+      [class.active]="currentPage === page"
+      #pageItem
+    >
+    @if (page < 10) {
+      <a class=""  (click)="goToPage(page)">0{{ page }}</a>
+    }@else {
+       <a class=""  (click)="goToPage(page)">{{ page }}</a>
+    }
+    </li>
+     </div>
+
+
+    <li class="page-item" [class.disabled]="currentPage === totalPages">
+      <a class="page-link btn-next "  (click)="next()">
+
+
+        <i class="fa-solid fa-arrow-right"></i>
+
+
+      </a>
+    </li>
+
+  </ul>
+  </div>
+</nav>
