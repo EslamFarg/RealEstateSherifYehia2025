@@ -4,6 +4,9 @@ import { HeaderComponent } from './header/header.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { NgbAccordionModule } from '@ng-bootstrap/ng-bootstrap';
 import { RouterModule, RouterOutlet } from '@angular/router';
+import { EmptytableComponent } from '../ui/emptytable/emptytable.component';
+import { LoadingComponent } from './loading/loading.component';
+import { DirectivesModule } from '../directives/directives.module';
 // import { AccountsRoutingModule } from "../../pages/accounting/accounts/accounts-routing.module";
 
 
@@ -14,11 +17,11 @@ import { RouterModule, RouterOutlet } from '@angular/router';
   imports: [
     CommonModule,
     NgbAccordionModule,
-    // AccountsRoutingModule
     CommonModule,
     RouterModule,
-    RouterOutlet
+    RouterOutlet,
+    DirectivesModule
 ],
-  exports:[HeaderComponent,SidebarComponent]
+  exports:[HeaderComponent,SidebarComponent,]
 })
 export class SharedModule { }

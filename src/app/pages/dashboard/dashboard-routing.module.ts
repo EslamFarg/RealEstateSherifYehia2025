@@ -1,10 +1,12 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { DashboardComponent } from './dashboard.component';
+import { authGuard } from '../../core/guards/auth.guard';
 
 const routes: Routes = [
   {path:'',component:DashboardComponent,
-    children:[
+  
+  children:[
       {path:'',redirectTo:'owner',pathMatch:'full'},
       {path:'owner',loadChildren:()=>import('./main/owner/owner.module').then(m=>m.OwnerModule)},
       {path:'realtor',loadChildren:()=>import('./main/realtor/realtor.module').then(m=>m.RealtorModule)},

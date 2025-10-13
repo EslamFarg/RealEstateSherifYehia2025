@@ -1,6 +1,10 @@
-import { Component, inject } from '@angular/core';
+import { Component, DestroyRef, inject } from '@angular/core';
 import { Owner } from './models/owner';
 import { ToastrService } from '../../../../shared/ui/toastr/services/toastr.service';
+import { FormBuilder, Validators } from '@angular/forms';
+import { saudiPhoneValidator } from '../../../../shared/validations/phoneNumber';
+import { OwnerService } from './services/owner.service';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-owner',
@@ -9,36 +13,191 @@ import { ToastrService } from '../../../../shared/ui/toastr/services/toastr.serv
 })
 export class OwnerComponent {
 
-  toastr:ToastrService=inject(ToastrService);
 
-  // titlePage
+   // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! Services !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!11
+  toastr:ToastrService=inject(ToastrService);
+  fb:FormBuilder=inject(FormBuilder)
+  _ownerServices:OwnerService=inject(OwnerService)
+  $destroyRef:DestroyRef=inject(DestroyRef)
+
+
+
+  // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! Property
+
+
   title='الرئيسيه'
   subtitle="المالك"
+btnAddAndUpdate='add'  
+showDelete=false;
+deleteId:any
 
-
-  // dataView
-  ownersData: Owner[] = [
-  { id: 1, ownerName: "أحمد محمد علي",    mobile: "01001234567", nationalId: "28506123401234" },
-  { id: 2, ownerName: "منى سامي حسين",     mobile: "01009876543", nationalId: "29705234567890" },
-  { id: 3, ownerName: "خالد إبراهيم حسن",  mobile: "01112345678", nationalId: "30101111222333" },
-  { id: 4, ownerName: "سارة محمود عمر",    mobile: "01233445566", nationalId: "29807098765432" },
-  { id: 5, ownerName: "محمود فؤاد عبد",    mobile: "01055667788", nationalId: "29009234567812" },
-  { id: 6, ownerName: "نهى مصطفى فرج",     mobile: "01199887766", nationalId: "30304123456789" },
-  { id: 7, ownerName: "ياسر سليمان جمال",   mobile: "01234566778", nationalId: "29903123400123" },
-  { id: 8, ownerName: "هالة ربيع ناصر",     mobile: "01022334455", nationalId: "28612123456780" },
-  { id: 9, ownerName: "عمر رامي سعيد",      mobile: "01166778899", nationalId: "30205123400987" },
-  { id:10, ownerName: "ريم محمد خالد",      mobile: "01277889900", nationalId: "29508123456745" }
-];
-
-// pagination
+  
+  // pagination
 
 pageIndex=1
 pageSize=10
 
+  ownerData=this.fb.group({
+    Name:['',[Validators.required,Validators.minLength(3)]],
+    Mobile:['',[Validators.required,saudiPhoneValidator.phoneNumberValidator]],
+    Email:['',[Validators.required,Validators.email]],
+    NationalID:['',[Validators.required,Validators.minLength(10)]],
+    Files:[null]
+  })
 
+
+  
+
+
+ 
+
+
+
+
+
+    // dataView
+    getAllData: {rows: Owner[] , paginationInfo:any} = {
+      rows:[],
+      paginationInfo:null
+    }
+
+
+
+    dataFiles:any[]=[]
+
+
+// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! Methods !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!111
+
+
+
+ngOnInit(): void {
+  //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
+  //Add 'implements OnInit' to the class.
+  this.getAllDataOwner();
+}
 onPageChanged(page: number) {
   this.pageIndex = page;
-  // this.fetchEmployees(); // أعد جلب البيانات
-  // this.getData()
+this.getAllDataOwner();
+}
+
+
+onSubmit(){
+  if(this.ownerData.valid){
+
+
+    if(this.btnAddAndUpdate == 'add'){
+
+       let formData=new FormData();
+
+
+    formData.append('Name',this.ownerData.value.Name || '');
+    formData.append('Mobile',this.ownerData.value.Mobile || '');
+    formData.append('Email',this.ownerData.value.Email || '');
+    formData.append('NationalID',this.ownerData.value.NationalID || '');
+
+    const files: File[] = this.ownerData.value.Files || [];
+
+    files.forEach(file=>{
+      formData.append('Files',file);
+    })
+
+    
+
+
+    this._ownerServices.createOwner(formData).pipe(takeUntilDestroyed(this.$destroyRef)).subscribe((res:any)=>{
+      this.ownerData.reset();
+      this.btnAddAndUpdate='add'
+      this.toastr.show('تم اضافه المالك بنجاح','success');
+      this.getAllDataOwner();
+    })
+    
+    }else{
+      // Update
+    }
+
+   
+    
+
+
+
+  }else{
+
+    this.ownerData.markAllAsTouched();
+
+  }
+}
+
+
+getAllDataOwner(){
+
+  let pagination={
+  paginationInfo: {
+    pageIndex: this.pageIndex,
+    pageSize: this.pageSize
+  }
+}
+
+  this._ownerServices.getAllDataOwner(pagination).pipe(takeUntilDestroyed(this.$destroyRef)).subscribe((res:any)=>{
+    this.getAllData=res;
+  })
+
+}
+
+OnDataFiles(ValueDataFiles:any){
+  this.ownerData.get('Files')?.setValue(ValueDataFiles);
+ 
+}
+
+
+getDataUpdate(id:any){
+  if(id){
+    this._ownerServices.getDataUpdate(id).pipe(takeUntilDestroyed(this.$destroyRef)).subscribe((res:any)=>{
+
+      this.ownerData.patchValue({
+        Name:res.name,
+        Mobile:res.mobile,
+        Email:res.email,
+        NationalID:res.nationalID,
+        Files:res.attachments
+      })
+   
+      
+       this.dataFiles=res.attachments
+
+      this.btnAddAndUpdate='update'
+    })
+
+
+   
+
+
+    
+  }
+
+}
+
+
+onClose(){
+  this.showDelete=false;
+}
+
+
+deleteConfirmed(e:any){
+  this.showDelete=false;
+  console.log(e);
+  this._ownerServices.deleteData(e).pipe(takeUntilDestroyed(this.$destroyRef)).subscribe((res:any)=>{
+    this.toastr.show('تم حذف المالك بنجاح','success');
+    this.getAllDataOwner();
+  })
+}
+
+
+showDeletePopup(id:any){
+
+  if(id){
+    this.showDelete=true;
+    this.deleteId=id
+  }
+
 }
 }

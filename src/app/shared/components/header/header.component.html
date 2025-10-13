@@ -60,7 +60,7 @@
    
   <ul class="drop_down_show" [ngClass]="{'active':this.ShowDropDown}">
       <li><a routerLink="profilesettings">الملف الشخصي</a></li>
-      <li><a href="#">تسجيل الخروج</a></li>
+      <li><a (click)="logout()">تسجيل الخروج</a></li>
     </ul>
   </div>
 

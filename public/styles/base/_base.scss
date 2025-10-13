@@ -212,8 +212,21 @@ ul{
         }
 
      button[data-button="send"]{
+        
         background-color: $main_color;
         color: $white_color;
+
+        &.btnAdd{
+ background-color: $main_color;
+        color: $white_color;
+        }
+
+        &.btnEdit{
+            background-color: #ffc107; /* teal-ish */
+  color: #4b4b4b;
+
+        }
+
         
 
      }
@@ -845,4 +858,15 @@ input[readonly]{
     opacity: 1;
     transform: translateY(0);
     
+}
+
+
+// Table Empty
+
+.empty-cell {
+  text-align: center;
+//   padding: 60px 20px;
+  background: #f9fafb;
+  border: 1px dashed #cfd8dc;
+  width: 100%;
 }

@@ -8,11 +8,16 @@ import { InputAttachmentsComponent } from '../../../../shared/ui/input-attachmen
 import { PopupAttachmentsComponent } from '../../../../shared/ui/popup-attachments/popup-attachments.component';
 import { PaginationComponent } from '../../../../shared/ui/pagination/pagination.component';
 import { ScrollAnimationDirective } from '../../../../shared/directives/scroll-animation.directive';
+import { ReactiveFormsModule } from '@angular/forms';
+import { DirectivesModule } from '../../../../shared/directives/directives.module';
+import { EmptytableComponent } from '../../../../shared/ui/emptytable/emptytable.component';
+import { ConfirmDeleteComponent } from '../../../../shared/components/confirm-delete/confirm-delete.component';
 
 
 @NgModule({
   declarations: [
     OwnerComponent,
+    EmptytableComponent
   ],
   imports: [
     CommonModule,
@@ -20,7 +25,10 @@ import { ScrollAnimationDirective } from '../../../../shared/directives/scroll-a
     PageHeadingComponent,
     InputAttachmentsComponent,
     PopupAttachmentsComponent,
-    PaginationComponent
+    PaginationComponent,
+    ReactiveFormsModule,
+    DirectivesModule,
+    ConfirmDeleteComponent
   ]
 })
 export class OwnerModule { }

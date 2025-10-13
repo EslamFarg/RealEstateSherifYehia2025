@@ -1,30 +1,30 @@
-<form  class="forms_dashboard">
+<form  class="forms_dashboard" [formGroup]="profileData" (ngSubmit)="onSubmit()">
     <div class="row">
 
         <div class="col-sm-12 mb-3">
             <label for="username" class="form-label">اسم المستخدم</label>
-            <input type="text" name="" placeholder="اسم المستخدم" id="username" class="form-control">
+            <input type="text" name="" placeholder="اسم المستخدم" id="username" class="form-control" formControlName="fullName">
         </div>
 
         <div class="col-sm-12 col-lg-6 mb-3">
                     <label for="phoneNumber" class="form-label">رقم الجوال</label>
-            <input type="text" name="" placeholder="اسم المستخدم" id="phoneNumber" class="form-control">
+            <input type="text" name="" placeholder="اسم المستخدم" id="phoneNumber" class="form-control" formControlName="phoneNumber">
         </div>
 
         <div class="col-sm-12 col-lg-6 mb-3">
                     <label for="email" class="form-label">البريد الالكتروني</label>
-            <input type="email" name="" placeholder="البريد الالكتروني" id="email" class="form-control">
+            <input type="email" name="" placeholder="البريد الالكتروني" id="email" class="form-control" formControlName="email">
         </div>
         <div class="col-sm-12 col-lg-6 mb-3">
                     <label for="group" class="form-label">المجموعه</label>
-            <input type="group" name="" placeholder="المجموعه" id="group" class="form-control">
+            <input type="group" name="" placeholder="المجموعه" id="group" class="form-control"  >
         </div>
 
         <div class="col-sm-12 col-lg-6">
      <div class="mb-3">
                 <label for="statususer" class="form-label">حاله المستخدم</label>
                 <div class="parent_checkbox d-flex align-items-center gap-2">
-                        <input type="checkbox" name="" checked class="checkedBox_shared" id="statususer" readonly>
+                        <input type="checkbox" name="" checked class="checkedBox_shared" id="statususer" formControlName="emailConfirmed" readonly [disabled]="true">
                         <label for="statususer">نشط</label>
                 </div>
               

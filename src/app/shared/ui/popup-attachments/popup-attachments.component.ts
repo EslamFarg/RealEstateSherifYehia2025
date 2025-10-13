@@ -31,33 +31,78 @@ export class PopupAttachmentsComponent {
 
   }
 
-  showFile(item:any){
+  // showFile(item:any){
 
-    let  Reader=new FileReader();
+  //   let  Reader=new FileReader();
 
     
-    Reader.onload=function(e:any){
-      let div=document.createElement('div');
+  //   console.log(item);
+  //   Reader.onload=function(e:any){
+  //     let div=document.createElement('div');
 
-     let newTap=window.open();
+  //    let newTap=window.open();
 
 
-    if(newTap){
-          newTap.document.title = item.name;
-     div.innerHTML=`<iframe width="100%" height="100%" src="${e.target.result}" frameborder="0"></iframe>`
-     div.style.margin='auto'
-      newTap.document.body.style.margin='0';
-      newTap.document.body.style.padding='0';
-      newTap.document.body.style.height='100vh';
-     newTap?.document.body.appendChild(div);
-        }
+  //   if(newTap){
+  //     newTap.document.title = item.name;
+  //    div.innerHTML=`<iframe width="100%" height="100%" src="${e.target.result}" frameborder="0"></iframe>`
+  //    div.style.margin='auto'
+  //     newTap.document.body.style.margin='0';
+  //     newTap.document.body.style.padding='0';
+  //     newTap.document.body.style.height='100vh';
+  //    newTap?.document.body.appendChild(div);
+  //       }
   
 
       
+  //   }
+
+  //   Reader.readAsDataURL(item);
+
+
+  // }
+
+
+  showFile(item: any) {
+  // لو العنصر من السيرفر (فيه filePath)
+  if (item.filePath) {
+    const baseUrl = 'http://gtsdev-001-site3.atempurl.com'; // غيّرها حسب الـ API عندك
+    const fileUrl = `${baseUrl}${item.filePath}`;
+
+    const newTab = window.open();
+    if (newTab) {
+      newTab.document.title = item.fileName;
+      const div = document.createElement('div');
+      div.innerHTML = `
+        <iframe width="100%" height="100%" src="${fileUrl}" frameborder="0"></iframe>
+      `;
+      div.style.margin = 'auto';
+      newTab.document.body.style.margin = '0';
+      newTab.document.body.style.padding = '0';
+      newTab.document.body.style.height = '100vh';
+      newTab.document.body.appendChild(div);
     }
-
-    Reader.readAsDataURL(item);
-
-
+  } 
+  // لو العنصر من input (File)
+  else {
+    const reader = new FileReader();
+    reader.onload = function (e: any) {
+      const newTab = window.open();
+      if (newTab) {
+        newTab.document.title = item.name;
+        const div = document.createElement('div');
+        div.innerHTML = `
+          <iframe width="100%" height="100%" src="${e.target.result}" frameborder="0"></iframe>
+        `;
+        div.style.margin = 'auto';
+        newTab.document.body.style.margin = '0';
+        newTab.document.body.style.padding = '0';
+        newTab.document.body.style.height = '100vh';
+        newTab.document.body.appendChild(div);
+      }
+    };
+    reader.readAsDataURL(item);
   }
+}
+
 }

@@ -1,6 +1,6 @@
 import { NgClass } from '@angular/common';
 import { Component, ElementRef, EventEmitter, HostListener, inject, Input, Output, output, ViewChild } from '@angular/core';
-import { Router } from '@angular/router';
+import { Route, Router } from '@angular/router';
 // import { SendUserService } from '../../../../shared/services/settings/send-user.service';
 import { Subscription } from 'rxjs';
 // import { ToastrService } from '../../../../shared/services/toastr.service';
@@ -15,12 +15,14 @@ import { Subscription } from 'rxjs';
 export class HeaderComponent {
 
 
+  // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1 Property
   ShowDropDown=false;
 
 
   @Input() fullWidthMode=false;
   @Output() toggleSidebarForMe: EventEmitter<any> = new EventEmitter();
  
+  router:Router=inject(Router);
 
   @HostListener('document:click',['$event'])
   clickout(event:any){
@@ -50,4 +52,10 @@ export class HeaderComponent {
 
   }
 
+
+
+  logout(){
+    localStorage.removeItem('payloadUser');
+    this.router.navigate(['/auth']);
+  }
 }

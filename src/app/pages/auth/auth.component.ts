@@ -1,9 +1,12 @@
-import { Component, ElementRef, inject, QueryList, TemplateRef, ViewChild, ViewChildren, ViewContainerRef } from '@angular/core';
+import { Component, DestroyRef, ElementRef, inject, QueryList, TemplateRef, ViewChild, ViewChildren, ViewContainerRef } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { ToastrService } from '../../shared/ui/toastr/services/toastr.service';
 import { checkUsername } from '../../shared/validations/checkUsername';
+import { AuthService } from './services/auth.service';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { AuthLogin } from './models/auth';
 
 @Component({
   selector: 'app-auth',
@@ -12,14 +15,22 @@ import { checkUsername } from '../../shared/validations/checkUsername';
 })
 export class AuthComponent {
 
+
+
+  //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1 Services!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!111
   fb:FormBuilder=inject(FormBuilder);
   router:Router=inject(Router)
   scription!:Subscription;
   toastr:ToastrService=inject(ToastrService)
-// loginSer:LoginS=inject(LoginService)
-// authSer:AuthService=inject(AuthService);
+  _authServices:AuthService=inject(AuthService)
+  destroyRef=inject(DestroyRef);
+
+
+
+// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1 Property
   otpCodeValue:any
   counter=180;
+  remember:any=true;
   @ViewChild('login',{read:TemplateRef}) login!:TemplateRef<any>;
   @ViewChild('otpcodetem',{read:TemplateRef}) otpcodetem!:TemplateRef<any>;
   @ViewChild('container',{read:ViewContainerRef}) vcr!:ViewContainerRef
@@ -30,6 +41,8 @@ export class AuthComponent {
   passwordForm: any;
   showNewPassword = false;
   showConfirmPassword = false;
+  emailOtp:any
+
 
     
 ngOnInit() {
@@ -52,10 +65,17 @@ ngOnInit() {
 
   // auth:AuthService=inject(AuthService)
   authForm=this.fb.group({
-    emailOrUserName:['',[Validators.required,Validators.minLength(3),checkUsername.ValidationUsername()]],
-    password:['',Validators.required]
+    emailOrUserName:[JSON.parse(localStorage.getItem('rememberData')!)?.emailOrUserName ||'',[Validators.required,Validators.minLength(3),checkUsername.ValidationUsername()]],
+    password:[JSON.parse(localStorage.getItem('rememberData')!)?.password || '',Validators.required]
   })
 
+
+  otpForm=this.fb.group({
+   
+  email:[''  , Validators.required] ,
+  otp: ['',Validators.required]
+
+  })
 
   emailForm=this.fb.group({
     email:['',[Validators.required,Validators.email]]
@@ -79,14 +99,49 @@ this.vcr.createEmbeddedView(this.login);
 }
   onSubmit(){
 
-    this.router.navigate(['/dashboard'])
+  
 
     
  if(this.authForm.valid){
-          const data={
-        username:this.authForm.value.emailOrUserName,
+      const data={
+        emailOrUserName:this.authForm.value.emailOrUserName,
         password:this.authForm.value.password
       }
+
+      this._authServices.authLogin(data).pipe(takeUntilDestroyed(this.destroyRef)).subscribe((res:any)=>{
+
+        let payloadUser={
+          userId:res.userId,
+          fullName:res.fullName,
+          email:res.email,
+          imgUrl:res.imgUrl,
+          phoneNumber:res.phoneNumber,
+          token:res.token
+        }
+
+        this.router.navigate(['/dashboard'])
+
+        localStorage.setItem('payloadUser',JSON.stringify(payloadUser));  
+        console.log(payloadUser);
+
+        if(this.remember) {
+          localStorage.setItem('rememberData',JSON.stringify({
+            emailOrUserName:data.emailOrUserName,
+            password:data.password
+          }));
+        }else{
+          localStorage.removeItem('rememberData');
+        }
+
+        this.toastr.show('تم تسجيل الدخول بنجاح','success')
+        this.authForm.reset();
+
+
+
+      })
+
+
+
 
 
     
@@ -104,12 +159,19 @@ this.vcr.createEmbeddedView(this.login);
 
   sendOtpCode(){
 
-    this.vcr.clear();
-    this.vcr.createEmbeddedView(this.otpcodetem);
+    
     if(this.emailForm.valid){
-      let email={
+      let data={
         email:this.emailForm.value.email
       }
+      
+
+      this._authServices.sendEmailInotp(data).pipe(takeUntilDestroyed(this.destroyRef)).subscribe((res:any)=>{
+        this.vcr.clear();
+       this.vcr.createEmbeddedView(this.otpcodetem);
+        this.toastr.show('تم ارسال رمز التحقق','success');  
+        this.emailOtp=data.email  
+      })
  
     }else{
       this.emailForm.markAllAsTouched();
@@ -164,19 +226,47 @@ submitNewPassword() {
   }
 
 
-enterData() {
+onSubmitOTP() {
 
-  this.vcr.clear()
-      this.vcr.createEmbeddedView(this.resetpass)
+  console.log('OTOTOTOTTOTOTOTO')
+
   if (!this.otpCodeValue || this.otpCodeValue.length < this.otpArray.length) {
     this.toastr.show('رجاء إدخال رمز التحقق بالكامل', 'error');
     return;
   }
 
-  let data = {
-    email: this.emailForm.get('email')?.value,
-    otpCode: this.otpCodeValue
-  };
+    let data ={
+  email: this.emailOtp,
+  otp: this.otpForm.value.otp
+}  
+
+console.log(data)
+
+
+  // if(this.otpForm.valid){
+
+this._authServices.sendOtp(data)
+  .pipe(takeUntilDestroyed(this.destroyRef))
+  .subscribe({
+    next: (res:any) => {
+      console.log('OTP Response:', res);
+      this.vcr.clear();
+      this.vcr.createEmbeddedView(this.resetpass);
+      this.toastr.show('تم التحقق بنجاح','success');
+    },
+    error: (err:any) => {
+      console.error('OTP Error:', err);
+      this.toastr.show('حدث خطأ أثناء التحقق','error');
+    }
+  });
+
+
+  // }else{
+    
+  // }
+ 
+
+
 
  
 }
@@ -184,19 +274,14 @@ enterData() {
 
 
 
-  onOtpInput(e:any){
-      // const input = e.target;
-      // let value = input.value;
-      // value = value.replace(/[^0-9]/g, '');
-      // input.value=value;
+  onOtpInput(value:any){
+    
 
-      this.otpCodeValue=e;
+      this.otpCodeValue=value;
+        this.otpForm.get('otp')?.setValue(value);
 
-    //    if (value && index < this.otpArray.length - 1) {
-    //   const nextInput = this.otpInputs.toArray()[index + 1].nativeElement;
-    //   nextInput.focus();
-    // }
-
+   
+      console.log(this.otpCodeValue);
 
 
   }
@@ -205,13 +290,18 @@ enterData() {
 
 
 
-
-
-  ngOnDestroy(): void {
-    if(this.scription){
-      this.scription.unsubscribe();
-    }
   
-      
+
+  rememberme(){
+    this.remember=!this.remember;
+
+    console.log(this.remember)
   }
+
+
+
+  logs(){
+    console.log('clicked')
+  }
+
 }

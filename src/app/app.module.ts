@@ -3,20 +3,34 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
-import { ScrollAnimationDirective } from './shared/directives/scroll-animation.directive';
+import {  HttpClientModule, provideHttpClient, withInterceptors } from '@angular/common/http';
+import { errorInterceptor } from './core/interceptors/error.interceptor';
+import { ToastrComponent } from "./shared/ui/toastr/toastr.component";
+import { DirectivesModule } from './shared/directives/directives.module';
+import { authInterceptor } from './core/interceptors/auth.interceptor';
+import { LoadingComponent } from './shared/components/loading/loading.component';
+
+
 
 @NgModule({
   declarations: [
     AppComponent,
-    // ScrollAnimationDirective,x x
+    
+  
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    ToastrComponent,
+    DirectivesModule,
+    LoadingComponent
+],
+  providers: [
+    provideHttpClient(
+      withInterceptors([errorInterceptor,authInterceptor])
+    )
   ],
-  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

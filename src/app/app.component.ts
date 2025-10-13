@@ -1,5 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
+import { LoadingService } from './shared/services/loading.service';
 
 @Component({
   selector: 'app-root',
@@ -10,17 +11,20 @@ export class AppComponent {
   title = 'realestate';
 
 
+  LoadingService:LoadingService=inject(LoadingService)
+  loading$ = this.LoadingService.loading
 
   router:Router=inject(Router);
 
+   loading: boolean =false;
 
   ngOnInit(): void {
-    //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
-    //Add 'implements OnInit' to the class.
+    this.loading=true
     this.router.events.subscribe((event:any)=>{
       if(event instanceof NavigationEnd){
         window.scrollTo(0,0)
       }
     })
   }
+
 }

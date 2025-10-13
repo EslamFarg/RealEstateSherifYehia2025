@@ -99,8 +99,8 @@
                 <a  class="nesset" (click)="otpcode()" style="font-size: 12px !important; cursor: pointer;">هل نسيت كلمة المرور؟</a>
 
                 <div class="form-check checkbox_login p-0"  >
-                   <input type="checkbox" id="exampleCheck1" checked>
-                    <label class="form-check-label" for="exampleCheck1" style="font-size: 12px !important;">تذكرني</label>
+                   <input type="checkbox" id="exampleCheck1" checked (click)="rememberme()">
+                    <label class="form-check-label" for="exampleCheck1"  style="font-size: 12px !important;">تذكرني</label>
 
 
 
@@ -118,8 +118,10 @@
   <!-- <app-otpcode></app-otpcode> -->
 
   
+<!-- <form > -->
 
-   <div class="otp-container login_card">
+
+   <form class="otp-container login_card" [formGroup]="otpForm" (ngSubmit)="onSubmitOTP()">
 
     <h3 style="margin-bottom: 0 !important;"> OTP code ادخل</h3>
     <p class="otpcode_content" >ادخل رمز التحقق الذي أُرسل إلى البريد الإلكتروني الخاص بك<br>{{showemail}}</p>
@@ -129,7 +131,9 @@
   <ng-otp-input 
  
   [config]="{length:6, inputClass:'otp-input', allowNumbersOnly:true}" 
-  (onInputChange)="onOtpInput($event)">
+  (onInputChange)="onOtpInput($event)"
+  formControlName="otp"
+  >
 </ng-otp-input>
     </div>
 
@@ -139,8 +143,10 @@
 
     <div class="resend-link" *ngIf="showreset" (click)="replaySend()" style="text-align: center; margin: 10px 0px !important;" >اعاده ارسال الرمز ؟</div>
 
-    <button class="submit-btn" (click)="enterData()" style="width: 100%; display: block; margin: 7px auto !important;">استمرار</button>
-  </div>
+    <button class="submit-btn" type="submit"  style="width: 100%; display: block; margin: 7px auto !important;">استمرار</button>
+  </form>
+<!-- </form> -->
+
 
 
 

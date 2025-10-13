@@ -1,6 +1,8 @@
 export interface Owner {
-  id: number;               // م
-  ownerName: string;        // اسم المالك
-  mobile: string;           // رقم الجوال
-  nationalId: string;       // رقم الهويه
+ id: number,
+  name: string,
+  mobile: string,
+  email: string,
+  nationalID: string,
+
 }
