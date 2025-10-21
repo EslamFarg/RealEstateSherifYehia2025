@@ -199,6 +199,10 @@
 
         </div>
       </span>
+      <ng-container *ngIf="passwordForm.controls['newPassword'].invalid && passwordForm.controls['newPassword'].touched">
+        <small class="error_msg_form" *ngIf="passwordForm.controls['newPassword'].hasError('required')">كلمة المرور مطلوبة</small>
+      </ng-container>
+      
     </div>
 
     <div class="mb-3 w-100 input_icon_password">
@@ -237,6 +241,9 @@
 
         </div>
       </span>
+          <ng-container *ngIf="passwordForm.controls['confirmPassword'].invalid && passwordForm.controls['confirmPassword'].touched">
+        <small class="error_msg_form" *ngIf="passwordForm.controls['confirmPassword'].hasError('required')">تأكيد كلمه المرور مطلوبه</small>
+      </ng-container>
     </div>
 
     <button type="submit" class="btn_login">حفظ</button>

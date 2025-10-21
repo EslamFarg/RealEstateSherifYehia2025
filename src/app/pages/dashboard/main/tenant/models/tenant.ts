@@ -17,6 +17,21 @@ export interface Apartments {
   name: string;           // اسم المرافق
   nationalId: string;     // رقم الهوية
   mobile: string;         // رقم الجوال
+  nationalID?:string
   nationality: string;    // الجنسية
   relation: string;       // الصلة
+}
+
+
+export interface TenantData {
+   id: number,
+      name: string,
+      tenantType: string,
+      nationality: string,
+      mobile: string,
+      email: string,
+      nationalID: string,
+      
+      jobTitle: string,
+      dependants:[],
 }

@@ -119,12 +119,13 @@
 
 .modal_popup{
     width: 819px;
-    min-height: 100px;
+    height: 500px;
     background-color: #FFFFFF;
     border-radius: 15px;
     padding: 16px 32px 16px 32px;
     position: relative;
     z-index: 900000000;
+    // overflow: scroll;
 
     @media (max-width:768px) {
         width: 80% !important;
@@ -180,9 +181,15 @@
 
 
         .boxes{
+            // height: 500px;
+            // height: 330px;
+            height: 347px;
+            overflow: scroll;
             .box{
                 @include flex_box(flex,null,center,20px);
                 margin-bottom: 30px;
+                    margin-top: 29px;
+                
                 .number_msg{
                     font-size: 20px ;
                     color: $main_color;
@@ -272,4 +279,5 @@
         border: 0;
     }
 }
+
 

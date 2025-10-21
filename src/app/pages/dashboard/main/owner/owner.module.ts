@@ -7,17 +7,18 @@ import { PageHeadingComponent } from '../../../../shared/ui/page-heading/page-he
 import { InputAttachmentsComponent } from '../../../../shared/ui/input-attachments/input-attachments.component';
 import { PopupAttachmentsComponent } from '../../../../shared/ui/popup-attachments/popup-attachments.component';
 import { PaginationComponent } from '../../../../shared/ui/pagination/pagination.component';
-import { ScrollAnimationDirective } from '../../../../shared/directives/scroll-animation.directive';
+
 import { ReactiveFormsModule } from '@angular/forms';
 import { DirectivesModule } from '../../../../shared/directives/directives.module';
-import { EmptytableComponent } from '../../../../shared/ui/emptytable/emptytable.component';
+
 import { ConfirmDeleteComponent } from '../../../../shared/components/confirm-delete/confirm-delete.component';
+import { EmptytableComponent } from '../../../../shared/ui/emptytable/emptytable.component';
 
 
 @NgModule({
   declarations: [
     OwnerComponent,
-    EmptytableComponent
+    // EmptytableComponent
   ],
   imports: [
     CommonModule,
@@ -28,7 +29,8 @@ import { ConfirmDeleteComponent } from '../../../../shared/components/confirm-de
     PaginationComponent,
     ReactiveFormsModule,
     DirectivesModule,
-    ConfirmDeleteComponent
+    ConfirmDeleteComponent,
+    EmptytableComponent
   ]
 })
 export class OwnerModule { }

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component, inject, TemplateRef, ViewChild, ViewContainerRef } from '@angular/core';
 
 @Component({
   selector: 'app-addsendmessage',
@@ -8,12 +8,12 @@ import { Component } from '@angular/core';
 export class AddsendmessageComponent {
 active = 1;
 active2=1
-msgDataDescription:any
+msgDataDescription1:any
 showPopup=false;
 searchdataCheckRealtor:any=[];
 
 showPopupRealtor=false
-
+ cdr:ChangeDetectorRef=inject(ChangeDetectorRef)
 arrDataCheck(val:any){
 
   this.searchdataCheckRealtor=val;
@@ -30,8 +30,47 @@ this.searchdataCheckRealtor.splice(index,1)
 
 
 showMsg(val:any){
-  this.msgDataDescription=val;
+  // setTimeout(()=>{
+ this.msgDataDescription1=val;
+  // },0)
+ this.cdr.detectChanges(); // 👈 يجبر Angular يعمل تحديث للتبويبات
+
+  // console.log(this.msgDataDescription);
+ 
 
 }
 
+// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
+
+@ViewChild('group',{read:TemplateRef}) group!:TemplateRef<any>
+@ViewChild('singlar',{read:TemplateRef}) singlar!:TemplateRef<any>
+@ViewChild('container',{read:ViewContainerRef}) container!:ViewContainerRef;
+
+
+activelink='group'
+
+
+ngOnInit(): void {
+  //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
+  //Add 'implements OnInit' to the class.
+  setTimeout(()=>{
+  this.container.clear()
+  this.container.createEmbeddedView(this.group)
+  this.activelink='group'
+  
+  })
+
+}
+
+sendGroup(){
+  this.container.clear();
+  this.container.createEmbeddedView(this.group)
+  this.activelink='group'
+}
+
+sendSinglar(){
+  this.container.clear();
+  this.container.createEmbeddedView(this.singlar)
+  this.activelink='singlar'
+}
 }

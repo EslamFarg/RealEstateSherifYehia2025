@@ -16,6 +16,7 @@ export class InputAttachmentsComponent {
   showPopupAttachment=false
   toastr:ToastrService=inject(ToastrService);
   @Output() sendDataFiles=new EventEmitter()
+  @Output() idRemoveFiles=new EventEmitter();
 
 
   @Input() nameFiles:any=[];
@@ -73,13 +74,17 @@ export class InputAttachmentsComponent {
 
       
       this.showPopupAttachment=true;
-      console.log(this.nameFiles);
+      
     }else{
       this.showPopupAttachment=false;
       this.toastr.show('رجاء اختيار ملف','error');
     }
   }
 
+
+  FnIdRemoveFiles(id:any){
+    this.idRemoveFiles.emit(id);
+  }
 
   
 }

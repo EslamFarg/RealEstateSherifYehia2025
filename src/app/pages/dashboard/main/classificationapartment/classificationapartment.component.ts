@@ -1,4 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, DestroyRef, inject } from '@angular/core';
+import { FormBuilder, Validators } from '@angular/forms';
+import { ClassificationapartmentService } from './services/classificationapartment.service';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { ToastrService } from '../../../../shared/ui/toastr/services/toastr.service';
+import { Classificationapartment } from './models/classificationapartment';
 
 @Component({
   selector: 'app-classificationapartment',
@@ -7,46 +12,141 @@ import { Component } from '@angular/core';
 })
 export class ClassificationapartmentComponent {
 
-  title='الرئيسيه'
-  subtitle='تصنيف الوحده'
+
+  // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!11 Services
 
 
-  unitCategories = [
-  { id: 1, categoryName: "شقة سكنية" },
-  { id: 2, categoryName: "فيلا" },
-  { id: 3, categoryName: "دوبلكس" },
-  { id: 4, categoryName: "استوديو" },
-  { id: 5, categoryName: "مكتب إداري" },
-  { id: 6, categoryName: "محل تجاري" },
-  { id: 7, categoryName: "مستودع" },
-  { id: 8, categoryName: "شاليه" },
-  { id: 9, categoryName: "مزعة" },
-  { id: 10, categoryName: "أرض فضاء" },
-  { id: 11, categoryName: "برج سكني" },
-  { id: 12, categoryName: "برج تجاري" },
-  { id: 13, categoryName: "سكن طلاب" },
-  { id: 14, categoryName: "فندق" },
-  { id: 15, categoryName: "مصنع" },
-  { id: 16, categoryName: "مركز تجاري" },
-  { id: 17, categoryName: "مستشفى" },
-  { id: 18, categoryName: "مدرسة" },
-  { id: 19, categoryName: "مزرعة دواجن" },
-  { id: 20, categoryName: "مزرعة أسماك" }
-];
+  fb:FormBuilder=inject(FormBuilder)
+  _unitCategoryServices:ClassificationapartmentService=inject(ClassificationapartmentService);
+  $destroyRef:DestroyRef=inject(DestroyRef)
+  toastr:ToastrService=inject(ToastrService);
 
 
-
-   // pagination
+  // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! Property
+  // pagination
 
 pageIndex=1
 pageSize=10
 
 
-onPageChanged(page: number) {
-  this.pageIndex = page;
-  // this.fetchEmployees(); // أعد جلب البيانات
-  // this.getData()
+  unitCategory=this.fb.group({
+    name:['',[Validators.required,Validators.minLength(3)]]
+  })
+
+  title='الرئيسيه'
+  subtitle='تصنيف الوحده'
+
+
+  unitCategoriesData:{rows:Classificationapartment[],paginationInfo:any} = {
+    rows: [],
+    paginationInfo: null
+  }
+
+
+  btnaddandupdate='add'
+  idUpdate:any
+
+  showDelete=false;
+  deleteId:any
+ 
+
+
+// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! Methods
+
+ngOnInit(): void {
+  //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
+  //Add 'implements OnInit' to the class.
+  this.getAllDataUnitCategories();
+}
+
+onSubmit(){
+  if(this.unitCategory.valid){
+
+
+    if(this.btnaddandupdate == 'add'){
+  let data={
+      name:this.unitCategory.value.name
+    }
+
+
+    this._unitCategoryServices.createUnitCategories(data).pipe(takeUntilDestroyed(this.$destroyRef)).subscribe((res:any)=>{
+
+      this.toastr.show('تم اضافة التصنيف بنجاح','success');
+      this.unitCategory.reset();
+      this.btnaddandupdate='add'
+      this.getAllDataUnitCategories();
+      
+    })
+
+    }else{
+      // update
+      let data={
+         id: this.idUpdate,
+         name: this.unitCategory.value.name
+        }
+
+this._unitCategoryServices.updateData(data).pipe(takeUntilDestroyed(this.$destroyRef)).subscribe((res:any)=>{
+    this.toastr.show('تم تعديل التصنيف بنجاح','success');
+    this.unitCategory.reset();
+    this.btnaddandupdate='add'
+    this.getAllDataUnitCategories();
+})
+    }
+    
+  
+    
+
+
+  }else{
+
+    this.unitCategory.markAllAsTouched();
+
+  }
 }
 
 
+getAllDataUnitCategories(){
+  let pagination={
+    paginationInfo: {
+    pageIndex: this.pageIndex,
+    pageSize: this.pageSize
+  }
+  }
+  this._unitCategoryServices.getAllDataUnitCategories1(pagination).pipe(takeUntilDestroyed(this.$destroyRef)).subscribe((res:any)=>{
+    this.unitCategoriesData=res;
+  })
+}
+onPageChanged(page: number) {
+  this.pageIndex = page;
+  this.getAllDataUnitCategories();
+}
+
+getUpdateData(id:any){
+this._unitCategoryServices.getUpdateData(id).pipe(takeUntilDestroyed(this.$destroyRef)).subscribe((res:any)=>{
+  this.unitCategory.patchValue({name:res.name})
+  this.btnaddandupdate='update'
+  this.idUpdate=res.id
+
+  // console.log(this.idUpdate)
+})
+}
+
+
+deleteConfirmed(id:any){
+  this.showDelete=false;
+  this._unitCategoryServices.deleteData(id).pipe(takeUntilDestroyed(this.$destroyRef)).subscribe((res:any)=>{
+    this.toastr.show('تم حذف التصنيف بنجاح','success');
+    this.getAllDataUnitCategories();
+  })
+}
+
+
+showDeletePopup(id:any){
+  this.showDelete=true;
+  this.deleteId=id;
+}
+
+onClose(){
+  this.showDelete=false;
+}
 }

@@ -26,8 +26,8 @@ export class OwnerService extends BasehttpservicesService{
   }
 
 
-  updateData(){
-
+  updateData(query:any,fileData:any){
+    return this.put(`/Owners/update?${query}`,fileData);
   }
 
 
@@ -36,5 +36,7 @@ export class OwnerService extends BasehttpservicesService{
     return this.delete(`/Owners/${id}`);
 
   }
+
+
   
 }

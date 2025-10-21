@@ -30,8 +30,8 @@ export class OwnerComponent {
 btnAddAndUpdate='add'  
 showDelete=false;
 deleteId:any
-
-  
+idUpdate:any
+idRemoveFiles:any =[] 
   // pagination
 
 pageIndex=1
@@ -74,6 +74,7 @@ ngOnInit(): void {
   //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
   //Add 'implements OnInit' to the class.
   this.getAllDataOwner();
+
 }
 onPageChanged(page: number) {
   this.pageIndex = page;
@@ -108,11 +109,50 @@ onSubmit(){
       this.ownerData.reset();
       this.btnAddAndUpdate='add'
       this.toastr.show('تم اضافه المالك بنجاح','success');
+      
       this.getAllDataOwner();
     })
     
     }else{
       // Update
+
+const params = new URLSearchParams({
+  Id: this.idUpdate,
+  Name: this.ownerData.value.Name ?? '',
+  Mobile: this.ownerData.value.Mobile ?? '',
+  Email: this.ownerData.value.Email ?? '',
+  NationalID: this.ownerData.value.NationalID ?? ''
+});
+this.idRemoveFiles.forEach((id: any) => params.append('RemovedAttachmentIds', id));
+const queryParams = params.toString();
+
+
+
+      let formData = new FormData();
+
+// نرسل فقط الملفات الحقيقية
+const files: any[] = this.ownerData.value.Files || [];
+files
+  .filter(file => file instanceof File)
+  .forEach(file => formData.append('NewFiles', file));
+
+
+
+    this._ownerServices.updateData(queryParams,formData).pipe(takeUntilDestroyed(this.$destroyRef)).subscribe((res:any)=>{
+      this.ownerData.reset();
+   
+      this.toastr.show('تم تعديل المالك بنجاح','success');
+       
+             // ✅ إعادة التهيئة بشكل صحيح
+    this.btnAddAndUpdate = 'add';
+    this.idUpdate = null;
+    this.idRemoveFiles = [];
+    this.dataFiles = [];
+      this.getAllDataOwner();
+    })
+
+
+
     }
 
    
@@ -163,8 +203,9 @@ getDataUpdate(id:any){
    
       
        this.dataFiles=res.attachments
-
+      this.idUpdate=res.id
       this.btnAddAndUpdate='update'
+        // console.log(this.dataFiles)
     })
 
 
@@ -198,6 +239,15 @@ showDeletePopup(id:any){
     this.showDelete=true;
     this.deleteId=id
   }
+
+}
+
+
+fnIdRemoveFiles(id:any){
+
+  this.dataFiles=this.dataFiles.filter((el:any)=>el.id != id);
+  this.idRemoveFiles.push(id);
+  
 
 }
 }

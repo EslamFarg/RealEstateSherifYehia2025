@@ -7,6 +7,9 @@ import { PageHeadingComponent } from '../../../../shared/ui/page-heading/page-he
 import { RealtorComponent } from './realtor.component';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { PaginationComponent } from '../../../../shared/ui/pagination/pagination.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { EmptytableComponent } from '../../../../shared/ui/emptytable/emptytable.component';
+import { ConfirmDeleteComponent } from '../../../../shared/components/confirm-delete/confirm-delete.component';
 // import {  } from '@angular/forms';
 @NgModule({
   declarations: [RealtorComponent],
@@ -16,7 +19,10 @@ import { PaginationComponent } from '../../../../shared/ui/pagination/pagination
     InputAttachmentsComponent,
     PageHeadingComponent,
     NgSelectModule,
-    PaginationComponent
+    PaginationComponent,
+    ReactiveFormsModule,
+    EmptytableComponent,
+    ConfirmDeleteComponent
     
   ]
 })

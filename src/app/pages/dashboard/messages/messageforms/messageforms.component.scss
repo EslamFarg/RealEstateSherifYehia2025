@@ -5,5 +5,6 @@ textarea{
 }
 
 .table-responsive{
-    height: 240px;
+    max-height: 240px;
+    min-height:50px;
 }

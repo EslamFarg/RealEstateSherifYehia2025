@@ -1,13 +1,13 @@
 <app-page-heading [title]="'الصيانه'" [subtitle]="'الصيانه'"[TitlePageAddBtn]="'مستكشف الصيانه'" [AddBtn]="true"  [ExplorerRoute]="'/dashboard/maintenance/explorermaintenance'" ></app-page-heading>
 
 
-<div class="forms_dashboard">
+<form class="forms_dashboard" [formGroup]="mainTenanceData"  >
     <div class="row">
           <div class="col-sm-12 col-lg-2 mb-3">
         <label for="numberbala" class="form-label">رقم البلاغ</label>
         <input type="text" name="" readonly value="123" class="form-control" placeholder="رقم الوحده" id="numberbala">
     </div>
-  <div class="col-sm-12 col-lg-2 mb-3" style="align-self: flex-end;">
+  <div class="col-sm-12 col-lg-2 mb-3" style="margin-top: 7px;">
         <label  class="form-label" ></label>
         <div class="search_number_component">
 <input type="text" name="" placeholder="بحث برقم البلاغ"  class="form-control">
@@ -26,7 +26,10 @@
     <div class="col-sm-12 col-lg-4">
         <div class="mb-3">
               <label for="daphtary" class="form-label">الرقم الدفتري</label>
-        <input type="text" name=""  class="form-control" placeholder="الرقم الدفتري" id="daphtary">
+        <input type="text" name=""  class="form-control" placeholder="الرقم الدفتري" id="daphtary" formControlName="BookNumber">
+        <ng-container *ngIf="mainTenanceData.controls['BookNumber'].invalid && mainTenanceData.controls['BookNumber'].touched">
+            <small class="error_msg_form" *ngIf="mainTenanceData.controls['BookNumber'].hasError('required')">رقم الدفتري مطلوب</small>
+        </ng-container>
         </div>
         
     </div>
@@ -34,20 +37,23 @@
     <div class="col-sm-12 col-lg-4">
         <div class="mb-3">
               <label for="date" class="form-label">التاريخ</label>
-        <input type="date" name=""  class="form-control" placeholder="التاريخ" id="date">
+        <input type="date" name=""  class="form-control" placeholder="التاريخ" id="date" formControlName="RequestDate">
+        <ng-container *ngIf="mainTenanceData.controls['RequestDate'].invalid && mainTenanceData.controls['RequestDate'].touched">
+            <small class="error_msg_form" *ngIf="mainTenanceData.controls['RequestDate'].hasError('required')">التاريخ مطلوب</small>
+        </ng-container>
         </div>
         
     </div>
 
     </div>
-</div>
+</form>
 
 
 
-<div class="forms_dashboard my-3">
+<form class="forms_dashboard my-3" >
     <div class="row">
         <div class="col-sm-4 me-auto">
-             <app-searchinforms [dataFilter]="dataFilter"></app-searchinforms>
+             <app-searchinforms [dataFilter]="dataFilter" (selectedDataFilter)="SelectDataFilterSearch($event)"></app-searchinforms>
         </div>
 
 
@@ -95,44 +101,60 @@
 
         </div>
     </div>
-</div>
+</form>
 
-<div class="forms_dashboard">
+<form class="forms_dashboard" [formGroup]="mainTenanceData">
     <div class="row">
         <div class="col-sm-12 col-lg-4">
             <div class="mb-3">
-                <app-refresh-select [titleLabel]="'نوع الصيانه'"></app-refresh-select>
+                <app-refresh-select [titleLabel]="'نوع الصيانه'" [dataItems]="dataItemsTypeMaintenance" [bindLabel]="'name'" [bindValue]="'id'" [fc]="getFc('MaintenanceTypeId')"></app-refresh-select>
+                <ng-container *ngIf="mainTenanceData.controls['MaintenanceTypeId'].invalid && mainTenanceData.controls['MaintenanceTypeId'].touched">
+                    <small class="error_msg_form" *ngIf="mainTenanceData.controls['MaintenanceTypeId'].hasError('required')">نوع الصيانه مطلوب</small>
+                </ng-container>
             </div>
 
         </div>
         <div class="col-sm-12 col-lg-4">
             <div class="mb-3">
-                <app-refresh-select [titleLabel]="'موظف مسؤول'"></app-refresh-select>
+                <app-refresh-select [titleLabel]="'موظف مسؤول'" [dataItems]="dataItemsEmployees" [bindLabel]="'name'" [bindValue]="'id'" [fc]="getFc('EmployeeId')"></app-refresh-select>
+                <ng-container *ngIf="mainTenanceData.controls['EmployeeId'].invalid && mainTenanceData.controls['EmployeeId'].touched">
+                    <small class="error_msg_form" *ngIf="mainTenanceData.controls['EmployeeId'].hasError('required')">موظف مسؤول مطلوب</small>
+                    </ng-container>
+
             </div>
 
         </div>
         <div class="col-sm-12 col-lg-4">
             <div class="mb-3">
-                <app-refresh-select [titleLabel]="'الحاله'"></app-refresh-select>
+                <app-refresh-select [titleLabel]="'الحاله'" [dataItems]="dataItemsStatus" [bindLabel]="'name'" [bindValue]="'name'" [fc]="getFc('Status')"></app-refresh-select>
+                  <ng-container *ngIf="mainTenanceData.controls['Status'].invalid && mainTenanceData.controls['Status'].touched">
+                    <small class="error_msg_form" *ngIf="mainTenanceData.controls['Status'].hasError('required')">الحاله مطلوبه</small>
+                    </ng-container>
             </div>
 
         </div>
         <div class="col-sm-12 col-lg-4">
             <div class="mb-3">
-                <app-refresh-select [titleLabel]="'الصندوق /  البنك'"></app-refresh-select>
+                <app-refresh-select [titleLabel]="'الصندوق /  البنك'" [dataItems]="dataItemsAccounts" [bindLabel]="'name'" [bindValue]="'id'" [fc]="getFc('AccountId')"></app-refresh-select>
+                  <ng-container *ngIf="mainTenanceData.controls['AccountId'].invalid && mainTenanceData.controls['AccountId'].touched">
+                    <small class="error_msg_form" *ngIf="mainTenanceData.controls['AccountId'].hasError('required')">صندوق / بنك مطلوب</small>
+                    </ng-container>
             </div>
 
         </div>
         <div class="col-sm-12 col-lg-4">
             <div class="mb-3">
               <label for="" class="form-label">المبلغ</label>
-              <input type="text" name="" class="form-control" placeholder="المبلغ" id="">
+              <input type="text" class="form-control" placeholder="المبلغ"  formControlName="Amount">
+              <ng-container *ngIf="mainTenanceData.controls['Amount'].invalid && mainTenanceData.controls['Amount'].touched">
+                <small class="error_msg_form" *ngIf="mainTenanceData.controls['Amount'].hasError('required')">المبلغ مطلوب</small>
+                </ng-container>
             </div>
 
         </div>
         <div class="col-sm-12 col-lg-4">
             <div class="mb-3">
-           <app-input-attachments></app-input-attachments>
+           <app-input-attachments (sendDataFiles)="OnDataFiles($event)" [nameFiles]="dataFiles" (idRemoveFiles)="fnIdRemoveFiles($event)"></app-input-attachments>
             </div>
 
         </div>
@@ -141,17 +163,16 @@
          <div class="col-sm-12">
             <div class="mb-3">
                 <label for="exampleFormControlTextarea1" class="form-label">البيان</label>
-                <textarea class="form-control textarea" id="exampleFormControlTextarea1" placeholder="اكتب المحتوي"></textarea>
+                <textarea class="form-control textarea" id="exampleFormControlTextarea1" formControlName="Notes" placeholder="اكتب المحتوي"></textarea>
             </div>
         </div>
     </div>
-</div>
+</form>
 
 
 <div class="btn_add_reset mb-3">
-        <button type="sumbit" data-button="send">اضافه</button>
+        <button type="sumbit" data-button="send" (click)="onSubmit()">اضافه</button>
         <button type="reset" data-button="reset">جديد</button>
-        <button type="button" data-button="reset">تعديل</button>
         <button type="button" data-button="reset">حذف</button>
         <button type="button" data-button="reset">طباعه</button>
     </div>

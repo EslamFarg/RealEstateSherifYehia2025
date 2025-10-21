@@ -6,6 +6,9 @@ import { AccountsComponent } from './accounts.component';
 import { PageHeadingComponent } from '../../../../shared/ui/page-heading/page-heading.component';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { PaginationComponent } from '../../../../shared/ui/pagination/pagination.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { EmptytableComponent } from '../../../../shared/ui/emptytable/emptytable.component';
+import { ConfirmDeleteComponent } from '../../../../shared/components/confirm-delete/confirm-delete.component';
 
 
 @NgModule({
@@ -17,7 +20,10 @@ import { PaginationComponent } from '../../../../shared/ui/pagination/pagination
     AccountsRoutingModule,
     PageHeadingComponent,
     NgSelectModule,
-    PaginationComponent
+    PaginationComponent,
+    ReactiveFormsModule,
+    EmptytableComponent,
+    ConfirmDeleteComponent
 
   ]
 })

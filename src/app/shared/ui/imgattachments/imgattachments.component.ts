@@ -1,5 +1,5 @@
 import { NgFor, NgClass } from '@angular/common';
-import { Component, HostListener } from '@angular/core';
+import { Component, EventEmitter, HostListener, Input, Output } from '@angular/core';
 
 @Component({
   selector: 'app-imgattachments',
@@ -12,10 +12,18 @@ export class ImgattachmentsComponent {
 
 
 
+
+
   // !!!!!!!!!!!!!!!!!!!!!!!!!!!!! Property
   imgsArr:any=[]
+  @Output() idRemoveFiles=new EventEmitter();
 
+  idRemoveFileArr:any=[]
+
+  @Output() dataImgs=new EventEmitter()
   showoverlay:any=null
+
+
 
 
 
@@ -24,13 +32,19 @@ export class ImgattachmentsComponent {
   onFileSelected(e:any){
 
     const files=e.target.files;
-    Array.from(files).forEach((file:any) => {
+    if(files){
+Array.from(files).forEach((file:any) => {
     const url=URL.createObjectURL(file);
       this.imgsArr.push({
         file:file,
         url:url
       });
     })
+    this.dataImgs.emit(this.imgsArr)
+    }
+    
+
+    
   }
 
 
@@ -44,7 +58,19 @@ export class ImgattachmentsComponent {
     
   }
 
-  deleteItem(index:any){
+  deleteItem(index:any,id:any){
     this.imgsArr.splice(index,1);
+    if(id){
+      this.idRemoveFileArr.push(id);
+      this.idRemoveFiles.emit(this.idRemoveFileArr);
+       
+    }
+   
   }
+
+  resetImages() {
+  this.imgsArr = [];
+  // this.previewUrls = [];
+  this.dataImgs.emit(this.imgsArr);
+}
 }

@@ -1,19 +1,27 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-
+import cities from '../../../../public/api/cities_lite.json';
+import districts from '../../../../public/api/districts_lite.json';
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class SharedService {
+  http: HttpClient = inject(HttpClient);
 
-   http:HttpClient=inject(HttpClient);
-
-  getAllNationality(){
+  getAllNationality() {
     return this.http.get('/api/nationalities.json');
   }
 
-
-  getAllRelations(){
+  getAllRelations() {
     return this.http.get('/api/relations.json');
   }
+
+
+
+
+
+  allCities=cities
+  allDistricts=districts
+
+
 }

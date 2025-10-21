@@ -1,82 +1,114 @@
 <div style="margin-bottom: 30px;">
-<app-page-heading [AddRoute]="'/dashboard/tenant/explorertenant'" [ExplorerRoute]="'/dashboard/tenant/explorertenant'" [showdescription]="true" [description]="'اضافه مستاجر جديد'" [title]="title" [subtitle]="subtitle" [AddBtn]="true"  [TitlePageAddBtn]="'اضافه مستاجر جديد'"></app-page-heading>
+<app-page-heading [AddRoute]="'/dashboard/tenant/explorertenant'" [ExplorerRoute]="'/dashboard/tenant/explorertenant'" [showdescription]="true" [description]="'اضافه مستاجر جديد'" [title]="title" [subtitle]="subtitle" [explorerBtn]="true"  [TitlePageExplorerBtn]="'مستكشف المستاجرين'" ></app-page-heading>
 
 
 </div>
 
 <div class="mb-4">
     <h4 class="head_forms_dashboard">بيانات المستأجر</h4>
-    <div class="forms_dashboard">
+    <form class="forms_dashboard" [formGroup]="tenantForm" (ngSubmit)="onSubmit()">
 
         <div class="row">
             <div class="col-sm-12 col-lg-8">
                 <div class="mb-3">
                 <label for="nameTenant" class="form-label">الاسم</label>
-                <input type="text" class="form-control" id="nameTenant" placeholder="الاسم">
+                <input type="text" class="form-control" id="nameTenant" placeholder="الاسم" formControlName="Name"/>
+                   <ng-container *ngIf="tenantForm.controls['Name'].invalid && tenantForm.controls['Name'].touched">
+                        <small class="error_msg_form" *ngIf="tenantForm.controls['Name'].hasError('required')" >الاسم مطلوب</small>
+                        <small class="error_msg_form" *ngIf="tenantForm.controls['Name'].hasError('minlength')">يجب ان يكون الاسم اكثر من 3 حروف</small>
+                       
+                    </ng-container> 
                 </div>
             
             </div>
             <div class="col-sm-12 col-lg-4">
                 <div class="mb-3">
                 <label for="statusTenant" class="form-label">نوع المستاجر</label>
-                <ng-select [items]="[{name:'عزاب'},{name:'عوايل'}]" placeholder="عزاب / عوايل" bindLabel="name" bindValue="name"></ng-select> 
+                <ng-select [items]="[{name:'عزاب'},{name:'عوايل'}]" placeholder="عزاب / عوايل" bindLabel="name" bindValue="name" formControlName="TenantType"></ng-select> 
+
+                      <ng-container *ngIf="tenantForm.controls['TenantType'].invalid && tenantForm.controls['TenantType'].touched">
+                        <small class="error_msg_form" *ngIf="tenantForm.controls['TenantType'].hasError('required')" >نوع المستاجر مطلوب</small>
+                       
+                    </ng-container> 
                 </div>
             
             </div>
             <div class="col-sm-12 col-lg-4">
                 <div class="mb-3">
                 <label for="statusTenant" class="form-label">الجنسيه</label>
-                <ng-select [items]="dataNationality" placeholder="الجنسيه" bindLabel="nationality_ar" bindValue="nationality_ar"></ng-select>
+                <ng-select [items]="dataNationality" placeholder="الجنسيه" bindLabel="nationality_ar" bindValue="nationality_ar" formControlName="Nationality"></ng-select>
+
+                      <ng-container *ngIf="tenantForm.controls['Nationality'].invalid && tenantForm.controls['Nationality'].touched">
+                        <small class="error_msg_form" *ngIf="tenantForm.controls['Nationality'].hasError('required')" >الجنسيه مطلوبه</small>
+                       
+                    </ng-container>
                 </div>
             </div>
 
               <div class="col-sm-12 col-lg-4">
                 <div class="mb-3">
                     <label for="phonenumber" class="form-label">رقم الجوال</label>
-                <input type="text" class="form-control" id="phonenumber" placeholder="رقم الجوال">
+                <input type="text" class="form-control" id="phonenumber" placeholder="رقم الجوال" formControlName="Mobile">
+                <ng-container *ngIf="tenantForm.controls['Mobile'].invalid && tenantForm.controls['Mobile'].touched">
+                        <small class="error_msg_form" *ngIf="tenantForm.controls['Mobile'].hasError('required')" >رقم الجوال مطلوب</small>
+                </ng-container>
                 </div>
             
             </div>
               <div class="col-sm-12 col-lg-4">
                 <div class="mb-3">
                     <label for="email" class="form-label">البريد الالكتروني</label>
-                <input type="email" class="form-control" id="email" placeholder="البريد الالكتروني">
+                <input type="email" class="form-control" id="email" placeholder="البريد الالكتروني" formControlName="Email">
+                <ng-container *ngIf="tenantForm.controls['Email'].invalid && tenantForm.controls['Email'].touched">
+                        <small class="error_msg_form" *ngIf="tenantForm.controls['Email'].hasError('required')" >البريد الالكتروني مطلوب</small>
+                        <small class="error_msg_form" *ngIf="tenantForm.controls['Email'].hasError('email')" >صيغة البريد الالكتروني غير صحيحة</small>
+                    </ng-container>
                 </div>
             
             </div>
               <div class="col-sm-12 col-lg-4">
                 <div class="mb-3">
                     <label for="idnational" class="form-label">رقم الهويه</label>
-                <input type="text" class="form-control" id="idnational" placeholder="رقم الهويه">
+                <input type="text" class="form-control" id="idnational" placeholder="رقم الهويه" formControlName="NationalID">
+                <ng-container *ngIf="tenantForm.controls['NationalID'].invalid && tenantForm.controls['NationalID'].touched">
+                        <small class="error_msg_form" *ngIf="tenantForm.controls['NationalID'].hasError('required')" >رقم الهويه مطلوب</small>
+                </ng-container>
                 </div>
             
             </div>
               <div class="col-sm-12 col-lg-4">
                 <div class="mb-3">
                     <label for="jop" class="form-label">الوظيفه</label>
-                <input type="text" class="form-control" id="jop" placeholder="الوظيفه">
+                <input type="text" class="form-control" id="jop" placeholder="الوظيفه" formControlName="JobTitle">
+                <ng-container *ngIf="tenantForm.controls['JobTitle'].invalid && tenantForm.controls['JobTitle'].touched">
+                        <small class="error_msg_form" *ngIf="tenantForm.controls['JobTitle'].hasError('required')" >الوظيفه مطلوبه</small>
+                </ng-container>
                 </div>
             
             </div>
 
             <div class="col-sm-12 col-lg-4">
-                <app-input-attachments></app-input-attachments>
+                <app-input-attachments (sendDataFiles)="OnDataFiles($event)" [nameFiles]="dataFiles" (idRemoveFiles)="fnIdRemoveFiles($event)"></app-input-attachments>
             </div>
 
         </div>
 
-    </div>
+    </form>
 </div>
 
 <div>
     <h4 class="head_forms_dashboard">بيانات المرافقين</h4>
-    <div class="forms_dashboard" style="min-height: 220px !important;">
+    <form class="forms_dashboard" style="min-height: 220px !important;" [formGroup]="DependantsForm" (ngSubmit)="onSubmitDependents()">
 
         <div class="row">
             <div class="col-sm-12 col-lg-8">
                 <div class="mb-3">
                 <label for="nameapartment" class="form-label">الاسم</label>
-                <input type="text" class="form-control" id="nameapartment" placeholder="الاسم">
+                <input type="text" class="form-control" id="nameapartment" placeholder="الاسم" formControlName="Name">
+                <ng-container *ngIf="DependantsForm.controls['Name'].invalid && DependantsForm.controls['Name'].touched">
+                        <small class="error_msg_form" *ngIf="DependantsForm.controls['Name'].hasError('required')" >الاسم مطلوب</small>
+                        <small class="error_msg_form" *ngIf="DependantsForm.controls['Name'].hasError('minlength')">يجب ان يكون الاسم اكثر من 3 حروف</small>
+                </ng-container>
                 </div>
             
             </div>
@@ -84,7 +116,8 @@
                 <div class="col-sm-12 col-lg-4">
                 <div class="mb-3">
                     <label for="phonenumber2" class="form-label">رقم الجوال</label>
-                <input type="text" class="form-control" id="phonenumber2" placeholder="رقم الجوال">
+                <input type="text" class="form-control" id="phonenumber2" placeholder="رقم الجوال" formControlName="phoneNumber">
+                <ng-container *ngIf="DependantsForm.controls['phoneNumber'].invalid && DependantsForm.controls['phoneNumber'].touched"><small class="error_msg_form" *ngIf="DependantsForm.controls['phoneNumber'].hasError('required')" >رقم الجوال مطلوب</small></ng-container>
                 </div>
             
             </div>
@@ -92,7 +125,8 @@
              <div class="col-sm-12 col-lg-4">
                 <div class="mb-3">
                     <label for="idnational2" class="form-label">رقم الهويه</label>
-                <input type="text" class="form-control" id="idnational2" placeholder="رقم الهويه">
+                <input type="text" class="form-control" id="idnational2" placeholder="رقم الهويه" formControlName="nationalID">
+              <ng-container *ngIf="DependantsForm.controls['nationalID'].invalid && DependantsForm.controls['nationalID'].touched"><small class="error_msg_form" *ngIf="DependantsForm.controls['nationalID'].hasError('required')" >رقم الهويه مطلوب</small></ng-container>
                 </div>
             
             </div>
@@ -100,18 +134,20 @@
              <div class="col-sm-12 col-lg-4">
                 <div class="mb-3">
                 <label for="nationality2" class="form-label">الجنسيه</label>
-                <ng-select [items]="dataNationality" placeholder="الجنسيه" bindLabel="nationality_ar" bindValue="nationality_ar"></ng-select>
+                <ng-select [items]="dataNationality" placeholder="الجنسيه" bindLabel="nationality_ar" bindValue="nationality_ar" formControlName="nationality"></ng-select>
+                    <ng-container *ngIf="DependantsForm.controls['nationality'].invalid && DependantsForm.controls['nationality'].touched"><small class="error_msg_form" *ngIf="DependantsForm.controls['nationality'].hasError('required')" >الجنسيه مطلوبه</small></ng-container>
                 </div>
             </div>
              <div class="col-sm-12 col-lg-4">
                 <div class="mb-3">
                 <label for="apartment" class="form-label">الصله</label>
-                <ng-select [items]="dataRelation"  bindLabel="relation_ar" bindValue="relation_ar" placeholder="الصله"></ng-select>
+                <ng-select [items]="dataRelation"  bindLabel="relation_ar" bindValue="relation_ar" placeholder="الصله" formControlName="relation"></ng-select>
+                    <ng-container *ngIf="DependantsForm.controls['relation'].invalid && DependantsForm.controls['relation'].touched"><small class="error_msg_form" *ngIf="DependantsForm.controls['relation'].hasError('required')" >الصله مطلوبه</small></ng-container>
                 </div>
             </div>
 
              <div class="btn_add_reset">
-        <button type="sumbit" data-button="send">اضافه</button>
+        <button type="submit" data-button="send" [ngClass]="{'btnEdit':this.btnaddandupdateMoraphk=='update','btnAdd':this.btnaddandupdateMoraphk=='add'}">{{this.btnaddandupdateMoraphk=='add' ? 'اضافه' : 'تعديل'}}</button>
         <button type="reset" data-button="reset">جديد</button>
     </div>
             
@@ -119,7 +155,7 @@
 
         </div>
 
-    </div>
+    </form>
 </div>
 
 <div class="table-responsive">
@@ -140,7 +176,7 @@
         <tr>
             <td>{{$index+1}}</td>
             <td>{{item.name}}</td>
-            <td>{{item.nationalId}}</td>
+            <td>{{item.nationalID}}</td>
             <td>  {{item.mobile}}</td>
             <td> {{item.nationality}}</td>
             <td>{{item.relation}}</td>
@@ -150,13 +186,13 @@
             
             <td>
                 <div class="btn_edit">
-                    <button type="button" data-button="edit"><svg width="33" height="26" viewBox="0 0 33 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <button type="button" data-button="edit" (click)="editmorafqa($index)"><svg width="33" height="26" viewBox="0 0 33 26" fill="none" xmlns="http://www.w3.org/2000/svg">
 <rect y="0.5" width="33.0001" height="25.0001" rx="2" fill="#E0ECE1"/>
 <path d="M11 8.5H10C9.46957 8.5 8.96086 8.71071 8.58579 9.08579C8.21071 9.46086 8 9.96957 8 10.5V19.5C8 20.0304 8.21071 20.5391 8.58579 20.9142C8.96086 21.2893 9.46957 21.5 10 21.5H19C19.5304 21.5 20.0391 21.2893 20.4142 20.9142C20.7893 20.5391 21 20.0304 21 19.5V18.5" stroke="#16601A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
 <path d="M20 6.50011L23 9.50011M24.385 8.08511C24.7788 7.69126 25.0001 7.15709 25.0001 6.60011C25.0001 6.04312 24.7788 5.50895 24.385 5.11511C23.9912 4.72126 23.457 4.5 22.9 4.5C22.343 4.5 21.8088 4.72126 21.415 5.11511L13 13.5001V16.5001H16L24.385 8.08511Z" stroke="#16601A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
 </svg>
 </button>
-                    <button type="button" data-button="delete"><svg width="33" height="26" viewBox="0 0 33 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <button type="button" data-button="delete" (click)="deleteMoraphk($index)"><svg width="33" height="26" viewBox="0 0 33 26" fill="none" xmlns="http://www.w3.org/2000/svg">
 <rect y="0.5" width="33" height="25" rx="2" fill="#FFE5E5"/>
 <path d="M23.5 5H20L19 4H14L13 5H9.5V7H23.5M10.5 20C10.5 20.5304 10.7107 21.0391 11.0858 21.4142C11.4609 21.7893 11.9696 22 12.5 22H20.5C21.0304 22 21.5391 21.7893 21.9142 21.4142C22.2893 21.0391 22.5 20.5304 22.5 20V8H10.5V20Z" fill="#FF3D00"/>
 </svg>
@@ -164,7 +200,13 @@
                 </div>
             </td>
         </tr>
-      } 
+      } @empty {
+               <tr>
+    <td class="empty-cell" colspan="8">
+     <app-emptytable></app-emptytable>
+    </td>
+  </tr>
+      }
         </tbody>
     </table>
 
@@ -172,8 +214,10 @@
 </div>
 
    <div class="btn_add_reset mb-3" style="margin-top: 30px !important;">
-        <button type="sumbit" data-button="send">حفظ</button>
-        <button type="button" data-button="reset">جديد</button>
-        <button type="button" data-button="reset">تعديل </button>
-        <button type="button" data-button="reset">حفظ</button>
+        <button type="sumbit" data-button="send" (click)="onSubmit()" [ngClass]="{'btnEdit':this.btnaddandupdate=='update','btnAdd':this.btnaddandupdate=='add'}">{{btnaddandupdate == 'add' ? 'اضافه' : 'تعديل'}}</button>
+        <button type="button" data-button="reset" (click)="resetForms()">جديد</button>
+        <!-- <button type="button" data-button="reset">تعديل </button> -->
+        <button type="button" data-button="reset" (click)="deleteTenant()" *ngIf="this.idEdit">حذف</button>
     </div>
+
+<app-confirm-delete [isVisible]="showDelete" (onDelete)="deleteConfirmed($event)" [itemId]="this.deleteId" (toggleModal)="onClose()"></app-confirm-delete>

@@ -1,6 +1,11 @@
 import { Component, DestroyRef, inject } from '@angular/core';
 import { SharedService } from '../../../../shared/services/shared.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { FormBuilder, Validators } from '@angular/forms';
+import { EmployeesService } from './services/employees.service';
+import { ToastrService } from '../../../../shared/ui/toastr/services/toastr.service';
+import { EmployeesModule } from './employees.module';
+import { Employees } from './models/employees';
 
 @Component({
   selector: 'app-employees',
@@ -9,26 +14,45 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 })
 export class EmployeesComponent {
 
-  // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! Properties !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
-  
-  dataNationality:any[]=[]
-    empData: any = [
-    { id: 1, empName: "أحمد محمد علي",    mobile: "01001234567", nationalId: "28506123401234" },
-    { id: 2, empName: "منى سامي حسين",     mobile: "01009876543", nationalId: "29705234567890" },
-    { id: 3, empName: "خالد إبراهيم حسن",  mobile: "01112345678", nationalId: "30101111222333" },
-    { id: 4, empName: "سارة محمود عمر",    mobile: "01233445566", nationalId: "29807098765432" },
-    { id: 5, empName: "محمود فؤاد عبد",    mobile: "01055667788", nationalId: "29009234567812" },
-    { id: 6, empName: "نهى مصطفى فرج",     mobile: "01199887766", nationalId: "30304123456789" },
-    { id: 7, empName: "ياسر سليمان جمال",   mobile: "01234566778", nationalId: "29903123400123" },
-    { id: 8, empName: "هالة ربيع ناصر",     mobile: "01022334455", nationalId: "28612123456780" },
-    { id: 9, empName: "عمر رامي سعيد",      mobile: "01166778899", nationalId: "30205123400987" },
-    { id:10, empName: "ريم محمد خالد",      mobile: "01277889900", nationalId: "29508123456745" }
-  ];
-  
-
   // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1 Services !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!11
   _sharedServices:SharedService=inject(SharedService);
   destroyRef:DestroyRef=inject(DestroyRef);
+  fb:FormBuilder=inject(FormBuilder);
+
+  _employeesServices:EmployeesService=inject(EmployeesService)
+  toastr:ToastrService=inject(ToastrService);
+
+
+  // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! Properties !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
+  
+  dataNationality:any[]=[]
+  employeesData=this.fb.group({
+    Name:['',[Validators.required]],
+    Nationality:[null,[Validators.required]],
+    Mobile:['',[Validators.required]],
+    Email:['',[Validators.required,Validators.email]],
+    Address:['',[Validators.required]],
+    NationalID:['',[Validators.required]],
+    Salary:['',[Validators.required]],
+    Files:[null],
+  })
+  dataFiles:any=[]
+  idUpdate:any
+  idsRemoveFiles:any=[]
+    empData: {rows:Employees[],paginationInfo:any} = {
+      rows:[],
+      paginationInfo:null
+    }
+  
+    // pagination
+    btnAddandUpdate='add';
+
+pageIndex=1
+pageSize=10
+showDelete=false;
+deleteId:any
+
+
 
 
 
@@ -37,6 +61,7 @@ export class EmployeesComponent {
     //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
     //Add 'implements OnInit' to the class.
     this.getAllNationality();
+    this.getAllData();
   }
   getAllNationality(){
 
@@ -49,15 +74,162 @@ export class EmployeesComponent {
     
   }
 
-  // pagination
+  onSubmit(){
+    if(this.employeesData.valid){
+  if(this.btnAddandUpdate=='add'){
+        let formData=new FormData();
 
-pageIndex=1
-pageSize=10
+      formData.append('Name',this.employeesData.value.Name ?? '');
+      formData.append('Nationality',this.employeesData.value.Nationality ?? '');
+      formData.append('Mobile',this.employeesData.value.Mobile ?? '');
+      formData.append('Email',this.employeesData.value.Email ?? '');
+      formData.append('NationalID',this.employeesData.value.NationalID ?? '');
+      formData.append('Address',this.employeesData.value.Address ?? '');
+      formData.append('Salary',this.employeesData.value.Salary ?? '');
+      // formData.append('Salary',this.employeesData.value.Salary ?? '');
 
+      let  files=this.employeesData.value.Files || []
+
+      files.forEach((file:any)=>{
+        formData.append('Files',file);
+      })
+      this._employeesServices.createData(formData).pipe(takeUntilDestroyed(this.destroyRef)).subscribe((res:any)=>{
+        this.toastr.show('تم اضافه البيانات بنجاح','success');
+        this.employeesData.reset();
+        this.employeesData.get('Files')?.patchValue(null);
+        this.dataFiles = [];
+        this.getAllData();
+      })
+  }else{
+    // Update
+
+    let formData=new FormData();
+    formData.append('Name',this.employeesData.value.Name ?? '');
+    formData.append('Nationality',this.employeesData.value.Nationality ?? '');
+    formData.append('Mobile',this.employeesData.value.Mobile ?? '');
+    formData.append('Email',this.employeesData.value.Email ?? '');
+    formData.append('NationalID',this.employeesData.value.NationalID ?? '');
+    formData.append('Address',this.employeesData.value.Address ?? '');
+    formData.append('Salary',this.employeesData.value.Salary ?? '');
+    formData.append('id',this.idUpdate ?? '');
+
+    // RemovedAttachmentIds
+
+    this.idsRemoveFiles.forEach((id:any)=>{
+
+      formData.append('RemovedAttachmentIds',id);
+
+    })
+
+
+    let files:any=this.employeesData.value.Files || []
+
+   files.filter((el:any)=> el instanceof File).forEach((file:any)=>{
+
+    formData.append('NewFiles',file);
+   })
+
+   this._employeesServices.updateData(formData).pipe(takeUntilDestroyed(this.destroyRef)).subscribe((res:any)=>{
+    this.toastr.show('تم تعديل البيانات بنجاح','success');
+    this.employeesData.reset();
+    this.employeesData.get('Files')?.patchValue(null);
+    this.dataFiles = [];
+    this.btnAddandUpdate='add';
+   })
+  }
+
+    }else{
+      this.employeesData.markAllAsTouched();
+    }
+  }
+
+
+  OnDataFiles(file:any){
+    
+  this.employeesData.get('Files')?.setValue(file);
+  }
+
+
+  fnIdRemoveFiles(ids:any){
+
+    // console.log(ids);
+    // this.dataFiles=this.dataFiles.filter((el:any)=>!ids.includes(el.id));
+    this.dataFiles = this.dataFiles.filter((el:any) => el.id !== ids);
+
+
+      this.idsRemoveFiles.push(ids);
+   
+
+
+  }
+
+
+  getAllData(){
+    let pagination={
+  paginationInfo: {
+    pageIndex: this.pageIndex,
+    pageSize: this.pageSize
+  }
+}
+  this._employeesServices.getAllDataEmployees(pagination).pipe(takeUntilDestroyed(this.destroyRef)).subscribe((res:any)=>{
+    this.empData=res
+    console.log(this.empData)
+  })
+
+  
+
+  }
+
+  getDataUpdate(id:any){
+    this._employeesServices.getUpdateDate(id).pipe(takeUntilDestroyed(this.destroyRef)).subscribe((res:any)=>{
+      console.log(res);
+      this.idUpdate=id
+      this.employeesData.patchValue({
+        Name:res.name,
+        Nationality:res.nationality,
+        Email:res.email,
+        Mobile:res.mobile,
+        Address:res.address,
+        NationalID:res.nationalID,
+        Salary:res.salary
+      })
+
+      this.dataFiles=res.attachments
+      this.btnAddandUpdate='update'
+    })
+
+  }
 
 onPageChanged(page: number) {
   this.pageIndex = page;
-  // this.fetchEmployees(); // أعد جلب البيانات
-  // this.getData()
+this.getAllData();
 }
+
+
+onClose(){
+  this.showDelete=false
+}
+getDataDelete(id:any){
+this.showDelete=true
+this.deleteId=id
+
+}
+
+
+deleteConfirmed(id:any){
+
+
+  this.showDelete=false;
+
+  this._employeesServices.deleteData(id).pipe(takeUntilDestroyed(this.destroyRef)).subscribe((res:any)=>{
+    console.log(res);
+    this.toastr.show('تم حذف البيانات بنجاح','success');
+    this.getAllData();
+  })
+}
+
+
+
+
+
 }

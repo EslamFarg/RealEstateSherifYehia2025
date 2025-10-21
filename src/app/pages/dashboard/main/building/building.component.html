@@ -1,37 +1,53 @@
 <app-page-heading [title]="title" [subtitle]="subtitle"></app-page-heading>
 
 
-<div class="forms_dashboard">
+<form class="forms_dashboard" [formGroup]="formProperty"  (ngSubmit)="onSubmit()">
     <div class="row">
         <div class="col-sm-12 col-lg-2">
             <div class="mb-3">
                 <label for="NumberBuilding" class="form-label">رقم العقار</label>
-                <input type="text" class="form-control" id="NumberBuilding" placeholder="رقم العقار">
+                <input type="text" class="form-control" maxlength="40" id="NumberBuilding" placeholder="رقم العقار" formControlName="PropertyNumber">
+                <ng-container *ngIf="formProperty.controls['PropertyNumber'].invalid && formProperty.controls['PropertyNumber'].touched" >
+                    <small class="error_msg_form" *ngIf="formProperty.controls['PropertyNumber'].hasError('required')">رقم العقار مطلوب</small>
+                    <!-- <small class="error_msg_form" *ngIf="formProperty.controls['PropertyNumber'].hasError('minlength')">رقم العقار مطلوب</small> -->
+                </ng-container>
             </div>
         </div>
         <div class="col-sm-12 col-lg-5">
             <div class="mb-3">
                 <label for="nameBuilding" class="form-label">اسم العقار</label>
-                <input type="text" class="form-control" id="nameBuilding" placeholder="اسم العقار">
+                <input type="text" class="form-control" id="nameBuilding" placeholder="اسم العقار" formControlName="Name">
+                <ng-container *ngIf="formProperty.controls['Name'].invalid && formProperty.controls['Name'].touched">
+
+                <small class="error_msg_form" *ngIf="formProperty.controls['Name'].hasError('required')">اسم العقار مطلوب</small>
+                <small class="error_msg_form" *ngIf="formProperty.controls['Name'].hasError('minlength')">اسم العقار يجب ان يحتوي علي اكثر من 3 حروف</small>
+                </ng-container>
+              
             </div>
         </div>
         <div class="col-sm-12 col-lg-5">
             <div class="mb-3">
-              <app-refresh-select [titleLabel]="'اسم المالك'"></app-refresh-select>
-              
+              <app-refresh-select [titleLabel]="'اسم المالك'" [fc]="getFc('OwnerID')" [dataItems]="nameOwners" [bindLabel]="'name'" [bindValue]="'id'" (selectedData)="OnSelectedOwners($event)"></app-refresh-select>
+                 <ng-container *ngIf="formProperty.controls['OwnerID'].invalid && formProperty.controls['OwnerID'].touched" >
+                    <small class="error_msg_form" *ngIf="formProperty.controls['OwnerID'].hasError('required')">اسم المالك مطلوب</small>
+                </ng-container>
             </div>
         </div>
         <div class="col-sm-12 col-lg-3">
             <div class="mb-3">
-            <app-refresh-select [titleLabel]="'المدينه'"></app-refresh-select>
-              
+            <app-refresh-select [titleLabel]="'المدينه'" [fc]="getFc('City')"  [dataItems]="cities" [bindLabel]="'name_ar'" [bindValue]="'name_ar'"  (selectedData)="OnSelectedCity($event)"></app-refresh-select>
+                <ng-container *ngIf="formProperty.controls['City'].invalid && formProperty.controls['City'].touched" >
+                    <small class="error_msg_form" *ngIf="formProperty.controls['City'].hasError('required')">المدينه مطلوبه</small>
+                </ng-container>
             </div>
         </div>
         <div class="col-sm-12 col-lg-3">
             <div class="mb-3">
               
-                <app-refresh-select [titleLabel]="'الحي'"></app-refresh-select>
-              
+                <app-refresh-select [fc]="getFc('District')" [titleLabel]="'الحي'" [dataItems]="districts"  [bindLabel]="'name_ar'" [bindValue]="'name_ar'" (selectedData)="OnSelecteddistricts($event)"></app-refresh-select>
+                <ng-container *ngIf="formProperty.controls['District'].invalid && formProperty.controls['District'].touched" >
+                    <small class="error_msg_form" *ngIf="formProperty.controls['District'].hasError('required')">الحي مطلوب</small>
+                </ng-container>
             </div>
         </div>
 
@@ -39,38 +55,47 @@
             <div class="col-sm-12 col-lg-2">
             <div class="mb-3">
                 <label for="street" class="form-label">الشارع</label>
-                <input type="text" class="form-control" id="street" placeholder="الشارع">
+                <input type="text" class="form-control" id="street" maxlength="30" placeholder="الشارع" formControlName="Street">
+                 <ng-container *ngIf="formProperty.controls['Street'].invalid && formProperty.controls['Street'].touched" >
+                    <small class="error_msg_form" *ngIf="formProperty.controls['Street'].hasError('required')">الشارع مطلوب</small>
+                </ng-container>
             </div>
         </div>
             <div class="col-sm-12 col-lg-2">
             <div class="mb-3">
                 <label for="numberbuild" class="form-label">رقم المبني</label>
-                <input type="text" class="form-control" id="numberbuild" placeholder="رقم المبني">
+                <input type="text" class="form-control" id="numberbuild" placeholder="رقم المبني" formControlName="BuildingNumber">
+                <ng-container *ngIf="formProperty.controls['BuildingNumber'].invalid && formProperty.controls['BuildingNumber'].touched" >
+                    <small class="error_msg_form" *ngIf="formProperty.controls['BuildingNumber'].hasError('required')">رقم المبني مطلوب</small>
+                </ng-container>
             </div>
         </div>
             <div class="col-sm-12 col-lg-2">
             <div class="mb-3">
                 <label for="code" class="form-label">الرمز البريدي</label>
-                <input type="text" class="form-control" id="code" placeholder="الرمز البريدي">
+                <input type="text" class="form-control" id="code" placeholder="الرمز البريدي" formControlName="PostalCode">
+                <ng-container *ngIf="formProperty.controls['PostalCode'].invalid && formProperty.controls['PostalCode'].touched" >
+                    <small class="error_msg_form" *ngIf="formProperty.controls['PostalCode'].hasError('required')">الرمز البريدي مطلوب</small>
+                </ng-container>
             </div>
         </div>
 
         <div class="col-sm-12">
-            <app-imgattachments></app-imgattachments>
+            <app-imgattachments #attachments (dataImgs)="getDataFiles($event)" (idRemoveFiles)="RemoveFiles($event)"></app-imgattachments>
         </div>
 
         <div class="col-sm-12">
             <div class="mb-3">
                 <label for="exampleFormControlTextarea1" class="form-label">البيان</label>
-                <textarea class="form-control textarea" id="exampleFormControlTextarea1" placeholder="اكتب المحتوي"></textarea>
+                <textarea class="form-control textarea" formControlName="Description" id="exampleFormControlTextarea1" placeholder="اكتب المحتوي"></textarea>
             </div>
         </div>
     </div>
           <div class="btn_add_reset">
-        <button type="sumbit" data-button="send">اضافه</button>
-        <button type="reset" data-button="reset">جديد</button>
+        <button type="submit" data-button="send" [ngClass]="{'btnEdit':this.btnAddandUpdate=='update','btnAdd':this.btnAddandUpdate=='add'}">{{btnAddandUpdate == 'add' ? 'اضافه':"تعديل"}}</button>
+        <button type="reset" data-button="reset" (click)="resetForm()">جديد</button>
     </div>
-</div>
+</form>
 
 
 <div class="table-responsive">
@@ -85,21 +110,21 @@
             </tr>
         </thead>
         <tbody>
-       @for (item of buildingsData; track $index) {
+       @for (item of buildingsData.rows; track $index) {
         <tr>
             <td>{{$index+1}}</td>
             <td>{{item.name}}</td>
-            <td>{{item.owner}}</td>
+            <td>{{item.ownerName}}</td>
             <td>  {{item.city}}</td>            
             <td>
                 <div class="btn_edit">
-                    <button type="button" data-button="edit"><svg width="33" height="26" viewBox="0 0 33 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <button type="button" (click)="getUpdateData(item.id)" data-button="edit"><svg width="33" height="26" viewBox="0 0 33 26" fill="none" xmlns="http://www.w3.org/2000/svg">
 <rect y="0.5" width="33.0001" height="25.0001" rx="2" fill="#E0ECE1"/>
 <path d="M11 8.5H10C9.46957 8.5 8.96086 8.71071 8.58579 9.08579C8.21071 9.46086 8 9.96957 8 10.5V19.5C8 20.0304 8.21071 20.5391 8.58579 20.9142C8.96086 21.2893 9.46957 21.5 10 21.5H19C19.5304 21.5 20.0391 21.2893 20.4142 20.9142C20.7893 20.5391 21 20.0304 21 19.5V18.5" stroke="#16601A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
 <path d="M20 6.50011L23 9.50011M24.385 8.08511C24.7788 7.69126 25.0001 7.15709 25.0001 6.60011C25.0001 6.04312 24.7788 5.50895 24.385 5.11511C23.9912 4.72126 23.457 4.5 22.9 4.5C22.343 4.5 21.8088 4.72126 21.415 5.11511L13 13.5001V16.5001H16L24.385 8.08511Z" stroke="#16601A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
 </svg>
 </button>
-                    <button type="button" data-button="delete"><svg width="33" height="26" viewBox="0 0 33 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <button type="button" data-button="delete" (click)="showDeletePopup(item.id)"><svg width="33" height="26" viewBox="0 0 33 26" fill="none" xmlns="http://www.w3.org/2000/svg">
 <rect y="0.5" width="33" height="25" rx="2" fill="#FFE5E5"/>
 <path d="M23.5 5H20L19 4H14L13 5H9.5V7H23.5M10.5 20C10.5 20.5304 10.7107 21.0391 11.0858 21.4142C11.4609 21.7893 11.9696 22 12.5 22H20.5C21.0304 22 21.5391 21.7893 21.9142 21.4142C22.2893 21.0391 22.5 20.5304 22.5 20V8H10.5V20Z" fill="#FF3D00"/>
 </svg>
@@ -107,7 +132,13 @@
                 </div>
             </td>
         </tr>
-      } 
+      }@empty{
+                   <tr>
+    <td class="empty-cell" colspan="5">
+     <app-emptytable></app-emptytable>
+    </td>
+  </tr>
+      }
         </tbody>
     </table>
 
@@ -115,7 +146,10 @@
 </div>
 
  <app-pagination
-  [totalPages]="10"
+  [totalPages]="buildingsData.paginationInfo?.totalPagesCount"
   [currentPage]="pageIndex"
   (pageChange)="onPageChanged($event)">
 </app-pagination>
+
+
+<app-confirm-delete [isVisible]="showDelete" (onDelete)="deleteConfirmed($event)" [itemId]="this.deleteId" (toggleModal)="onClose()"></app-confirm-delete>

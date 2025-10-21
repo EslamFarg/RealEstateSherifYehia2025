@@ -42,6 +42,7 @@ export class AuthComponent {
   showNewPassword = false;
   showConfirmPassword = false;
   emailOtp:any
+  userId:any
 
 
     
@@ -52,6 +53,7 @@ ngOnInit() {
   
 
   this.passwordForm = this.fb.group({
+    userId:[this.userId ?? ''],
     newPassword: ['', Validators.required],
     confirmPassword: ['', Validators.required],
   });
@@ -171,6 +173,9 @@ this.vcr.createEmbeddedView(this.login);
        this.vcr.createEmbeddedView(this.otpcodetem);
         this.toastr.show('تم ارسال رمز التحقق','success');  
         this.emailOtp=data.email  
+        this.emailForm.reset();
+
+       
       })
  
     }else{
@@ -198,11 +203,19 @@ submitNewPassword() {
       return;
     }
 
-    const data = {
-      email: this.emailForm.get('email')?.value,
-      otpCode: this.otpCodeValue,
-      newPassword: confirmPassword
-    };
+    const data={
+      userId:this.userId,
+      newPassword:this.passwordForm.value.newPassword,
+      confirmPassword:this.passwordForm.value.confirmPassword
+    }
+
+
+    this._authServices.changePassword(data).pipe(takeUntilDestroyed(this.destroyRef)).subscribe((res:any)=>{
+      this.vcr.clear();
+      this.vcr.createEmbeddedView(this.login);
+      this.toastr.show('تم تغيير كلمة المرور بنجاح','success')
+      this.passwordForm.reset();
+    })
 
    
 
@@ -216,19 +229,14 @@ submitNewPassword() {
 
 
   otpcode(){
-
     this.vcr.clear()
     this.vcr.createEmbeddedView(this.emailForgot);
-
-    // this.vcr.clear();
-    // this.vcr.createEmbeddedView(this.resetpass);
-
   }
 
 
 onSubmitOTP() {
 
-  console.log('OTOTOTOTTOTOTOTO')
+  
 
   if (!this.otpCodeValue || this.otpCodeValue.length < this.otpArray.length) {
     this.toastr.show('رجاء إدخال رمز التحقق بالكامل', 'error');
@@ -253,6 +261,11 @@ this._authServices.sendOtp(data)
       this.vcr.clear();
       this.vcr.createEmbeddedView(this.resetpass);
       this.toastr.show('تم التحقق بنجاح','success');
+      // console.log(res);
+       this.userId=res.userId
+
+
+        console.log(this.userId)
     },
     error: (err:any) => {
       console.error('OTP Error:', err);

@@ -3,7 +3,7 @@
     <div class="head_popup">
       <svg
         width="24"
-        (click)="showPopup = !showPopup"
+        (click)="closePopup()"
         height="24"
         viewBox="0 0 24 24"
         fill="none"
@@ -19,12 +19,13 @@
     </div>
 
     <div class="body_popup">
-     <form action="" class="forms_dashboard send_msg_forms">
+     <form action="" class="forms_dashboard send_msg_forms" [formGroup]="SearchForm" (ngSubmit)="onSubmit()">
 
         <div class="row">
             <div class="col-sm-12 col-lg-4">
                 <label for="city" class="form-label">المدينه</label>
                 <ng-select [items]="[]" bindLabel="name" placeholder="اختر" bindValue="id" placeholder="المدينه"></ng-select>
+                
 
             </div>
             <div class="col-sm-12 col-lg-4">

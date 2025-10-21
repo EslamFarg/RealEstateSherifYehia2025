@@ -3,7 +3,7 @@
     <div class="head_popup">
       <svg
         width="24"
-        (click)="showPopup = !showPopup"
+        (click)="closePopup()"
         height="24"
         viewBox="0 0 24 24"
         fill="none"
@@ -23,16 +23,27 @@
 
         <div class="boxes">
 
-            @for(item of msgData; track $index){
+            @for(item of msgArrayData; track $index){
             <div class="box">
                 <div class="number_msg">{{$index + 1}}.</div>
                  <input type="radio"  [name]="'checkmsg'" (change)="selectMsg(item)" [id]="'check_inp'+$index" >
-                <label [for]="'check_inp'+$index">
-                    <h5 class="title">{{item.title}}</h5>
-                    <p>{{item.text}}</p>
+                <label [for]="'check_inp'+$index" style="width: 100%;">
+                    <h5 class="title">{{item.name}}</h5>
+                    <p>{{item.body}}</p>
                 </label>
                 
                            </div>      
+            }@empty{
+              <div class="empty_arr">
+   <div class="no-data">
+              <svg xmlns="http://www.w3.org/2000/svg" height="70" viewBox="0 -960 960 960" width="70" fill="#aaa">
+                <path d="M480-80q-83 0-156-31t-127.5-85Q142-250 111-323T80-480q0-83 31-156t85.5-127Q250-818 323-849t157-31q83 0 156 31t127 85q54 54 85 127t31 157q0 83-31 156t-85 127.5Q716-111 643-80t-163 0Zm0-680q-134 0-227 93t-93 227q0 134 93 227t227 93q134 0 227-93t93-227q0-134-93-227t-227-93Zm0 500q-17 0-28.5-11.5T440-300q0-17 11.5-28.5T480-340q17 0 28.5 11.5T520-300q0 17-11.5 28.5T480-260Zm-40-140v-280h80v280h-80Z"/>
+              </svg>
+              <h4>لا توجد رسائل متاحة حاليًا</h4>
+              <p>يرجى إضافة رسائل جديدة من لوحة التحكم لعرضها هنا</p>
+            </div>
+              </div>
+              
             }
           
             <!-- <div class="box">

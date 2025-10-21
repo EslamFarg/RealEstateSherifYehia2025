@@ -77,3 +77,40 @@
         
     }
 }
+
+
+.links_msg{
+    @include flex_box(flex,null,center,40px);
+    margin-bottom: 20px !important;
+    li{
+        a{
+            color: #86AC88;
+            font-weight: 700;
+            font-size: 18px;
+            position: relative;
+            // position: relative;
+          
+            &.active{
+                color: $main_color !important;
+                // display: block;
+                transition: 0.3s ;
+
+                  &::after{
+                content: '';
+                position: absolute;
+                left: 53%;
+                transform: translateX(-50%);
+                bottom: -10px;
+                width: 80%;
+                background-color: $main-color;
+
+                height: 4px;
+                border-radius: 4px;
+                
+
+            }
+                
+            }
+        }
+    }
+}

@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { ProgramsettingsRoutingModule } from './programsettings-routing.module';
 import { ProgramsettingsComponent } from './programsettings.component';
 import { NgSelectModule } from '@ng-select/ng-select';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -13,7 +14,8 @@ import { NgSelectModule } from '@ng-select/ng-select';
   imports: [
     CommonModule,
     ProgramsettingsRoutingModule,
-    NgSelectModule
+    NgSelectModule,
+    ReactiveFormsModule
   ]
 })
 export class ProgramsettingsModule { }

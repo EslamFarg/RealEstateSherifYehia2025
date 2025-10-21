@@ -1,5 +1,5 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
+import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgSelectModule } from '@ng-select/ng-select';
 
 @Component({
@@ -7,10 +7,25 @@ import { NgSelectModule } from '@ng-select/ng-select';
   templateUrl: './searchmsg.component.html',
   styleUrl: './searchmsg.component.scss',
   standalone:true,
-  imports:[FormsModule,NgSelectModule]
+  imports: [FormsModule, NgSelectModule, ReactiveFormsModule]
 })
 export class SearchmsgComponent {
-@Input() showPopup=false;
+@Input() showPopup:any = false;
+fb:FormBuilder=inject(FormBuilder);
+// @Output() 
+@Output() showPopupChange = new EventEmitter<boolean>();
+
+SearchForm=this.fb.group({
+  search:['']
+})
+
+
+closePopup() {
+  this.showPopup = false;
+  this.showPopupChange.emit(this.showPopup);
+}
+
+
     employees = [
     { name: 'محمد احمد محمود', checked: false },
     { name: 'احمد علي', checked: false },
@@ -110,5 +125,11 @@ export class SearchmsgComponent {
 
    
  
+ }
+
+
+ 
+ onSubmit(){
+
  }
 }

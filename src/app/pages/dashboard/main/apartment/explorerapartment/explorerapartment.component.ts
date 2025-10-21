@@ -1,4 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { ApartmentService } from '../services/apartment.service';
+import { Apartment } from '../models/apartment';
+import { ToastrService } from '../../../../../shared/ui/toastr/services/toastr.service';
+import { EditBehaviorServiceService } from '../../../../../shared/services/edit-behavior-service.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-explorerapartment',
@@ -7,9 +12,19 @@ import { Component } from '@angular/core';
 })
 export class ExplorerapartmentComponent {
 
+
+
+// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!11 Services
+
+_unitServices:ApartmentService=inject(ApartmentService)
+toastr:ToastrService=inject(ToastrService)
+_behaviorServices:EditBehaviorServiceService=inject(EditBehaviorServiceService)
+router:Router=inject(Router)
+
   title='الرئيسيه'
   subtitle="الوحده"
 
+  // _unit
 
   dataFilter=['اسم الوحده','العماره']
 
@@ -18,24 +33,13 @@ export class ExplorerapartmentComponent {
 
 
 
-  units:any = [
-  { id: 1, name: "وحدة 101", building: "عمارة النور", floor: 1, rooms: 3, price: 2500 },
-  { id: 2, name: "وحدة 202", building: "عمارة الندى", floor: 2, rooms: 2, price: 2000 },
-  { id: 3, name: "وحدة 303", building: "برج الخليج", floor: 3, rooms: 4, price: 3500 },
-  { id: 4, name: "وحدة 404", building: "عمارة الورود", floor: 4, rooms: 3, price: 2800 },
-  { id: 5, name: "وحدة 505", building: "برج السلام", floor: 5, rooms: 5, price: 4500 },
-  { id: 1, name: "وحدة 101", building: "عمارة النور", floor: 1, rooms: 3, price: 2500 },
-  { id: 2, name: "وحدة 202", building: "عمارة الندى", floor: 2, rooms: 2, price: 2000 },
-  { id: 3, name: "وحدة 303", building: "برج الخليج", floor: 3, rooms: 4, price: 3500 },
-  { id: 4, name: "وحدة 404", building: "عمارة الورود", floor: 4, rooms: 3, price: 2800 },
-  { id: 5, name: "وحدة 505", building: "برج السلام", floor: 5, rooms: 5, price: 4500 },
-  { id: 1, name: "وحدة 101", building: "عمارة النور", floor: 1, rooms: 3, price: 2500 },
-  { id: 2, name: "وحدة 202", building: "عمارة الندى", floor: 2, rooms: 2, price: 2000 },
-  { id: 3, name: "وحدة 303", building: "برج الخليج", floor: 3, rooms: 4, price: 3500 },
-  { id: 4, name: "وحدة 404", building: "عمارة الورود", floor: 4, rooms: 3, price: 2800 },
-  { id: 5, name: "وحدة 505", building: "برج السلام", floor: 5, rooms: 5, price: 4500 },
+  unitsData:{rows:Apartment[],paginationInfo:any} = {
+    rows:[],
+    paginationInfo:null
+  }
 
-];
+  showDelete=false
+  deleteId:any
 
 // pagination
 
@@ -43,10 +47,64 @@ pageIndex=1
 pageSize=10
 
 
-onPageChanged(page: number) {
-  this.pageIndex = page;
-  // this.fetchEmployees(); // أعد جلب البيانات
-  // this.getData()
+
+// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! Methods
+
+ngOnInit(): void {
+  //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
+  //Add 'implements OnInit' to the class.
+  this.getAllDataUnit();
 }
 
+onPageChanged(page: number) {
+  this.pageIndex = page;
+  this.getAllDataUnit();
+}
+
+
+getAllDataUnit(){
+  let pagination={
+  
+  paginationInfo: {
+    pageIndex: this.pageIndex,
+    pageSize:this.pageSize
+  
+}
+  }
+  this._unitServices.getAllDataUnit(pagination).subscribe((res:any)=>{
+    this.unitsData=res
+    console.log(this.unitsData)
+  });
+}
+
+
+onSelectedPagination(val:any){
+  this.pageSize=val
+  this.getAllDataUnit();
+}
+
+
+getUpdateData(id:any){
+this.router.navigate(['/dashboard/apartment/addapartment']);
+this._behaviorServices.setId(id);
+}
+
+
+showDeletePopup(id:any){
+  this.showDelete=true;
+  this.deleteId=id
+
+}
+
+onClose(){
+  this.showDelete=true
+}
+
+deleteConfirmed(id:any){
+this.showDelete=false;
+this._unitServices.deleteData(id).subscribe((res:any)=>{
+  this.toastr.show('تم حذف الوحده بنجاح','success');
+  this.getAllDataUnit();
+})
+}
 }

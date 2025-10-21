@@ -34,4 +34,10 @@ export class AuthService extends BasehttpservicesService{
 
   }
   
+
+  changePassword(data:any){
+
+    return this.post(`/Auths/ChangePassword`,data);
+
+  }
 }

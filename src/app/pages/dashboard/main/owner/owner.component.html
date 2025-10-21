@@ -51,7 +51,7 @@
             </div>
         </div>
         <div class="col-sm-12 col-lg-4">
-            <app-input-attachments (sendDataFiles)="OnDataFiles($event)" [nameFiles]="dataFiles"></app-input-attachments>
+            <app-input-attachments (sendDataFiles)="OnDataFiles($event)" [nameFiles]="dataFiles" (idRemoveFiles)="fnIdRemoveFiles($event)"></app-input-attachments>
         </div>
 
 
@@ -59,8 +59,8 @@
 
 
     <div class="btn_add_reset">
-        <button type="sumbit" data-button="send" [ngClass]="{'btnEdit':this.btnAddAndUpdate=='update','btnAdd':this.btnAddAndUpdate=='add'}">{{btnAddAndUpdate == 'add' ? 'اضافه':"تعديل"}}</button>
-        <button type="reset" data-button="reset">جديد</button>
+        <button type="submit" data-button="send" [ngClass]="{'btnEdit':this.btnAddAndUpdate=='update','btnAdd':this.btnAddAndUpdate=='add'}">{{btnAddAndUpdate == 'add' ? 'اضافه':"تعديل"}}</button>
+        <button type="reset" (click)="this.btnAddAndUpdate='add'" data-button="reset">جديد</button>
     </div>
 
 </form>

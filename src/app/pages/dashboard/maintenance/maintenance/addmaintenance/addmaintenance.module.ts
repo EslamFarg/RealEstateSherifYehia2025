@@ -8,6 +8,7 @@ import { SearchinformsComponent } from '../../../../../shared/ui/searchinforms/s
 import { RefreshSelectComponent } from '../../../../../shared/ui/refresh-select/refresh-select.component';
 import { PopupAttachmentsComponent } from '../../../../../shared/ui/popup-attachments/popup-attachments.component';
 import { InputAttachmentsComponent } from '../../../../../shared/ui/input-attachments/input-attachments.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -20,7 +21,8 @@ import { InputAttachmentsComponent } from '../../../../../shared/ui/input-attach
     PageHeadingComponent,
     SearchinformsComponent,
     RefreshSelectComponent,
-    InputAttachmentsComponent
+    InputAttachmentsComponent,
+    ReactiveFormsModule
   ]
 })
 export class AddmaintenanceModule { }

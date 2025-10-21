@@ -1,6 +1,7 @@
 .table-responsive{
-    height: 443px;
-
+    max-height: 443px;
+    // min-height: ;
+    min-height:50px;
     @media (max-width:992px) {
         height: 500px;
         

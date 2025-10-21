@@ -16,18 +16,23 @@ export class PopupAttachmentsComponent {
   @Input() dataFile:any=[];
 
   @Output() closeAttachments=new EventEmitter();
+  @Output() idRemoveFiles=new EventEmitter();
 
   onClose(){
     this.closeAttachments.emit(!this.showPopupAttachment);
+    
   }
 
 
 
-  hideFile(i:any){
+  hideFile(i:any,id:any){
     this.dataFile.splice(i,1);
+    this.idRemoveFiles.emit(id);
     if(this.dataFile.length==0){
-      this.showPopupAttachment=false;
+      // this.showPopupAttachment=false;
+      this.closeAttachments.emit(false);
     }
+
 
   }
 

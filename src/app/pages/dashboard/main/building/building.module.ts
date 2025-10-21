@@ -9,6 +9,9 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import { ImgattachmentsComponent } from '../../../../shared/ui/imgattachments/imgattachments.component';
 import { PaginationComponent } from '../../../../shared/ui/pagination/pagination.component';
 import { RefreshSelectComponent } from '../../../../shared/ui/refresh-select/refresh-select.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { EmptytableComponent } from '../../../../shared/ui/emptytable/emptytable.component';
+import { ConfirmDeleteComponent } from '../../../../shared/components/confirm-delete/confirm-delete.component';
 
 
 @NgModule({
@@ -23,7 +26,10 @@ import { RefreshSelectComponent } from '../../../../shared/ui/refresh-select/ref
     NgSelectModule,
     ImgattachmentsComponent,
     PaginationComponent,
-    RefreshSelectComponent
+    RefreshSelectComponent,
+    ReactiveFormsModule,
+    EmptytableComponent,
+    ConfirmDeleteComponent
 ]
 })
 export class BuildingModule { }

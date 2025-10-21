@@ -1,7 +1,7 @@
 <div class="mb-3">
 <div class="search_forms_container">
             <div class="search_container">
-                  <input type="text" placeholder="بحث" [style.backgroud]="''" class="form-control" >
+                  <input type="text" placeholder="بحث" #searchVal [style.backgroud]="''" class="form-control" (keydown)="valueSearch(searchVal.value)">
                   <div class="icons_search">    
 
                     <div class="filter_data" (click)="showFilterData=!showFilterData ">
@@ -13,7 +13,7 @@
  <div class="data_filters" [ngClass]="{'active':this.showFilterData}">
 
   @for(item of dataFilter; track $index){
-           <a href="#" (click)="selectIndex = $index" [ngClass]="{'active': selectIndex == $index }">{{item}}</a>                   
+           <a href="#" (click)="selectDataFilter($index)" [ngClass]="{'active': selectIndex == $index }">{{item.name}}</a>                   
   }
                
                     </div>
@@ -30,7 +30,7 @@
 
                     </div>
 
-                    <div class="search">
+                    <div class="search" style="cursor: pointer;" (click)="SearchAboutData()">
                         <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path d="M10.4168 17.5C6.04458 17.5 2.50016 13.9555 2.50016 9.58329C2.50016 5.21104 6.04458 1.66663 10.4168 1.66663C14.7891 1.66663 18.3335 5.21104 18.3335 9.58329C18.3335 13.9555 14.7891 17.5 10.4168 17.5Z" stroke="#7F7F7F" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
 <path d="M1.66683 18.3333L3.3335 16.6666" stroke="#7F7F7F" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>

@@ -8,9 +8,10 @@ import { RefreshSelectComponent } from '../../../../shared/ui/refresh-select/ref
 import { PaginationComponent } from '../../../../shared/ui/pagination/pagination.component';
 import { ReactiveFormsModule } from '@angular/forms';
 // import { DirectivesModule } from '../../../../shared/directives/directives.module';
-import { EmptytableComponent } from '../../../../shared/ui/emptytable/emptytable.component';
+// import { EmptytableComponent } from '../../../../shared/ui/emptytable/emptytable.component';
 import { ConfirmDeleteComponent } from '../../../../shared/components/confirm-delete/confirm-delete.component';
 import { DirectivesModule } from '../../../../shared/directives/directives.module';
+import { EmptytableComponent } from '../../../../shared/ui/emptytable/emptytable.component';
 // import { NoStringPasteDirective } from '../../../../shared/directives/no-string-paste.directive';
 
 
@@ -18,7 +19,7 @@ import { DirectivesModule } from '../../../../shared/directives/directives.modul
 @NgModule({
   declarations: [
     NewuserComponent,
-    EmptytableComponent,
+    // EmptytableComponent,
   ],
   imports: [
     CommonModule,
@@ -28,7 +29,8 @@ import { DirectivesModule } from '../../../../shared/directives/directives.modul
     PaginationComponent,
     ReactiveFormsModule,
     ConfirmDeleteComponent,
-    DirectivesModule
+    DirectivesModule,
+    EmptytableComponent
     
   ]
 })

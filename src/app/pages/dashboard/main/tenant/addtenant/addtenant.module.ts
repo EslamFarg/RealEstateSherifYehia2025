@@ -6,6 +6,9 @@ import { AddtenantComponent } from './addtenant.component';
 import { PageHeadingComponent } from '../../../../../shared/ui/page-heading/page-heading.component';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { InputAttachmentsComponent } from '../../../../../shared/ui/input-attachments/input-attachments.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { EmptytableComponent } from '../../../../../shared/ui/emptytable/emptytable.component';
+import { ConfirmDeleteComponent } from '../../../../../shared/components/confirm-delete/confirm-delete.component';
 
 
 @NgModule({
@@ -17,7 +20,10 @@ import { InputAttachmentsComponent } from '../../../../../shared/ui/input-attach
     AddtenantRoutingModule,
     PageHeadingComponent,
     NgSelectModule,
-    InputAttachmentsComponent
+    InputAttachmentsComponent,
+    ReactiveFormsModule,
+    EmptytableComponent,
+    ConfirmDeleteComponent
   ]
 })
 export class AddtenantModule { }

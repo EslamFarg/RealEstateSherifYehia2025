@@ -1,9 +1,11 @@
 .forms_dashboard{
     min-height: 100px ;
+
 }
 
 .table-responsive{
     // height: 440px;
 
-        height: 354px !important;
+        max-height: 354px !important;
+        min-height: 50px;
 }

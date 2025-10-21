@@ -7,6 +7,9 @@ import { PageHeadingComponent } from '../../../../shared/ui/page-heading/page-he
 import { NgSelectModule } from '@ng-select/ng-select';
 import { InputAttachmentsComponent } from '../../../../shared/ui/input-attachments/input-attachments.component';
 import { PaginationComponent } from '../../../../shared/ui/pagination/pagination.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { EmptytableComponent } from '../../../../shared/ui/emptytable/emptytable.component';
+import { ConfirmDeleteComponent } from '../../../../shared/components/confirm-delete/confirm-delete.component';
 
 
 @NgModule({
@@ -19,7 +22,10 @@ import { PaginationComponent } from '../../../../shared/ui/pagination/pagination
     PageHeadingComponent,
     NgSelectModule,
     InputAttachmentsComponent,
-    PaginationComponent
+    PaginationComponent,
+    ReactiveFormsModule,
+    EmptytableComponent,
+    ConfirmDeleteComponent
   ]
 })
 export class EmployeesModule { }

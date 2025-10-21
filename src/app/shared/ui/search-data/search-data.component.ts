@@ -1,5 +1,5 @@
 import { NgClass } from '@angular/common';
-import { Component, HostListener, Input } from '@angular/core';
+import { Component, EventEmitter, HostListener, Input, Output } from '@angular/core';
 import { BrowserModule } from "@angular/platform-browser";
 
 @Component({
@@ -14,7 +14,8 @@ export class SearchDataComponent {
   showFilterData=false;
 
   @Input() dataFilter:any
-  @Input() dropDownTitle:any
+  @Input() dropDownTitle:any;
+  @Output() sendDataSelect=new EventEmitter()
   selectIndex:any=0
 
   showFilter(){
@@ -34,5 +35,10 @@ export class SearchDataComponent {
 
     // console.log(e);
     // if(e.)
+  }
+
+  showDataPagination(e:any){
+    const value=Number(e.target.value);
+    this.sendDataSelect.emit(value);
   }
 }

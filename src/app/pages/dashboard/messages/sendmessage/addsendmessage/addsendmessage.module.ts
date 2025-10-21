@@ -7,6 +7,9 @@ import { PageHeadingComponent } from '../../../../../shared/ui/page-heading/page
 import { NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
 import { SearchmsgComponent } from "../../../../../shared/ui/searchmsg/searchmsg.component";
 import { TitleMsgPopupComponent } from "../../../../../shared/ui/title-msg-popup/title-msg-popup.component";
+import { FormsModule } from '@angular/forms';
+import { SendsingularmessageComponent } from '../../../../../shared/components/sendsingularmessage/sendsingularmessage.component';
+import { SendpluralmessageComponent } from '../../../../../shared/components/sendpluralmessage/sendpluralmessage.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +21,10 @@ import { TitleMsgPopupComponent } from "../../../../../shared/ui/title-msg-popup
     PageHeadingComponent,
     NgbNavModule,
     SearchmsgComponent,
-    TitleMsgPopupComponent
+    TitleMsgPopupComponent,
+    FormsModule,
+    SendsingularmessageComponent,
+    SendpluralmessageComponent
 ]
 })
 export class AddsendmessageModule { }
