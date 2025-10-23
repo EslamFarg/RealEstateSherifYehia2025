@@ -8,7 +8,8 @@ import { PageHeadingComponent } from '../../../../shared/ui/page-heading/page-he
 
 @NgModule({
   declarations: [
-    ProfilesettingsComponent
+    ProfilesettingsComponent,
+    
   ],
   imports: [
     CommonModule,

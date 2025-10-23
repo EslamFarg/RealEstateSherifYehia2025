@@ -1,0 +1,25 @@
+<form action="" class="forms_dashboard" [formGroup]="changeemailForm" (ngSubmit)="onSubmit()">
+    <div class="row">
+
+        <div class="col-sm-12 mb-3">
+            <label for="email" class="form-label">البريد الالكتروني</label>
+            <input type="text" name="" placeholder="البريد الالكتروني" id="email" class="form-control" formControlName="email" formControlName="newEmail">
+            <ng-container *ngIf="this.changeemailForm.controls['newEmail'].invalid && this.changeemailForm.controls['newEmail'].touched">
+                <small class="error_msg_form" *ngIf="this.changeemailForm.controls['newEmail'].hasError('required')">البريد الالكتروني مطلوب</small>
+            </ng-container> 
+        </div>
+
+        <div class="col-sm-12  mb-3">
+                    <label for="password" class="form-label">كلمه المرور الحاليه</label>
+            <input type="password" name="" placeholder="كلمه المرور الحاليه" id="password" class="form-control" formControlName="password">
+             <ng-container *ngIf="this.changeemailForm.controls['password'].invalid && this.changeemailForm.controls['password'].touched">
+                <small class="error_msg_form" *ngIf="this.changeemailForm.controls['password'].hasError('required')">كلمه المرور مطلوبه</small>
+            </ng-container>
+        </div>
+
+              <div class="btn_add_reset">
+        <button type="submit" data-button="send">تعديل</button>
+       
+    </div>
+</div>
+</form>

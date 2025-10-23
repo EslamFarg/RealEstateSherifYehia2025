@@ -2,6 +2,7 @@ import { Component, DestroyRef, inject } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ProfilesettingsService } from '../services/profilesettings.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { ToastrService } from '../../../../../shared/ui/toastr/services/toastr.service';
 
 @Component({
   selector: 'app-profile',
@@ -16,6 +17,7 @@ export class ProfileComponent {
   fb:FormBuilder=inject(FormBuilder);
   destroyref:DestroyRef=inject(DestroyRef)
   _profileSettingsServices:ProfilesettingsService=inject(ProfilesettingsService)
+  toastr:ToastrService=inject(ToastrService)
 
   // !!!!!!!!!!!!!!!!!!!!!!!!!! Property
 
@@ -25,7 +27,8 @@ export class ProfileComponent {
   imageUrl: ['',[Validators.required]],
   email: ['',[Validators.required,Validators.email]],
   phoneNumber: ['',[Validators.required]],
-  emailConfirmed: [true, [Validators.required]]
+  emailConfirmed: [true, [Validators.required]],
+  groupName:['المجموعه الاولي', [Validators.required]],
   })
 
 
@@ -46,8 +49,17 @@ export class ProfileComponent {
 
 
   onSubmit(){
-    if(this.profileData.valid){
+    
+    if(this.profileData.get('fullName').valid && this.profileData.get('phoneNumber').valid){
+      let data={
+          fullName: this.profileData.value.fullName,
+          phone: this.profileData.value.phoneNumber,
+      }
 
+      this._profileSettingsServices.EditUserData(data).pipe(takeUntilDestroyed(this.destroyref)).subscribe((res:any)=>{
+        this.toastr.show('تم التعديل بنجاح','success');
+        this.getAllDataProfile();
+      })
 
 
     }else{
@@ -60,12 +72,18 @@ export class ProfileComponent {
   getAllDataProfile(){
 
     this._profileSettingsServices.getDataUserProfile().pipe(takeUntilDestroyed(this.destroyref)).subscribe((res:any)=>{
-
-      this.profileData.patchValue(res)
+      console.log(res);
+      this.profileData.patchValue({
+        fullName:res.fullName,
+        phoneNumber:res.phoneNumber,
+      })
 
     })
     
   }
+
+
+  
 
 
 

@@ -1,6 +1,7 @@
 import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
 import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgSelectModule } from '@ng-select/ng-select';
+import { SharedService } from '../../services/shared.service';
 
 @Component({
   selector: 'app-searchmsg',
@@ -14,12 +15,13 @@ export class SearchmsgComponent {
 fb:FormBuilder=inject(FormBuilder);
 // @Output() 
 @Output() showPopupChange = new EventEmitter<boolean>();
-
+ _sharedServices:SharedService=inject(SharedService);
 SearchForm=this.fb.group({
   search:['']
 })
 
-
+getDataCities:any=[];
+getDataDistricts:any=[];
 closePopup() {
   this.showPopup = false;
   this.showPopupChange.emit(this.showPopup);
@@ -73,6 +75,27 @@ closePopup() {
     "phone": "01003334444",
     "email": "layla.ibrahim@example.com",
     checked:false
+  },
+   {
+    "id": 6,
+    name: "Layla Ibrahim",
+    "phone": "01003334444",
+    "email": "layla.ibrahim@example.com",
+    checked:false
+  },
+   {
+    "id": 7,
+    name: "Layla Ibrahim",
+    "phone": "01003334444",
+    "email": "layla.ibrahim@example.com",
+    checked:false
+  },
+   {
+    "id": 8,
+    name: "Layla Ibrahim",
+    "phone": "01003334444",
+    "email": "layla.ibrahim@example.com",
+    checked:false
   }
 ]
 
@@ -98,15 +121,19 @@ closePopup() {
 
    itemsArr:any=[];
 
- onChange(e:any,item:any){
-  // console.log(item);
 
-  console.log(item.checked)
+  ngOnInit(): void {
+    //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
+    //Add 'implements OnInit' to the class.
+    this.getAllDataCites();
+  }
+
+ onChange(e:any,item:any){
+
 
   if(item.checked){
     if(!this.itemsArr.find((el:any)=>el.id == item.id)){
-      // this.itemsArr.push(item);   
-      this.itemsArr=item; 
+      this.itemsArr.push(item);    
     }  
   }else{
 
@@ -122,6 +149,7 @@ closePopup() {
 
 
    this.arrDataCheck.emit(this.itemsArr);
+   this.showPopup = false;
 
    
  
@@ -132,4 +160,27 @@ closePopup() {
  onSubmit(){
 
  }
+
+ getAllDataCites(){
+  this.getDataCities=this._sharedServices.allCities
+}
+
+ selectedcities(e:any){
+
+  if(!e){
+    this.getDataDistricts=[];
+    return;
+  }
+  // console.log(e);
+  const id=e.city_id
+  if(id){
+this.getDataDistricts=this._sharedServices.allDistricts.filter((item:any)=>item.city_id==id)
+  }else{
+    this.getDataDistricts=[];
+  }
+}
+
+
+
+
 }

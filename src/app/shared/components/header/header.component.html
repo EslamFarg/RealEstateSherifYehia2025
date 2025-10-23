@@ -31,18 +31,20 @@
 
   <div class="data_profile">
     <div class="profile_img">
-      <svg width="50" height="50" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <svg *ngIf="!payloadUser?.imgUrl" width="50" height="50" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
 <rect x="0.5" y="0.5" width="49" height="49" rx="1.5" fill="white"/>
 <rect x="0.5" y="0.5" width="49" height="49" rx="1.5" stroke="#BED2BF"/>
 <path d="M24.375 26.25C28.2019 26.25 31.6823 27.3103 34.2426 28.8029C35.5204 29.5515 36.6129 30.43 37.4019 31.3849C38.1782 32.326 38.75 33.4504 38.75 34.6528C38.75 35.9438 38.0935 36.9613 37.148 37.6869C36.2535 38.3744 35.0732 38.8297 33.8194 39.1475C31.299 39.7846 27.9352 40 24.375 40C20.8148 40 17.451 39.7861 14.9306 39.1475C13.6768 38.8297 12.4965 38.3744 11.602 37.6869C10.6549 36.9597 10 35.9438 10 34.6528C10 33.4504 10.5718 32.326 11.3481 31.3849C12.1371 30.43 13.228 29.5515 14.5074 28.8029C17.0677 27.3103 20.5497 26.25 24.375 26.25Z" fill="#619363"/>
 <path opacity="0.3" d="M24.375 8.75C30.6202 8.75 34.524 14.4796 31.4006 19.0625C30.6886 20.1076 29.6645 20.9755 28.4313 21.5789C27.198 22.1823 25.799 22.5 24.375 22.5C18.1298 22.5 14.226 16.7704 17.3494 12.1875C18.0614 11.1424 19.0855 10.2745 20.3187 9.67112C21.552 9.06771 22.951 8.75003 24.375 8.75Z" fill="#619363"/>
 </svg>
 
+
+<img [src]="payloadUser?.imgUrl" alt="img" srcset="" style="width: 50px; height: 50px;">
     </div>
 
 
     <div class="drop_down_profile" (click)="ShowDropDown = !ShowDropDown">
-      <p class="name_profile">محمد أحمد</p>
+      <p class="name_profile"></p>
       <div class="icon" [ngClass]="{'active':this.ShowDropDown}">
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M4.08004 8.91003L10.6 15.43C11.37 16.2 12.63 16.2 13.4 15.43L19.92 8.91003" stroke="#619363" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
@@ -58,7 +60,7 @@
 
 
    
-  <ul class="drop_down_show" [ngClass]="{'active':this.ShowDropDown}">
+  <ul class="drop_down_show" style="width: 162px;" [ngClass]="{'active':this.ShowDropDown}">
       <li><a routerLink="profilesettings">الملف الشخصي</a></li>
       <li><a (click)="logout()">تسجيل الخروج</a></li>
     </ul>

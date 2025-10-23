@@ -1,7 +1,7 @@
 <div class="mb-3">
 <div class="search_forms_container">
             <div class="search_container">
-                  <input type="text" placeholder="بحث" #searchVal [style.backgroud]="''" class="form-control" (keydown)="valueSearch(searchVal.value)">
+                  <input type="text" placeholder="بحث" (input)="writeDataValid($event)" (paste)="onPaste($event)" #searchVal [style.backgroud]="''" class="form-control" (keydown)="valueSearch(searchVal.value)">
                   <div class="icons_search">    
 
                     <div class="filter_data" (click)="showFilterData=!showFilterData ">

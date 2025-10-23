@@ -24,13 +24,13 @@
         <div class="row">
             <div class="col-sm-12 col-lg-4">
                 <label for="city" class="form-label">المدينه</label>
-                <ng-select [items]="[]" bindLabel="name" placeholder="اختر" bindValue="id" placeholder="المدينه"></ng-select>
+                <ng-select [items]="getDataCities" bindLabel="name_ar" bindValue="name_ar" (change)="selectedcities($event)" [virtualScroll]="true" placeholder="اختر" bindValue="id" placeholder="المدينه"></ng-select>
                 
 
             </div>
             <div class="col-sm-12 col-lg-4">
                 <label for="hay" class="form-label">الحي</label>
-                <ng-select [items]="[]" bindLabel="name" placeholder="اختر" bindValue="id" placeholder="الحي"></ng-select>
+                <ng-select [items]="getDataDistricts" bindLabel="name_ar" bindValue="name_ar" placeholder="اختر" bindValue="id" placeholder="الحي"></ng-select>
 
             </div>
             <div class="col-sm-12 col-lg-4">

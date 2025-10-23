@@ -11,10 +11,15 @@
 .data_tenant{
     &.form-control{
     line-height: 0;
-    height: 104px !important;
+    min-height: 104px !important;
+     height: auto !important; // يسمح له يتمدد
     background-color: #FBFBFB !important;     
     padding:20px 10px;
-    margin-bottom: 20px !important;
+    margin-bottom: 10px !important;
+    
+
+    
+    
     }   
    
 }
@@ -59,9 +64,15 @@
         position: absolute;
         right: 10px;
         top: 10px;
-        @include flex_box(flex,null,center,20px);
+        @include flex_box(flex,null,flex-start,8px);
         flex-wrap: wrap;
+        // height:90px;
 
+      
+        &::-webkit-scrollbar-track{
+            background-color: #FBFBFB !important;
+        }
+        
         .box{
             @include flex_box(flex,null,center);
             // min-width:153px;
@@ -69,6 +80,7 @@
             padding: 4px 8px;
             background-color: #E0ECE1;
             border-radius: 4px;
+
 
             .delete{
                 cursor: pointer;
@@ -88,6 +100,7 @@
             font-weight: 700;
             font-size: 18px;
             position: relative;
+            cursor: pointer;
             // position: relative;
           
             &.active{

@@ -6,6 +6,7 @@ import { GroupmessageComponent } from './groupmessage.component';
 import { PageHeadingComponent } from '../../../../shared/ui/page-heading/page-heading.component';
 import { SearchinformsComponent } from '../../../../shared/ui/searchinforms/searchinforms.component';
 import { PaginationComponent } from '../../../../shared/ui/pagination/pagination.component';
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 
 
 @NgModule({
@@ -17,7 +18,9 @@ import { PaginationComponent } from '../../../../shared/ui/pagination/pagination
     GroupmessageRoutingModule,
     PageHeadingComponent,
     SearchinformsComponent,
-    PaginationComponent
-  ]
+    PaginationComponent,
+    FormsModule,
+    ReactiveFormsModule
+]
 })
 export class GroupmessageModule { }

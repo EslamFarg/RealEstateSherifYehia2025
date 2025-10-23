@@ -106,7 +106,7 @@
    
                 <div class="mb-3 col-sm-12 col-lg-3">
                  <label for="address" class="form-label">المنطقه</label>
-                 <ng-select [items]="[]" bindLabel="name" placeholder="المنطقه" formControlName="region"></ng-select>
+                 <ng-select [items]="getDataRegions" bindLabel="name_ar" bindValue="name_ar" (change)="onRegionChange($event)" [virtualScroll]="true" placeholder="المنطقه" formControlName="region"></ng-select>
                 
                      <ng-container appNoPaste *ngIf="systemSettings.controls['region'].invalid && systemSettings.controls['region'].touched">
                       <small class="error_msg_form" *ngIf="systemSettings.controls['region'].hasError('required')">المنطقه مطلوبه</small>
@@ -137,7 +137,8 @@
 
                 <div class="mb-3 col-sm-12 col-lg-3">
                  <label for="street" class="form-label">الشارع</label>
-                 <ng-select [items]="[]" bindLabel="name" placeholder="الشارع" formControlName="street"></ng-select>
+                 
+                 <input type="text" class="form-control" id="street" placeholder="الشارع" formControlName="street">
                    <ng-container appNoPaste *ngIf="systemSettings.controls['street'].invalid && systemSettings.controls['street'].touched">
                       <small class="error_msg_form" *ngIf="systemSettings.controls['street'].hasError('required')">الشارع مطلوب</small>
                  </ng-container>
@@ -188,7 +189,7 @@
                  <div class="nesba_dareba">
                   
                       
-                     <ng-select [items]="['معفي','15 %','5%','ضريبه صفريه']" bindLabel="name" placeholder="نسبه الضريبه" formControlName="taxRate"></ng-select>
+                     <ng-select [items]="nespaDarepa" bindLabel="name" bindValue="value" placeholder="نسبه الضريبه" formControlName="taxRate"></ng-select>
                        <ng-container appNoPaste *ngIf="systemSettings.controls['taxRate'].invalid && systemSettings.controls['taxRate'].touched">
                       <small class="error_msg_form" *ngIf="systemSettings.controls['taxRate'].hasError('required')">نسبه الضريبه مطلوبه</small>
                  </ng-container>       
@@ -236,6 +237,6 @@
     </form>
 
       <div class="btn_add_reset mb-3" (click)="onSubmit()">
-                <button type="submit" class="ms-0" data-button="send">حفظ</button>
+                <button type="submit" class="ms-0" data-button="send" [ngClass]="{'btnEdit':this.btnAddandUpdate=='update','btnAdd':this.btnAddandUpdate=='add'}">{{this.btnAddandUpdate =='add' ? 'اضافه':"تعديل"}}</button>
                 
             </div>

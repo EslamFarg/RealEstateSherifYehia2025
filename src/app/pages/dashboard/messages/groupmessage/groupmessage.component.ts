@@ -1,4 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, DestroyRef, inject } from '@angular/core';
+import { ToastrService } from '../../../../shared/ui/toastr/services/toastr.service';
+import { FormBuilder, Validators } from '@angular/forms';
+import { GroupmessageService } from './services/groupmessage.service';
+import { MessageformsService } from '../messageforms/services/messageforms.service';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-groupmessage',
@@ -7,7 +12,40 @@ import { Component } from '@angular/core';
 })
 export class GroupmessageComponent {
 
-  dataFilter=['اسم الراسل','المرسل اليه']
+  // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!11 Services
+
+  toastr:ToastrService=inject(ToastrService);
+  fb:FormBuilder=inject(FormBuilder);
+  // groupMessageService:GroupmessageService=inject(MessageformsService)
+  _groupMessageService:GroupmessageService=inject(GroupmessageService)
+  destroyRef:DestroyRef=inject(DestroyRef);
+
+
+
+
+  // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! Propertys
+  dataFilter=[{
+    id:0,
+    name:"اسم الراسل"
+  },
+  {
+    id:1,
+    name:'رقم التليفون'
+  }
+
+]
+
+
+DataTypeFilter:any='string'
+SearchValue:any
+
+
+SearchForm=this.fb.group({
+  FromDate:[''],
+  ToDate:[''],
+  // Search:['']
+})
+
 
   
  messagesData = [
@@ -40,9 +78,77 @@ pageIndex=1
 pageSize=10
 
 
+// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! Methods
+
 onPageChanged(page: number) {
   this.pageIndex = page;
   // this.fetchEmployees(); // أعد جلب البيانات
   // this.getData()
+
 }
+
+
+
+
+selectFilterData(e:any){
+
+  console.log(e);
+  if(e.value == undefined || e.value == '') {
+    this.toastr.show('الرجاء املاء قيمه البحث','error');
+    return;
+  }
+
+  if(e.index == 0){
+    console.log('اسم الراسل')
+    this.DataTypeFilter=e.dataType;
+   this.SearchValue=e.value
+
+
+    
+  }else if(e.index == 1){
+    
+   console.log('رقم التليفون')
+   this.DataTypeFilter=e.dataType;
+   this.SearchValue=e.value
+  
+  }
+  
+}
+
+onSubmit(){
+  // debugger
+  if(this.SearchForm.valid){
+
+
+
+    let includesDate:boolean=false;
+     let fromDate=this.SearchForm.value.FromDate;
+    let toDate=this.SearchForm.value.ToDate;
+    let paramsData=new URLSearchParams();
+
+
+    
+
+    if(this.SearchValue!= '' && this.SearchValue!= null && this.SearchValue!= undefined){
+  
+    paramsData.append('search',this.SearchValue ?? '');
+    }
+
+      
+
+    if(fromDate != '' && toDate != '' && fromDate != null && toDate != null && fromDate != undefined && toDate != undefined){
+      paramsData.append('FromDate',fromDate ?? '');
+      paramsData.append('ToDate',toDate ?? '');
+      paramsData.append('IncludeDates','true');
+      // includesDate=true;
+    }
+
+     this._groupMessageService.searchMessage(paramsData).pipe(takeUntilDestroyed(this.destroyRef)).subscribe((res:any)=>{
+        console.log(res);
+    })
+  }else{
+    this.SearchForm.markAllAsTouched();
+  }
+}
+// SearchForm()
 }

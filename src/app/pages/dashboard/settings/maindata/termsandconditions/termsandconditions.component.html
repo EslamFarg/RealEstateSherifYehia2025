@@ -1,5 +1,5 @@
 
-    <form class="forms_dashboard"  appIntersection="fade-in">
+    <form class="forms_dashboard"  appIntersection="fade-in" [formGroup]="termsForm" (ngSubmit)="onSubmit()">
         <div class="row align-items-center">
 
      
@@ -7,12 +7,14 @@
 <div class="mb-3 col-sm-12 ">
                  <label for="terms" class="form-label">الشروط والاحكام</label>
                  <textarea class="form-control mt-3" id="terms" style="height: 510px; font-size: 12px; font-weight: 400; border-radius: 4px;" placeholder=" اكتب المحتوي" formControlName="termsAndConditions"></textarea>
-
+                 <ng-container *ngIf="termsForm.controls['termsAndConditions'].invalid && termsForm.controls['termsAndConditions'].touched">
+                    <small class="error_msg_form" *ngIf="termsForm.controls['termsAndConditions'].hasError('required')">الشروط والاحكام مطلوبه</small>
+                 </ng-container>
         </div>
 
 
         
-       
+    
             <!-- </div> -->
  
 
@@ -30,7 +32,7 @@
       
             
             <div class="btn_add_reset">
-                <button type="submit" data-button="send" >حفظ</button>
+                <button type="submit" data-button="send" [ngClass]="{'btnEdit':this.btnAddandUpdate=='update','btnAdd':this.btnAddandUpdate=='add'}">{{this.btnAddandUpdate =='add' ? 'اضافه':"تعديل"}}</button>
                 
             </div>
          

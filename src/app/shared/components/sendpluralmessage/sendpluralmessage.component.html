@@ -1,8 +1,8 @@
- <form class="forms_dashboard" >
+ <form class="forms_dashboard" [formGroup]="sendMessageForm" (ngSubmit)="onSubmit()">
             <div class="row">
 
                 <div class="col-sm-12">
-                    <p class="date_time">24/09/2025 11:26:00 am</p>
+                    <p class="date_time " style="direction: ltr; text-align: left;">{{this.dateTimeObj.date}} <span class="mx-1"></span> {{this.dateTimeObj.time}} </p>
                 </div>
 
                 <div class="col-sm-12">
@@ -12,8 +12,13 @@
                 </div>
 
                 <div class="parent_textareaTenant">
-                    <textarea    class="form-control data_tenant" readonly ></textarea>
-                    <div class="boxes">
+                    <textarea    class="form-control data_tenant" style="resize: none;" readonly ></textarea>
+                    <!-- <small class="error_msg_form" *ngIf="this..invalid">{{}}></small> -->
+                     
+                    <div class="boxes" style="height: 83px;
+        background-color: transparent;
+        overflow-y: scroll;">
+
                         @for (item of searchdataCheckRealtor; track $index) {
        <div class="box">
                             <p class="name_tenant">{{item.name}}</p>
@@ -30,19 +35,32 @@
                 </div>
                
 
+                  <div class="d-flex align-items-center justify-content-between">
+                     <small class="error_msg_form" *ngIf="this.searchdataCheckRealtor.length<=0">{{realtorMsgErrorMsg}}</small>
+                     <p>    </p>
+                    <p class="countMsg1">العدد : {{searchdataCheckRealtor.length}}</p>
+                  
+                    </div>
 
                 <div class="d-flex justify-content-between align-items-center mb-3">
 
                     <button type="button" class="choose_data" (click)="openPopupMsg()"> إختيار نماذج الرساله</button>
-                     <p class="countMsg1">العدد : {{searchdataCheckRealtor.length}}</p>
+                  
+                   
                 </div>
                 </div>
 
             <div class="col-sm-12">
                 <label for="msgText" class="form-label">نص الرساله</label>
-                <textarea name="" id="" id="msgText" [(ngModel)]="msgDataDescription1"  [ngModelOptions]="{standalone: true}"  class="form-control" placeholder="اكتب المحتوي"></textarea>
-                <p class="countMsg2">  {{getMsgCount() }} / 48</p>
-                <!-- <p>NOOOO</p> -->
+                <textarea name="" id="" id="msgText"  formControlName="messageText" (keydown)="writeMessage($event)"  (focus)="requiredMsg()"  class="form-control" placeholder="اكتب المحتوي"></textarea>
+                <div class="d-flex align-items-center justify-content-between">
+                       <small class="error_msg_form" *ngIf="this.sendMessageForm.invalid">{{errorMsgWithMessage}}</small>
+                       <p></p>
+                       <p class="countMsg2 " style="width: 80%; margin-left: auto;" >  {{getMsgCount() }} / 48</p>
+                 
+                </div>
+             
+                 <!-- </ng-container> -->
             </div>
 
 
@@ -51,23 +69,25 @@
 
                 <div class="d-flex align-items-center gap-3 my-2 tarekasend">
                     <div class="d-flex gap-2 ">
-                        <input type="checkbox" checked id="sms" class="form-check-input">
+                        <input type="checkbox" checked id="sms" formControlName="useSms" class="form-check-input">
                         <label for="sms">SMS</label>
                     </div>
                     <div class="d-flex gap-2 ">
-                        <input type="checkbox" id="whatapp" class="form-check-input">
+                        <input type="checkbox" id="whatapp" class="form-check-input" formControlName="useWhatsApp">
                         <label for="whatapp">واتساب</label>
                     </div>
                     <div class="d-flex gap-2 ">
-                        <input type="checkbox" id="email" class="form-check-input">
+                        <input type="checkbox" id="email" class="form-check-input" formControlName="useEmail">
                         <label for="email">البريد الالكتروني</label>
                     </div>
 
                 </div>
 
+                <small class="error_msg_form mt-3" >{{this.methodMsgSend}}</small>
+
 
                 <div class="btn_add_reset">
-                    <button type="button" data-button="send">ارسال</button>
+                    <button type="submit" data-button="send">ارسال</button>
                 </div>
             </div>
            
@@ -80,5 +100,8 @@
 
 
 <app-title-msg-popup [(showPopup)]="showPopup" (msgDataDescription)="showMsg($event)"></app-title-msg-popup>
+
+
+
 
 

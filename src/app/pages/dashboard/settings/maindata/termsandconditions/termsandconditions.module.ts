@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { TermsandconditionsRoutingModule } from './termsandconditions-routing.module';
 import { TermsandconditionsComponent } from './termsandconditions.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({ 
@@ -11,7 +12,8 @@ import { TermsandconditionsComponent } from './termsandconditions.component';
   ],
   imports: [
     CommonModule,
-    TermsandconditionsRoutingModule
+    TermsandconditionsRoutingModule,
+    ReactiveFormsModule
   ]
 })
 export class TermsandconditionsModule { }

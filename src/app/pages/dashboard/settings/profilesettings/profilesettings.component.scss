@@ -73,13 +73,14 @@ margin-top: 20px;
         line-height: 43px;
         text-align: center;
         color: $main_color;
-        font-size: 18px;
+        font-size: 16px;
         font-weight: 700;
+        margin-bottom: 10px;
         
         &.active{
   background-color: $main_color;
   color: $white-color;
-        margin-bottom: 10px;
+        // margin-bottom: 10px;
         opacity: 70%;
         }
       

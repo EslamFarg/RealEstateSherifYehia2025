@@ -32,7 +32,7 @@ export class AddmaintenanceComponent {
 
 
   mainTenanceData=this.fb.group({
-    BookNumber:['',[Validators.required]],
+BookNumber:['',[Validators.required]],
 RequestDate:['',[Validators.required]],
 TargetType:['',[Validators.required]],
 TargetId:['',[Validators.required]],
@@ -46,10 +46,25 @@ Files:[null]
   })
 
 
+  FormSearch=this.fb.group({
+      name: [''],
+      propertyName: [''],
+      propertyID: [''],
+      area: [''],
+      floorNumber: [''],
+      roomsCount: [''],
+      unitType: [''],
+      unitCategoryName: [''],
+      price: [''],
+      description: ['']
+  })
+
   idRemoveFiles:any[]=[];
   selectFilter=0;
 
-  dataItemsTypeMaintenance:any[]=[]
+
+  dataItemsTypeMaintenance:any[]=[];
+  dataItemsSearch:any
   dataItemsEmployees:any[]=[]
   dataItemsAccounts:any[]=[]
   dataItemsStatus=[{name:'قيد التنفيذ'},{name:'تحت الاصلاح'},{name:'معطله'},{name:'اتصلحت'}]
@@ -160,7 +175,7 @@ Files:[null]
     }
   },
   searchFilter: {
-    column: 0,
+    column: 1,
     value: e.value
   }
       }
@@ -170,8 +185,8 @@ Files:[null]
 
 
       this._maintenanceSer.searchByUnit(data).pipe(takeUntilDestroyed(this.destroyRef)).subscribe((res:any)=>{
-        // this.dataItemsTypeMaintenance=res.rows;
-        console.log(res);
+        this.dataItemsSearch=res.rows[0];
+        console.log(this.dataItemsSearch);
       
       })
 

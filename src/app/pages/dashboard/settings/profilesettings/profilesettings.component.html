@@ -1,8 +1,8 @@
 <app-page-heading [title]="'الاعدادات'" [subtitle]="'الملف الشخصي'"></app-page-heading>
 
 <div class="profile_head_container">
-    <div class="profile_img">
-        <svg width="100" *ngIf="!this.imgFile" height="100" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <div class="profile_img" >
+        <svg width="100"  *ngIf="!this.getDatausers.imageUrl" height="100" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
 <rect x="0.5" y="0.5" width="99" height="99" rx="13.5" fill="white"/>
 <rect x="0.5" y="0.5" width="99" height="99" rx="13.5" stroke="#BED2BF"/>
 <path d="M48.75 52.5C56.4039 52.5 63.3646 54.6206 68.4853 57.6058C71.0408 59.1031 73.2258 60.86 74.8039 62.7697C76.3564 64.6519 77.5 66.9008 77.5 69.3056C77.5 71.8875 76.1871 73.9225 74.296 75.3739C72.5071 76.7489 70.1464 77.6594 67.6387 78.295C62.5979 79.5692 55.8704 80 48.75 80C41.6296 80 34.9021 79.5722 29.8612 78.295C27.3536 77.6594 24.9929 76.7489 23.204 75.3739C21.3097 73.9194 20 71.8875 20 69.3056C20 66.9008 21.1436 64.6519 22.6961 62.7697C24.2742 60.86 26.456 59.1031 29.0147 57.6058C34.1354 54.6206 41.0993 52.5 48.75 52.5Z" fill="#619363"/>
@@ -13,7 +13,7 @@
 </svg>
 
 
-<img [src]="this.imgFile" *ngIf="this.imgFile" alt="ImgFile" style="width: 100px; height: 100px; border-radius: 4px;">
+<img [src]="this.getDatausers.imageUrl" *ngIf="this.getDatausers.imageUrl" alt="ImgFile" style="width: 100px; height: 100px; border-radius: 4px;">
 
 
 
@@ -29,8 +29,8 @@
     </div>
 
     <div class="profile_content">
-        <h5>محمد احمد محمود</h5>
-        <p>gts{{'@'}}gmail.com</p>
+        <h5>{{getDatausers.fullName}}</h5>
+        <p>{{getDatausers.email}}</p>
     </div>
 </div>
 
@@ -40,6 +40,7 @@
 <aside>
 
     <a [routerLink]="'profile'" [routerLinkActive]="'active'" class="active">الملف الشخصي</a>
+    <a [routerLink]="'changeemail'" [routerLinkActive]="'active'" class="active">تغيير البريد الالكتروني</a>
     <a [routerLink]="'changepassword'" [routerLinkActive]="'active'">تغيير كلمه المرور</a>
 
 </aside>
@@ -48,3 +49,18 @@
     <router-outlet></router-outlet>
 </section>
 </div>
+
+
+  <div *ngIf="uploadProgress >= 0" class="mt-3">
+    <div class="progress" style="height: 15px;">
+      <div class="progress-bar progress-bar-striped progress-bar-animated bg-success"
+           [style.width.%]="uploadProgress"
+           role="progressbar">
+        {{ uploadProgress }}%
+      </div>
+    </div>
+    <small class="text-muted mt-2 d-block">
+      {{ uploadProgress }}% 
+      <span *ngIf="remainingTime > 0">- {{ remainingTime | number:'1.0-0' }} ثانية متبقية</span>
+    </small>
+  </div>

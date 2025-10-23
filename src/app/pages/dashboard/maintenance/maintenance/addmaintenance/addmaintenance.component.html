@@ -5,7 +5,7 @@
     <div class="row">
           <div class="col-sm-12 col-lg-2 mb-3">
         <label for="numberbala" class="form-label">رقم البلاغ</label>
-        <input type="text" name="" readonly value="123" class="form-control" placeholder="رقم الوحده" id="numberbala">
+        <input type="text" name="" readonly value="0" class="form-control" placeholder="رقم الوحده" id="numberbala">
     </div>
   <div class="col-sm-12 col-lg-2 mb-3" style="margin-top: 7px;">
         <label  class="form-label" ></label>
@@ -50,7 +50,7 @@
 
 
 
-<form class="forms_dashboard my-3" >
+<form class="forms_dashboard my-3" [formGroup]="FormSearch">
     <div class="row">
         <div class="col-sm-4 me-auto">
              <app-searchinforms [dataFilter]="dataFilter" (selectedDataFilter)="SelectDataFilterSearch($event)"></app-searchinforms>
@@ -63,19 +63,19 @@
  <div class="col-sm-12 col-lg-4">
                 <div class="mb-3 parent_review">
                     <label for="" class="form-label"> الوحده</label>
-                    <input type="text" name="" readonly value="12" class="form-control" placeholder="الوحده" id="">
+                    <input type="text" name="" readonly value="12" class="form-control" placeholder="الوحده" id="" formControlName="name">
                 </div>
             </div>
             <div class="col-sm-12 col-lg-4">
                 <div class="mb-3 parent_review">
                     <label for="" class="form-label"> العقار</label>
-                    <input type="text" name="" class="form-control" value="المجد" placeholder="العقار" id="">
+                    <input type="text" name="" class="form-control" value="المجد" placeholder="العقار" id="" formControlName="propertyName">
                 </div>
             </div>
             <div class="col-sm-12 col-lg-4">
                 <div class="mb-3 parent_review">
                     <label for="" class="form-label"> رقم المبني</label>
-                    <input type="text" name="" readonly value="123" style="padding-right: 85px !important;" class="form-control" placeholder="رقم المبني" id="">
+                    <input type="text" name="" readonly value="123" style="padding-right: 85px !important;" class="form-control" formControlName="" placeholder="رقم المبني" id="">
                 </div>
             </div>
             <div class="col-sm-12 col-lg-4">

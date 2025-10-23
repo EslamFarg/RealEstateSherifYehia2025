@@ -13,8 +13,23 @@ export class MaindataService extends BasehttpservicesService{
 
   createSystemSettings(data:any){
 
-    return this.http.post('/SystemSettings/Setting',data)
+    return this.post('/SystemSettings/Setting',data)
 
   }
 
+  getDataSystemSettings(){
+
+    return this.get('/SystemSettings/Settings')
+  }
+
+
+  createSystemTerms(data:any){
+    return this.post('/SystemSettings/Terms',data);
+  }
+
+
+  getDataSystemTerms(){
+
+    return this.get('/SystemSettings/Terms')
+  }
 }
