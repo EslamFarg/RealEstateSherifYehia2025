@@ -36,4 +36,8 @@ export class ApartmentService extends BasehttpservicesService{
   getDataUpdate(id:any){
     return this.get(`/Units/${id}`);
   }
+
+  searchDataUnit(data:any){
+    return this.post(`/Units/search`,data);
+  }
 }

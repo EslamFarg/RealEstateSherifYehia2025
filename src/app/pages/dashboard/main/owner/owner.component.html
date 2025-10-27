@@ -123,6 +123,7 @@
 
 
 <app-pagination
+*ngIf="getAllData.rows.length > 0"
   [totalPages]="getAllData.paginationInfo?.totalPagesCount"
   [currentPage]="pageIndex"
   (pageChange)="onPageChanged($event)">

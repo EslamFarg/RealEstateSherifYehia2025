@@ -67,6 +67,7 @@
 </div>
 
  <app-pagination
+ *ngIf="unitCategoriesData.rows.length > 0"
   [totalPages]="unitCategoriesData.paginationInfo?.totalPagesCount"
   [currentPage]="pageIndex"
   (pageChange)="onPageChanged($event)">

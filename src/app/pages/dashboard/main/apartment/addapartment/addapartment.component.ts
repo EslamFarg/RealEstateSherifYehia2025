@@ -7,6 +7,7 @@ import { ClassificationapartmentService } from '../../classificationapartment/se
 import { BuildingService } from '../../building/services/building.service';
 import { environment } from '../../../../../../environment/environment';
 import { EditBehaviorServiceService } from '../../../../../shared/services/edit-behavior-service.service';
+import { checkUsername } from '../../../../../shared/validations/checkUsername';
 
 @Component({
   selector: 'app-addapartment',
@@ -33,12 +34,12 @@ export class AddapartmentComponent {
 
   // !!!!!!!!!!!!!!!!!!!!!!!!!!! Property
   unitData=this.fb.group({
-    Name:['',[Validators.required,Validators.minLength(3)]],
+    Name:['',[Validators.required,Validators.minLength(3),checkUsername.ValidationUsername()]],
     RoomsCount:['',[Validators.required]],
     UnitType:[null,[Validators.required]],
-    Area:['',[Validators.required]],
+    Area:['',[Validators.minLength(2)]],
     FloorNumber:[null,[Validators.required]],
-    Price:['',[Validators.required]],
+    Price:['',[Validators.required,Validators.minLength(4)]],
     Description:[''],
     PropertyID:[null,[Validators.required]],
     UnitCategoryId:[null,[Validators.required]],

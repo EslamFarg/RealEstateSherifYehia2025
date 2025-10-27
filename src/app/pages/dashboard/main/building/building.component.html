@@ -6,10 +6,10 @@
         <div class="col-sm-12 col-lg-2">
             <div class="mb-3">
                 <label for="NumberBuilding" class="form-label">رقم العقار</label>
-                <input type="text" class="form-control" maxlength="40" id="NumberBuilding" placeholder="رقم العقار" formControlName="PropertyNumber">
+                <input type="text" class="form-control" maxlength="15" id="NumberBuilding" placeholder="رقم العقار" formControlName="PropertyNumber">
                 <ng-container *ngIf="formProperty.controls['PropertyNumber'].invalid && formProperty.controls['PropertyNumber'].touched" >
                     <small class="error_msg_form" *ngIf="formProperty.controls['PropertyNumber'].hasError('required')">رقم العقار مطلوب</small>
-                    <!-- <small class="error_msg_form" *ngIf="formProperty.controls['PropertyNumber'].hasError('minlength')">رقم العقار مطلوب</small> -->
+                    <small class="error_msg_form" *ngIf="formProperty.controls['PropertyNumber'].hasError('minlength')">رقم العقار يجب ان يحتوي علي اكثر من 3 حروف</small>
                 </ng-container>
             </div>
         </div>
@@ -21,6 +21,8 @@
 
                 <small class="error_msg_form" *ngIf="formProperty.controls['Name'].hasError('required')">اسم العقار مطلوب</small>
                 <small class="error_msg_form" *ngIf="formProperty.controls['Name'].hasError('minlength')">اسم العقار يجب ان يحتوي علي اكثر من 3 حروف</small>
+                <small class="error_msg_form" *ngIf="formProperty.controls['Name'].hasError('invalidUsername')">اسم العقار يحتوي علي رموز او احرف غير مسموح بيها </small>
+                <small class="error_msg_form" *ngIf="formProperty.controls['Name'].hasError('invalidStart')">اسم العقار يجب ان لايبدء برقم </small>
                 </ng-container>
               
             </div>
@@ -55,9 +57,10 @@
             <div class="col-sm-12 col-lg-2">
             <div class="mb-3">
                 <label for="street" class="form-label">الشارع</label>
-                <input type="text" class="form-control" id="street" maxlength="30" placeholder="الشارع" formControlName="Street">
+                <input type="text" class="form-control" id="street" maxlength="30" placeholder="الشارع" maxlength="15" formControlName="Street">
                  <ng-container *ngIf="formProperty.controls['Street'].invalid && formProperty.controls['Street'].touched" >
                     <small class="error_msg_form" *ngIf="formProperty.controls['Street'].hasError('required')">الشارع مطلوب</small>
+                    <small class="error_msg_form" *ngIf="formProperty.controls['Street'].hasError('minlength')">الشارع يجب ان يحتوي علي اكثر من 3 حروف</small>
                 </ng-container>
             </div>
         </div>
@@ -73,9 +76,10 @@
             <div class="col-sm-12 col-lg-2">
             <div class="mb-3">
                 <label for="code" class="form-label">الرمز البريدي</label>
-                <input type="text" class="form-control" id="code" placeholder="الرمز البريدي" formControlName="PostalCode">
+                <input type="text" class="form-control" id="code" placeholder="الرمز البريدي" appNoStringPaste maxlength="5" formControlName="PostalCode">
                 <ng-container *ngIf="formProperty.controls['PostalCode'].invalid && formProperty.controls['PostalCode'].touched" >
                     <small class="error_msg_form" *ngIf="formProperty.controls['PostalCode'].hasError('required')">الرمز البريدي مطلوب</small>
+                    <small class="error_msg_form" *ngIf="formProperty.controls['PostalCode'].hasError('minlength')">الرمز البريدي يجب ان يحتوي علي   5 حروف</small>
                 </ng-container>
             </div>
         </div>
@@ -146,6 +150,7 @@
 </div>
 
  <app-pagination
+ *ngIf="buildingsData.rows.length > 0"
   [totalPages]="buildingsData.paginationInfo?.totalPagesCount"
   [currentPage]="pageIndex"
   (pageChange)="onPageChanged($event)">

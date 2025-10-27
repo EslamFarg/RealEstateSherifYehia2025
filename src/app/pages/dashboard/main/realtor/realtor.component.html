@@ -146,6 +146,7 @@
 
 
 <app-pagination
+*ngIf="realtorData.rows.length > 0"
   [totalPages]="realtorData.paginationInfo?.totalPagesCount"
   [currentPage]="pageIndex"
   (pageChange)="onPageChanged($event)">

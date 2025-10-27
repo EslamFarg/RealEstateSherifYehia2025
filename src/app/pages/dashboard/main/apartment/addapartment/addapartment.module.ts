@@ -9,6 +9,7 @@ import { RefreshSelectComponent } from "../../../../../shared/ui/refresh-select/
 import { ImgattachmentsComponent } from "../../../../../shared/ui/imgattachments/imgattachments.component";
 import { ReactiveFormsModule } from '@angular/forms';
 import { ConfirmDeleteComponent } from '../../../../../shared/components/confirm-delete/confirm-delete.component';
+import { DirectivesModule } from "../../../../../shared/directives/directives.module";
 
 
 @NgModule({
@@ -23,7 +24,8 @@ import { ConfirmDeleteComponent } from '../../../../../shared/components/confirm
     RefreshSelectComponent,
     ImgattachmentsComponent,
     ReactiveFormsModule,
-    ConfirmDeleteComponent
+    ConfirmDeleteComponent,
+    DirectivesModule
 ]
 })
 export class AddapartmentModule { }

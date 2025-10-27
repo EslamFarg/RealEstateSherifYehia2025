@@ -1,5 +1,5 @@
 <app-page-heading [title]="title" [subtitle]="subtitle" [explorerBtn]="true" [explorerBtn]="true"  [explorerBtn]="true" [AddRoute]="'/dashboard/apartment/addapartment'" [TitlePageExplorerBtn]="'اضافه وحده جديده'"></app-page-heading>
-<app-search-data [dataFilter]="dataFilter" [dropDownTitle]="'وحدات'" (sendDataSelect)="onSelectedPagination($event)"></app-search-data>
+<app-search-data [dataFilter]="dataFilter" [dropDownTitle]="'وحدات'" (selectedDataFilter)="onSearchFilter($event)" (sendDataSelect)="onSelectedPagination($event)"></app-search-data>
 
 
 
@@ -55,6 +55,7 @@
 
 
 <app-pagination
+*ngIf="unitsData.rows.length > 0"
   [totalPages]="unitsData.paginationInfo?.totalPagesCount"
   [currentPage]="pageIndex"
   (pageChange)="onPageChanged($event)">

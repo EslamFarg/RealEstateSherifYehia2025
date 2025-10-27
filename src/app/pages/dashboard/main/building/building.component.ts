@@ -8,6 +8,7 @@ import { BuildingService } from './services/building.service';
 import { ToastrService } from '../../../../shared/ui/toastr/services/toastr.service';
 import { Building } from './models/building';
 import { environment } from '../../../../../environment/environment';
+import { checkUsername } from '../../../../shared/validations/checkUsername';
 
 @Component({
   selector: 'app-building',
@@ -47,14 +48,14 @@ export class BuildingComponent {
   showDelete:any=false;
 
   formProperty:any=this.fb.group({
-    PropertyNumber:['',[Validators.required]],
-    Name:['',[Validators.required,Validators.minLength(3)]],
+    PropertyNumber:['',[Validators.required,Validators.minLength(3)]],
+    Name:['',[Validators.required,Validators.minLength(3),checkUsername.ValidationUsername()]],
     OwnerID:[null,[Validators.required]],
     City:[null,[Validators.required]],
     District:[null,[Validators.required]],
-    Street:['',[Validators.required]],
+    Street:['',[Validators.required,Validators.minLength(3)]],
     BuildingNumber:['',[Validators.required]],
-    PostalCode:['',[Validators.required]],
+    PostalCode:['',[Validators.required,Validators.minLength(5)]],
     Description:[''],
     Files:[null]
   })

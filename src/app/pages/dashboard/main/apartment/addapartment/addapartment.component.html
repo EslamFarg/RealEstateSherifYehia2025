@@ -34,12 +34,14 @@
 
           <small class="error_msg_form" *ngIf="unitData.controls['Name'].hasError('required')">اسم الوحده مطلوب</small>
           <small class="error_msg_form" *ngIf="unitData.controls['Name'].hasError('minlength')">يجب ان يكون الاسم اكثر من 3 حروف</small>
+          <small class="error_msg_form" *ngIf="unitData.controls['Name'].hasError('invalidUsername')">اسم الوحده يحتوي علي رموز او احرف غير مسموح بيها</small>
+          <small class="error_msg_form" *ngIf="unitData.controls['Name'].hasError('invalidStart')">اسم الوحده يجب ان لايبدء برقم</small>
 
         </ng-container>
     </div>
       <div class="col-sm-12 col-lg-4 mb-3">
         <label for="numberroom" class="form-label">عدد الغرف</label>
-        <input type="text" name="" class="form-control" maxlength="40" id="numberroom" placeholder="عدد الغرف"  formControlName="RoomsCount">
+        <input type="text" name="" class="form-control" maxlength="40" id="numberroom" placeholder="عدد الغرف" maxlength="3"  appNoStringPaste formControlName="RoomsCount">
          <ng-container *ngIf="unitData.controls['RoomsCount'].invalid && unitData.controls['RoomsCount'].touched">
 
           <small class="error_msg_form" *ngIf="unitData.controls['RoomsCount'].hasError('required')">عدد الغرف  مطلوب</small>
@@ -61,11 +63,11 @@
 
      <div class="col-sm-12 col-lg-4 mb-3">
         <label for="sizeunit" class="form-label">مساحه الوحده</label>
-        <input type="text" name="" class="form-control" id="sizeunit" placeholder="مساحه الوحده" formControlName="Area">
+        <input type="text" name="" class="form-control" id="sizeunit" placeholder="مساحه الوحده" formControlName="Area" maxlength="6">
         <ng-container *ngIf="unitData.controls['Area'].invalid && unitData.controls['Area'].touched">
 
           <small class="error_msg_form" *ngIf="unitData.controls['Area'].hasError('required')">مساحه الوحده  مطلوب</small>
-          <!-- <small class="error_msg_form" *ngIf="unitData.controls['RoomsCount'].hasError('minlength')">يجب ان يكون عد اكثر من 3 حروف</small> -->
+          <small class="error_msg_form" *ngIf="unitData.controls['Area'].hasError('minlength')">يجب ان يكون عد اكثر من 2 رقم</small>
 
         </ng-container>
         
@@ -123,9 +125,10 @@
               <div class="col-sm-12 col-lg-4">
             <div class="mb-3">
                 <label for="price" class="form-label"> السعر</label>
-                <input type="text" name="" class="form-control" id="price" placeholder="السعر" formControlName="Price">
+                <input type="text" name="" class="form-control" id="price" appNoStringPaste maxlength="12" placeholder="السعر" formControlName="Price">
                 <ng-container *ngIf="unitData.controls['Price'].invalid && unitData.controls['Price'].touched">
                 <small class="error_msg_form" *ngIf="unitData.controls['Price'].hasError('required')">السعر مطلوب</small>  
+                <small class="error_msg_form" *ngIf="unitData.controls['Price'].hasError('minlength')">السعر يجب ان يكون اكثر من 3 ارقام</small>  
                 </ng-container>
                </div>
         </div>
