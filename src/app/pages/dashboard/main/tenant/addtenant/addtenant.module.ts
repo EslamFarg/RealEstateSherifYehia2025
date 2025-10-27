@@ -9,6 +9,7 @@ import { InputAttachmentsComponent } from '../../../../../shared/ui/input-attach
 import { ReactiveFormsModule } from '@angular/forms';
 import { EmptytableComponent } from '../../../../../shared/ui/emptytable/emptytable.component';
 import { ConfirmDeleteComponent } from '../../../../../shared/components/confirm-delete/confirm-delete.component';
+import { DirectivesModule } from "../../../../../shared/directives/directives.module";
 
 
 @NgModule({
@@ -23,7 +24,8 @@ import { ConfirmDeleteComponent } from '../../../../../shared/components/confirm
     InputAttachmentsComponent,
     ReactiveFormsModule,
     EmptytableComponent,
-    ConfirmDeleteComponent
-  ]
+    ConfirmDeleteComponent,
+    DirectivesModule
+]
 })
 export class AddtenantModule { }

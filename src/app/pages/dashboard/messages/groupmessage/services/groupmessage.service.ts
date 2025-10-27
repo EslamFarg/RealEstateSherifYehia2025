@@ -10,6 +10,6 @@ export class GroupmessageService extends BasehttpservicesService {
 
 
   searchMessage(params:any){
-    return this.get(`/MessageSender/ListSingle${params}`)
+    return this.get(`/MessageSender/ListSingle?${params}`)
   }
 }

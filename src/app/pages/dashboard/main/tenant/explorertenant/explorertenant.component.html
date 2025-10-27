@@ -1,6 +1,6 @@
 <app-page-heading [ExplorerRoute]="'/dashboard/tenant/addtenant'"  [title]="title" [subtitle]="subtitle" [AddBtn]="true" [TitlePageAddBtn]="AddTitle"></app-page-heading>
 
-<app-search-data [dataFilter]="dataFilter" [dropDownTitle]="'مستاجرين'" (sendDataSelect)="onSelectedPagination($event)"></app-search-data>
+<app-search-data [dataFilter]="dataFilter" [dropDownTitle]="'مستاجرين'" (selectedDataFilter)="onSearchFilter($event)" (sendDataSelect)="onSelectedPagination($event)"></app-search-data>
 
 
 
@@ -54,6 +54,7 @@
 
 
 <app-pagination
+  *ngIf="tenantData.rows.length > 0"
   [totalPages]="this.tenantData.paginationInfo?.totalPagesCount"
   [currentPage]="pageIndex"
   (pageChange)="onPageChanged($event)">

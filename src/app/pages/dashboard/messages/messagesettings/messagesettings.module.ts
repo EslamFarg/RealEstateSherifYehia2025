@@ -5,6 +5,8 @@ import { MessagesettingsRoutingModule } from './messagesettings-routing.module';
 import { MessagesettingsComponent } from './messagesettings.component';
 import { PageHeadingComponent } from '../../../../shared/ui/page-heading/page-heading.component';
 import { NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
+import { ReactiveFormsModule } from '@angular/forms';
+import { NgSelectModule } from '@ng-select/ng-select';
 
 
 @NgModule({
@@ -15,7 +17,9 @@ import { NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
     CommonModule,
     MessagesettingsRoutingModule,
     PageHeadingComponent,
-    NgbNavModule
+    NgbNavModule,
+    ReactiveFormsModule,
+    NgSelectModule
   ]
 })
 export class MessagesettingsModule { }

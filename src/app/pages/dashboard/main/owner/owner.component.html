@@ -2,13 +2,24 @@
 
 <form action="" class="forms_dashboard" [formGroup]="ownerData" (ngSubmit)="onSubmit()"  appScrollAnimation="fade-in">
     <div class="row">
-        <div class="col-sm-12 col-lg-8">
+        <div class="col-sm-12 col-lg-4">
             <div class="mb-3">
                     <label for="nameOwner" class="form-label">الاسم</label>
                     <input type="text" class="form-control" maxlength="40" id="nameOwner" placeholder="الاسم" formControlName="Name">
                     <ng-container *ngIf="ownerData.controls['Name'].invalid && ownerData.controls['Name'].touched">
                         <small class="error_msg_form" *ngIf="ownerData.controls['Name'].hasError('required')" >الاسم مطلوب</small>
                         <small class="error_msg_form" *ngIf="ownerData.controls['Name'].hasError('minlength')">يجب ان يكون الاسم اكثر من 3 حروف</small>
+                        <small class="error_msg_form" *ngIf="ownerData.controls['Name'].hasError('invalidUsername')">{{ownerData.get('Name')?.errors?.['invalidUsername']}}</small>
+                        <small class="error_msg_form" *ngIf="ownerData.controls['Name'].hasError('invalidStart')">{{ownerData.get('Name')?.errors?.['invalidStart']}}</small>
+                    </ng-container>
+            </div>
+        </div>
+        <div class="col-sm-12 col-lg-4">
+            <div class="mb-3">
+                    <label for="accountParent" class="form-label">حساب الاب</label>
+                    <ng-select [items]="accountParent" bindLabel="name" bindValue="id" [virtualScroll]="true" placeholder="اسم الحساب" formControlName="parentId"></ng-select>
+                    <ng-container *ngIf="ownerData.controls['parentId'].invalid && ownerData.controls['parentId'].touched">
+                        <small class="error_msg_form" *ngIf="ownerData.controls['parentId'].hasError('required')" >حساب الاب مطلوب</small>
                     </ng-container>
             </div>
         </div>
@@ -31,15 +42,14 @@
                     <label for="emailOwner" class="form-label">البريد الالكتروني</label>
                     <input type="email" class="form-control" id="emailOwner" placeholder="البريد الالكتروني" formControlName="Email">
                     <ng-container *ngIf="ownerData.controls['Email'].invalid && ownerData.controls['Email'].touched">
-                        <small class="error_msg_form" *ngIf="ownerData.controls['Email'].hasError('required')" >البريد الالكتروني مطلوب</small>
-                        <small class="error_msg_form" *ngIf="ownerData.controls['Email'].hasError('email')" >صيغة البريد الالكتروني غير صحيحة</small>
+                        <small class="error_msg_form" *ngIf="ownerData.controls['Email'].hasError('inValidEmail')" >  {{ ownerData.get('Email')?.errors?.['inValidEmail'] }}</small>
                     </ng-container>
             </div>
         </div>
         <div class="col-sm-12 col-lg-4">
             <div class="mb-3">
                     <label for="idNational" class="form-label">رقم الهويه</label>
-                    <input type="text" class="form-control" id="idNational" maxlength="10" placeholder="رقم الهويه" formControlName="NationalID">
+                    <input type="text" class="form-control" appNoStringPaste id="idNational" maxlength="10" placeholder="رقم الهويه" formControlName="NationalID">
                     <ng-container *ngIf="ownerData.controls['NationalID'].invalid && ownerData.controls['NationalID'].touched">
                         <small class="error_msg_form" *ngIf="ownerData.controls['NationalID'].hasError('required')" >رقم الهويه مطلوب</small>
                         <small class="error_msg_form" *ngIf="ownerData.controls['NationalID'].hasError('minlength')" >
@@ -60,7 +70,7 @@
 
     <div class="btn_add_reset">
         <button type="submit" data-button="send" [ngClass]="{'btnEdit':this.btnAddAndUpdate=='update','btnAdd':this.btnAddAndUpdate=='add'}">{{btnAddAndUpdate == 'add' ? 'اضافه':"تعديل"}}</button>
-        <button type="reset" (click)="this.btnAddAndUpdate='add'" data-button="reset">جديد</button>
+        <button type="reset" (click)="resetData()" data-button="reset">جديد</button>
     </div>
 
 </form>

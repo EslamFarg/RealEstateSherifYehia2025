@@ -8,6 +8,9 @@ import { TenantService } from '../services/tenant.service';
 import { ToastrService } from '../../../../../shared/ui/toastr/services/toastr.service';
 import { EditBehaviorServiceService } from '../../../../../shared/services/edit-behavior-service.service';
 import { Router } from '@angular/router';
+import { CheckEmail } from '../../../../../shared/validations/emailValidation';
+import { checkUsername } from '../../../../../shared/validations/checkUsername';
+import { saudiPhoneValidator } from '../../../../../shared/validations/phoneNumber';
 
 @Component({
   selector: 'app-addtenant',
@@ -19,6 +22,7 @@ export class AddtenantComponent {
   title='الرئيسيه';
   subtitle="المستاجر";
   descripition='اضافه مستاجر جديد'
+  accountParent:any=[]
 
   subScription:any
 
@@ -29,6 +33,7 @@ export class AddtenantComponent {
   toastr:ToastrService=inject(ToastrService);
   $destroyRef:DestroyRef=inject(DestroyRef);
   _editBehaviorServices:EditBehaviorServiceService=inject(EditBehaviorServiceService);
+  _sharedServices:SharedService=inject(SharedService)
   _router:Router=inject(Router)
 
   // getAllNationality
@@ -38,22 +43,23 @@ export class AddtenantComponent {
   destoryRef:DestroyRef=inject(DestroyRef);
   dataDependants:any[]=[]
   tenantForm=this.fb.group({
-    Name:['',[Validators.required,Validators.minLength(3)]],
+    Name:['',[Validators.required,Validators.minLength(3),checkUsername.ValidationUsername()]],
     TenantType:[null,[Validators.required]],
     Nationality:[null,[Validators.required]],
-    Mobile:['',[Validators.required]],
-    Email:['',[Validators.required,Validators.email]],
-    NationalID:['',[Validators.required]],
+    Mobile:['',[Validators.required,saudiPhoneValidator.phoneNumberValidator]],
+    Email:['',[CheckEmail.ValidationEmail()]],
+    NationalID:['',[Validators.required,Validators.minLength(10)]],
     JobTitle:['',[Validators.required]],
+    ParentId:[null,[Validators.required]],
     Dependants:this.fb.control<Apartments[]>([], [Validators.required]),
     Files:[null]
   })
 
 
   DependantsForm:any=this.fb.group({
-    Name:['',[Validators.required,Validators.minLength(3)]],
-    phoneNumber:['',[Validators.required]],
-    nationalID:['',[Validators.required]],
+    Name:['',[Validators.required,Validators.minLength(3),checkUsername.ValidationUsername()]],
+    phoneNumber:['',[Validators.required,saudiPhoneValidator.phoneNumberValidator]],
+    nationalID:['',[Validators.required,Validators.minLength(10)]],
     nationality:[null,[Validators.required]],
     relation:[null,[Validators.required]],
 
@@ -82,18 +88,21 @@ export class AddtenantComponent {
 ngOnInit(): void {
   this.getAllNationality();
   this.getAllRelations();
+  this.getAllFinicalData();
 
   this._editBehaviorServices.idSubscribe.pipe(takeUntilDestroyed(this.$destroyRef)).subscribe((id)=>{
     if(id){
       this.idEdit=id;
       this.btnaddandupdate='update';
       this._tenantServices.getDataUpdate(id).pipe(takeUntilDestroyed(this.$destroyRef)).subscribe((res:any)=>{
+        console.log(res);
         this.tenantForm.patchValue({
           Name:res.name,
           TenantType:res.tenantType,
           Nationality:res.nationality,
           Mobile:res.mobile,
           Email:res.email,
+          ParentId:res.parentId,
           NationalID:res.nationalID,
           JobTitle:res.jobTitle,
           Dependants:res.dependants,
@@ -159,6 +168,7 @@ onSubmit(){
     formData.append('Email',this.tenantForm.value.Email || '' );
     formData.append('NationalID',this.tenantForm.value.NationalID || '' );
     formData.append('JobTitle',this.tenantForm.value.JobTitle || '' );
+    formData.append('ParentId',this.tenantForm.value.ParentId || '' );
     
     let files= this.tenantForm.value.Files || [];
     files.forEach(file=>{
@@ -185,7 +195,7 @@ onSubmit(){
    }else{
     // update
 
-    debugger
+    
     let dataform=new FormData();
 
     dataform.append('Id',this.idEdit);
@@ -197,6 +207,7 @@ onSubmit(){
     dataform.append('Email',this.tenantForm.value.Email || '' );
     dataform.append('NationalID',this.tenantForm.value.NationalID || '' );
     dataform.append('JobTitle',this.tenantForm.value.JobTitle || '' );
+    dataform.append('ParentId',this.tenantForm.value.ParentId || '' );
     
     let files= this.tenantForm.value.Files || [];
     files.forEach(file=>{
@@ -350,6 +361,23 @@ ngOnDestroy(): void {
   //Called once, before the instance is destroyed.
   //Add 'implements OnDestroy' to the class.
   this._editBehaviorServices.clearId();
+}
+
+getAllFinicalData(){
+
+  let pagination={
+  paginationInfo: {
+    pageIndex: 0,
+    pageSize: 0
+  }
+}
+
+  this._sharedServices.getAllfinancialData(pagination).pipe(takeUntilDestroyed(this.$destroyRef)).subscribe((res:any)=>{
+    console.log(res);
+    this.accountParent=res;
+  })
+  
+
 }
 
 

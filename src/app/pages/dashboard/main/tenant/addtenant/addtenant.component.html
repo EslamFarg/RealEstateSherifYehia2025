@@ -9,14 +9,26 @@
     <form class="forms_dashboard" [formGroup]="tenantForm" (ngSubmit)="onSubmit()">
 
         <div class="row">
-            <div class="col-sm-12 col-lg-8">
+            <div class="col-sm-12 col-lg-4">
                 <div class="mb-3">
                 <label for="nameTenant" class="form-label">الاسم</label>
-                <input type="text" class="form-control" id="nameTenant" placeholder="الاسم" formControlName="Name"/>
+                <input type="text" class="form-control" id="nameTenant" maxlength="40" placeholder="الاسم" formControlName="Name"/>
                    <ng-container *ngIf="tenantForm.controls['Name'].invalid && tenantForm.controls['Name'].touched">
                         <small class="error_msg_form" *ngIf="tenantForm.controls['Name'].hasError('required')" >الاسم مطلوب</small>
                         <small class="error_msg_form" *ngIf="tenantForm.controls['Name'].hasError('minlength')">يجب ان يكون الاسم اكثر من 3 حروف</small>
+                        <small class="error_msg_form" *ngIf="tenantForm.controls['Name'].hasError('invalidUsername')">{{tenantForm.get('Name')?.errors?.['invalidUsername']}}</small>
+                        <small class="error_msg_form" *ngIf="tenantForm.controls['Name'].hasError('invalidStart')">{{tenantForm.get('Name')?.errors?.['invalidStart']}}</small>
                        
+                    </ng-container> 
+                </div>
+            
+            </div>
+            <div class="col-sm-12 col-lg-4">
+                <div class="mb-3">
+                <label for="accountName" class="form-label">حساب الاب</label>
+               <ng-select [items]="accountParent" bindLabel="name" bindValue="id" [virtualScroll]="true" placeholder="اسم الحساب" formControlName="ParentId"></ng-select>
+                   <ng-container *ngIf="tenantForm.controls['ParentId'].invalid && tenantForm.controls['ParentId'].touched">
+                        <small class="error_msg_form" *ngIf="tenantForm.controls['ParentId'].hasError('required')" >  اسم الحساب مطلوب</small>
                     </ng-container> 
                 </div>
             
@@ -48,9 +60,10 @@
               <div class="col-sm-12 col-lg-4">
                 <div class="mb-3">
                     <label for="phonenumber" class="form-label">رقم الجوال</label>
-                <input type="text" class="form-control" id="phonenumber" placeholder="رقم الجوال" formControlName="Mobile">
+                <input type="text" class="form-control" id="phonenumber" appNoStringPaste placeholder="رقم الجوال" formControlName="Mobile">
                 <ng-container *ngIf="tenantForm.controls['Mobile'].invalid && tenantForm.controls['Mobile'].touched">
                         <small class="error_msg_form" *ngIf="tenantForm.controls['Mobile'].hasError('required')" >رقم الجوال مطلوب</small>
+                        <small class="error_msg_form" *ngIf="tenantForm.controls['Mobile'].hasError('saudiPhoneInvalid')" > {{ tenantForm.controls['Mobile'].getError('saudiPhoneInvalid') }}</small>
                 </ng-container>
                 </div>
             
@@ -60,8 +73,7 @@
                     <label for="email" class="form-label">البريد الالكتروني</label>
                 <input type="email" class="form-control" id="email" placeholder="البريد الالكتروني" formControlName="Email">
                 <ng-container *ngIf="tenantForm.controls['Email'].invalid && tenantForm.controls['Email'].touched">
-                        <small class="error_msg_form" *ngIf="tenantForm.controls['Email'].hasError('required')" >البريد الالكتروني مطلوب</small>
-                        <small class="error_msg_form" *ngIf="tenantForm.controls['Email'].hasError('email')" >صيغة البريد الالكتروني غير صحيحة</small>
+                        <small class="error_msg_form" *ngIf="tenantForm.controls['Email'].hasError('inValidEmail')" >{{tenantForm.get('Email')?.errors?.['inValidEmail']}}</small>
                     </ng-container>
                 </div>
             
@@ -69,9 +81,10 @@
               <div class="col-sm-12 col-lg-4">
                 <div class="mb-3">
                     <label for="idnational" class="form-label">رقم الهويه</label>
-                <input type="text" class="form-control" id="idnational" placeholder="رقم الهويه" formControlName="NationalID">
+                <input type="text" class="form-control" id="idnational" placeholder="رقم الهويه" maxlength="10" appNoStringPaste formControlName="NationalID">
                 <ng-container *ngIf="tenantForm.controls['NationalID'].invalid && tenantForm.controls['NationalID'].touched">
                         <small class="error_msg_form" *ngIf="tenantForm.controls['NationalID'].hasError('required')" >رقم الهويه مطلوب</small>
+                        <small class="error_msg_form" *ngIf="tenantForm.controls['NationalID'].hasError('minlength')" >   يجب ان يكون رقم الهويه 10 ارقام</small>
                 </ng-container>
                 </div>
             
@@ -79,7 +92,7 @@
               <div class="col-sm-12 col-lg-4">
                 <div class="mb-3">
                     <label for="jop" class="form-label">الوظيفه</label>
-                <input type="text" class="form-control" id="jop" placeholder="الوظيفه" formControlName="JobTitle">
+                <input type="text" class="form-control" id="jop" appNoNumberPaste placeholder="الوظيفه" maxlength="50" formControlName="JobTitle">
                 <ng-container *ngIf="tenantForm.controls['JobTitle'].invalid && tenantForm.controls['JobTitle'].touched">
                         <small class="error_msg_form" *ngIf="tenantForm.controls['JobTitle'].hasError('required')" >الوظيفه مطلوبه</small>
                 </ng-container>
@@ -108,6 +121,8 @@
                 <ng-container *ngIf="DependantsForm.controls['Name'].invalid && DependantsForm.controls['Name'].touched">
                         <small class="error_msg_form" *ngIf="DependantsForm.controls['Name'].hasError('required')" >الاسم مطلوب</small>
                         <small class="error_msg_form" *ngIf="DependantsForm.controls['Name'].hasError('minlength')">يجب ان يكون الاسم اكثر من 3 حروف</small>
+                        <small class="error_msg_form" *ngIf="DependantsForm.controls['Name'].hasError('invalidUsername')">{{DependantsForm.get('Name')?.errors?.['invalidUsername']}}</small>
+                        <small class="error_msg_form" *ngIf="DependantsForm.controls['Name'].hasError('invalidStart')">{{DependantsForm.get('Name')?.errors?.['invalidStart']}}</small>
                 </ng-container>
                 </div>
             
@@ -116,8 +131,11 @@
                 <div class="col-sm-12 col-lg-4">
                 <div class="mb-3">
                     <label for="phonenumber2" class="form-label">رقم الجوال</label>
-                <input type="text" class="form-control" id="phonenumber2" placeholder="رقم الجوال" formControlName="phoneNumber">
-                <ng-container *ngIf="DependantsForm.controls['phoneNumber'].invalid && DependantsForm.controls['phoneNumber'].touched"><small class="error_msg_form" *ngIf="DependantsForm.controls['phoneNumber'].hasError('required')" >رقم الجوال مطلوب</small></ng-container>
+                <input type="text" class="form-control" id="phonenumber2" placeholder="رقم الجوال" formControlName="phoneNumber" appNoStringPaste>
+                <ng-container *ngIf="DependantsForm.controls['phoneNumber'].invalid && DependantsForm.controls['phoneNumber'].touched">
+                    <small class="error_msg_form" *ngIf="DependantsForm.controls['phoneNumber'].hasError('required')" >رقم الجوال مطلوب</small>
+                    <small class="error_msg_form" *ngIf="DependantsForm.controls['phoneNumber'].hasError('saudiPhoneInvalid')" >{{DependantsForm.get('phoneNumber')?.errors?.['saudiPhoneInvalid']}}</small>
+                    </ng-container>
                 </div>
             
             </div>
@@ -125,8 +143,12 @@
              <div class="col-sm-12 col-lg-4">
                 <div class="mb-3">
                     <label for="idnational2" class="form-label">رقم الهويه</label>
-                <input type="text" class="form-control" id="idnational2" placeholder="رقم الهويه" formControlName="nationalID">
-              <ng-container *ngIf="DependantsForm.controls['nationalID'].invalid && DependantsForm.controls['nationalID'].touched"><small class="error_msg_form" *ngIf="DependantsForm.controls['nationalID'].hasError('required')" >رقم الهويه مطلوب</small></ng-container>
+                <input type="text" class="form-control" id="idnational2" appNoStringPaste placeholder="رقم الهويه" maxlength="10" formControlName="nationalID">
+              <ng-container *ngIf="DependantsForm.controls['nationalID'].invalid && DependantsForm.controls['nationalID'].touched"><small class="error_msg_form" *ngIf="DependantsForm.controls['nationalID'].hasError('required')" >رقم الهويه مطلوب</small>
+              <small class="error_msg_form" *ngIf="DependantsForm.controls['nationalID'].hasError('minlength')" >
+                           يجب ان يكون رقم الهويه 10 ارقام
+                        </small>
+            </ng-container>
                 </div>
             
             </div>

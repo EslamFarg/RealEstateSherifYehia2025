@@ -3,6 +3,7 @@ import { inject, Injectable } from '@angular/core';
 import cities from '../../../../public/api/cities_lite.json';
 import districts from '../../../../public/api/districts_lite.json';
 import regions from "../../../../public/api/regions_lite.json"
+import { environment } from '../../../environment/environment';
 @Injectable({
   providedIn: 'root',
 })
@@ -19,6 +20,9 @@ export class SharedService {
 
 
 
+    getAllfinancialData(pagination:any){
+    return this.http.post(environment.apiUrl+'/FinancialAccount/GetList',pagination)
+  }
 
 
   allCities=cities

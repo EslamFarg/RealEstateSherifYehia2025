@@ -30,7 +30,7 @@ export class ExplorertenantComponent {
   showBtns=true
   AddTitle="اضافه مستاجر جديد"
 
-  dataFilter=['اسم المستأجر','رقم الهويه','رقم الجوال']
+  dataFilter=['اسم المستأجر','رقم الجوال','رقم الهويه']
 
   tenantData:{rows:TenantData[],paginationInfo:any} = {
     rows:[],
@@ -116,5 +116,41 @@ onClose(){
   this.showDelete=false;
 }
 
+
+onSearchFilter(data:any){
+  console.log(data);
+  // if(data)
+
+  let ShapeSearch={
+  criteriaDto: {
+    paginationInfo: {
+      pageIndex: 0,
+      pageSize: 0
+    }
+  },
+  searchFilter: {
+    column: 0,
+    value: data.value
+  }
+}
+  if(data.index == 0){
+    // let 
+    ShapeSearch.searchFilter.column=1;
+  }else if(data.index == 1){
+    ShapeSearch.searchFilter.column=3;
+  }else if(data.index == 2){
+    ShapeSearch.searchFilter.column=2;
+  }else{
+    ShapeSearch.searchFilter.column=0;
+  }
+
+
+
+  this._tenantServices.searchData(ShapeSearch).pipe(takeUntilDestroyed(this.$destroyRef)).subscribe((res:any)=>{
+    this.tenantData=res;
+    data.value='';
+  })
+
+}
 
 }

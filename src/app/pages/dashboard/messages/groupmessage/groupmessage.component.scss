@@ -22,7 +22,8 @@ input{
 }
 
 .table-responsive{
-       height: 360px;
+       min-height: 50px;
+       max-height: 360px;
    
 }
 

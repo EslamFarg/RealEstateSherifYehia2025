@@ -7,38 +7,59 @@
 	<li [ngbNavItem]="1">
 		<button ngbNavLink>SMS</button>
 		<ng-template ngbNavContent>
-		<form class="forms_dashboard">
-            <div class="row">
+		<form class="forms_dashboard" [formGroup]="FormSms" (ngSubmit)="OnSubmitSms()">
+            <div class="row" formGroupName="sms">
                 <div class="col-sm-12 col-lg-6">
                     <div class="mb-3">
-                        <label for="usernamesend" class="form-label">اسم المرسل </label>
-                        <input type="text" name="" class="form-control" id="usernamesend" placeholder="اسم المرسل">
+                        <label for="usernamesend" class="form-label">Account Sid </label>
+                        <input type="text" name="" class="form-control" id="Account Sid" placeholder="Account Sid" formControlName="accountSid">
+                      <ng-container *ngIf="FormSms.get('sms.accountSid')?.invalid && FormSms.get('sms.accountSid')?.touched">
+          <small class="error_msg_form" *ngIf="FormSms.get('sms.accountSid')?.hasError('required')">
+            AccountSid is Required
+          </small>
+                        </ng-container>
                     </div>
                 </div>
                 <div class="col-sm-12 col-lg-6">
                     <div class="mb-3">
-                        <label for="phonenumber" class="form-label">رقم الجوال</label>
-                        <input type="text" name="" class="form-control" id="phonenumber" placeholder="رقم الجوال">
+                        <label for="authtoken" class="form-label">Auth Token</label>
+                        <input type="text" name="" class="form-control" id="authtoken" placeholder="Auth Token" formControlName="authToken">
+                        <ng-container *ngIf="FormSms.get('sms.authToken')?.invalid && FormSms.get('sms.authToken')?.touched">
+          <small class="error_msg_form" *ngIf="FormSms.get('sms.authToken')?.hasError('required')">authToken is Required</small>
+                        </ng-container>
                     </div>
                 </div>
 
                    <div class="col-sm-12 col-lg-6">
                     <div class="mb-3">
-                        <label for="username" class="form-label">اسم المستخدم </label>
-                        <input type="text" name="" class="form-control" id="username" placeholder="اسم المستخدم">
+                        <label for="fromnumber" class="form-label">From Number </label>
+                        <input type="text" name="" class="form-control" id="fromnumber" placeholder="From Number" formControlName="fromNumber">
+                        <ng-container *ngIf="this.FormSms.get('sms.fromNumber')?.invalid && this.FormSms.get('sms.fromNumber')?.touched">
+          <small class="error_msg_form" *ngIf="this.FormSms.get('sms.fromNumber')?.hasError('required')">fromNumber is Required</small>
+                        </ng-container>
+                        
                     </div>
                 </div>
                    <div class="col-sm-12 col-lg-6">
                     <div class="mb-3">
-                        <label for="password" class="form-label">كلمه المرور</label>
-                        <input type="password" name="" class="form-control" id="password" placeholder="كلمه المرور">
+                        <label for="baseurl" class="form-label">Base Url</label>
+                        <input type="text" name="" class="form-control" id="baseurl" placeholder="Base Url" formControlName="baseUrl">
+                        <ng-container *ngIf="FormSms.get('sms.baseUrl')?.invalid && FormSms.get('sms.baseUrl')?.touched"><small class="error_msg_form" *ngIf="FormSms.get('sms.baseUrl')?.hasError('required')">baseUrl is Required</small></ng-container>
+                    </div>
+                </div>
+                   <div class="col-sm-12">
+                    <div class="mb-3">
+                        <label for="messaging" class="form-label">Messaging ServiceSid</label>
+                        <input type="text" name="" class="form-control" id="messaging" placeholder="Messaging ServiceSid" formControlName="messagingServiceSid">
+                        <ng-container *ngIf="FormSms.get('sms.messagingServiceSid')?.invalid && FormSms.get('sms.messagingServiceSid')?.touched"><small class="error_msg_form" *ngIf="FormSms.get('sms.messagingServiceSid')?.hasError('required')">messagingServiceSid is Required</small></ng-container>
+
                     </div>
                 </div>
             </div>
 
-              <div class="btns_add_edit ">
- <button data-type="save">حفظ</button>
- <button>جديد</button>
+              <div class="btn_add_reset">
+ <button type="submit" data-button="send"  [ngClass]="{'btnEdit':this.btnAddandUpdate=='update','btnAdd':this.btnAddandUpdate=='add'}">{{this.btnAddandUpdate == 'add' ? 'حفظ' : 'تعديل'}}</button>
+ <!-- <button>جديد</button> -->
 
   </div>
         </form>
@@ -47,38 +68,50 @@
 	<li [ngbNavItem]="2">
 		<button ngbNavLink>واتساب</button>
 		<ng-template ngbNavContent>
-		<form class="forms_dashboard">
-            <div class="row">
+		<form class="forms_dashboard" [formGroup]="formWhatsApp" (ngSubmit)="OnSubmitWhatsApp()">
+              <div class="row" formGroupName="whatsApp">
                 <div class="col-sm-12 col-lg-6">
                     <div class="mb-3">
-                        <label for="usernamesend" class="form-label">اسم المرسل </label>
-                        <input type="text" name="" class="form-control" id="usernamesend" placeholder="اسم المرسل">
+                        <label for="usernamesend" class="form-label">Account Sid </label>
+                        <input type="text" name="" class="form-control" id="Account Sid" placeholder="Account Sid" formControlName="accountSid">
+                          <ng-container *ngIf="formWhatsApp.get('whatsApp.accountSid')?.invalid && formWhatsApp.get('whatsApp.accountSid')?.touched">
+          <small class="error_msg_form" *ngIf="formWhatsApp.get('whatsApp.accountSid')?.hasError('required')">
+            AccountSid is Required
+          </small>
+                        </ng-container>
                     </div>
                 </div>
                 <div class="col-sm-12 col-lg-6">
                     <div class="mb-3">
-                        <label for="phonenumber" class="form-label">رقم الواتساب</label>
-                        <input type="text" name="" class="form-control" id="phonenumber" placeholder="رقم الجوال">
+                        <label for="authtoken" class="form-label">Auth Token</label>
+                        <input type="text" name="" class="form-control" id="authtoken" placeholder="Auth Token" formControlName="authToken">
+                           <ng-container *ngIf="formWhatsApp.get('whatsApp.authToken')?.invalid && formWhatsApp.get('whatsApp.authToken')?.touched">
+          <small class="error_msg_form" *ngIf="formWhatsApp.get('whatsApp.authToken')?.hasError('required')">authToken is Required</small>
+                        </ng-container>
                     </div>
                 </div>
 
                    <div class="col-sm-12 col-lg-6">
                     <div class="mb-3">
-                        <label for="username" class="form-label">اسم المستخدم </label>
-                        <input type="text" name="" class="form-control" id="username" placeholder="اسم المستخدم">
+                        <label for="fromnumber" class="form-label">From Number </label>
+                        <input type="text" name="" class="form-control" id="fromnumber" placeholder="From Number" formControlName="fromNumber">
+                                                <ng-container *ngIf="this.formWhatsApp.get('whatsApp.fromNumber')?.invalid && this.formWhatsApp.get('whatsApp.fromNumber')?.touched">
+          <small class="error_msg_form" *ngIf="this.formWhatsApp.get('whatsApp.fromNumber')?.hasError('required')">fromNumber is Required</small>
+                        </ng-container>
                     </div>
                 </div>
                    <div class="col-sm-12 col-lg-6">
                     <div class="mb-3">
-                        <label for="password" class="form-label">كلمه المرور</label>
-                        <input type="password" name="" class="form-control" id="password" placeholder="كلمه المرور">
+                        <label for="baseurl" class="form-label">Base Url</label>
+                        <input type="text" name="" class="form-control" id="baseurl" placeholder="Base Url" formControlName="baseUrl">
+                             <ng-container *ngIf="formWhatsApp.get('whatsApp.baseUrl')?.invalid && formWhatsApp.get('whatsApp.baseUrl')?.touched"><small class="error_msg_form" *ngIf="formWhatsApp.get('whatsApp.baseUrl')?.hasError('required')">baseUrl is Required</small></ng-container>
                     </div>
                 </div>
+                
             </div>
 
-              <div class="btns_add_edit ">
- <button data-type="save">حفظ</button>
- <button>جديد</button>
+              <div class="btn_add_reset">
+ <button type="submit" data-button="send"  [ngClass]="{'btnEdit':this.btnAddandUpdate=='update','btnAdd':this.btnAddandUpdate=='add'}">{{this.btnAddandUpdate == 'add' ? 'حفظ' : 'تعديل'}}</button>
 
   </div>
         </form>
@@ -87,38 +120,77 @@
 	<li [ngbNavItem]="3">
 		<button ngbNavLink>البريد الالكتروني</button>
 		<ng-template ngbNavContent>
-		<form class="forms_dashboard">
-            <div class="row">
+		<form class="forms_dashboard" [formGroup]="formEmail" (ngSubmit)="OnSubmitEmail()">
+            <div class="row" formGroupName="email">
                 <div class="col-sm-12 col-lg-6">
                     <div class="mb-3">
-                        <label for="usernamesend" class="form-label">اسم المرسل </label>
-                        <input type="text" name="" class="form-control" id="usernamesend" placeholder="اسم المرسل">
+                        <label for="host" class="form-label">Host </label>
+                        <input type="text" name="" class="form-control" id="host" placeholder="Host" formControlName="host">
+                        <ng-container *ngIf="formEmail.get('email.host')?.invalid && formEmail.get('email.host')?.touched"><small class="error_msg_form" *ngIf="formEmail.get('email.host')?.hasError('required')">host is Required</small></ng-container>
                     </div>
                 </div>
                 <div class="col-sm-12 col-lg-6">
                     <div class="mb-3">
-                        <label for="phonenumber" class="form-label">البريد الالكتروني</label>
-                        <input type="email" name="" class="form-control" id="phonenumber" placeholder="البريد الالكتروني">
+                        <label for="Port" class="form-label">Port </label>
+                        <input type="text" name="" class="form-control" id="Port" placeholder="Port" formControlName="port">
+                           <ng-container *ngIf="formEmail.get('email.port')?.invalid && formEmail.get('email.port')?.touched"><small class="error_msg_form" *ngIf="formEmail.get('email.port')?.hasError('required')">Port is Required</small></ng-container>
                     </div>
                 </div>
+                <div class="col-sm-12 col-lg-6">
+                    <div class="mb-3">
+                        <label for="UseSsl" class="form-label">Use Ssl </label>
+                        <!-- <input type="text" name="" class="form-control" id="UseSsl" placeholder="Use Ssl"> -->
+                         <ng-select [items]="useSsl" bindLabel="name" bindValue="value" placeholder="useSSl" formControlName="useSsl"></ng-select>
+                           <ng-container *ngIf="formEmail.get('email.useSsl')?.invalid && formEmail.get('email.useSsl')?.touched"><small class="error_msg_form" *ngIf="formEmail.get('email.useSsl')?.hasError('required')">useSsl is Required</small></ng-container>
 
-                   <div class="col-sm-12 col-lg-6">
-                    <div class="mb-3">
-                        <label for="username" class="form-label">اسم المستخدم </label>
-                        <input type="text" name="" class="form-control" id="username" placeholder="اسم المستخدم">
                     </div>
                 </div>
-                   <div class="col-sm-12 col-lg-6">
+                <div class="col-sm-12 col-lg-6">
                     <div class="mb-3">
-                        <label for="password" class="form-label">كلمه المرور</label>
-                        <input type="password" name="" class="form-control" id="password" placeholder="كلمه المرور">
+                        <label for="fromaddress" class="form-label">From Address </label>
+                        <input type="text" name="" class="form-control" id="fromaddress" placeholder="From Address" formControlName="fromAddress">
+                        <ng-container *ngIf="formEmail.get('email.fromAddress')?.invalid && formEmail.get('email.fromAddress')?.touched">
+                            <small class="error_msg_form" *ngIf="formEmail.get('email.fromAddress')?.hasError('required')">fromAddress is Required</small>
+                        </ng-container>
                     </div>
                 </div>
+                <div class="col-sm-12 col-lg-6">
+                    <div class="mb-3">
+                        <label for="fromname" class="form-label">From Name </label>
+                        <input type="text" name="" class="form-control" id="fromname" placeholder="From Name" formControlName="fromName">
+                        <ng-container *ngIf="formEmail.get('email.fromName')?.invalid && formEmail.get('email.fromName')?.touched">
+                            <small class="error_msg_form" *ngIf="formEmail.get('email.fromName')?.hasError('required')">fromName is Required</small>
+                            </ng-container>
+                    </div>
+                </div>
+                <div class="col-sm-12 col-lg-6">
+                    <div class="mb-3">
+                        <label for="Username" class="form-label">Username </label>
+                        <input type="text" name="" class="form-control" id="Username" placeholder="Username" formControlName="username">
+                        <ng-container *ngIf="formEmail.get('email.username')?.invalid && formEmail.get('email.username')?.touched">
+                            <small class="error_msg_form" *ngIf="formEmail.get('email.username')?.hasError('required')">username is Required</small>
+                            </ng-container>
+                    </div>
+                </div>
+                <div class="col-sm-12">
+                    <div class="mb-3">
+                        <label for="Password" class="form-label">Password </label>
+                        <input type="password" name="" class="form-control" id="Password" placeholder="Password" formControlName="password">
+                        <ng-container *ngIf="formEmail.get('email.password')?.invalid && formEmail.get('email.password')?.touched">
+                            <small class="error_msg_form" *ngIf="formEmail.get('email.password')?.hasError('required')">password is Required</small>
+
+                        </ng-container>
+
+                    </div>
+                </div>
+           
+
+                  
+                 
             </div>
 
-              <div class="btns_add_edit ">
- <button data-type="save">حفظ</button>
- <button>جديد</button>
+              <div class="btn_add_reset">
+ <button type="submit" data-button="send"  [ngClass]="{'btnEdit':this.btnAddandUpdate=='update','btnAdd':this.btnAddandUpdate=='add'}">{{this.btnAddandUpdate == 'add' ? 'حفظ' : 'تعديل'}}</button>
 
   </div>
         </form>

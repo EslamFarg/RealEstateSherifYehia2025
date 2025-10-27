@@ -13,6 +13,7 @@ import { DirectivesModule } from '../../../../shared/directives/directives.modul
 
 import { ConfirmDeleteComponent } from '../../../../shared/components/confirm-delete/confirm-delete.component';
 import { EmptytableComponent } from '../../../../shared/ui/emptytable/emptytable.component';
+import { NgSelectModule } from '@ng-select/ng-select';
 
 
 @NgModule({
@@ -30,7 +31,8 @@ import { EmptytableComponent } from '../../../../shared/ui/emptytable/emptytable
     ReactiveFormsModule,
     DirectivesModule,
     ConfirmDeleteComponent,
-    EmptytableComponent
+    EmptytableComponent,
+    NgSelectModule
   ]
 })
 export class OwnerModule { }

@@ -26,8 +26,8 @@ export class RealtorService  extends BasehttpservicesService{
   }
 
 
-  updateData(query:any,dataFile:any){
-    return this.put(`/Brokers/update?${query}`,dataFile)
+  updateData(data:any){
+    return this.put(`/Brokers/update`,data)
 
   }
 

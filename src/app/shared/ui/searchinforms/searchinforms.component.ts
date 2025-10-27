@@ -58,10 +58,17 @@ writeDataValid(e:any){
 
   if(regex.test(e.target.value) || e.target.value == '' ){
     input.value = input.value.replace(/[^0-9]/g, '');
+   
   }else{
     input.value = '';
   }
   }
+
+    this.selectedDataFilter.emit({
+    index: this.selectIndex,
+    value: this.DataValue,
+    dataType: this.typeDataFilter
+  });
 
 }
 

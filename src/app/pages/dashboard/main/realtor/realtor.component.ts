@@ -7,6 +7,8 @@ import { saudiPhoneValidator } from '../../../../shared/validations/phoneNumber'
 import { RealtorService } from './services/realtor.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ToastrService } from '../../../../shared/ui/toastr/services/toastr.service';
+import { CheckEmail } from '../../../../shared/validations/emailValidation';
+import { checkUsername } from '../../../../shared/validations/checkUsername';
 
 @Component({
   selector: 'app-realtor',
@@ -25,22 +27,26 @@ fb:FormBuilder=inject(FormBuilder);
 _BrokerServices:RealtorService=inject(RealtorService)
 $destroyRef:DestroyRef=inject(DestroyRef);
 toastr:ToastrService=inject(ToastrService);
+_sharedServices:SharedService=inject(SharedService)
 
 
 // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! property !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 BrokerData=this.fb.group({
-  Name: ['',[Validators.required,Validators.minLength(3)]],
+  Name: ['',[Validators.required,Validators.minLength(3),checkUsername.ValidationUsername()]],
   Mobile: ['',[Validators.required,saudiPhoneValidator.phoneNumberValidator]],
   Nationality: [null,[Validators.required]],
   Bonus: ['',[Validators.required]],
   NationalID:['',[Validators.required,Validators.minLength(10)]],
-  Email:['',[Validators.required,Validators.email]],
+  Email:['',[CheckEmail.ValidationEmail()]],
+  parentId:[null,[Validators.required]],
+  FinanciallyAccountId:[null],
   Files:[null]
 
 })
 
 dataNationality:nationality[]=[]
+accountParent:any=[];
 
 dataFiles:any[]=[]
 idRemoveFiles:any =[] 
@@ -76,6 +82,7 @@ pageSize=10
 ngOnInit(){
   this.getAllNationality();
   this.getAllDataRealtor();
+  this.getAllFinicalData();
 }
 
 
@@ -91,7 +98,7 @@ getAllNationality(){
 }
 
 onSubmit(){
-
+  debugger
   if(this.BrokerData.valid){
     if(this.btnAddandUpdate=='add'){
       
@@ -120,6 +127,8 @@ onSubmit(){
     formData.append('Bonus',this.BrokerData.value.Bonus || '');
     formData.append('NationalID',this.BrokerData.value.NationalID || '');
     formData.append('Email',this.BrokerData.value.Email || '');
+    formData.append('parentId',this.BrokerData.value.parentId || '');
+    formData.append('FinanciallyAccountId',this.BrokerData.value.FinanciallyAccountId || '');
 
 
       const files: File[] = this.BrokerData.value.Files || []
@@ -136,28 +145,31 @@ onSubmit(){
         this.BrokerData.reset();
         this.btnAddandUpdate='add';
         this.dataFiles=[];
+        this.idRemoveFiles=[];
         this.getAllDataRealtor();
       })
     }else{
-      
+ 
+    
       if (!this.idUpdate) {
   this.toastr.show('حدث خطأ: لم يتم تحديد السمسار المراد تعديله', 'error');
   return;
 }
+
+    let formdata=new FormData();
       
-      let params=new URLSearchParams({
-  Id: this.idUpdate ,
-  Name: this.BrokerData.value.Name ?? '',
-  Mobile: this.BrokerData.value.Mobile ?? '',
-  Email: this.BrokerData.value.Email ?? '',
-  NationalID: this.BrokerData.value.NationalID ?? '',
-  Bonus:this.BrokerData.value.Bonus ?? '',
-  Nationality:this.BrokerData.value.Nationality ?? ''
 
-})
+    formdata.append('Name',this.BrokerData.value.Name || '');
+    formdata.append('Mobile',this.BrokerData.value.Mobile || '');
+    formdata.append('Nationality',this.BrokerData.value.Nationality || '');
+    formdata.append('Bonus',this.BrokerData.value.Bonus || '');
+    formdata.append('NationalID',this.BrokerData.value.NationalID || '');
+    formdata.append('Email',this.BrokerData.value.Email || '');
+    formdata.append('parentId',this.BrokerData.value.parentId || '');
+    formdata.append('FinanciallyAccountId',this.BrokerData.value.FinanciallyAccountId || '');
+    formdata.append('Id',this.idUpdate || '');
 
-// params.append('Id', String(Number(this.idUpdate)));
-
+   
 
 
 
@@ -165,28 +177,24 @@ onSubmit(){
 
 this.idRemoveFiles.forEach((id:any)=>{
 
-  params.append('RemovedAttachmentIds',id);
+  formdata.append('RemovedAttachmentIds',id);
 })
 
 
-
-let queryParams=params.toString();
-
-
-console.log(decodeURIComponent(queryParams));
-let formData=new FormData();
 
 
 const files: File[] = this.BrokerData.value.Files || []
 
 files.forEach(file=>{
 
-  formData.append('NewFiles',file);
+  formdata.append('NewFiles',file);
 })
 
 
+// console
 
-this._BrokerServices.updateData(queryParams,formData).pipe(takeUntilDestroyed(this.$destroyRef)).subscribe((res:any)=>{
+
+this._BrokerServices.updateData(formdata).pipe(takeUntilDestroyed(this.$destroyRef)).subscribe((res:any)=>{
   this.toastr.show('تم تعديل السمسار بنجاح','success');
   this.BrokerData.reset();
   this.btnAddandUpdate='add';
@@ -228,13 +236,18 @@ getAllDataRealtor(){
 getUpdateData(id:any){
 
   this._BrokerServices.getDataUpdate(id).pipe(takeUntilDestroyed(this.$destroyRef)).subscribe((res:any)=>{
+    console.log(res);
     this.BrokerData.patchValue({
       Name:res.name,
       Mobile:res.mobile,
       Nationality:res.nationality,
       Bonus:res.bonus,
       NationalID:res.nationalID,
-      Email:res.email
+      Email:res.email,
+      parentId:res.parentId,
+
+      FinanciallyAccountId:res.financiallyAccountId
+
     })
 
     this.dataFiles=res.attachments
@@ -288,5 +301,27 @@ deleteConfirmed(id:any){
 
 onClose(){
   this.showDelete=false;
+}
+
+getAllFinicalData(){
+
+  let pagination={
+  paginationInfo: {
+    pageIndex: 0,
+    pageSize: 0
+  }
+}
+
+  this._sharedServices.getAllfinancialData(pagination).pipe(takeUntilDestroyed(this.$destroyRef)).subscribe((res:any)=>{
+    console.log(res);
+    this.accountParent=res;
+  })
+  
+
+}
+
+resetData(){
+  this.dataFiles=[];
+  this.btnAddandUpdate='add';
 }
 }

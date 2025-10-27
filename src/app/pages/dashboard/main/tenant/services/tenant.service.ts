@@ -33,5 +33,11 @@ export class TenantService extends BasehttpservicesService{
   deleteData(id:any){
     return this.delete(`/Tenants/${id}`)
   }
+
+
+  searchData(data:any){
+    return this.post(`/Tenants/search`,data)
+
+  }
   
 }

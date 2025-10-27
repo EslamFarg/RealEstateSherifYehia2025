@@ -5,6 +5,9 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { saudiPhoneValidator } from '../../../../shared/validations/phoneNumber';
 import { OwnerService } from './services/owner.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { SharedService } from '../../../../shared/services/shared.service';
+import { checkUsername } from '../../../../shared/validations/checkUsername';
+import { CheckEmail } from '../../../../shared/validations/emailValidation';
 
 @Component({
   selector: 'app-owner',
@@ -19,6 +22,7 @@ export class OwnerComponent {
   fb:FormBuilder=inject(FormBuilder)
   _ownerServices:OwnerService=inject(OwnerService)
   $destroyRef:DestroyRef=inject(DestroyRef)
+  _sharedServices:SharedService=inject(SharedService);
 
 
 
@@ -32,16 +36,20 @@ showDelete=false;
 deleteId:any
 idUpdate:any
 idRemoveFiles:any =[] 
+
+accountParent:any=[];
   // pagination
 
 pageIndex=1
 pageSize=10
 
   ownerData=this.fb.group({
-    Name:['',[Validators.required,Validators.minLength(3)]],
+    Name:['',[Validators.required,Validators.minLength(3),checkUsername.ValidationUsername()]],
     Mobile:['',[Validators.required,saudiPhoneValidator.phoneNumberValidator]],
-    Email:['',[Validators.required,Validators.email]],
+    Email:['',[CheckEmail.ValidationEmail()]],
     NationalID:['',[Validators.required,Validators.minLength(10)]],
+    parentId: [null,[Validators.required]],
+    financiallyAccountId: [0], 
     Files:[null]
   })
 
@@ -74,6 +82,7 @@ ngOnInit(): void {
   //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
   //Add 'implements OnInit' to the class.
   this.getAllDataOwner();
+  this.getAllFinicalData();
 
 }
 onPageChanged(page: number) {
@@ -95,6 +104,7 @@ onSubmit(){
     formData.append('Mobile',this.ownerData.value.Mobile || '');
     formData.append('Email',this.ownerData.value.Email || '');
     formData.append('NationalID',this.ownerData.value.NationalID || '');
+    formData.append('parentId',this.ownerData.value.parentId || '');
 
     const files: File[] = this.ownerData.value.Files || [];
 
@@ -108,6 +118,9 @@ onSubmit(){
     this._ownerServices.createOwner(formData).pipe(takeUntilDestroyed(this.$destroyRef)).subscribe((res:any)=>{
       this.ownerData.reset();
       this.btnAddAndUpdate='add'
+      this.dataFiles=[];
+      this.idUpdate = null;
+      this.idRemoveFiles = [];
       this.toastr.show('تم اضافه المالك بنجاح','success');
       
       this.getAllDataOwner();
@@ -121,7 +134,8 @@ const params = new URLSearchParams({
   Name: this.ownerData.value.Name ?? '',
   Mobile: this.ownerData.value.Mobile ?? '',
   Email: this.ownerData.value.Email ?? '',
-  NationalID: this.ownerData.value.NationalID ?? ''
+  NationalID: this.ownerData.value.NationalID ?? '',
+  parentId: this.ownerData.value.parentId ?? ''
 });
 this.idRemoveFiles.forEach((id: any) => params.append('RemovedAttachmentIds', id));
 const queryParams = params.toString();
@@ -148,6 +162,7 @@ files
     this.idUpdate = null;
     this.idRemoveFiles = [];
     this.dataFiles = [];
+
       this.getAllDataOwner();
     })
 
@@ -198,6 +213,7 @@ getDataUpdate(id:any){
         Mobile:res.mobile,
         Email:res.email,
         NationalID:res.nationalID,
+        parentId:res.parentId,
         Files:res.attachments
       })
    
@@ -243,11 +259,33 @@ showDeletePopup(id:any){
 }
 
 
+getAllFinicalData(){
+
+  let pagination={
+  paginationInfo: {
+    pageIndex: 0,
+    pageSize: 0
+  }
+}
+
+  this._sharedServices.getAllfinancialData(pagination).pipe(takeUntilDestroyed(this.$destroyRef)).subscribe((res:any)=>{
+    console.log(res);
+    this.accountParent=res;
+  })
+  
+
+}
+
 fnIdRemoveFiles(id:any){
 
   this.dataFiles=this.dataFiles.filter((el:any)=>el.id != id);
   this.idRemoveFiles.push(id);
   
 
+}
+
+resetData(){
+  this.btnAddAndUpdate='add'
+  this.dataFiles=[];
 }
 }

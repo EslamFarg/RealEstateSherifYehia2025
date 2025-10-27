@@ -7,6 +7,7 @@ import { PageHeadingComponent } from '../../../../shared/ui/page-heading/page-he
 import { SearchinformsComponent } from '../../../../shared/ui/searchinforms/searchinforms.component';
 import { PaginationComponent } from '../../../../shared/ui/pagination/pagination.component';
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { EmptytableComponent } from '../../../../shared/ui/emptytable/emptytable.component';
 
 
 @NgModule({
@@ -20,7 +21,8 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
     SearchinformsComponent,
     PaginationComponent,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    EmptytableComponent
 ]
 })
 export class GroupmessageModule { }
