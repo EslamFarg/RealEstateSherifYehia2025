@@ -12,9 +12,12 @@ import { LoadingComponent } from './shared/components/loading/loading.component'
 
 
 
+
 @NgModule({
   declarations: [
     AppComponent,
+   
+   
     
   
   ],

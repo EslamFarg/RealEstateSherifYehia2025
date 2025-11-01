@@ -17,13 +17,13 @@ export const errorInterceptor: HttpInterceptorFn = (req, next) => {
       
       } else {
 
-        if (err.error?.code) {
-          errorMsg = err.error.code;
+        if (err.error?.detail) {
+          errorMsg = err.error.detail;
         } else if (err.error?.message) {
           errorMsg = err.error.message;
         }else if(err.error.errors && err.error.errors.length > 0 && Array.isArray(err.error.errors)){
-          err.error.errors.forEach((error:any) => {
-            const message = error.code;
+          err.error.errors.detail.forEach((error:any) => {
+            const message = error;
             
 
             toastr.show(message, 'error');

@@ -73,8 +73,6 @@ export class SearchDataComponent {
     const dataValue={
       index: this.selectIndex,
     }
-    
-
     this.selectIndex=this.dataFilter.indexOf(value);
   
 

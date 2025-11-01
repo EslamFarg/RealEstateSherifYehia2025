@@ -3,6 +3,6 @@ export interface Accounts{
     name: string;
     type: number;
     accountNumber: number;
-    description: string;
+    iban:string
 
 }

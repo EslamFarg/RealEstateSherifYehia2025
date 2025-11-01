@@ -9,6 +9,7 @@ import { PaginationComponent } from '../../../../shared/ui/pagination/pagination
 import { ReactiveFormsModule } from '@angular/forms';
 import { EmptytableComponent } from '../../../../shared/ui/emptytable/emptytable.component';
 import { ConfirmDeleteComponent } from '../../../../shared/components/confirm-delete/confirm-delete.component';
+import { DirectivesModule } from "../../../../shared/directives/directives.module";
 
 
 @NgModule({
@@ -23,8 +24,8 @@ import { ConfirmDeleteComponent } from '../../../../shared/components/confirm-de
     PaginationComponent,
     ReactiveFormsModule,
     EmptytableComponent,
-    ConfirmDeleteComponent
-
-  ]
+    ConfirmDeleteComponent,
+    DirectivesModule
+]
 })
 export class AccountsModule { }

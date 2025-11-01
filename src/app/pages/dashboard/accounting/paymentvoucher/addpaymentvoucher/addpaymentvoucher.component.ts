@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { FormBuilder } from '@angular/forms';
 
 @Component({
   selector: 'app-addpaymentvoucher',
@@ -6,6 +7,23 @@ import { Component } from '@angular/core';
   styleUrl: './addpaymentvoucher.component.scss'
 })
 export class AddpaymentvoucherComponent {
+// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1 Services
+fb:FormBuilder=inject(FormBuilder);
+
+
+
+
+// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!111 Properties
+
+paymentVoucherForm=this.fb.group({
+  voucherDate:[''],
+  debitAccountId:[''],
+  creditAccountId:[''],
+  amount:[''],
+  notes:['']
+})
+
+
 
 
    paymentData = [

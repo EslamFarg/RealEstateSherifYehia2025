@@ -30,18 +30,18 @@
             </div>
             <div class="col-sm-12 col-lg-4">
                 <label for="hay" class="form-label">الحي</label>
-                <ng-select [items]="getDataDistricts" bindLabel="name_ar" bindValue="name_ar" placeholder="اختر" bindValue="id" placeholder="الحي"></ng-select>
+                <ng-select [items]="getDataDistricts" bindLabel="name_ar" bindValue="name_ar" placeholder="اختر" bindValue="id" placeholder="الحي" (change)="SelectedDistritByProperty($event)"></ng-select>
 
             </div>
             <div class="col-sm-12 col-lg-4">
                 <label for="property" class="form-label">العقار</label>
-                <ng-select [items]="[]" bindLabel="name" placeholder="اختر" bindValue="id" placeholder="العقار"></ng-select>
+                <ng-select [items]="getDataProperties" bindLabel="name" placeholder="اختر" bindValue="id" placeholder="العقار" (change)="getIdSearch($event)" formControlName="property"></ng-select>
 
             </div>
         </div>
 
         <div class="btn_add_reset">
-            <button type="button" data-button="send">بحث</button>
+            <button type="submit" data-button="send">بحث</button>
         </div>
         </form>
 

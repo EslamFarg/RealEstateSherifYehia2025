@@ -5,7 +5,7 @@
     <div class="row">
         <div class="col-sm-12">
             <label for="maintenance" class="form-label">الصيانه</label>
-            <input type="text" placeholder="الصيانه" class="form-control" formControlName="name">
+            <input type="text" placeholder="الصيانه" maxlength="30" class="form-control" formControlName="name">
             <ng-container *ngIf="maintenanceData.controls['name'].invalid && maintenanceData.controls['name'].touched">
                 <small class="error_msg_form" *ngIf="maintenanceData.controls['name'].hasError('required')">الصيانه مطلوب</small>
                 <small class="error_msg_form" *ngIf="maintenanceData.controls['name'].hasError('minlength')">يجب ان يكون الاسم اكثر من 3 حروف</small>
@@ -68,6 +68,7 @@
 
 
 <app-pagination
+*ngIf="maintenanceTypes.rows.length > 0"
   [totalPages]="maintenanceTypes.paginationInfo?.totalPagesCount"
   [currentPage]="pageIndex"
   (pageChange)="onPageChanged($event)">

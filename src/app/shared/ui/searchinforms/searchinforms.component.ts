@@ -1,6 +1,6 @@
 import { NgClass } from '@angular/common';
 import { Component, ElementRef, EventEmitter, HostListener, inject, Input, Output, ViewChild } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ToastrService } from '../toastr/services/toastr.service';
 
 @Component({
@@ -8,7 +8,7 @@ import { ToastrService } from '../toastr/services/toastr.service';
   templateUrl: './searchinforms.component.html',
   styleUrl: './searchinforms.component.scss',
   standalone:true,
-  imports:[NgClass,FormsModule]
+  imports:[NgClass,FormsModule,ReactiveFormsModule]
 })
 export class SearchinformsComponent {
 showFilterData=false;
@@ -16,11 +16,12 @@ selectIndex:any=0
 @Input() backgroundForm:any;
 @ViewChild('searchVal') searchVal!:ElementRef;
 @Input() typeDataFilter:any
- 
+ @Input() fc!:FormControl;
 @Input() dataFilter:any
 @Output() selectedDataFilter=new EventEmitter()
 DataValue:any
 toastr:ToastrService=inject(ToastrService)
+
 // @
 
 
@@ -39,38 +40,12 @@ if(!e.target.closest('.filter_data')){
 
 selectDataFilter(i:any){
   this.selectIndex = i
-    if (this.selectIndex === 0) {
-    this.typeDataFilter = 'string';
-  } else if (this.selectIndex === 1) {
-    this.typeDataFilter = 'number';
-    if(this.typeDataFilter){
-      this.searchVal.nativeElement.value='';
-    }
-  }
+  // console.log(i)
+  
 }
 
 
-writeDataValid(e:any){
-  const input = e.target as HTMLInputElement;
 
-  if(this.typeDataFilter == 'number'){
-    let regex=/^[0-9]+$/
-
-  if(regex.test(e.target.value) || e.target.value == '' ){
-    input.value = input.value.replace(/[^0-9]/g, '');
-   
-  }else{
-    input.value = '';
-  }
-  }
-
-    this.selectedDataFilter.emit({
-    index: this.selectIndex,
-    value: this.DataValue,
-    dataType: this.typeDataFilter
-  });
-
-}
 
 
 onPaste(e:ClipboardEvent){
@@ -89,30 +64,24 @@ onPaste(e:ClipboardEvent){
 
 
 
-SearchAboutData(){
+SearchAboutData(val:any){
+
+  const value=val.value.trim();
   
-  if(this.searchVal.nativeElement.value == ''){
+  
+  if(value.trim() == '' || value.trim() == undefined || value.trim() == null){
     this.toastr.show('الرجاء ادخال البحث','error');
     return;
   }
 
-  
-  if(this.selectIndex == 0){
 
-    this.selectedDataFilter.emit({
-      index:0,
-      value:this.DataValue,
-      dataType:this.typeDataFilter
-    })
-  }else if(this.selectIndex == 1){
-    // console.log('العقار')
-    this.selectedDataFilter.emit({
-       index:1,
-       value:this.DataValue,
-       dataType:this.typeDataFilter
-
-    })
+  let dataSearch={
+    index:this.selectIndex,
+    value:value,
   }
+  // console.log(dataSearch);
+  this.selectedDataFilter.emit(dataSearch);
+  // this.fc.setValue('');
 
 }
 

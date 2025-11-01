@@ -6,6 +6,8 @@ import { EmployeesService } from './services/employees.service';
 import { ToastrService } from '../../../../shared/ui/toastr/services/toastr.service';
 import { EmployeesModule } from './employees.module';
 import { Employees } from './models/employees';
+import { saudiPhoneValidator } from '../../../../shared/validations/phoneNumber';
+import { CheckEmail } from '../../../../shared/validations/emailValidation';
 
 @Component({
   selector: 'app-employees',
@@ -27,12 +29,12 @@ export class EmployeesComponent {
   
   dataNationality:any[]=[]
   employeesData=this.fb.group({
-    Name:['',[Validators.required]],
+    Name:['',[Validators.required,Validators.minLength(2)]],
     Nationality:[null,[Validators.required]],
-    Mobile:['',[Validators.required]],
-    Email:['',[Validators.required,Validators.email]],
-    Address:['',[Validators.required]],
-    NationalID:['',[Validators.required]],
+    Mobile:['',[Validators.required,saudiPhoneValidator.phoneNumberValidator]],
+    Email:['',[CheckEmail.ValidationEmail()]],
+    Address:['',[Validators.required,Validators.minLength(3)]],
+    NationalID:['',[Validators.required,Validators.minLength(10)]],
     Salary:['',[Validators.required]],
     Files:[null],
   })

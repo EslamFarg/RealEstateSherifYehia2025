@@ -1,4 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, DestroyRef, ElementRef, inject, QueryList, ViewChild, ViewChildren } from '@angular/core';
+import { FormBuilder, Validators } from '@angular/forms';
+import { AccountService } from '../../accounts/services/account.service';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { Realtor } from '../../../main/realtor/models/realtor';
+import { RealtorService } from '../../../main/realtor/services/realtor.service';
+import { RealtorpaymentvoucherService } from '../services/realtorpaymentvoucher.service';
+import { ToastrService } from '../../../../../shared/ui/toastr/services/toastr.service';
 
 @Component({
   selector: 'app-addrealtorpaymentvoucher',
@@ -7,7 +14,60 @@ import { Component } from '@angular/core';
 })
 export class AddrealtorpaymentvoucherComponent {
 
+  // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! Services
 
+  fb:FormBuilder=inject(FormBuilder);
+  _accountsService:AccountService=inject(AccountService);
+  _realtorPaymentVoucherServices:RealtorpaymentvoucherService=inject(RealtorpaymentvoucherService);
+
+  destroyRef:DestroyRef=inject(DestroyRef)
+
+
+
+  // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! Properties
+
+
+
+
+
+  toastr:ToastrService=inject(ToastrService);
+  realtorPaymentVoucherForm=this.fb.group({
+  voucherNo: ['',Validators.required,Validators.minLength(3)],
+  voucherDate: ['',Validators.required],
+  paymentMethod: ['cash',Validators.required],
+  amount: [0,Validators.required],
+  notes: [''],
+  brokerId: [0,Validators.required],
+  debitAccountId: [0,Validators.required],
+  creditAccountId: [null,Validators.required],
+  brokerPaymentVoucherDetails: [
+    {
+      contractId: [0],
+      amount: [0]
+    }
+  ]
+})
+
+
+idSearchRealtor:any
+
+formDataSearch=this.fb.group({
+  financiallyAccountId:[null,Validators.required],
+  name:[''],
+  email:[''],
+  mobile:[''],
+  nationalID:[''],
+})
+
+
+accountData:any;
+itemsChecked: any[] = [];
+getAllDataSearch:any
+FilterData=[
+  {id:1,name:'اسم السمسار'},
+  {id:1,name:'رقم الجوال'},
+  {id:1,name:'رقم الهويه'},
+]
   
 
    paymentData = [
@@ -33,4 +93,235 @@ export class AddrealtorpaymentvoucherComponent {
   { id: 20, contractNumber: "C-1020", property: "فيلا الأفق", unit: "الوحدة D4", month: "أغسطس", amount: "8,500 ريال", paid: "8,000 ريال", tax: "1,275 ريال", remaining: "500 ريال" }
 ];
 
+
+
+// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! Methods
+
+
+ngOnInit(){
+  this.getAllAccounts();
 }
+onSubmit(){
+  if(this.realtorPaymentVoucherForm.valid){
+    if(this.formDataSearch.get('financiallyAccountId')?.value == null || this.formDataSearch.get('financiallyAccountId')?.value == undefined){
+      this.toastr.show('يرجى تحديد حساب','error');
+      return ; 
+    }
+
+    let data={
+  voucherNo: this.realtorPaymentVoucherForm.get('voucherNo')?.value,
+  voucherDate: this.realtorPaymentVoucherForm.get('voucherDate')?.value,
+  paymentMethod: this.realtorPaymentVoucherForm.get('paymentMethod')?.value,
+  amount: this.realtorPaymentVoucherForm.get('amount')?.value,
+  notes: this.realtorPaymentVoucherForm.get('notes')?.value,
+  brokerId: this.realtorPaymentVoucherForm.get('brokerId')?.value,
+  debitAccountId: this.formDataSearch.get('financiallyAccountId')?.value,
+  creditAccountId: this.realtorPaymentVoucherForm.get('creditAccountId')?.value,
+  brokerPaymentVoucherDetails:[] as { contractId: number; amount: number }[]  
+}
+
+this.itemsChecked.forEach((item) => {
+  data.brokerPaymentVoucherDetails.push({
+    contractId: item.contractId,
+    amount: item.paidAmount
+  });
+})
+
+
+
+console.log(data);
+
+  }else{
+    this.realtorPaymentVoucherForm.markAllAsTouched();
+  }
+}
+
+
+
+
+getAllAccounts(){
+this._accountsService.getAllData({}).pipe(takeUntilDestroyed(this.destroyRef)).subscribe((res: any) => {
+  this.accountData = res.rows;
+})
+}
+
+
+
+
+
+SearchFilter(e:any){
+
+
+  let ShapeDataFilter={
+  "criteriaDto": {
+    "paginationInfo": {
+      "pageIndex": 0,
+      "pageSize": 0
+    }
+  },
+  "searchFilter": {
+    "column": 0,
+    value: e.value
+  }
+}
+  
+  // console.log(e);
+
+  if(e.index == 0){
+    ShapeDataFilter.searchFilter.column=1
+  }else if(e.index == 1){
+    ShapeDataFilter.searchFilter.column=3
+    
+  }else if(e.index == 2){
+    ShapeDataFilter.searchFilter.column=2
+  }
+
+
+
+  this._realtorPaymentVoucherServices.searchBroker(ShapeDataFilter).pipe(takeUntilDestroyed(this.destroyRef)).subscribe((res:any)=>{
+    // this.getAllDataSearch=res.rows;
+    const row=res.rows[0];
+
+    if(res.rows && res.rows.length > 0){
+      this.formDataSearch.patchValue(row);
+      this.idSearchRealtor=row.id;
+      this.realtorPaymentVoucherForm.get('brokerId')?.setValue(row.id);
+      console.log(this.idSearchRealtor);
+      // console.log(this.formDataSearch.value);
+      let pagination={
+  paginationInfo: {
+    pageIndex: 0,
+    pageSize: 0
+  }
+}
+
+      this._realtorPaymentVoucherServices.searchBrokerCommissions(this.idSearchRealtor,pagination).pipe(takeUntilDestroyed(this.destroyRef)).subscribe((res:any)=>{
+        this.getAllDataSearch=res
+        // console.log(res)
+        // console.log(this.getAllDataSearch)
+      })
+
+
+    }
+
+    console.log(this.getAllDataSearch);
+    
+  })
+
+
+  }
+
+
+// get TotalBrokerCommission() {
+//       this.getAllDataSearch.rows.reduce((acc:any,curr:any)=>{
+//         return acc + curr.brokerCommission
+//       },0)
+//   }
+
+get TotalBrokerCommission(): number {
+  if (!this.getAllDataSearch || !this.getAllDataSearch.rows) return 0;
+
+  return this.getAllDataSearch.rows.reduce(
+    (acc: number, curr: any) => acc + (curr.brokerCommission || 0),
+    0
+  );
+}
+
+
+
+@ViewChildren('rowCheckbox') checkboxes!: QueryList<ElementRef>
+
+PaidAmount: number = 0;
+@ViewChildren('paidAmount') paidAmountElement!:QueryList<ElementRef>
+onPaidChange(event: any, item: any) {
+   let value = parseFloat(event.target.value) || 0;
+  if (value > item.brokerCommission) {
+    // event.target.value = item.brokerCommission;
+     value = item.brokerCommission;
+    event.target.value = value;
+  }
+
+  // item.remainingAmount = item.brokerCommission - event.target.value;
+
+    item.brokerPaidAmount = value;
+  item.remainingAmount = item.brokerCommission - value;
+
+
+  // Tot
+
+}
+
+
+
+
+
+
+checkDataId(event:any,item:any){
+   const isChecked = event.target.checked;
+
+  if (isChecked) {
+    // ✅ لو اتعلم عليه — ضيفه أو حدّثه
+    const existing = this.itemsChecked.find(x => x.contractId === item.contractId);
+
+    if (existing) {
+      existing.paidAmount = item.brokerPaidAmount || 0;
+    } else {
+      this.itemsChecked.push({
+        contractId: item.contractId,
+        paidAmount: item.brokerPaidAmount || 0
+      });
+    }
+  } else {
+    // ❌ لو اتشال منه الصح — امسحه من المصفوفة
+    this.itemsChecked = this.itemsChecked.filter(x => x.contractId !== item.contractId);
+  }
+
+  // console.log(this.itemsChecked);
+
+ 
+  console.log(this.itemsChecked);
+
+}
+
+
+
+selectAllChecked(e:any){
+  const isChecked=e.target.checked
+  // console.log(e.target.checked);
+
+  if(isChecked){
+    this.itemsChecked=this.getAllDataSearch.rows
+      this.checkboxes.forEach((checkbox) => {
+      checkbox.nativeElement.checked = true;
+    });
+    
+  }else{
+    this.itemsChecked=[]
+      this.checkboxes.forEach((checkbox) => {
+      checkbox.nativeElement.checked = false;
+    });
+  }
+
+  console.log(this.itemsChecked);
+
+}
+
+
+// @ViewChildren('paidAmount') paidAmountElements!: QueryList<ElementRef>;
+get TotalPaidAmount() : number{
+
+   let total = 0;
+  this.paidAmountElement?.forEach((el:ElementRef) => {
+    // return this.PaidAmount += parseFloat(paidAmount.nativeElement.value)
+      const value = parseFloat(el.nativeElement.value) || 0;
+    total += value;
+  })
+  return total;;
+}
+}
+
+
+
+
+
+

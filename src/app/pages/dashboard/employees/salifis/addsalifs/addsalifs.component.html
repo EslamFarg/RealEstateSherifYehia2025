@@ -1,18 +1,18 @@
 <app-page-heading [title]="'الموظفين'" [subtitle]="'السلفيات'" [AddBtn]="true" [ExplorerRoute]="'/dashboard/salifis/explorersalifs'" [TitlePageAddBtn]="'مستكشف  السلفيات'"></app-page-heading>
 
 
-<form class="forms_dashboard">
+<form class="forms_dashboard" [formGroup]="salafisData" (ngSubmit)="onSubmit()">
     <div class="row">
      <div class="col-sm-12 col-lg-2 mb-3">
         <label for="numberbala" class="form-label">رقم السند</label>
-        <input type="text" name="" readonly value="123" class="form-control" placeholder="رقم الوحده" id="numberbala">
+        <input type="text" name="" value="0" readonly  class="form-control" placeholder="رقم الوحده" id="numberbala" #NumberBond>
     </div>
-  <div class="col-sm-12 col-lg-2 mb-3" style="align-self: flex-end;">
+  <div class="col-sm-12 col-lg-2 mb-3" style="margin-top: 7px;">
         <label  class="form-label" ></label>
         <div class="search_number_component">
-<input type="text" name="" placeholder="بحث برقم السند"  class="form-control">
+<input type="text" name="" placeholder="بحث برقم السند" (keyup.enter)="onSearch(searchVal)" #searchVal class="form-control">
 
-<div class="search">
+<div class="search" (click)="onSearch(searchVal)">
     <svg width="21" height="20" viewBox="0 0 21 20" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path d="M10.7501 17.4998C6.37783 17.4998 2.83342 13.9554 2.83342 9.58317C2.83342 5.21092 6.37783 1.6665 10.7501 1.6665C15.1223 1.6665 18.6667 5.21092 18.6667 9.58317C18.6667 13.9554 15.1223 17.4998 10.7501 17.4998Z" stroke="#7F7F7F" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
 <path d="M2.00008 18.3332L3.66675 16.6665" stroke="#7F7F7F" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
@@ -25,44 +25,62 @@
 
        <div class="col-sm-12 col-lg-4 mb-3">
         <label for="numberdafter" class="form-label">رقم الدفتري</label>
-        <input type="text" name="" readonly value="123" id="numberdafter" class="form-control number_notes" placeholder="رقم الوحده" id="numberbala">
+        <input type="text" name=""  id="numberdafter" class="form-control number_notes" formControlName="bookNumber" placeholder="رقم الدفتري" id="numberbala">
+        <ng-container *ngIf="salafisData.controls['bookNumber'].invalid && salafisData.controls['bookNumber'].touched">
+            <small class="error_msg_form" *ngIf="salafisData.controls['bookNumber'].hasError('required')">رقم الدفتري مطلوب</small>
+            <small class="error_msg_form" *ngIf="salafisData.controls['bookNumber'].hasError('minlength')">رقم الدفتري يجب ان يكون اكثر من 3 حروف</small>
+        </ng-container>
     </div>
        <div class="col-sm-12 col-lg-4 mb-3">
         <label for="date" class="form-label">التاريخ</label>
-        <input type="date" name=""  class="form-control" placeholder="التاريخ" id="date">
+        <input type="date" name=""  class="form-control" placeholder="التاريخ" id="date" formControlName="voucherDate" formControlName="voucherDate">
+        <ng-container *ngIf="salafisData.controls['voucherDate'].invalid && salafisData.controls['voucherDate'].touched">
+            <small class="error_msg_form" *ngIf="salafisData.controls['voucherDate'].hasError('required')">التاريخ مطلوب</small>
+        </ng-container>
     </div>
        <div class="col-sm-12 col-lg-6 mb-3">
         <label for="sandok" class="form-label">صندوق / بنك</label>
-        <ng-select [items]="[]" bindLabel="name" placeholder="صندوق / بنك" bindValue="id"></ng-select>
+        <ng-select [items]="this.accountDataAll" bindLabel="name" placeholder="صندوق / بنك" bindValue="id" (change)="DataAccountfinancially($event)"  formControlName="accountId"></ng-select>
+        <ng-container *ngIf="salafisData.controls['accountId'].invalid && salafisData.controls['accountId'].touched">
+            <small class="error_msg_form" *ngIf="salafisData.controls['accountId'].hasError('required')">الحساب مطلوب</small>
+        </ng-container>
+        
     </div>
     
       <div class="col-sm-12 col-lg-6 mb-3">
         <label for="price" class="form-label">المبلغ</label>
-        <input type="text" name=""  class="form-control" placeholder="المبلغ" id="price">
+        <input type="text" name="" appNoStringPaste  class="form-control" placeholder="المبلغ" id="price" formControlName="amount">
+          <ng-container *ngIf="salafisData.controls['amount'].invalid && salafisData.controls['amount'].touched">
+            <small class="error_msg_form" *ngIf="salafisData.controls['amount'].hasError('required')">المبلغ مطلوب</small>
+        </ng-container>
     </div>
 
 
       <div class="col-sm-12 mb-3">
         <label for="emp" class="form-label">الموظف</label>
-        <ng-select [items]="[]" bindLabel="name" placeholder="اختر" bindValue="id" id="emp" placeholer="الموظف"></ng-select>
+        <ng-select [items]="employeesDataAll" bindLabel="name" placeholder="اختر" bindValue="id" id="emp" placeholer="الموظف" (change)="DataEmployeesfinancially($event)" formControlName="employeeId"></ng-select>
+          <ng-container *ngIf="salafisData.controls['employeeId'].invalid && salafisData.controls['employeeId'].touched">
+            <small class="error_msg_form" *ngIf="salafisData.controls['employeeId'].hasError('required')">الموظف مطلوب</small>
+        </ng-container>
     </div>
 
       <div class="col-sm-12">
             <div class="mb-3">
                 <label for="exampleFormControlTextarea1" class="form-label">البيان</label>
-                <textarea class="form-control textarea" id="exampleFormControlTextarea1" placeholder="اكتب المحتوي"></textarea>
+                <textarea class="form-control textarea" id="exampleFormControlTextarea1" placeholder="اكتب المحتوي" formControlName="notes"></textarea>
             </div>
         </div>
     </div>
   <div class="btn_add_reset">
- <button type="button" data-button="send">حفظ</button>
- <button type="button" data-button="reset">تعديل</button>
- <button type="button" data-button="reset">حذف</button>
- <button type="button" data-button="reset">طباعه بالسند</button>
- <button  type="button" data-button="reset" (click)="showPopup=!showPopup">طباعه بالموظف</button>
+ <button type="submit" data-button="send" [ngClass]="{'btnEdit':this.btnAddandUpdate=='update','btnAdd':this.btnAddandUpdate=='add'}">{{this.btnAddandUpdate == 'add' ? 'اضافه':"تعديل"}}</button>
+ <button type="button" data-button="reset" (click)="openDeletePopup()" *ngIf="showBtns">حذف</button>
+ <button type="button" data-button="reset" *ngIf="showBtns">طباعه بالسند</button>
+ <button  type="button" data-button="reset" (click)="showPopup=!showPopup" *ngIf="showBtns">طباعه بالموظف</button>
   </div>
 
     </form>
 
 
-<app-printemployee *ngIf="false"></app-printemployee>
+<app-printemployee></app-printemployee>
+
+<app-confirm-delete [isVisible]="showDelete" (onDelete)="deleteConfirmed($event)" [itemId]="this.deleteId" (toggleModal)="onClose()"></app-confirm-delete>

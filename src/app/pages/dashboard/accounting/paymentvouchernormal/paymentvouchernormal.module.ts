@@ -6,6 +6,10 @@ import { PaymentvouchernormalComponent } from './paymentvouchernormal.component'
 import { PageHeadingComponent } from '../../../../shared/ui/page-heading/page-heading.component';
 import { PaginationComponent } from '../../../../shared/ui/pagination/pagination.component';
 import { NgSelectModule } from '@ng-select/ng-select';
+import { ReactiveFormsModule } from '@angular/forms';
+import { EmptytableComponent } from '../../../../shared/ui/emptytable/emptytable.component';
+import { FormerrorMsgComponent } from '../../../../shared/ui/formerror-msg/formerror-msg.component';
+import { ConfirmDeleteComponent } from '../../../../shared/components/confirm-delete/confirm-delete.component';
 
 
 @NgModule({
@@ -17,7 +21,11 @@ import { NgSelectModule } from '@ng-select/ng-select';
     PaymentvouchernormalRoutingModule,
     PageHeadingComponent,
     PaginationComponent,
-    NgSelectModule
+    NgSelectModule,
+    ReactiveFormsModule,
+    EmptytableComponent,
+    FormerrorMsgComponent,
+    ConfirmDeleteComponent
   ]
 })
 export class PaymentvouchernormalModule { }

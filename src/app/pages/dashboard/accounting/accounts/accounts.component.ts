@@ -5,6 +5,8 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ToastrService } from '../../../../shared/ui/toastr/services/toastr.service';
 import { take } from 'rxjs';
 import { Accounts } from './models/account';
+import { checkUsername } from '../../../../shared/validations/checkUsername';
+import { SharedService } from '../../../../shared/services/shared.service';
 
 @Component({
   selector: 'app-accounts',
@@ -20,25 +22,30 @@ export class AccountsComponent {
 
   fb:FormBuilder=inject(FormBuilder);
   _accountServices:AccountService=inject(AccountService);
+  _sharedServices:SharedService=inject(SharedService);
   destroyRef:DestroyRef=inject(DestroyRef);
   toastr:ToastrService=inject(ToastrService);
 
   showDelete=false;
   deleteId:any
 
+  accountParent:any=[]
+
 
 
   // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1 Property
 
   accountData=this.fb.group({
-  name: ['',[Validators.required,Validators.minLength(3)]],
+  name: ['',[Validators.required,Validators.minLength(3),checkUsername.ValidationUsername(),Validators.minLength(3)]],
   type: [null,[Validators.required]],
-  accountNumber: ['',[Validators.required]],
-  iban: ['',[Validators.required]]
+  accountNumber: ['',[Validators.required, Validators.pattern(/^[0-9]{8,20}$/)]],
+  iban: ['',[Validators.pattern(/^[A-Z]{2}[0-9A-Z]{20,32}$/)]],
+  parentId: [null,[Validators.required]]
   })
   btnAddandUpdate='add'
   idUpdate:any
 
+  financiallyAccountId:any
 
 
 
@@ -83,13 +90,33 @@ ngOnInit(): void {
   //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
   //Add 'implements OnInit' to the class.
   this.getAllData();
+  this.getAllFinicalData();
+
+  
+}
+
+
+getAllFinicalData(){
+
+  let pagination={
+  paginationInfo: {
+    pageIndex: 0,
+    pageSize: 0
+  }
+}
+
+  this._sharedServices.getAllfinancialData(pagination).pipe(takeUntilDestroyed(this.destroyRef)).subscribe((res:any)=>{
+    console.log(res);
+    this.accountParent=res;
+  })
+  
+
 }
 
 
 onPageChanged(page: number) {
   this.pageIndex = page;
-  // this.fetchEmployees(); // أعد جلب البيانات
-  // this.getData()
+  this.getAllData();
 }
 
 
@@ -105,6 +132,7 @@ if(this.btnAddandUpdate == 'add'){
   type: this.accountData.value.type,
   accountNumber: this.accountData.value.accountNumber,
   iban: this.accountData.value.iban,
+  parentID: this.accountData.value.parentId
   }
 
   this._accountServices.createData(data).pipe(takeUntilDestroyed(this.destroyRef)).subscribe((res:any)=>{
@@ -120,7 +148,11 @@ let data={
   type: this.accountData.value.type,
   accountNumber: this.accountData.value.accountNumber,
   iban: this.accountData.value.iban,
+  parentID: this.accountData.value.parentId,
+  financiallyAccountId:this.financiallyAccountId
   }
+
+  console.log(data);
 this._accountServices.updateData(data).pipe(takeUntilDestroyed(this.destroyRef)).subscribe((res:any)=>{
   this.toastr.show('تم تعديل الحساب بنجاح','success');
   this.accountData.reset();
@@ -138,6 +170,8 @@ this._accountServices.updateData(data).pipe(takeUntilDestroyed(this.destroyRef))
 
 
 
+
+
 getAllData(){
   let pagination={
       paginationInfo: {
@@ -152,19 +186,23 @@ getAllData(){
 }
 
 getUpdateData(id:any){
+  this.idUpdate=id;
 
   this._accountServices.getDataUpdate(id).pipe(takeUntilDestroyed(this.destroyRef)).subscribe((res:any)=>{
     this.accountData.patchValue({
       name:res.name,
       type:res.type,
       accountNumber:res.accountNumber,
-      iban:res.iban
+      iban:res.iban,
+      parentId:res.parentId
     })
+
+    this.financiallyAccountId=res.financiallyAccountId
+  this.btnAddandUpdate='update';
   })
 
-  this.idUpdate=id;
 
-  this.btnAddandUpdate='update';
+  
 
 }
 

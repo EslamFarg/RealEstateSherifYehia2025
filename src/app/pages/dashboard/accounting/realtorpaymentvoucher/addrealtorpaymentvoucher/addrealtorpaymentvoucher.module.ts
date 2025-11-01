@@ -6,6 +6,10 @@ import { AddrealtorpaymentvoucherComponent } from './addrealtorpaymentvoucher.co
 import { PageHeadingComponent } from '../../../../../shared/ui/page-heading/page-heading.component';
 import { SearchinformsComponent } from '../../../../../shared/ui/searchinforms/searchinforms.component';
 import { NgSelectModule } from '@ng-select/ng-select';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormerrorMsgComponent } from '../../../../../shared/ui/formerror-msg/formerror-msg.component';
+import { IntersectionDirective } from "../../../../../shared/directives/intersection.directive";
+import { EmptytableComponent } from '../../../../../shared/ui/emptytable/emptytable.component';
 
 
 @NgModule({
@@ -17,7 +21,12 @@ import { NgSelectModule } from '@ng-select/ng-select';
     AddrealtorpaymentvoucherRoutingModule,
     PageHeadingComponent,
     SearchinformsComponent,
-    NgSelectModule
-  ]
+    NgSelectModule,
+    ReactiveFormsModule,
+    FormerrorMsgComponent,
+    IntersectionDirective,
+    EmptytableComponent,
+    // FormsModule
+]
 })
 export class AddrealtorpaymentvoucherModule { }

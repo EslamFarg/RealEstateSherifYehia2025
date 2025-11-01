@@ -1,14 +1,15 @@
 <app-page-heading [title]="'المحاسبه'" [subtitle]="'سند الصرف'" [AddBtn]="true" [ExplorerRoute]="'/dashboard/paymentvoucher/explorepaymentvoucher'" [TitlePageAddBtn]="'مستكشف سند الصرف'"></app-page-heading>
 
 
-<form action="" class="forms_dashboard">
+<form action="" class="forms_dashboard" [formGroup]="realtorPaymentVoucherForm" (ngSubmit)="onSubmit()">
            <div class="row ">
 <div class=" col-sm-12  col-lg-3 ">
                  <label for="vouchernumber" class="form-label">رقم السند</label>
-                 <input type="text" class="form-control"  id="vouchernumber" placeholder="رقم السند" readonly [value]="'12345'">
+                 <input type="text" class="form-control"  id="vouchernumber" placeholder="رقم السند" readonly [value]="'0'">
+              
                 
         </div>
-  <div class="col-sm-12 col-lg-3 mb-3 search_contract" style="align-self: flex-end;">
+  <div class="col-sm-12 col-lg-3 mb-3 search_contract" style="margin-top:8px ;">
         <label  class="form-label" ></label>
         <div class="search_number_component">
 <input type="text" name="" placeholder="بحث برقم السند"  class="form-control">
@@ -27,54 +28,68 @@
     <div class="col-sm-12 col-lg-3">
         <div class="mb-3">
             <label for="numbernotes" class="form-label">رقم الدفتري</label>
-            <input type="text" class="form-control" id="numbernotes" placeholder="رقم الدفتري" readonly value="123" style="background-color: #F5F5F5 !important;">
+            <input type="text" class="form-control" id="numbernotes" placeholder="رقم الدفتري" formControlName="voucherNo" style="background-color: #F5F5F5 !important;">
+               <app-formerror-msg [control]="this.realtorPaymentVoucherForm.controls['voucherNo']" [Messages]="{
+                  'required':'الرقم الدفتري مطلوب',
+                  'minlength':'الرقم الدفتري يجب ان يكون اكثر من 3 حروف'
+               }"></app-formerror-msg>
           </div>
     </div>
 
     <div class="col-sm-12 col-lg-3">
         <div class="mb-3">
             <label for="date" class="form-label">التاريخ</label>
-            <input type="date" class="form-control" id="date" placeholder="التاريخ" >
+            <input type="date" class="form-control" id="date" placeholder="التاريخ" formControlName="voucherDate">
+               <app-formerror-msg [control]="this.realtorPaymentVoucherForm.controls['voucherDate']" [Messages]="{
+                  required:'التاريخ مطلوب'
+               }"></app-formerror-msg>
           </div>
     </div>
     <div class="col-sm-12">
         <div class="mb-3">
             <label for="box" class="form-label">صندوق / بنك</label>
-            <ng-select [items]="[]" bindLabel="bankName" bindValue="bankValue"  placeholder="صندوق / بنك"></ng-select>
+            <ng-select [items]="accountData" bindLabel="name" bindValue="financiallyAccountId"  placeholder="صندوق / بنك" formControlName="creditAccountId"></ng-select>
+               <app-formerror-msg [control]="this.realtorPaymentVoucherForm.controls['creditAccountId']" [Messages]="{
+                  required:'صندوق / بنك مطلوب'
+               }"></app-formerror-msg>
+
           </div>
     </div>
     <div class="col-sm-12">
         <div class="mb-3">
             <label for="byan" class="form-label">البيان</label>
-            <textarea class="form-control" id="byan" rows="3" placeholder="اكتب المحتوي" style="height: 75px !important;"></textarea>
-          </div>
+            <textarea class="form-control" id="byan" rows="3" placeholder="اكتب المحتوي" style="height: 75px !important;" formControlName="notes"></textarea>
+               <app-formerror-msg [control]="this.realtorPaymentVoucherForm.controls['notes']" [Messages]="{
+                  required:'البيان مطلوب'
+               }"></app-formerror-msg>
+          </div> 
     </div>
           </div>
 </form>
 
 
 
-<form action="" class="forms_dashboard mt-4">
+<form action="" class="forms_dashboard mt-4" [formGroup]="formDataSearch">
     <div class="row">
         <div class="col-sm-12 mb-3">
-            <app-searchinforms></app-searchinforms>
+            <app-searchinforms (selectedDataFilter)="SearchFilter($event)" [dataFilter]="FilterData"></app-searchinforms>
         </div>
 
         <div class="col-sm-12 col-lg-6 readonly_input mb-3">
-            <label for="" class="form-label">اسم السمسار</label>
-            <input type="text" class="form-control"  placeholder="الاسم" readonly [value]="'محمد أحمد'" style="padding-right: 105px;">
+            <label for="" class="form-label">الاسم</label>
+            <input type="text" class="form-control"   readonly  style="padding-right: 50px;" formControlName="name">
         </div>
         <div class="col-sm-12 col-lg-6 readonly_input mb-3">
             <label for="" class="form-label">رقم الجوال</label>
-            <input type="text" class="form-control"  placeholder="رقم الجوال" readonly [value]="'01026381737'" style="padding-right: 80px;">
+            <input type="text" class="form-control"   readonly  style="padding-right: 80px;" formControlName="mobile">
         </div>
         <div class="col-sm-12 col-lg-6 readonly_input mb-3">
             <label for="" class="form-label">البريد الالكتروني</label>
-            <input type="text" class="form-control"  placeholder="رقم الجوال" readonly [value]="'gts@gmail.com'" style="padding-right: 105px;">
+            <input type="text" class="form-control"  readonly formControlName="email" style="padding-right: 105px;">
         </div>
         <div class="col-sm-12 col-lg-6 readonly_input mb-3">
             <label for="" class="form-label">رقم الهويه </label>
-            <input type="text" class="form-control"  placeholder="رقم الهويه" readonly [value]="'987654321234567'" style="padding-right: 80px;">
+            <input type="text" class="form-control"   readonly  formControlName="nationalID" style="padding-right: 80px;">
         </div>
     </div>
 
@@ -88,7 +103,7 @@
       <th scope="col">
 
         <div class="d-flex align-items-center justify-content-center">
-        <input type="checkbox" aria-label="Checkbox for following text input" style="width: 16px; height: 16px; margin-left: 8px;">
+        <input type="checkbox" *ngIf="this.getAllDataSearch?.rows.length> 0" (change)="selectAllChecked($event)" aria-label="Checkbox for following text input" style="width: 16px; height: 16px; margin-left: 8px;">
         م     
         </div>
         
@@ -99,39 +114,47 @@
       <th scope="col">الشهر</th>
       <th scope="col">المبلغ</th>
       <th scope="col">المدفوع</th>
-      <th scope="col">الضريبه</th>
+      
       <th scope="col">المتبقي</th>
     </tr>
   </thead>
    <tbody>
-    @for (item of paymentData; track $index) {
+    @for (item of getAllDataSearch?.rows; track $index) {
 <tr>
       <td scope="row">
         <div class="d-flex align-items-center justify-content-center">
-<input type="checkbox" aria-label="Checkbox for following text input" >
+<input type="checkbox" aria-label="Checkbox for following text input" #rowCheckbox (change)="checkDataId($event,item)">
         {{$index + 1}}
         </div>
          
     </td>
-      <td>{{item.contractNumber}}</td>
-      <td>{{item.property}}</td>
-      <td>{{item.unit}} </td>
+      <td>{{item.contractId}}</td>
+      <td>{{item.propertyName}}</td>
+      <td>{{item.unitName}} </td>
       <td><input type="text" class="form-control" value="{{item.month}}" readonly></td>
-      <td>{{item.amount}}</td>
-      <td><input type="text" class="form-control" value="{{item.paid}}"></td>
-      <td>{{item.tax}}</td>
-      <td>{{item.remaining}}</td>
+      <td>{{item.brokerCommission}}</td>
+      <!-- <td><input type="text" class="form-control" placeholder="0" (input)="onPaidChange($event,item)" #paidAmount></td> -->
+     <td>
+  <input
+    type="text"
+    class="form-control"
+    placeholder="0"
+    [value]="item.brokerPaidAmount"
+    (input)="onPaidChange($event, item)"
+    #paidAmount
+  />
+</td> 
+      <td>{{item.remainingAmount}}</td>
       
     
     
     </tr>
     }@empty {
-       <tr>
-      <td colspan="8" class="text-center py-5" style="color: #888; font-size: 18px;">
-        <i class="fa-solid fa-circle-exclamation fa-2x mb-2" style="color: #ccc;"></i><br>
-        لا توجد بيانات حتى الآن
-      </td>
-    </tr>
+                      <tr>
+    <td class="empty-cell" colspan="8">
+     <app-emptytable></app-emptytable>
+    </td>
+  </tr>
     }
 
     
@@ -139,7 +162,7 @@
 
 </table>   
 
- <table class="table2">
+ <table class="table2" *ngIf="getAllDataSearch?.rows.length > 0"> 
         <tbody>
             <tr>
    <td></td>
@@ -147,10 +170,15 @@
         <td></td>
         <td></td>
         <td></td>
-        <td>3000</td>
-        <td>0</td>
+        <!-- اجمالي المبلغ -->
+        <td>
+         {{TotalBrokerCommission}}
+        </td>
+
+        <!-- اجمالي المدفوع -->
+        <td>{{TotalPaidAmount}}</td>
         <td></td>
-        <td>3000</td>
+        <!-- <td>3000</td> -->
             </tr>
         </tbody>
     </table>
@@ -168,7 +196,7 @@
 
 
   <div class="btns_add_edit">
- <button data-type="save">حفظ</button>
+ <button type="submit" data-type="save" (click)="onSubmit()">حفظ</button>
  <button>جديد</button>
  <button>حذف</button>
  <button>طباعه </button>

@@ -5,14 +5,14 @@
     <div class="row">
           <div class="col-sm-12 col-lg-2 mb-3">
         <label for="numberbala" class="form-label">رقم البلاغ</label>
-        <input type="text" name="" readonly value="0" class="form-control" placeholder="رقم الوحده" id="numberbala">
+        <input type="text" name="" readonly value="0" class="form-control"  placeholder="رقم الوحده" id="numberbala" #ReportNumber>
     </div>
   <div class="col-sm-12 col-lg-2 mb-3" style="margin-top: 7px;">
         <label  class="form-label" ></label>
         <div class="search_number_component">
-<input type="text" name="" placeholder="بحث برقم البلاغ"  class="form-control">
+<input type="text" name="" placeholder="بحث برقم البلاغ" (keyup.enter)="SearchData(searchVal)" #searchVal  class="form-control">
 
-<div class="search">
+<div class="search" (click)="SearchData(searchVal)" >
     <svg width="21" height="20" viewBox="0 0 21 20" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path d="M10.7501 17.4998C6.37783 17.4998 2.83342 13.9554 2.83342 9.58317C2.83342 5.21092 6.37783 1.6665 10.7501 1.6665C15.1223 1.6665 18.6667 5.21092 18.6667 9.58317C18.6667 13.9554 15.1223 17.4998 10.7501 17.4998Z" stroke="#7F7F7F" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
 <path d="M2.00008 18.3332L3.66675 16.6665" stroke="#7F7F7F" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
@@ -26,9 +26,10 @@
     <div class="col-sm-12 col-lg-4">
         <div class="mb-3">
               <label for="daphtary" class="form-label">الرقم الدفتري</label>
-        <input type="text" name=""  class="form-control" placeholder="الرقم الدفتري" id="daphtary" formControlName="BookNumber">
+        <input type="text" name="" maxlength="20" class="form-control" placeholder="الرقم الدفتري" id="daphtary" formControlName="BookNumber">
         <ng-container *ngIf="mainTenanceData.controls['BookNumber'].invalid && mainTenanceData.controls['BookNumber'].touched">
             <small class="error_msg_form" *ngIf="mainTenanceData.controls['BookNumber'].hasError('required')">رقم الدفتري مطلوب</small>
+            <small class="error_msg_form" *ngIf="mainTenanceData.controls['BookNumber'].hasError('minlength')">يجب ان يكون رقم الدفتري اكثر من 3 حروف</small>
         </ng-container>
         </div>
         
@@ -53,9 +54,13 @@
 <form class="forms_dashboard my-3" [formGroup]="FormSearch">
     <div class="row">
         <div class="col-sm-4 me-auto">
-             <app-searchinforms [dataFilter]="dataFilter" (selectedDataFilter)="SelectDataFilterSearch($event)"></app-searchinforms>
+             <app-searchinforms [dataFilter]="dataFilter" (selectedDataFilter)="SelectDataFilterSearch($event)" [fc]="searchControl"></app-searchinforms>
+             <!-- <small class="error_msg_form" *ngIf="FormSearch.controls['id'].invalid && FormSearch.controls['id'].touched">رجاء بحث عن شئ</small>
+               -->
+             <ng-container *ngIf="FormSearch.controls['id'].invalid && FormSearch.controls['id'].touched">
+                <small class="error_msg_form" *ngIf="FormSearch.controls['id'].hasError('required')">رجاء بحث عن شئ</small>
+            </ng-container>
         </div>
-
 
         <div class="review_searchData">
 
@@ -63,37 +68,37 @@
  <div class="col-sm-12 col-lg-4">
                 <div class="mb-3 parent_review">
                     <label for="" class="form-label"> الوحده</label>
-                    <input type="text" name="" readonly value="12" class="form-control" placeholder="الوحده" id="" formControlName="name">
+                    <input type="text" name="" readonly value="12" class="form-control" readonly  id="" formControlName="name">
                 </div>
             </div>
             <div class="col-sm-12 col-lg-4">
                 <div class="mb-3 parent_review">
                     <label for="" class="form-label"> العقار</label>
-                    <input type="text" name="" class="form-control" value="المجد" placeholder="العقار" id="" formControlName="propertyName">
+                    <input type="text" name="" class="form-control" value="المجد" readonly id="" formControlName="propertyName">
                 </div>
             </div>
             <div class="col-sm-12 col-lg-4">
                 <div class="mb-3 parent_review">
                     <label for="" class="form-label"> رقم المبني</label>
-                    <input type="text" name="" readonly value="123" style="padding-right: 85px !important;" class="form-control" formControlName="" placeholder="رقم المبني" id="">
+                    <input type="text" name="" readonly  style="padding-right: 85px !important;" class="form-control" formControlName="propertyID"  id="">
                 </div>
             </div>
             <div class="col-sm-12 col-lg-4">
                 <div class="mb-3 parent_review">
                     <label for="" class="form-label">المدينه</label>
-                    <input type="text" name="" readonly value="مكه" class="form-control" placeholder="المدينه" id="">
+                    <input type="text" name="" readonly  class="form-control"  id="" formControlName="city">
                 </div>
             </div>
             <div class="col-sm-12 col-lg-4">
                 <div class="mb-3 parent_review">
                     <label for="" class="form-label">الحي</label>
-                    <input type="text" name="" readonly value="السعدني" class="form-control" placeholder="الحي" id="">
+                    <input type="text" name="" readonly  class="form-control"  id="" formControlName="district">
                 </div>
             </div>
             <div class="col-sm-12 col-lg-4">
                 <div class="mb-3 parent_review">
                     <label for="" class="form-label">الشارع</label>
-                    <input type="text" name="" readonly value="123" class="form-control" placeholder="الشارع" id="">
+                    <input type="text" name="" readonly  class="form-control"  id="" formControlName="street">
                 </div>
             </div>
             </div>
@@ -145,16 +150,17 @@
         <div class="col-sm-12 col-lg-4">
             <div class="mb-3">
               <label for="" class="form-label">المبلغ</label>
-              <input type="text" class="form-control" placeholder="المبلغ"  formControlName="Amount">
+              <input type="text" class="form-control" placeholder="المبلغ"  appNoStringPaste formControlName="Amount">
               <ng-container *ngIf="mainTenanceData.controls['Amount'].invalid && mainTenanceData.controls['Amount'].touched">
                 <small class="error_msg_form" *ngIf="mainTenanceData.controls['Amount'].hasError('required')">المبلغ مطلوب</small>
+                <!-- <small class="error_msg_form" *ngIf="mainTenanceData.controls['Amount'].hasError('required')">المبلغ مطلوب</small> -->
                 </ng-container>
             </div>
 
         </div>
         <div class="col-sm-12 col-lg-4">
             <div class="mb-3">
-           <app-input-attachments (sendDataFiles)="OnDataFiles($event)" [nameFiles]="dataFiles" (idRemoveFiles)="fnIdRemoveFiles($event)"></app-input-attachments>
+           <app-input-attachments #attachments (sendDataFiles)="OnDataFiles($event)" [nameFiles]="dataFiles" (idRemoveFiles)="fnIdRemoveFiles($event)"></app-input-attachments>
             </div>
 
         </div>
@@ -171,8 +177,11 @@
 
 
 <div class="btn_add_reset mb-3">
-        <button type="sumbit" data-button="send" (click)="onSubmit()">اضافه</button>
-        <button type="reset" data-button="reset">جديد</button>
-        <button type="button" data-button="reset">حذف</button>
-        <button type="button" data-button="reset">طباعه</button>
+        <!-- <button type="submit" data-button="send" (click)="onSubmit()">اضافه</button> -->
+              <button type="submit" data-button="send" (click)="onSubmit()" [ngClass]="{'btnEdit':this.btnAddandUpdate=='update','btnAdd':this.btnAddandUpdate=='add'}">{{this.btnAddandUpdate == 'add' ? 'اضافه':"تعديل"}}</button>
+        <button type="reset" data-button="reset" (click)="resetForm()">جديد</button>
+        <button type="button" *ngIf="canShowBtns" data-button="reset" (click)="ShowDeletePopup()">حذف</button>
+        <button type="button" data-button="reset" *ngIf="canShowBtns">طباعه</button>
     </div>
+
+    <app-confirm-delete [isVisible]="showDelete" (onDelete)="deleteConfirmed($event)" [itemId]="this.deleteId" (toggleModal)="onClose()"></app-confirm-delete>

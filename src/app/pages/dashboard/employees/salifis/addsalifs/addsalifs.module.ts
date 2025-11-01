@@ -7,6 +7,9 @@ import { PaginationComponent } from '../../../../../shared/ui/pagination/paginat
 import { NgSelectModule } from '@ng-select/ng-select';
 import { PageHeadingComponent } from '../../../../../shared/ui/page-heading/page-heading.component';
 import { PrintemployeeComponent } from '../../../../../shared/ui/printemployee/printemployee.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { DirectivesModule } from "../../../../../shared/directives/directives.module";
+import { ConfirmDeleteComponent } from '../../../../../shared/components/confirm-delete/confirm-delete.component';
 
 
 @NgModule({
@@ -19,8 +22,10 @@ import { PrintemployeeComponent } from '../../../../../shared/ui/printemployee/p
     PaginationComponent,
     NgSelectModule,
     PageHeadingComponent,
-    PrintemployeeComponent
-
-  ]
+    PrintemployeeComponent,
+    ReactiveFormsModule,
+    DirectivesModule,
+    ConfirmDeleteComponent
+]
 })
 export class AddsalifsModule { }

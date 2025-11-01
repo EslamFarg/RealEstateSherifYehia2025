@@ -1,7 +1,10 @@
-import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
-import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { Component, DestroyRef, EventEmitter, inject, Input, Output } from '@angular/core';
+import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { SharedService } from '../../services/shared.service';
+import { SendmessageService } from '../../../pages/dashboard/messages/sendmessage/services/sendmessage.service';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { ToastrService } from '../toastr/services/toastr.service';
 
 @Component({
   selector: 'app-searchmsg',
@@ -13,15 +16,20 @@ import { SharedService } from '../../services/shared.service';
 export class SearchmsgComponent {
 @Input() showPopup:any = false;
 fb:FormBuilder=inject(FormBuilder);
+_SendMsgSer:SendmessageService=inject(SendmessageService);
+destroyRef:DestroyRef=inject(DestroyRef)
+toastr:ToastrService=inject(ToastrService)
 // @Output() 
 @Output() showPopupChange = new EventEmitter<boolean>();
  _sharedServices:SharedService=inject(SharedService);
 SearchForm=this.fb.group({
-  search:['']
+  property:[null,[Validators.required]]
 })
 
 getDataCities:any=[];
 getDataDistricts:any=[];
+getDataProperties:any=[];
+idSearchProperties:any
 closePopup() {
   this.showPopup = false;
   this.showPopupChange.emit(this.showPopup);
@@ -158,6 +166,20 @@ closePopup() {
 
  
  onSubmit(){
+  // debugger;
+  if(this.SearchForm.valid){
+
+    let idSearchProperties=this.SearchForm.value.property;
+    // this.SelectedDistritByProperty(idSearchProperties);
+    this._SendMsgSer.getAndPropertyByTenant(idSearchProperties,{}).pipe(takeUntilDestroyed(this.destroyRef)).subscribe((res)=>{
+      console.log(res);
+      // this.dataSearch=res.rows
+    })
+    
+  }else{
+    this.toastr.show('يجب تعبئة الحقول المطلوبة', 'error');
+
+  }
 
  }
 
@@ -169,6 +191,8 @@ closePopup() {
 
   if(!e){
     this.getDataDistricts=[];
+    this.getDataProperties=[];
+    this.SearchForm.get('property')?.setValue(null);
     return;
   }
   // console.log(e);
@@ -181,6 +205,48 @@ this.getDataDistricts=this._sharedServices.allDistricts.filter((item:any)=>item.
 }
 
 
+
+SelectedDistritByProperty(e:any){
+  // console.log(e);
+  if(!e){
+    this.getDataProperties=[];
+    this.SearchForm.get('property')?.setValue(null);
+    return
+  }
+  let ShapeDataFilter={
+  criteriaDto: {
+    paginationInfo: {
+      pageIndex: 0,
+      pageSize: 0
+    }
+  },
+  searchFilter: {
+    column: 4,
+    value: e.name_ar
+  }
+}
+
+  this._SendMsgSer.getByProperty(ShapeDataFilter).pipe(takeUntilDestroyed(this.destroyRef)).subscribe((res:any)=>{
+    console.log(res);
+    this.getDataProperties=res?.rows
+  })
+
+  
+
+}
+
+
+getIdSearch(e:any){
+
+  if(!e){
+    this.idSearchProperties=0;
+    this.SearchForm.get('property')?.setValue(null);
+    this.getDataProperties=[];
+    return
+  }
+  this.idSearchProperties=e.id
+  console.log(this.idSearchProperties);
+}
 
 
 }

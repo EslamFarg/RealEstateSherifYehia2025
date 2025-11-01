@@ -9,6 +9,8 @@ import { RefreshSelectComponent } from '../../../../../shared/ui/refresh-select/
 import { PopupAttachmentsComponent } from '../../../../../shared/ui/popup-attachments/popup-attachments.component';
 import { InputAttachmentsComponent } from '../../../../../shared/ui/input-attachments/input-attachments.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { DirectivesModule } from "../../../../../shared/directives/directives.module";
+import { ConfirmDeleteComponent } from '../../../../../shared/components/confirm-delete/confirm-delete.component';
 
 
 @NgModule({
@@ -22,7 +24,9 @@ import { ReactiveFormsModule } from '@angular/forms';
     SearchinformsComponent,
     RefreshSelectComponent,
     InputAttachmentsComponent,
-    ReactiveFormsModule
-  ]
+    ReactiveFormsModule,
+    DirectivesModule,
+    ConfirmDeleteComponent
+]
 })
 export class AddmaintenanceModule { }

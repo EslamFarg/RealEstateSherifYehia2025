@@ -9,10 +9,16 @@ export class MaintenanceService extends BasehttpservicesService{
 
 
   createData(data:any){
-    return this.post(`/Maintenance/create`,data)
+    return this.post(`/Maintenances/create`,data)
   }
 
+  getAllDataMaintenaces(pagination:any){
+    return this.post(`/Maintenances`,pagination);
+  }
 
+  updateData(data:any){
+    return this.put(`/Maintenances/update`,data)
+  }
 
   searchData(data:any){
     return this.post(`/Maintenances/search`,data)
@@ -26,4 +32,15 @@ export class MaintenanceService extends BasehttpservicesService{
   }
 
 
+  deleteData(id:any){
+    return this.delete(`/Maintenances/${id}`)
+
+  }
+
+
+
+  getDataUpdate(data:any){
+    return this.post(`/Maintenances/search`,data);
+
+  }
 }

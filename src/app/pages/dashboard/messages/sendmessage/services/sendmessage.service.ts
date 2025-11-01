@@ -13,4 +13,15 @@ export class SendmessageService extends BasehttpservicesService{
   getAllDataMessagesListgroup(page:any,pageSize:any){
     return this.get(`/MessageSender/ListGroup?${page}&${pageSize}`);
   }
+
+
+  getByProperty(data:any){
+    return this.post(`/Properties/search`,data)
+  }
+
+
+
+  getAndPropertyByTenant(id:any,pagination:any){
+    return this.post(`/Tenants/searchByPropertyId?${id}`,pagination);
+  }
 }

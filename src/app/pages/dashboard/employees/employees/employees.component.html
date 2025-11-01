@@ -33,6 +33,7 @@
                     <input type="text" class="form-control" id="phoneEmp" placeholder="رقم الجوال" formControlName="Mobile">
                            <ng-container *ngIf="employeesData.controls['Mobile'].invalid && employeesData.controls['Mobile'].touched">
                         <small *ngIf="employeesData.controls['Mobile'].hasError('required')" class="error_msg_form">رقم الجوال مطلوب</small>
+                        <small *ngIf="employeesData.controls['Mobile'].hasError('saudiPhoneInvalid')" class="error_msg_form">{{this.employeesData.controls['Mobile'].getError('saudiPhoneInvalid')}}</small>
                     </ng-container>
             </div>
         </div>
@@ -41,8 +42,8 @@
                     <label for="emailEmp" class="form-label">البريد الالكتروني</label>
                     <input type="email" class="form-control" id="emailEmp" placeholder="البريد الالكتروني" formControlName="Email">
                            <ng-container *ngIf="employeesData.controls['Email'].invalid && employeesData.controls['Email'].touched">
-                        <small *ngIf="employeesData.controls['Email'].hasError('required')" class="error_msg_form">البريد  الالكتروني مطلوب</small>
-                        <small *ngIf="employeesData.controls['Email'].hasError('email')" class="error_msg_form">البريد الالكتروني غير صحيح</small>
+                        <small *ngIf="employeesData.controls['Email'].hasError('inValidEmail')" class="error_msg_form">  {{ employeesData.get('Email')?.errors?.['inValidEmail'] }}</small>
+                        
                      
 
                     </ng-container>
@@ -51,9 +52,11 @@
         <div class="col-sm-12 col-lg-3">
             <div class="mb-3">
                     <label for="address" class="form-label">العنوان</label>
-                    <input type="text" class="form-control" id="address" placeholder="العنوان" formControlName="Address">
+                    <input type="text" class="form-control" maxlength="50" id="address" placeholder="العنوان" formControlName="Address">
                                                <ng-container *ngIf="employeesData.controls['Address'].invalid && employeesData.controls['Address'].touched">
                         <small *ngIf="employeesData.controls['Address'].hasError('required')" class="error_msg_form">العنوان مطلوب</small>
+                        <small *ngIf="employeesData.controls['Address'].hasError('minlength')" class="error_msg_form">يجب العنوان ان يتكون من 3 حروف علي الاقل</small>
+                    
                        
                      
 
@@ -66,6 +69,7 @@
                     <input type="text" class="form-control" id="idNational" placeholder="رقم الهويه" maxlength="10" formControlName="NationalID" formControlName="NationalID">
                                                    <ng-container *ngIf="employeesData.controls['NationalID'].invalid && employeesData.controls['NationalID'].touched">
                         <small *ngIf="employeesData.controls['NationalID'].hasError('required')" class="error_msg_form">رقم الهويه مطلوب</small>
+                        <small *ngIf="employeesData.controls['NationalID'].hasError('minlength')" class="error_msg_form">يجب رقم الهويه ان يتكون من 10 رقم</small>
                        
                      
 
@@ -75,7 +79,7 @@
            <div class="col-sm-12 col-lg-3">
             <div class="mb-3">
                     <label for="salary" class="form-label">الراتب</label>
-                    <input type="text" class="form-control" id="salary" placeholder="الراتب" formControlName="Salary">
+                    <input type="text" class="form-control" appNoStringPaste maxlength="15" id="salary" placeholder="الراتب" formControlName="Salary">
                                                             <ng-container *ngIf="employeesData.controls['Salary'].invalid && employeesData.controls['Salary'].touched">
                         <small *ngIf="employeesData.controls['Salary'].hasError('required')" class="error_msg_form">رقم الهويه مطلوب</small>
                        
@@ -95,7 +99,7 @@
 
     <div class="btn_add_reset">
         <button type="sumbit" data-button="send" [ngClass]="{'btnEdit':this.btnAddandUpdate=='update','btnAdd':this.btnAddandUpdate=='add'}">{{this.btnAddandUpdate =='add' ? 'اضافه' : 'تعديل'}}</button>
-        <button type="reset" data-button="reset">جديد</button>
+        <button type="reset" data-button="reset" (click)="btnAddandUpdate='add'">جديد</button>
     </div>
 
 </form>

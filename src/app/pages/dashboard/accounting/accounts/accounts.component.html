@@ -3,19 +3,32 @@
 
 <form class="forms_dashboard" [formGroup]="accountData" (ngSubmit)="onSubmit()">
 <div class="row">
-    <div class="col-sm-12 col-lg-6">
+    <div class="col-sm-12 col-lg-4">
         <div class="mb-3">
             <label for="username" class="form-label">الاسم</label>
-            <input type="text" name="" placeholder="الاسم" id="username" class="form-control" formControlName="name">
+            <input type="text" name="" placeholder="الاسم" id="username" maxlength="40" appNoNumberPaste class="form-control" formControlName="name">
             <ng-container *ngIf="accountData.controls['name'].invalid && accountData.controls['name'].touched">
               <small class="error_msg_form" *ngIf="this.accountData.controls['name'].hasError('required')">اسم الحساب مطلوب</small>
+              <small class="error_msg_form" *ngIf="this.accountData.controls['name'].hasError('minlength')">يجب ان يكون الاسم اكثر من 3 حروف</small>
+              <small class="error_msg_form" *ngIf="this.accountData.controls['name'].hasError('invalidUsername')">اسم الحساب  يحتوي على رموز أو حروف غير مسموح بها</small>
+              <!-- <small class="error_msg_form" *ngIf="this.accountData.controls['name'].hasError('invalidUsername')">اسم الحساب  يحتوي على رموز أو حروف غير مسموح بها</small> -->
             </ng-container>
         </div>
 
     </div>
-    <div class="col-sm-12 col-lg-6">
+
+       <div class="col-sm-12 col-lg-4">
+            <div class="mb-3">
+                    <label for="accountParent" class="form-label">حساب الاب</label>
+                    <ng-select [items]="accountParent" bindLabel="name" bindValue="id" [virtualScroll]="true" placeholder="اسم الحساب" formControlName="parentId"></ng-select>
+                    <ng-container *ngIf="accountData.controls['parentId'].invalid && accountData.controls['parentId'].touched">
+                        <small class="error_msg_form" *ngIf="accountData.controls['parentId'].hasError('required')" >حساب الاب مطلوب</small>
+                    </ng-container>
+            </div>
+        </div>
+    <div class="col-sm-12 col-lg-4">
         <div class="mb-3">
-            <label for="type" class="form-label">النوع</label>
+            <label for="type" class="form-label">البنك</label>
             <ng-select [items]="typeAccount" bindLabel="name" bindValue="name" placeholder="نوع الحساب" formControlName="type"></ng-select>
             <ng-container *ngIf="accountData.controls['type'].invalid && accountData.controls['type'].touched">
               <small class="error_msg_form" *ngIf="accountData.controls['type'].hasError('required')">نوع الحساب مطلوب</small>
@@ -27,9 +40,10 @@
     <div class="col-sm-12 col-lg-6">
         <div class="mb-3">
             <label for="numberaccount" class="form-label">رقم الحساب</label>
-           <input type="text" placeholder="رقم الحساب" id="numberaccount" class="form-control" formControlName="accountNumber">
+           <input type="text" placeholder="رقم الحساب" id="numberaccount" class="form-control" formControlName="accountNumber" appNoStringPaste maxlength="20">
            <ng-container *ngIf="accountData.controls['accountNumber'].invalid && accountData.controls['accountNumber'].touched">
             <small class="error_msg_form" *ngIf="accountData.controls['accountNumber'].hasError('required')">رقم الحساب مطلوب</small>
+            <small class="error_msg_form" *ngIf="accountData.controls['accountNumber'].hasError('pattern')">رقم الحساب يجب أن يحتوي على أرقام فقط (8–20 رقم)</small>
            </ng-container>
            
 
@@ -42,6 +56,9 @@
            <input type="text" placeholder="الرقم" id="iban" class="form-control" formControlName="iban">
              <ng-container *ngIf="accountData.controls['iban'].invalid && accountData.controls['iban'].touched">
             <small class="error_msg_form" *ngIf="accountData.controls['iban'].hasError('required')">رقم الايبان مطلوب</small>
+             <small class="error_msg_form" *ngIf="accountData.controls['iban'].hasError('pattern')">
+        رقم الآيبان غير صالح — يجب أن يبدأ بحرفي الدولة (مثل <b>SA</b>) ويليه من 20 إلى 32 رقم/حرف كبير
+      </small>
            </ng-container>
         </div>
 
@@ -81,9 +98,8 @@
        <td>{{item.name}}</td>
       <td>{{item.type}}</td>
       <td>{{item.accountNumber}} </td>
-      <td>{{item.description}}</td> 
-      
-    
+      <!-- <td>{{item.description}}</td>  -->
+      <td>{{item.iban}}</td>
     
        <td >
       <div class="d-flex align-items-center justify-content-center">
@@ -124,7 +140,7 @@
 </div>
 
 <app-pagination
-  [totalPages]="10"
+  [totalPages]="accountsAllData.paginationInfo?.totalPagesCount"
   [currentPage]="pageIndex"
   (pageChange)="onPageChanged($event)">
 </app-pagination>

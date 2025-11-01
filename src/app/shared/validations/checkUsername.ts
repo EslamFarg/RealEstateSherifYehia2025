@@ -6,7 +6,7 @@ export class checkUsername {
    static ValidationUsername(){
     return (control:AbstractControl):any =>{
         const value=control.value;
-        const regex=/^[\u0621-\u064A A-Za-z0-9._]{2,50}(?:\.[\u0621-\u064A A-Za-z0-9._]{2,50})*$/
+        const regex=/^[\u0621-\u064A A-Za-z 0-9._]+(?:\.[\u0621-\u064A A-Za-z 0-9._]+)*$/
     
         if(!value) return null;
 

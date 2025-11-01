@@ -7,7 +7,11 @@ import { Component } from '@angular/core';
 })
 export class ExplorerrealtorpaymentvoucherComponent {
 
+
+  
+
   dataFilter=['رقم السند','اسم السمسار']
+  // _
 
   
    vouchersData = [
