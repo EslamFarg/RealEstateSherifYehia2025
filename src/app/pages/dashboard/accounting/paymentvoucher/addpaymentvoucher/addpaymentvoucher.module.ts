@@ -7,6 +7,7 @@ import { PageHeadingComponent } from '../../../../../shared/ui/page-heading/page
 import { NgSelectModule } from '@ng-select/ng-select';
 import { SearchinformsComponent } from '../../../../../shared/ui/searchinforms/searchinforms.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { FormerrorMsgComponent } from '../../../../../shared/ui/formerror-msg/formerror-msg.component';
 // import { NgSelectComponent } from "../../../../../../../node_modules/@ng-select/ng-select/lib/ng-select.component";
 
 
@@ -21,7 +22,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     // NgSelectComponent
     NgSelectModule,
     SearchinformsComponent,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    FormerrorMsgComponent
 ]
 })
 export class AddpaymentvoucherModule { }

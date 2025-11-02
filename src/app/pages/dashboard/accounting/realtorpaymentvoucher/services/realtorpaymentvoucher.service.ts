@@ -27,4 +27,31 @@ export class RealtorpaymentvoucherService extends BasehttpservicesService{
 
 
       }
+
+      createBrokerPaymentVoucher(data:any){
+        return this.post('/BrokerPaymentVoucher/Create',data);
+      }
+
+      updateBrokerPaymentVoucher(data:any){
+        return this.put('/BrokerPaymentVoucher/Update',data);
+      }
+
+
+      getByIdBrokerPaymentVoucher(id:any){
+        return this.post(`/BrokerPaymentVoucher/GetById?Id=${id}`,{});
+      }
+
+      deleteDataBrokerPaymentVoucher(id:any){
+        return this.delete(`/BrokerPaymentVoucher/Delete?id=${id}`);
+      }
+
+      getAllDataBroker(pagination:any){
+        return this.post('/BrokerPaymentVoucher/GetAll',pagination);
+      }
+
+      filterSearch(data:any){
+
+        return this.post('/BrokerPaymentVoucher/Filter',data);
+
+      }
 }

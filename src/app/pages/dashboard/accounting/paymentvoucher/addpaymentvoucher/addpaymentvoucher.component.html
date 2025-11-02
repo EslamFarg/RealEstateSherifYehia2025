@@ -1,11 +1,11 @@
 <app-page-heading [title]="'المحاسبه'" [subtitle]="'سند الصرف'" [AddBtn]="true" [ExplorerRoute]="'/dashboard/paymentvoucher/explorepaymentvoucher'" [TitlePageAddBtn]="'مستكشف سند الصرف'"></app-page-heading>
 
 
-<form action="" class="forms_dashboard">
+<form action="" class="forms_dashboard" [formGroup]="paymentVoucherForm">
            <div class="row ">
 <div class=" col-sm-12  col-lg-3 ">
                  <label for="vouchernumber" class="form-label">رقم السند</label>
-                 <input type="text" class="form-control"  id="vouchernumber" placeholder="رقم السند" readonly [value]="'12345'">
+                 <input type="text" class="form-control"  id="vouchernumber" placeholder="رقم السند" readonly value="0">
                 
         </div>
   <div class="col-sm-12 col-lg-3 mb-3 search_contract" style="align-self: flex-end;">
@@ -27,26 +27,30 @@
     <div class="col-sm-12 col-lg-3">
         <div class="mb-3">
             <label for="numbernotes" class="form-label">رقم الدفتري</label>
-            <input type="text" class="form-control" id="numbernotes" placeholder="رقم الدفتري" readonly value="123" style="background-color: #F5F5F5 !important;">
+            <input type="text" class="form-control" id="numbernotes" placeholder="رقم الدفتري"   style="background-color: #F5F5F5 !important;">
+               <app-formerror-msg [control]="paymentVoucherForm.controls['voucherNo']" [Messages]="{
+                  'required':'الرقم الدفتري مطلوب',
+                  'minlength':'الرقم الدفتري يجب ان يكون اكثر من 3 حروف'
+               }"></app-formerror-msg>
           </div>
     </div>
 
     <div class="col-sm-12 col-lg-3">
         <div class="mb-3">
             <label for="date" class="form-label">التاريخ</label>
-            <input type="date" class="form-control" id="date" placeholder="التاريخ" >
+            <input type="date" class="form-control" id="date" placeholder="التاريخ" formControlName="voucherDate">
           </div>
     </div>
     <div class="col-sm-12">
         <div class="mb-3">
             <label for="box" class="form-label">صندوق / بنك</label>
-            <ng-select [items]="[]" bindLabel="bankName" bindValue="bankValue"  placeholder="صندوق / بنك"></ng-select>
+            <ng-select [items]="[]" bindLabel="bankName" bindValue="bankValue"  placeholder="صندوق / بنك" formControlName="creditAccountId"></ng-select>
           </div>
     </div>
     <div class="col-sm-12">
         <div class="mb-3">
             <label for="byan" class="form-label">البيان</label>
-            <textarea class="form-control" id="byan" rows="3" placeholder="اكتب المحتوي" style="height: 75px !important;"></textarea>
+            <textarea class="form-control" id="byan" rows="3" placeholder="اكتب المحتوي" style="height: 75px !important;" formControlName="notes"></textarea>
           </div>
     </div>
           </div>
@@ -62,19 +66,19 @@
 
         <div class="col-sm-12 col-lg-6 readonly_input mb-3">
             <label for="" class="form-label">الاسم</label>
-            <input type="text" class="form-control"  placeholder="الاسم" readonly [value]="'محمد أحمد'" style="padding-right: 48px;">
+            <input type="text" class="form-control"  readonly style="padding-right: 48px;">
         </div>
         <div class="col-sm-12 col-lg-6 readonly_input mb-3">
             <label for="" class="form-label">رقم الجوال</label>
-            <input type="text" class="form-control"  placeholder="رقم الجوال" readonly [value]="'01026381737'" style="padding-right: 80px;">
+            <input type="text" class="form-control"   readonly  style="padding-right: 80px;">
         </div>
         <div class="col-sm-12 col-lg-6 readonly_input mb-3">
             <label for="" class="form-label">البريد الالكتروني</label>
-            <input type="text" class="form-control"  placeholder="رقم الجوال" readonly [value]="'gts@gmail.com'" style="padding-right: 105px;">
+            <input type="text" class="form-control"   readonly  style="padding-right: 105px;">
         </div>
         <div class="col-sm-12 col-lg-6 readonly_input mb-3">
             <label for="" class="form-label">رقم الهويه </label>
-            <input type="text" class="form-control"  placeholder="رقم الهويه" readonly [value]="'987654321234567'" style="padding-right: 80px;">
+            <input type="text" class="form-control"   readonly style="padding-right: 80px;">
         </div>
     </div>
 

@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-addpaymentvoucher',
@@ -16,11 +16,22 @@ fb:FormBuilder=inject(FormBuilder);
 // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!111 Properties
 
 paymentVoucherForm=this.fb.group({
-  voucherDate:[''],
-  debitAccountId:[''],
-  creditAccountId:[''],
-  amount:[''],
-  notes:['']
+  
+  voucherNo: ['',[Validators.required,Validators.minLength(3)]],
+  voucherDate: ['',[Validators.required]],
+  paymentMethod: ['cash'],
+  amount: 0,
+  notes: [''],
+  ownerId: [0,[Validators.required]],
+  debitAccountId:[0,Validators.required] ,
+  creditAccountId:  [null,Validators.required],
+  ownerPaymentDetails: [
+    {
+      contractInstallmentId: 0,
+      amount: 0
+    }
+  ]
+
 })
 
 

@@ -10,6 +10,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FormerrorMsgComponent } from '../../../../../shared/ui/formerror-msg/formerror-msg.component';
 import { IntersectionDirective } from "../../../../../shared/directives/intersection.directive";
 import { EmptytableComponent } from '../../../../../shared/ui/emptytable/emptytable.component';
+import { ConfirmDeleteComponent } from '../../../../../shared/components/confirm-delete/confirm-delete.component';
 
 
 @NgModule({
@@ -26,7 +27,7 @@ import { EmptytableComponent } from '../../../../../shared/ui/emptytable/emptyta
     FormerrorMsgComponent,
     IntersectionDirective,
     EmptytableComponent,
-    // FormsModule
+    ConfirmDeleteComponent
 ]
 })
 export class AddrealtorpaymentvoucherModule { }

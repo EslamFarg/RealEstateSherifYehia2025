@@ -1,4 +1,4 @@
-import { Component, DestroyRef, ElementRef, inject, QueryList, ViewChild, ViewChildren } from '@angular/core';
+import { ChangeDetectorRef, Component, DestroyRef, ElementRef, inject, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { AccountService } from '../../accounts/services/account.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -22,7 +22,7 @@ export class AddrealtorpaymentvoucherComponent {
 
   destroyRef:DestroyRef=inject(DestroyRef)
 
-
+cdr: ChangeDetectorRef = inject(ChangeDetectorRef);
 
   // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! Properties
 
@@ -32,7 +32,7 @@ export class AddrealtorpaymentvoucherComponent {
 
   toastr:ToastrService=inject(ToastrService);
   realtorPaymentVoucherForm=this.fb.group({
-  voucherNo: ['',Validators.required,Validators.minLength(3)],
+  voucherNo: ['',[Validators.required,Validators.minLength(3)]],
   voucherDate: ['',Validators.required],
   paymentMethod: ['cash',Validators.required],
   amount: [0,Validators.required],
@@ -50,16 +50,19 @@ export class AddrealtorpaymentvoucherComponent {
 
 
 idSearchRealtor:any
-
+btnAddandUpdate='add'
+idUpdate:any
+showDelete=false
+deleteId:any
 formDataSearch=this.fb.group({
-  financiallyAccountId:[null,Validators.required],
+  financiallyAccountId:[null],
   name:[''],
   email:[''],
   mobile:[''],
   nationalID:[''],
 })
 
-
+canShowBtns=false
 accountData:any;
 itemsChecked: any[] = [];
 getAllDataSearch:any
@@ -70,29 +73,10 @@ FilterData=[
 ]
   
 
-   paymentData = [
-  { id: 1, contractNumber: "C-1001", property: "عمارة الورد", unit: "شقة 101", month: "يناير", amount: "4,000 ريال", paid: "3,000 ريال", tax: "600 ريال", remaining: "1,000 ريال" },
-  { id: 2, contractNumber: "C-1002", property: "برج السلام", unit: "مكتب 203", month: "فبراير", amount: "5,500 ريال", paid: "5,000 ريال", tax: "750 ريال", remaining: "500 ريال" },
-  { id: 3, contractNumber: "C-1003", property: "فيلا النخيل", unit: "الوحدة A1", month: "مارس", amount: "7,000 ريال", paid: "7,000 ريال", tax: "1,050 ريال", remaining: "0 ريال" },
-  { id: 4, contractNumber: "C-1004", property: "عمارة الرياض", unit: "شقة 202", month: "أبريل", amount: "3,800 ريال", paid: "2,800 ريال", tax: "570 ريال", remaining: "1,000 ريال" },
-  { id: 5, contractNumber: "C-1005", property: "برج الماسة", unit: "مكتب 505", month: "مايو", amount: "6,200 ريال", paid: "5,000 ريال", tax: "930 ريال", remaining: "1,200 ريال" },
-  { id: 6, contractNumber: "C-1006", property: "عمارة الخليج", unit: "شقة 303", month: "يونيو", amount: "4,500 ريال", paid: "4,500 ريال", tax: "675 ريال", remaining: "0 ريال" },
-  { id: 7, contractNumber: "C-1007", property: "برج اليمامة", unit: "مكتب 1101", month: "يوليو", amount: "8,000 ريال", paid: "7,000 ريال", tax: "1,200 ريال", remaining: "1,000 ريال" },
-  { id: 8, contractNumber: "C-1008", property: "عمارة النور", unit: "شقة 102", month: "أغسطس", amount: "3,600 ريال", paid: "3,000 ريال", tax: "540 ريال", remaining: "600 ريال" },
-  { id: 9, contractNumber: "C-1009", property: "فيلا الرفاه", unit: "الوحدة B2", month: "سبتمبر", amount: "9,000 ريال", paid: "8,500 ريال", tax: "1,350 ريال", remaining: "500 ريال" },
-  { id: 10, contractNumber: "C-1010", property: "برج السحاب", unit: "مكتب 210", month: "أكتوبر", amount: "5,200 ريال", paid: "4,200 ريال", tax: "780 ريال", remaining: "1,000 ريال" },
-  { id: 11, contractNumber: "C-1011", property: "عمارة النسيم", unit: "شقة 401", month: "نوفمبر", amount: "3,900 ريال", paid: "3,400 ريال", tax: "585 ريال", remaining: "500 ريال" },
-  { id: 12, contractNumber: "C-1012", property: "برج الرياض", unit: "مكتب 608", month: "ديسمبر", amount: "6,800 ريال", paid: "6,000 ريال", tax: "1,020 ريال", remaining: "800 ريال" },
-  { id: 13, contractNumber: "C-1013", property: "فيلا الورود", unit: "الوحدة C3", month: "يناير", amount: "7,500 ريال", paid: "6,500 ريال", tax: "1,125 ريال", remaining: "1,000 ريال" },
-  { id: 14, contractNumber: "C-1014", property: "عمارة الخليج", unit: "شقة 105", month: "فبراير", amount: "4,200 ريال", paid: "3,700 ريال", tax: "630 ريال", remaining: "500 ريال" },
-  { id: 15, contractNumber: "C-1015", property: "برج المملكة", unit: "مكتب 301", month: "مارس", amount: "10,000 ريال", paid: "9,000 ريال", tax: "1,500 ريال", remaining: "1,000 ريال" },
-  { id: 16, contractNumber: "C-1016", property: "عمارة النخيل", unit: "شقة 206", month: "أبريل", amount: "3,500 ريال", paid: "3,000 ريال", tax: "525 ريال", remaining: "500 ريال" },
-  { id: 17, contractNumber: "C-1017", property: "برج القصر", unit: "مكتب 1203", month: "مايو", amount: "6,000 ريال", paid: "5,000 ريال", tax: "900 ريال", remaining: "1,000 ريال" },
-  { id: 18, contractNumber: "C-1018", property: "عمارة الزهراء", unit: "شقة 307", month: "يونيو", amount: "4,800 ريال", paid: "4,000 ريال", tax: "720 ريال", remaining: "800 ريال" },
-  { id: 19, contractNumber: "C-1019", property: "برج التميز", unit: "مكتب 405", month: "يوليو", amount: "5,700 ريال", paid: "5,000 ريال", tax: "855 ريال", remaining: "700 ريال" },
-  { id: 20, contractNumber: "C-1020", property: "فيلا الأفق", unit: "الوحدة D4", month: "أغسطس", amount: "8,500 ريال", paid: "8,000 ريال", tax: "1,275 ريال", remaining: "500 ريال" }
-];
-
+@ViewChild('VoucherNumber') VoucherNumber!:ElementRef;
+// @ViewChild('paidAmount') paidAmount!:ElementRef;
+@ViewChild('checkAll') checkAll!:ElementRef;
+@ViewChild('valSearchById') valSearchById!:ElementRef;
 
 
 // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! Methods
@@ -108,11 +92,19 @@ onSubmit(){
       return ; 
     }
 
+       let initVal=0;
+
+this.itemsChecked.forEach((item) => {
+  
+  initVal+=item.paidAmount
+
+})
+
     let data={
   voucherNo: this.realtorPaymentVoucherForm.get('voucherNo')?.value,
   voucherDate: this.realtorPaymentVoucherForm.get('voucherDate')?.value,
   paymentMethod: this.realtorPaymentVoucherForm.get('paymentMethod')?.value,
-  amount: this.realtorPaymentVoucherForm.get('amount')?.value,
+  amount: initVal,
   notes: this.realtorPaymentVoucherForm.get('notes')?.value,
   brokerId: this.realtorPaymentVoucherForm.get('brokerId')?.value,
   debitAccountId: this.formDataSearch.get('financiallyAccountId')?.value,
@@ -120,16 +112,74 @@ onSubmit(){
   brokerPaymentVoucherDetails:[] as { contractId: number; amount: number }[]  
 }
 
+  if(this.btnAddandUpdate == 'add'){
+   
+
+
+
+    
+
 this.itemsChecked.forEach((item) => {
+  
   data.brokerPaymentVoucherDetails.push({
     contractId: item.contractId,
     amount: item.paidAmount
   });
+
+  
+  
+})
+
+console.log(data);
+
+
+
+
+this._realtorPaymentVoucherServices.createBrokerPaymentVoucher(data).pipe(takeUntilDestroyed(this.destroyRef)).subscribe((res:any)=>{
+  this.toastr.show('تم الاضافه بنجاح','success');
+  this.btnAddandUpdate='update';
+  this.VoucherNumber.nativeElement.value=res;
+  // this.getAllDataSearchBroker();
+  this.canShowBtns=true
+  this.idUpdate=res
+
 })
 
 
+  }else{
+    // Update
+    // debugger
+    let updateData={
+      id:this.idUpdate,
+      ...data
+    }
 
-console.log(data);
+  
+    updateData.brokerPaymentVoucherDetails = [];
+
+    
+this.itemsChecked.forEach((item) => {
+  
+  updateData.brokerPaymentVoucherDetails.push({
+    contractId: item.contractId,
+    amount: item.paidAmount
+  });
+
+  
+  
+})
+
+
+    
+
+    this._realtorPaymentVoucherServices.updateBrokerPaymentVoucher(updateData).pipe(takeUntilDestroyed(this.destroyRef)).subscribe((res:any)=>{
+      this.toastr.show('تم التعديل بنجاح','success');
+      this.btnAddandUpdate='update';
+      this.canShowBtns=true
+    })
+
+
+  }
 
   }else{
     this.realtorPaymentVoucherForm.markAllAsTouched();
@@ -145,6 +195,174 @@ this._accountsService.getAllData({}).pipe(takeUntilDestroyed(this.destroyRef)).s
 })
 }
 
+
+// loadVoucherData(){
+
+//   // this._realtorPaymentVoucherServices.post().pipe(takeUntilDestroyed(this.destroyRef)).subscribe((res: any) => {
+//   //   this.getAllDataSearch = res.rows;
+//   // })
+// }
+
+
+// searchGetById(val:any){
+//   const id=val.value
+
+//     this.itemsChecked = [];
+//   this.getAllDataSearch = { rows: [] };
+
+//     setTimeout(() => {
+//     if (this.checkAll) this.checkAll.nativeElement.checked = false;
+//   });
+//      this._realtorPaymentVoucherServices.getByIdBrokerPaymentVoucher(id).pipe(takeUntilDestroyed(this.destroyRef)).subscribe((res: any) => {
+//     //  this.getAllDataSearch = res.rows;
+
+//     this.btnAddandUpdate='update'
+//     this.realtorPaymentVoucherForm.patchValue({
+//       voucherNo: res.voucherNo,
+//       voucherDate: res.voucherDate.split('T')[0],
+//       paymentMethod: res.paymentMethod,
+//       amount: res.net,
+//       notes: res.notes,
+//       brokerId: res.brokerId,
+//       debitAccountId: res.debitAccountId,
+//       creditAccountId: res.creditAccountId,
+//       // brokerId: res.brokerId
+//     })
+
+//     this.formDataSearch.patchValue({
+//       // financiallyAccountId: res.debitAccountId
+//       name: res.debitAccountName,
+//       email: res.email,
+//       mobile: res.phoneNumber,
+//       nationalID: res.nationalID
+//     })
+
+
+//     res.brokerPaymentVoucherDetails.forEach((res: any) => {
+//       this.itemsChecked.push({
+//         contractId: res.contractId,
+//         paidAmount: res.paidAmmount || 0,
+//       });
+//     })
+      
+
+//       this.getAllDataSearch={
+//         rows:res.brokerPaymentVoucherDetails.map((item:any)=>({
+//          contractId: item.contractId,
+//     propertyName: item.propertyName,
+//     unitName: item.unitName,
+//     month: item.month,
+//     brokerCommission: item.totalAmount,          // عمولة السمسار الأصلية
+//     brokerPaidAmount: item.paidAmmount,          // المبلغ المدفوع سابقاً ✅
+//     remainingAmount: item.totalAmount - item.paidAmmount // المتبقي ✅
+
+//         })),
+
+       
+//       }
+
+//      this.cdr.detectChanges();
+        
+//       setTimeout(() => {
+//         this.checkAll.nativeElement.checked = true;
+//   this.checkboxes.forEach(checkbox => {
+//     checkbox.nativeElement.checked = true;
+//   });
+// },1000);
+      
+
+
+
+ 
+
+ 
+//    })
+  
+
+// }
+
+searchGetById(val: any) {
+  const id = val.value.trim();
+
+  if (!id) {
+    this.toastr.show('يرجى إدخال رقم سند صالح', 'error');
+    return;
+  }
+
+  this.itemsChecked = [];
+  this.getAllDataSearch = { rows: [] };
+
+  setTimeout(() => {
+    if (this.checkAll) this.checkAll.nativeElement.checked = false;
+  });
+
+  this._realtorPaymentVoucherServices.getByIdBrokerPaymentVoucher(id)
+    .pipe(takeUntilDestroyed(this.destroyRef))
+    .subscribe((res: any) => {
+
+      this.btnAddandUpdate = 'update';
+
+      console.log('res', res);
+      this.deleteId=res.id;
+      this.realtorPaymentVoucherForm.patchValue({
+        voucherNo: res.voucherNo,
+        voucherDate: res.voucherDate.split('T')[0],
+        paymentMethod: res.paymentMethod,
+        amount: res.net,
+        notes: res.notes,
+        brokerId: res.brokerId,
+        debitAccountId: res.debitAccountId,
+        creditAccountId: res.creditAccountId
+      });
+
+      this.formDataSearch.patchValue({
+        financiallyAccountId: res.debitAccountId,
+        name: res.debitAccountName,
+        email: res.email,
+        mobile: res.phoneNumber,
+        nationalID: res.nationalID
+      });
+
+      console.log("Search",this.formDataSearch.value)
+      // fill itemsChecked
+      res.brokerPaymentVoucherDetails.forEach((d: any) => {
+        this.itemsChecked.push({
+          contractId: d.contractId,
+          paidAmount: d.paidAmmount 
+        });
+      });
+
+
+
+      // table
+      this.getAllDataSearch = {
+        rows: res.brokerPaymentVoucherDetails.map((item: any) => ({
+          contractId: item.contractId,
+          propertyName: item.propertyName,
+          unitName: item.unitName,
+          month: item.month,
+          brokerCommission: item.totalAmount,
+          brokerPaidAmount: item.paidAmmount,
+          remainingAmount: item.totalAmount - item.paidAmmount
+        }))
+      };
+
+
+      console.log(this.getAllDataSearch);
+      console.log('RelatorForm', this.realtorPaymentVoucherForm.value);
+
+      this.cdr.detectChanges();
+
+      this.idUpdate=res.id
+      this.canShowBtns=true
+      console.log(this.idUpdate)
+      setTimeout(() => {
+        if (this.checkAll) this.checkAll.nativeElement.checked = true;
+        this.checkboxes.forEach(cb => cb.nativeElement.checked = true);
+      });
+
+    });
+}
 
 
 
@@ -186,8 +404,7 @@ SearchFilter(e:any){
       this.formDataSearch.patchValue(row);
       this.idSearchRealtor=row.id;
       this.realtorPaymentVoucherForm.get('brokerId')?.setValue(row.id);
-      console.log(this.idSearchRealtor);
-      // console.log(this.formDataSearch.value);
+      // console.log(this.idSearchRealtor)
       let pagination={
   paginationInfo: {
     pageIndex: 0,
@@ -212,11 +429,7 @@ SearchFilter(e:any){
   }
 
 
-// get TotalBrokerCommission() {
-//       this.getAllDataSearch.rows.reduce((acc:any,curr:any)=>{
-//         return acc + curr.brokerCommission
-//       },0)
-//   }
+
 
 get TotalBrokerCommission(): number {
   if (!this.getAllDataSearch || !this.getAllDataSearch.rows) return 0;
@@ -232,7 +445,7 @@ get TotalBrokerCommission(): number {
 @ViewChildren('rowCheckbox') checkboxes!: QueryList<ElementRef>
 
 PaidAmount: number = 0;
-@ViewChildren('paidAmount') paidAmountElement!:QueryList<ElementRef>
+@ViewChildren('paidAmountInput') paidAmountElement!:QueryList<ElementRef>
 onPaidChange(event: any, item: any) {
    let value = parseFloat(event.target.value) || 0;
   if (value > item.brokerCommission) {
@@ -247,6 +460,11 @@ onPaidChange(event: any, item: any) {
   item.remainingAmount = item.brokerCommission - value;
 
 
+  const exist = this.itemsChecked.find(x => x.contractId === item.contractId);
+  if (exist) {
+    exist.paidAmount = value;
+  }
+
   // Tot
 
 }
@@ -259,6 +477,8 @@ onPaidChange(event: any, item: any) {
 checkDataId(event:any,item:any){
    const isChecked = event.target.checked;
 
+   console.log(item)
+
   if (isChecked) {
     // ✅ لو اتعلم عليه — ضيفه أو حدّثه
     const existing = this.itemsChecked.find(x => x.contractId === item.contractId);
@@ -268,15 +488,15 @@ checkDataId(event:any,item:any){
     } else {
       this.itemsChecked.push({
         contractId: item.contractId,
-        paidAmount: item.brokerPaidAmount || 0
+        paidAmount: item.brokerPaidAmount || 0,
       });
     }
   } else {
-    // ❌ لو اتشال منه الصح — امسحه من المصفوفة
+    
     this.itemsChecked = this.itemsChecked.filter(x => x.contractId !== item.contractId);
   }
 
-  // console.log(this.itemsChecked);
+  
 
  
   console.log(this.itemsChecked);
@@ -290,7 +510,10 @@ selectAllChecked(e:any){
   // console.log(e.target.checked);
 
   if(isChecked){
-    this.itemsChecked=this.getAllDataSearch.rows
+    this.itemsChecked=this.getAllDataSearch.rows.map((item:any) => ({
+    contractId: item.contractId,
+    paidAmount: item.brokerPaidAmount || 0
+  }));
       this.checkboxes.forEach((checkbox) => {
       checkbox.nativeElement.checked = true;
     });
@@ -318,6 +541,67 @@ get TotalPaidAmount() : number{
   })
   return total;;
 }
+
+
+resetForm(){
+   this.itemsChecked=[]
+  //  this.getAllDataSearch=[]
+  this.getAllDataSearch = { rows: [] };
+ // 1) تصفير الجدول
+  this.itemsChecked = [];
+  this.getAllDataSearch = { rows: [] };
+
+  // 2) إعادة ضبط الفورم بقيم افتراضية صحيحة
+  this.realtorPaymentVoucherForm.reset({
+    paymentMethod: 'cash',
+    amount: 0,
+    brokerId: 0,
+    debitAccountId: 0,
+    creditAccountId: null
+  });
+
+  // 3) إعادة ضبط نموذج البحث
+  this.formDataSearch.reset({
+    financiallyAccountId: null,
+    name: '',
+    email: '',
+    mobile: '',
+    nationalID: ''
+  });
+
+  
+  // 4) تصفير المتغيرات
+  this.valSearchById.nativeElement.value = '';
+  this.idSearchRealtor = 0;
+  this.idUpdate = null;
+  this.canShowBtns=false;
+
+  this.btnAddandUpdate = 'add';
+
+
+}
+
+
+deleteConfirmed(id:any){
+  this.showDelete=false;
+  this._realtorPaymentVoucherServices.deleteDataBrokerPaymentVoucher(id).pipe(takeUntilDestroyed(this.destroyRef)).subscribe((res:any)=>{
+    this.toastr.show('تم حذف الصيانة بنجاح','success');
+    this.resetForm();
+    this.btnAddandUpdate='add';
+    this.VoucherNumber.nativeElement.value='0';
+    // this.searchVal.nativeElement.value='';
+  })
+}
+
+deleteData(){
+this.deleteId=this.idUpdate
+this.showDelete=true
+}
+
+onClose(){
+  this.showDelete=false
+}
+
 }
 
 

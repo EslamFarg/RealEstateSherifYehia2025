@@ -1,20 +1,20 @@
-<app-page-heading [title]="'المحاسبه'" [subtitle]="'سند الصرف'" [AddBtn]="true" [ExplorerRoute]="'/dashboard/paymentvoucher/explorepaymentvoucher'" [TitlePageAddBtn]="'مستكشف سند الصرف'"></app-page-heading>
+<app-page-heading [title]="'المحاسبه'" [subtitle]="'سند الصرف'" [AddBtn]="true" [ExplorerRoute]="'/dashboard/realtorpaymentvoucher/explorerrealtorpaymentvoucher'" [TitlePageAddBtn]="'مستكشف سند الصرف'"></app-page-heading>
 
 
-<form action="" class="forms_dashboard" [formGroup]="realtorPaymentVoucherForm" (ngSubmit)="onSubmit()">
+<form action="" class="forms_dashboard" [formGroup]="realtorPaymentVoucherForm" >
            <div class="row ">
 <div class=" col-sm-12  col-lg-3 ">
                  <label for="vouchernumber" class="form-label">رقم السند</label>
-                 <input type="text" class="form-control"  id="vouchernumber" placeholder="رقم السند" readonly [value]="'0'">
+                 <input type="text" class="form-control"  id="vouchernumber" #VoucherNumber placeholder="رقم السند"  readonly placeholder="0">
               
                 
         </div>
   <div class="col-sm-12 col-lg-3 mb-3 search_contract" style="margin-top:8px ;">
         <label  class="form-label" ></label>
         <div class="search_number_component">
-<input type="text" name="" placeholder="بحث برقم السند"  class="form-control">
+<input type="text" name="" placeholder="بحث برقم السند"  #valSearchById (keydown.enter)="searchGetById(valSearchById)"  class="form-control">
 
-<div class="search">
+<div class="search" (click)="searchGetById(valSearchById)">
     <svg width="21" height="20" viewBox="0 0 21 20" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path d="M10.7501 17.4998C6.37783 17.4998 2.83342 13.9554 2.83342 9.58317C2.83342 5.21092 6.37783 1.6665 10.7501 1.6665C15.1223 1.6665 18.6667 5.21092 18.6667 9.58317C18.6667 13.9554 15.1223 17.4998 10.7501 17.4998Z" stroke="#7F7F7F" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
 <path d="M2.00008 18.3332L3.66675 16.6665" stroke="#7F7F7F" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
@@ -59,9 +59,7 @@
         <div class="mb-3">
             <label for="byan" class="form-label">البيان</label>
             <textarea class="form-control" id="byan" rows="3" placeholder="اكتب المحتوي" style="height: 75px !important;" formControlName="notes"></textarea>
-               <app-formerror-msg [control]="this.realtorPaymentVoucherForm.controls['notes']" [Messages]="{
-                  required:'البيان مطلوب'
-               }"></app-formerror-msg>
+           
           </div> 
     </div>
           </div>
@@ -69,7 +67,8 @@
 
 
 
-<form action="" class="forms_dashboard mt-4" [formGroup]="formDataSearch">
+<form action="" class="forms_dashboard mt-4" [formGroup]="formDataSearch" style="    min-height: 46px;
+    max-height: 455px;">
     <div class="row">
         <div class="col-sm-12 mb-3">
             <app-searchinforms (selectedDataFilter)="SearchFilter($event)" [dataFilter]="FilterData"></app-searchinforms>
@@ -103,7 +102,7 @@
       <th scope="col">
 
         <div class="d-flex align-items-center justify-content-center">
-        <input type="checkbox" *ngIf="this.getAllDataSearch?.rows.length> 0" (change)="selectAllChecked($event)" aria-label="Checkbox for following text input" style="width: 16px; height: 16px; margin-left: 8px;">
+        <input type="checkbox" *ngIf="this.getAllDataSearch?.rows.length> 0" (change)="selectAllChecked($event)" #checkAll aria-label="Checkbox for following text input" style="width: 16px; height: 16px; margin-left: 8px;">
         م     
         </div>
         
@@ -141,7 +140,7 @@
     placeholder="0"
     [value]="item.brokerPaidAmount"
     (input)="onPaidChange($event, item)"
-    #paidAmount
+    #paidAmountInput
   />
 </td> 
       <td>{{item.remainingAmount}}</td>
@@ -195,11 +194,11 @@
 </form>
 
 
-  <div class="btns_add_edit">
- <button type="submit" data-type="save" (click)="onSubmit()">حفظ</button>
- <button>جديد</button>
- <button>حذف</button>
- <button>طباعه </button>
+  <div class="btn_add_reset mb-3">
+ <button type="button" data-type="save" data-button="send" (click)="onSubmit()" [ngClass]="{'btnEdit':this.btnAddandUpdate=='update','btnAdd':this.btnAddandUpdate=='add'}">{{btnAddandUpdate == 'add'?'اضافه':'تعديل'}}</button>
+ <button data-button="reset" (click)="resetForm()">جديد</button>
+ <button data-button="reset" *ngIf="canShowBtns" (click)="deleteData()">حذف</button>
+ <button data-button="reset" *ngIf="canShowBtns">طباعه </button>
   </div>
 
-
+<app-confirm-delete [isVisible]="showDelete" (onDelete)="deleteConfirmed($event)" [itemId]="this.deleteId" (toggleModal)="onClose()"></app-confirm-delete>

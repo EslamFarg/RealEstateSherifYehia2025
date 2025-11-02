@@ -1,6 +1,6 @@
 <app-page-heading [title]="'المحاسبه'" [subtitle]="'سند الصرف خاص بالسمسار'" [explorerBtn]="true" [AddRoute]="'/dashboard/realtorpaymentvoucher/addrealtorpaymentvoucher'" [TitlePageExplorerBtn]="'اضافه سند الصرف'"></app-page-heading>
 
-<app-search-data [dataFilter]="dataFilter" [dropDownTitle]="'السندات'"></app-search-data>
+<app-search-data [dataFilter]="dataFilter" [dropDownTitle]="'السندات'" (sendDataSelect)="onSelectedPagination($event)" (selectedDataFilter)="onSelectedFilter($event)"></app-search-data>
 
 
 
@@ -21,15 +21,14 @@
     </tr>
   </thead>
   <tbody>
-    @for (item of vouchersData; track $index) {
+    @for (item of vouchersData.rows; track $index) {
 <tr>
       <td scope="row">{{$index + 1}}</td>
-      <td>{{item.voucherNumber}}</td>
-      <td>{{item.ownerName}}</td>
-      <td>{{item.account}} </td>
-      <td>{{item.contract}}</td>
-      <td>{{item.totalAmount}}</td>
-    
+     <td>{{item.voucherNo}}</td>
+     <td>{{item.debitAccountName}}</td>
+     <td>{{item.creditAccountName}}</td>
+     <td>{{item.brokerPaymentVoucherDetails[0].contractId}}</td>
+     <td>{{item.net}}</td>
     
        <td>
       
@@ -50,14 +49,12 @@
        </td>
     </tr>
     }@empty {
-       <tr>
-      <td colspan="8" class="text-center py-5" style="color: #888; font-size: 18px;">
-        <i class="fa-solid fa-circle-exclamation fa-2x mb-2" style="color: #ccc;"></i><br>
-        لا توجد بيانات حتى الآن
-      </td>
-    </tr>
+               <tr>
+    <td class="empty-cell" colspan="8">
+     <app-emptytable></app-emptytable>
+    </td>
+  </tr>
     }
-
     
   </tbody>
 </table>   
@@ -66,7 +63,7 @@
 </div>
 
 <app-pagination
-  [totalPages]="10"
+  [totalPages]="this.vouchersData.paginationInfo?.totalPagesCount"
   [currentPage]="pageIndex"
   (pageChange)="onPageChanged($event)">
 </app-pagination>
