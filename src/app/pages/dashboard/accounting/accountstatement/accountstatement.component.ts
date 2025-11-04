@@ -1,4 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, DestroyRef, ElementRef, inject, ViewChild } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AccountService } from '../accounts/services/account.service';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { AccountstatementService } from './services/accountstatement.service';
 
 @Component({
   selector: 'app-accountstatement',
@@ -7,40 +11,112 @@ import { Component } from '@angular/core';
 })
 export class AccountstatementComponent {
 
+  // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!11 Services
+  fb:FormBuilder=inject(FormBuilder);
+  _accountsStatementSer:AccountstatementService=inject(AccountstatementService)
+  destroyRef:DestroyRef=inject(DestroyRef);
 
- accountStatement = [
-  { id: 1, accountName: "الصندوق الرئيسي", date: "2025-01-05", description: "تحصيل إيجار شهر يناير", debit: 0, credit: 3000, total: 3000 },
-  { id: 2, accountName: "الصندوق الرئيسي", date: "2025-01-10", description: "دفع مصاريف صيانة المبنى", debit: 500, credit: 0, total: 2500 },
-  { id: 3, accountName: "بنك الراجحي", date: "2025-01-15", description: "إيداع إيجار مستأجر رقم 102", debit: 0, credit: 2000, total: 4500 },
-  { id: 4, accountName: "بنك الراجحي", date: "2025-01-20", description: "دفع عمولة سمسار", debit: 800, credit: 0, total: 3700 },
-  { id: 5, accountName: "الصندوق الرئيسي", date: "2025-01-25", description: "دفع فاتورة كهرباء", debit: 300, credit: 0, total: 3400 },
-  { id: 6, accountName: "بنك الأهلي", date: "2025-01-28", description: "تحصيل إيجار فبراير", debit: 0, credit: 2500, total: 5900 },
-  { id: 7, accountName: "بنك الأهلي", date: "2025-02-02", description: "سداد ضريبة عقارية", debit: 700, credit: 0, total: 5200 },
-  { id: 8, accountName: "الصندوق الرئيسي", date: "2025-02-06", description: "تحصيل دفعة من مستأجر", debit: 0, credit: 3000, total: 8200 },
-  { id: 9, accountName: "الصندوق الرئيسي", date: "2025-02-10", description: "دفع عمولة مكتب عقاري", debit: 1000, credit: 0, total: 7200 },
-  { id: 10, accountName: "بنك البلاد", date: "2025-02-15", description: "تحصيل إيجار وحدة 205", debit: 0, credit: 2700, total: 9900 },
-  { id: 11, accountName: "بنك البلاد", date: "2025-02-20", description: "مصاريف تشغيلية", debit: 400, credit: 0, total: 9500 },
-  { id: 12, accountName: "الصندوق الرئيسي", date: "2025-02-25", description: "تحصيل إيجار مارس", debit: 0, credit: 3500, total: 13000 },
-  { id: 13, accountName: "الصندوق الرئيسي", date: "2025-03-01", description: "رسوم بنك", debit: 50, credit: 0, total: 12950 },
-  { id: 14, accountName: "بنك الراجحي", date: "2025-03-05", description: "تحصيل إيجار وحدة 307", debit: 0, credit: 3200, total: 16150 },
-  { id: 15, accountName: "بنك الأهلي", date: "2025-03-10", description: "صيانة دورية للمبنى", debit: 600, credit: 0, total: 15550 },
-  { id: 16, accountName: "الصندوق الرئيسي", date: "2025-03-15", description: "تحصيل إيجار مستأجر رقم 110", debit: 0, credit: 2800, total: 18350 },
-  { id: 17, accountName: "الصندوق الرئيسي", date: "2025-03-20", description: "دفع عمولة سمسار", debit: 900, credit: 0, total: 17450 },
-  { id: 18, accountName: "بنك الرياض", date: "2025-03-25", description: "تحصيل إيجار وحدة 411", debit: 0, credit: 3600, total: 21050 },
-  { id: 19, accountName: "بنك الرياض", date: "2025-03-28", description: "دفع فاتورة مياه", debit: 450, credit: 0, total: 20600 },
-  { id: 20, accountName: "الصندوق الرئيسي", date: "2025-03-31", description: "تحصيل إيجار مستأجر 112", debit: 0, credit: 2400, total: 23000 }
-];
+
+
+
+  // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! Property
+
+  FromSearchData:any=this.fb.group({
+  accountId: [null,[Validators.required]],
+  fromDate: ['',[Validators.required]],
+  toDate: ['',[Validators.required]],
+  })
+
+ accountStatement:any = [];
 
   // pagination
 
 pageIndex=1
 pageSize=10
 
+accountData:any=[]
 
+summaryList:any
+
+@ViewChild('accountElement') accountElement!:ElementRef;
+
+// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! Methods
+
+ngOnInit(): void {
+  //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
+  //Add 'implements OnInit' to the class.
+
+  this.getAllAccounts();  
+}
 
 onPageChanged(page: number) {
   this.pageIndex = page;
-  // this.fetchEmployees(); // أعد جلب البيانات
-  // this.getData()
+  this.searchOnData();
 }
+
+
+getAllAccounts(){
+  let pagination={
+  "paginationInfo": {
+    "pageIndex": 0,
+    "pageSize": 0
+  }
+}
+this._accountsStatementSer.getAllaccountsfinancially(pagination).pipe(takeUntilDestroyed(this.destroyRef)).subscribe((res: any) => {
+  this.accountData = res;
+  console.log(this.accountData);
+})
+}
+
+totalPages:any=1
+
+searchOnData(){
+  if(this.FromSearchData.valid){
+
+    let ShapeDataFilter={
+  "accountId": this.FromSearchData.value.accountId,
+  "fromDate": this.FromSearchData.value.fromDate,
+  "toDate": this.FromSearchData.value.toDate,
+  "criteriaDto": {
+    "paginationInfo": {
+      "pageIndex": this.pageIndex,
+      "pageSize": this.pageSize
+    }
+  }
+}
+    
+    this._accountsStatementSer.searchAccountsEstatement(ShapeDataFilter).pipe(takeUntilDestroyed(this.destroyRef)).subscribe((res: any) => {
+      // this.accountData = res;
+      // console.log(this.accountData);
+      console.log(res);
+      const selectedAccount = this.accountData.find(
+  (a: any) => a.id == this.FromSearchData.value.accountId
+);
+
+      this.summaryList=res.summary
+
+      
+// summary
+// : 
+// totalCredit
+// : 
+// 2327.61
+// totalDebit
+// : 
+// 0
+
+      this.accountStatement=res.listAccounts.rows.map((item:any)=>{
+        return {...item,name:selectedAccount.name}
+      })
+
+      this.totalPages = res.listAccounts.totalPages || 1;
+      console.log(this.accountStatement)
+    })
+  }else{
+    this.FromSearchData.markAllAsTouched();
+  }
+}
+
+
+
 }

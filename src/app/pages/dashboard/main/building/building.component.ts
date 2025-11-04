@@ -7,7 +7,7 @@ import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { BuildingService } from './services/building.service';
 import { ToastrService } from '../../../../shared/ui/toastr/services/toastr.service';
 import { Building } from './models/building';
-import { environment } from '../../../../../environment/environment';
+import { environment } from '../../../../../environments/environment';
 import { checkUsername } from '../../../../shared/validations/checkUsername';
 
 @Component({

@@ -3,7 +3,7 @@ import { inject, Injectable } from '@angular/core';
 import cities from '../../../../public/api/cities_lite.json';
 import districts from '../../../../public/api/districts_lite.json';
 import regions from "../../../../public/api/regions_lite.json"
-import { environment } from '../../../environment/environment';
+import { environment } from '../../../environments/environment';
 @Injectable({
   providedIn: 'root',
 })

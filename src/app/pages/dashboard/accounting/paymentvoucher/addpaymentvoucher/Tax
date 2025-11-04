@@ -1,0 +1,16 @@
+<!-- ========== Start Section ========== -->
+
+
+<!-- html -->
+
+<!-- <th scope="col">الضريبه</th> -->
+  <!-- <td>{{item.amountDue / (1 + (getTax / 100)) | number:'1.2-2'}}</td> -->
+<!-- <td></td> -->
+<!-- ========== End Section ========== -->
+
+<!-- Ts -->
+
+
+  <!-- const tax = Number(this.getTax) || 0;
+  const netAmount = item.amountDue / (1 + (tax / 100));
+  item.netAmount = netAmount.toFixed(2); -->

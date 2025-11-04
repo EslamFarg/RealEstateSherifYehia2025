@@ -5,7 +5,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ToastrService } from '../../../../../shared/ui/toastr/services/toastr.service';
 import { ClassificationapartmentService } from '../../classificationapartment/services/classificationapartment.service';
 import { BuildingService } from '../../building/services/building.service';
-import { environment } from '../../../../../../environment/environment';
+import { environment } from '../../../../../../environments/environment';
 import { EditBehaviorServiceService } from '../../../../../shared/services/edit-behavior-service.service';
 import { checkUsername } from '../../../../../shared/validations/checkUsername';
 

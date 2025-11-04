@@ -6,7 +6,7 @@ import { AccountService } from '../../../accounting/accounts/services/account.se
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ToastrService } from '../../../../../shared/ui/toastr/services/toastr.service';
 import { MaintenanceService } from '../services/maintenance.service';
-import { environment } from '../../../../../../environment/environment';
+import { environment } from '../../../../../../environments/environment';
 import { EditBehaviorServiceService } from '../../../../../shared/services/edit-behavior-service.service';
 
 @Component({

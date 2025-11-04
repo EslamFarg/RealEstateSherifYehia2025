@@ -7,6 +7,7 @@ import { PageHeadingComponent } from '../../../../../shared/ui/page-heading/page
 import { SearchDataComponent } from '../../../../../shared/ui/search-data/search-data.component';
 import { PaginationComponent } from '../../../../../shared/ui/pagination/pagination.component';
 import { EmptytableComponent } from '../../../../../shared/ui/emptytable/emptytable.component';
+import { ConfirmDeleteComponent } from '../../../../../shared/components/confirm-delete/confirm-delete.component';
 
 
 @NgModule({
@@ -19,7 +20,8 @@ import { EmptytableComponent } from '../../../../../shared/ui/emptytable/emptyta
     PageHeadingComponent,
     SearchDataComponent,
     PaginationComponent,
-    EmptytableComponent
+    EmptytableComponent,
+    ConfirmDeleteComponent
   ]
 })
 export class ExplorerrealtorpaymentvoucherModule { }

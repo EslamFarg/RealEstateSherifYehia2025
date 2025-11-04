@@ -110,7 +110,7 @@
       <th scope="col">رقم العقد</th>
       <th scope="col">العقار</th>
       <th scope="col">الوحده</th>
-      <th scope="col">الشهر</th>
+      
       <th scope="col">المبلغ</th>
       <th scope="col">المدفوع</th>
       
@@ -130,7 +130,7 @@
       <td>{{item.contractId}}</td>
       <td>{{item.propertyName}}</td>
       <td>{{item.unitName}} </td>
-      <td><input type="text" class="form-control" value="{{item.month}}" readonly></td>
+      <!-- <td><input type="text" class="form-control" value="{{item.month}}" readonly></td> -->
       <td>{{item.brokerCommission}}</td>
       <!-- <td><input type="text" class="form-control" placeholder="0" (input)="onPaidChange($event,item)" #paidAmount></td> -->
      <td>
@@ -168,7 +168,7 @@
         <td><p>الاجمالي</p></td>
         <td></td>
         <td></td>
-        <td></td>
+       
         <!-- اجمالي المبلغ -->
         <td>
          {{TotalBrokerCommission}}

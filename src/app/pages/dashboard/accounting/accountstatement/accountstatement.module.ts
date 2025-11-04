@@ -6,6 +6,9 @@ import { AccountstatementComponent } from './accountstatement.component';
 import { PageHeadingComponent } from '../../../../shared/ui/page-heading/page-heading.component';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { PaginationComponent } from '../../../../shared/ui/pagination/pagination.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { FormerrorMsgComponent } from '../../../../shared/ui/formerror-msg/formerror-msg.component';
+import { EmptytableComponent } from '../../../../shared/ui/emptytable/emptytable.component';
 
 
 @NgModule({
@@ -17,7 +20,10 @@ import { PaginationComponent } from '../../../../shared/ui/pagination/pagination
     AccountstatementRoutingModule,
     PageHeadingComponent,
     NgSelectModule,
-    PaginationComponent
+    PaginationComponent,
+    ReactiveFormsModule,
+    FormerrorMsgComponent,
+    EmptytableComponent
   ]
 })
 export class AccountstatementModule { }

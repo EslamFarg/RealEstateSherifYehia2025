@@ -1,6 +1,6 @@
 <app-page-heading [title]="'المحاسبه'" [subtitle]="'سند الصرف'" [explorerBtn]="true" [AddRoute]="'/dashboard/paymentvoucher/addpaymentvoucher'" [TitlePageExplorerBtn]="'اضافه سند الصرف'"></app-page-heading>
 
-<app-search-data [dataFilter]="dataFilter" [dropDownTitle]="'السندات'"></app-search-data>
+<app-search-data [dataFilter]="dataFilter" [dropDownTitle]="'السندات'" (selectedDataFilter)="onSearchFilter($event)" (sendDataSelect)="onSelectedPagination($event)"></app-search-data>
 
 
 
@@ -13,7 +13,7 @@
       <th scope="col">رقم السند</th>
       <th scope="col">اسم المالك</th>
       <th scope="col">الحساب</th>
-      <th scope="col">العقود</th>
+      <!-- <th scope="col">العقود</th> -->
       <th scope="col"> اجمالي الصرف</th>
       <!-- <th scope="col"> الحاله</th> -->
       <th scope="col">الادوات</th>
@@ -21,14 +21,14 @@
     </tr>
   </thead>
   <tbody>
-    @for (item of vouchersData; track $index) {
+    @for (item of vouchersData.rows; track $index) {
 <tr>
       <td scope="row">{{$index + 1}}</td>
-      <td>{{item.voucherNumber}}</td>
-      <td>{{item.ownerName}}</td>
-      <td>{{item.account}} </td>
-      <td>{{item.contract}}</td>
-      <td>{{item.totalAmount}}</td>
+      <td>{{item.id}}</td>
+      <td>{{item.debitAccountName}}</td>
+      <td>{{item.creditAccountName}} </td>
+      <!-- <td></td> -->
+      <td>{{item.net}}</td>
     
     
        <td>
@@ -40,7 +40,7 @@
 <path d="M20 6.50011L23 9.50011M24.385 8.08511C24.7788 7.69126 25.0001 7.15709 25.0001 6.60011C25.0001 6.04312 24.7788 5.50895 24.385 5.11511C23.9912 4.72126 23.457 4.5 22.9 4.5C22.343 4.5 21.8088 4.72126 21.415 5.11511L13 13.5001V16.5001H16L24.385 8.08511Z" stroke="#16601A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
 </svg>
 </button>
-                    <button type="button" data-button="delete"><svg width="33" height="26" viewBox="0 0 33 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <button type="button" data-button="delete" (click)="ShowdeletePopup(item.id)"><svg width="33" height="26" viewBox="0 0 33 26" fill="none" xmlns="http://www.w3.org/2000/svg">
 <rect y="0.5" width="33" height="25" rx="2" fill="#FFE5E5"/>
 <path d="M23.5 5H20L19 4H14L13 5H9.5V7H23.5M10.5 20C10.5 20.5304 10.7107 21.0391 11.0858 21.4142C11.4609 21.7893 11.9696 22 12.5 22H20.5C21.0304 22 21.5391 21.7893 21.9142 21.4142C22.2893 21.0391 22.5 20.5304 22.5 20V8H10.5V20Z" fill="#FF3D00"/>
 </svg>
@@ -50,12 +50,11 @@
        </td>
     </tr>
     }@empty {
-       <tr>
-      <td colspan="8" class="text-center py-5" style="color: #888; font-size: 18px;">
-        <i class="fa-solid fa-circle-exclamation fa-2x mb-2" style="color: #ccc;"></i><br>
-        لا توجد بيانات حتى الآن
-      </td>
-    </tr>
+                      <tr>
+    <td class="empty-cell" colspan="8">
+     <app-emptytable></app-emptytable>
+    </td>
+  </tr>
     }
 
     
@@ -66,7 +65,10 @@
 </div>
 
 <app-pagination
-  [totalPages]="10"
+  [totalPages]="this.vouchersData.paginationInfo?.totalPagesCount"
   [currentPage]="pageIndex"
   (pageChange)="onPageChanged($event)">
 </app-pagination>
+
+
+<app-confirm-delete [isVisible]="showDelete" (onDelete)="deleteConfirmed($event)" [itemId]="this.deleteId" (toggleModal)="onClose()"></app-confirm-delete>

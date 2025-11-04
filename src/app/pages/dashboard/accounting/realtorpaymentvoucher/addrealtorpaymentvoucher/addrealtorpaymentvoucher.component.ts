@@ -6,6 +6,7 @@ import { Realtor } from '../../../main/realtor/models/realtor';
 import { RealtorService } from '../../../main/realtor/services/realtor.service';
 import { RealtorpaymentvoucherService } from '../services/realtorpaymentvoucher.service';
 import { ToastrService } from '../../../../../shared/ui/toastr/services/toastr.service';
+import { EditBehaviorServiceService } from '../../../../../shared/services/edit-behavior-service.service';
 
 @Component({
   selector: 'app-addrealtorpaymentvoucher',
@@ -23,6 +24,7 @@ export class AddrealtorpaymentvoucherComponent {
   destroyRef:DestroyRef=inject(DestroyRef)
 
 cdr: ChangeDetectorRef = inject(ChangeDetectorRef);
+EditBehaviorServices:EditBehaviorServiceService=inject(EditBehaviorServiceService);
 
   // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! Properties
 
@@ -83,6 +85,105 @@ FilterData=[
 
 
 ngOnInit(){
+  // if
+  this.EditBehaviorServices.idSubscribe.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((id:any)=>{
+    // console.log(res);
+    if(id){
+
+
+      this._realtorPaymentVoucherServices.getByIdBrokerPaymentVoucher(id).pipe(takeUntilDestroyed(this.destroyRef)).subscribe((res:any)=>{
+        console.log(res);
+        
+  this.itemsChecked = [];
+  this.getAllDataSearch = { rows: [] };
+
+  setTimeout(() => {
+    if (this.checkAll) this.checkAll.nativeElement.checked = false;
+  });
+
+  this._realtorPaymentVoucherServices.getByIdBrokerPaymentVoucher(id)
+    .pipe(takeUntilDestroyed(this.destroyRef))
+    .subscribe((res: any) => {
+
+      this.btnAddandUpdate = 'update';
+
+      console.log('res', res);
+      this.deleteId=res.id;
+      this.realtorPaymentVoucherForm.patchValue({
+        voucherNo: res.voucherNo,
+        voucherDate: res.voucherDate.split('T')[0],
+        paymentMethod: res.paymentMethod,
+        amount: res.net,
+        notes: res.notes,
+        brokerId: res.brokerId,
+        debitAccountId: res.debitAccountId,
+        creditAccountId: res.creditAccountId
+      });
+
+      this.formDataSearch.patchValue({
+        financiallyAccountId: res.debitAccountId,
+        name: res.debitAccountName,
+        email: res.email,
+        mobile: res.phoneNumber,
+        nationalID: res.nationalID
+      });
+
+      console.log("Search",this.formDataSearch.value)
+      // fill itemsChecked
+      res.brokerPaymentVoucherDetails.forEach((d: any) => {
+        this.itemsChecked.push({
+          contractId: d.contractId,
+          paidAmount: d.paidAmmount 
+        });
+      });
+
+
+
+      // table
+      this.getAllDataSearch = {
+        rows: res.brokerPaymentVoucherDetails.map((item: any) => ({
+          contractId: item.contractId,
+          propertyName: item.propertyName,
+          unitName: item.unitName,
+          month: item.month,
+          brokerCommission: item.totalAmount,
+          brokerPaidAmount: item.paidAmmount,
+          remainingAmount: item.totalAmount - item.paidAmmount
+        }))
+      };
+
+
+      console.log(this.getAllDataSearch);
+      console.log('RelatorForm', this.realtorPaymentVoucherForm.value);
+
+      this.cdr.detectChanges();
+
+      this.idUpdate=res.id
+      this.canShowBtns=true
+      console.log(this.idUpdate)
+      setTimeout(() => {
+        if (this.checkAll) this.checkAll.nativeElement.checked = true;
+        this.checkboxes.forEach(cb => cb.nativeElement.checked = true);
+      });
+
+    });
+        this.canShowBtns=true;
+        this.btnAddandUpdate='update';
+        this.idUpdate=id;
+        this.VoucherNumber.nativeElement.value=res.id;
+      })
+
+   
+      // this.getUpdateData(id);
+    
+      
+    }
+    // if(res){
+    //   this.btnAddandUpdate='update';
+    //   this.idUpdate=res.id;
+    //   this.getUpdateData(res.id);
+    // }
+  })
   this.getAllAccounts();
 }
 onSubmit(){
@@ -547,6 +648,7 @@ resetForm(){
    this.itemsChecked=[]
   //  this.getAllDataSearch=[]
   this.getAllDataSearch = { rows: [] };
+  this.valSearchById.nativeElement.value = '';
  // 1) تصفير الجدول
   this.itemsChecked = [];
   this.getAllDataSearch = { rows: [] };
@@ -571,7 +673,7 @@ resetForm(){
 
   
   // 4) تصفير المتغيرات
-  this.valSearchById.nativeElement.value = '';
+  
   this.idSearchRealtor = 0;
   this.idUpdate = null;
   this.canShowBtns=false;
@@ -600,6 +702,15 @@ this.showDelete=true
 
 onClose(){
   this.showDelete=false
+}
+
+
+ngOnDestroy(): void {
+  //Called once, before the instance is destroyed.
+  //Add 'implements OnDestroy' to the class.
+  if(this.EditBehaviorServices.clearId){
+    this.EditBehaviorServices.clearId();
+  }
 }
 
 }
