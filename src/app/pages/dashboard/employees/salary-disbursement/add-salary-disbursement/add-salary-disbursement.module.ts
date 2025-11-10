@@ -6,6 +6,9 @@ import { AddSalaryDisbursementComponent } from './add-salary-disbursement.compon
 import { PageHeadingComponent } from '../../../../../shared/ui/page-heading/page-heading.component';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { PrintemployeeComponent } from '../../../../../shared/ui/printemployee/printemployee.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { FormerrorMsgComponent } from '../../../../../shared/ui/formerror-msg/formerror-msg.component';
+import { ConfirmDeleteComponent } from '../../../../../shared/components/confirm-delete/confirm-delete.component';
 
 
 @NgModule({
@@ -15,7 +18,10 @@ import { PrintemployeeComponent } from '../../../../../shared/ui/printemployee/p
     AddSalaryDisbursementRoutingModule,
     PageHeadingComponent,
     NgSelectModule,
-    PrintemployeeComponent
+    PrintemployeeComponent,
+    ReactiveFormsModule,
+    FormerrorMsgComponent,
+    ConfirmDeleteComponent
   ]
 })
 export class AddSalaryDisbursementModule { }

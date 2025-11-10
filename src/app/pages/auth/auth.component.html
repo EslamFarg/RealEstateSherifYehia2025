@@ -53,7 +53,7 @@
 
                  <div class=" w-100 input_icon_email">
     
-                     <input type="text" class="form-control" id="username" placeholder="اسم المستخدم" maxlength="40" name="username" formControlName="emailOrUserName">
+                     <input type="text" class="form-control" id="username" placeholder="اسم المستخدم" maxlength="40" name="username" formControlName="email">
                                    <div class="icon">
                    <svg width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">
 <g opacity="0.6">
@@ -65,10 +65,11 @@
                 </div>
 
                 <div class="mb-3">
-     <ng-container *ngIf="authForm.controls['emailOrUserName'].invalid && authForm.controls['emailOrUserName'].touched">
-                        <small class="error_msg_form" *ngIf="authForm.controls['emailOrUserName'].hasError('required')" >اسم المستخدم مطلوب</small>
-                        <small class="error_msg_form" *ngIf="authForm.controls['emailOrUserName'].hasError('minlength')">يجب ان يكون اسم المستخدم اكثر من 3 حروف</small>
-                        <small class="error_msg_form" *ngIf="authForm.controls['emailOrUserName'].hasError('invalidUsername')"> رجاءً اكتب اسم المستخدم بشكل صحيح — يُسمح فقط بالحروف الإنجليزية، الأرقام، النقطة (.)، والشرطة السفلية (_)</small>
+     <ng-container *ngIf="authForm.controls['email'].invalid && authForm.controls['email'].touched">
+                        <small class="error_msg_form" *ngIf="authForm.controls['email'].hasError('required')" > الايميل مطلوب</small>
+                        <small class="error_msg_form" *ngIf="authForm.controls['email'].hasError('minlength')">يجب ان يكون الايميل اكثر من 3 حروف</small>
+                        <small class="error_msg_form" *ngIf="authForm.controls['email'].hasError('email')">صيغة الايميل غير صحيحة</small>
+                
                      </ng-container>
                 </div>
              

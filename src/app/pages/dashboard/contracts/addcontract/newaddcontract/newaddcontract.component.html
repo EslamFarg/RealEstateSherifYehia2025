@@ -12,7 +12,7 @@
       <div ngbAccordionBody>
         <ng-template>
 
-           <form class="forms_dashboard"  appIntersection="fade-in">
+           <form class="forms_dashboard"  appIntersection="fade-in" [formGroup]="contractsForm">
         <div class="row row_part">
 
      
@@ -20,15 +20,15 @@
           <div class="row number_search">
 <div class="mb-3 col-sm-12  col-lg-3 number_contract">
                  <label for="contractnumber" class="form-label">رقم العقد</label>
-                 <input type="text" class="form-control"  id="contractnumber" placeholder="رقم العقد" >
+                 <input type="text" class="form-control"  id="contractnumber" placeholder="رقم العقد" readonly #contractNumber>
                 
         </div>
-  <div class="col-sm-12 col-lg-3 mb-3 search_contract" style="align-self: flex-end;">
+  <div class="col-sm-12 col-lg-3 mb-3 search_contract" style="margin-top: 7px;">
         <label  class="form-label" ></label>
         <div class="search_number_component">
-<input type="text" name="" placeholder="بحث برقم البلاغ"  class="form-control">
+<input type="text" name="" placeholder="بحث برقم البلاغ"  class="form-control" #valSearchNumber (keyup.enter)="searchByIdInput(valSearchNumber)">
 
-<div class="search">
+<div class="search" (click)="searchByIdInput(valSearchNumber)">
     <svg width="21" height="20" viewBox="0 0 21 20" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path d="M10.7501 17.4998C6.37783 17.4998 2.83342 13.9554 2.83342 9.58317C2.83342 5.21092 6.37783 1.6665 10.7501 1.6665C15.1223 1.6665 18.6667 5.21092 18.6667 9.58317C18.6667 13.9554 15.1223 17.4998 10.7501 17.4998Z" stroke="#7F7F7F" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
 <path d="M2.00008 18.3332L3.66675 16.6665" stroke="#7F7F7F" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
@@ -46,19 +46,31 @@
 
         <div class="mb-3 col-sm-12 col-lg-6 ">
                  <label for="placecontract" class="form-label">مكان ابرام العقد</label>
-                 <input type="text" class="form-control" readonly id="placecontract" placeholder="مكان ابرام العقد" >
-             
+                 <input type="text" class="form-control" maxlength="100" formControlName="ContractPlace" id="placecontract" placeholder="مكان ابرام العقد" >
+                   <app-formerror-msg [control]="contractsForm.controls['ContractPlace']" [Messages]="{
+                  required:'مكان ابرام العقد مطلوب',
+                  minlength:'مكان ابرام العقد يجب ان يكون اكثر من 3 حروف'
+               }"></app-formerror-msg>
         </div>
         <div class="mb-3 col-sm-12  col-lg-6">
                  <label for="dateebramcontract"  class="form-label">تاريخ ابرام العقد</label>
 
-        <input type="date"  class="form-control" id="dateebramcontract" >
+        <input type="date"  class="form-control" id="dateebramcontract" formControlName="ContractDate">
+           <app-formerror-msg [control]="contractsForm.controls['ContractDate']" [Messages]="{
+                  required:'تاريخ ابرام العقد مطلوب' ,
+             
+               }"></app-formerror-msg>
+
 
          
  </div>  
         <div class="mb-3 col-sm-12 col-lg-3 ">
                  <label for="date1" class="form-label">تاريخ بداية مده الايجار</label>
-                <input type="date"  class="form-control" appGetmincurrentyear  id="date1" formControlName="StartDate">
+                <input type="date"  class="form-control" appGetmincurrentyear  id="date1" formControlName="LeaseStartDate" >
+                  <app-formerror-msg [control]="contractsForm.controls['LeaseStartDate']" [Messages]="{
+                  required:'تاريخ بداية مده الايجار مطلوب' ,
+             
+               }"></app-formerror-msg>
 
                 
  </div>  
@@ -66,8 +78,11 @@
                  <label for="date2" class="form-label">تاريخ نهايه مده الايجار</label>
  
 
-            <input type="date"   class="form-control" id="date2" formControlName="EndDate" appGetmincurrentyear>
-            
+            <input type="date"   class="form-control" id="date2" formControlName="LeaseEndDate"  appGetmincurrentyear>
+             <app-formerror-msg [control]="contractsForm.controls['LeaseEndDate']" [Messages]="{
+                  required:'تاريخ نهايه مده الايجار مطلوب' ,
+             
+               }"></app-formerror-msg>
 
  </div>  
         <div class="mb-3 col-sm-12  col-lg-6">
@@ -75,33 +90,33 @@
  
             <div class="input_rent_container">
                 <input type="text"  id="monthsInput"  class="form-control"   readonly style="background-color: #BED2BF;">
+                <app-formerror-msg [control]="contractsForm.controls['LeaseMonths']" [Messages]="
+                 {required:'شهور الايجار مطلوب'}
+                "></app-formerror-msg>
 
-                <div class="months">
+                <div class="months" *ngIf="monthsList.length > 0">
 
-                  <div class="prev_month">
+                  <div class="prev_month" (click)="prevMonths()">
                     <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
 <rect x="16" y="16" width="16" height="16" rx="2" transform="rotate(180 16 16)" fill="#D4AF37"/>
 <path d="M10.0605 2.72003L5.71388 7.0667C5.20055 7.58003 5.20055 8.42003 5.71388 8.93336L10.0605 13.28" stroke="white" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
 </svg>
 
                   </div>
-                  <div class="container_months">
-   <div class="box">
-                    ديسمبر
-                    2025
+                  <div class="container_months" #MonthContainer>
+                    @for (item of this.monthsList; track $index) {
+                       <div class="box">
+                    {{item.month}}
+                    {{item.year}}
                   </div>
-                  <div class="box">
-                    ديسمبر
-                    2025
-                  </div>
-                  <div class="box">
-                    ديسمبر
-                    2025
-                  </div>
+                    }
+                 
+
+                
                   </div>
 
 
-                  <div class="next_months">
+                  <div class="next_months" (click)="nextMonths()">
                   <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                       <rect width="16" height="16" rx="2" transform="matrix(1 0 0 -1 0 16)" fill="#D4AF37"/>
                       <path d="M5.93945 2.72003L10.2861 7.0667C10.7995 7.58003 10.7995 8.42003 10.2861 8.93336L5.93945 13.28" stroke="white" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
@@ -110,8 +125,9 @@
                   </div>
                
                 </div>
-                <p class="count_months">
-                 12 شهر
+                <p class="count_months" *ngIf="this.contractsForm.get('LeaseMonths')?.value">
+                 {{this.contractsForm.get('LeaseMonths')?.value}}
+                 شهر
                 </p>
             </div>
           
@@ -121,18 +137,23 @@
 
  <div class="mb-3 col-sm-12 col-lg-3">
                  <label for="mara" class="form-label">رقم دفتري</label>
-                 <input type="text" class="form-control" id="mara" placeholder="رقم دفتري" formControlName="ReferenceName">
+                 <input type="text" class="form-control" id="mara" placeholder="رقم دفتري" formControlName="BookNumber" maxlength="40">
+                 <app-formerror-msg [control]="contractsForm.controls['BookNumber']" [Messages]="
+                  {required:'رقم دفتري مطلوب'}
+                 "></app-formerror-msg>
                  
         </div>
  <div class="mb-3 col-sm-12 col-lg-3">
                  <label for="mara" class="form-label">طريقه السداد</label>
-                <ng-select [items]="[]" bindLabel="name" placeholder="'طريقه السداد'" bindValue="id" ></ng-select>
+                <ng-select [items]="[]" bindLabel="name" placeholder="طريقه السداد" bindValue="id" formControlName="PaymentMethod"></ng-select>
+                <app-formerror-msg [control]="contractsForm.controls['PaymentMethod']" [Messages]="
+                  {required:'طريقه السداد مطلوب'}
+                 "></app-formerror-msg>
                  
         </div>
        
             <div class="mb-3 col-sm-12  col-lg-6 ">
-            
-                <app-input-attachments></app-input-attachments>
+                <app-input-attachments (sendDataFiles)="OnDataFiles($event)" [nameFiles]="dataFiles" (idRemoveFiles)="fnIdRemoveFiles($event)"></app-input-attachments>
               
 
                  
@@ -146,7 +167,7 @@
 
              <div class="mb-3 col-sm-12 ">
                  <label for="bayan" class="form-label">البيان</label>
-                 <textarea type="text" class="form-control"   style="height: 124px !important;"id="bayan" placeholder="اكتب المحتوي" formControlName="ContractNotes"></textarea>
+                 <textarea type="text" class="form-control"   style="height: 124px !important;"id="bayan" placeholder="اكتب المحتوي" formControlName="Description"></textarea>
                 <!-- <ng-container *ngIf="formData.controls['ContractNotes'].invalid && formData.controls['ContractNotes'].touched">
                       <small *ngIf="formData.controls['ContractNotes'].hasError('required')"> محتوي البيان مطلوب</small>
               </ng-container> -->
@@ -171,35 +192,71 @@
 <div ngbAccordion>
   <div ngbAccordionItem>
     <h2 ngbAccordionHeader>
-      <button ngbAccordionButton>العقار</button>
+      <button ngbAccordionButton>الوحده 
+        <!--العقار  -->
+      </button>
     </h2>
     <div ngbAccordionCollapse>
       <div ngbAccordionBody>
         <ng-template>
 
-     <div class="forms_dashboard ">
+     <div class="forms_dashboard " [formGroup]="formDataUnit">
       <div class="row">
         <div class="col-sm-12 mb-3">
-          <div class="search_Input">
+          <div class="mb-3">
+<div class="search_forms_container" >
+            <div class="search_container">
+                  <input type="text" placeholder="بحث" formControlName="PropertyId" (keyup.enter)="searchFilterUnit(searchValUnit)" #searchValUnit>
+                  <div class="icons_search icon_search_unit">    
 
-             <input type="text" class="form-control" placeholder="بحث">
-
-             <div class="icon">
-                          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M10.4163 17.5013C6.04409 17.5013 2.49967 13.9569 2.49967 9.58464C2.49967 5.21238 6.04409 1.66797 10.4163 1.66797C14.7886 1.66797 18.333 5.21238 18.333 9.58464C18.333 13.9569 14.7886 17.5013 10.4163 17.5013Z" stroke="#7F7F7F" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-<path d="M1.66634 18.3346L3.33301 16.668" stroke="#7F7F7F" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    <div class="filter_data" (click)="showPopupFilterUnit()">
+                        <svg width="20" height="18" viewBox="0 0 20 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M3.17752 0H11.8225C12.405 0 12.8875 -1.58054e-07 13.2613 0.0359987C13.6325 0.0719976 14.025 0.15171 14.3338 0.413987C14.7563 0.770119 14.9963 1.30496 15 1.86551C15.0025 2.27179 14.825 2.63692 14.6238 2.96862C14.42 3.3029 14.1238 3.70531 13.7613 4.19515L10.5238 8.58444C10.2163 9.001 10.115 9.14243 10.045 9.29285C9.97626 9.43957 9.92586 9.59466 9.89501 9.75441C9.86251 9.92155 9.86001 10.1015 9.86001 10.6312V16.0774C9.86001 16.3538 9.86001 16.6019 9.84376 16.8012C9.82626 16.9979 9.78626 17.2627 9.62251 17.4916C9.51902 17.6382 9.38541 17.7596 9.23116 17.8472C9.07691 17.9347 8.90581 17.9863 8.73001 17.9981C8.44627 18.0161 8.20627 17.8992 8.04002 17.8027C7.87377 17.7063 7.67752 17.5674 7.46377 17.4157L6.23377 16.5415L6.18127 16.5042C5.93127 16.3281 5.70627 16.1699 5.53877 15.9514C5.39192 15.7601 5.28164 15.542 5.21377 15.3085C5.13877 15.0411 5.13877 14.7595 5.13877 14.4394V10.6325C5.13877 10.1028 5.13752 9.92155 5.10502 9.75569C5.07417 9.59594 5.02377 9.44086 4.95502 9.29414C4.88502 9.14371 4.78377 9.00229 4.47627 8.58573L1.27877 4.25301L1.27127 4.24015L1.23752 4.19644C0.933854 3.80019 0.646518 3.39099 0.376276 2.96991C0.175026 2.63949 -0.0024739 2.27307 2.60942e-05 1.8668C0.00252609 1.30624 0.243776 0.771404 0.666275 0.413987C0.975025 0.152995 1.36627 0.0732832 1.73877 0.0372843C2.11252 -2.49054e-07 2.59502 0 3.17752 0ZM3.03127 4.49986L5.47127 7.80661L5.50627 7.85418C5.76627 8.20646 5.94877 8.45202 6.08002 8.73101C6.19668 8.97786 6.28085 9.23671 6.33252 9.50756C6.39002 9.81098 6.39002 10.1234 6.39002 10.5721V14.3726C6.39002 14.7968 6.39502 14.8804 6.41502 14.946C6.43668 15.0231 6.47085 15.0917 6.51752 15.1517C6.55502 15.2005 6.61127 15.2481 6.94377 15.4847L8.15127 16.3409C8.36001 16.4888 8.49751 16.5852 8.60126 16.6508C8.61001 16.5183 8.61001 16.3345 8.61001 16.0504V10.5721C8.61001 10.1221 8.61001 9.81098 8.66751 9.50756C8.72001 9.23671 8.80418 8.97786 8.92001 8.73101C9.05126 8.45202 9.23376 8.20646 9.49501 7.8529L9.52876 7.80661L11.9688 4.49986H3.03127ZM12.9163 3.21418C13.2113 2.81434 13.42 2.52249 13.5638 2.28721C13.7388 1.99922 13.7513 1.89508 13.75 1.87194C13.7503 1.78327 13.7317 1.6956 13.6954 1.61517C13.6591 1.53474 13.6061 1.4635 13.54 1.40653C13.5338 1.40138 13.4625 1.34739 13.145 1.31653C12.8363 1.28567 12.4125 1.28567 11.79 1.28567H3.21002C2.58627 1.28567 2.16377 1.28567 1.85502 1.31653C1.53752 1.34739 1.46627 1.40138 1.46002 1.40653C1.39396 1.4635 1.3409 1.53474 1.30461 1.61517C1.26832 1.6956 1.24968 1.78327 1.25002 1.87194C1.25002 1.89508 1.26127 2.00051 1.43627 2.28721C1.58002 2.52249 1.78877 2.81434 2.08377 3.21418H12.9163ZM15 7.07121C15 6.90072 15.0659 6.73721 15.1831 6.61665C15.3003 6.4961 15.4592 6.42837 15.625 6.42837H19.375C19.5408 6.42837 19.6997 6.4961 19.8169 6.61665C19.9342 6.73721 20 6.90072 20 7.07121C20 7.2417 19.9342 7.40521 19.8169 7.52576C19.6997 7.64632 19.5408 7.71404 19.375 7.71404H15.625C15.4592 7.71404 15.3003 7.64632 15.1831 7.52576C15.0659 7.40521 15 7.2417 15 7.07121ZM13.125 10.2854C13.125 10.1149 13.1909 9.95139 13.3081 9.83084C13.4253 9.71028 13.5842 9.64256 13.75 9.64256H19.375C19.5408 9.64256 19.6997 9.71028 19.8169 9.83084C19.9342 9.95139 20 10.1149 20 10.2854C20 10.4559 19.9342 10.6194 19.8169 10.7399C19.6997 10.8605 19.5408 10.9282 19.375 10.9282H13.75C13.5842 10.9282 13.4253 10.8605 13.3081 10.7399C13.1909 10.6194 13.125 10.4559 13.125 10.2854ZM12.5 13.4996C12.5 13.3291 12.5659 13.1656 12.6831 13.045C12.8003 12.9245 12.9592 12.8567 13.125 12.8567H19.375C19.5408 12.8567 19.6997 12.9245 19.8169 13.045C19.9342 13.1656 20 13.3291 20 13.4996C20 13.6701 19.9342 13.8336 19.8169 13.9541C19.6997 14.0747 19.5408 14.1424 19.375 14.1424H13.125C12.9592 14.1424 12.8003 14.0747 12.6831 13.9541C12.5659 13.8336 12.5 13.6701 12.5 13.4996ZM12.5 16.7138C12.5 16.5433 12.5659 16.3798 12.6831 16.2592C12.8003 16.1387 12.9592 16.0709 13.125 16.0709H16.25C16.4158 16.0709 16.5747 16.1387 16.6919 16.2592C16.8092 16.3798 16.875 16.5433 16.875 16.7138C16.875 16.8843 16.8092 17.0478 16.6919 17.1683C16.5747 17.2889 16.4158 17.3566 16.25 17.3566H13.125C12.9592 17.3566 12.8003 17.2889 12.6831 17.1683C12.5659 17.0478 12.5 16.8843 12.5 16.7138Z" fill="#7F7F7F"/>
 </svg>
-             </div>
 
 
-          </div>
-         
+ <div class="data_filters"  [ngClass]="{'active':this.showPopupFilterUnitProperty}">
+
+  @for(item of dataFilterUnit; track $index){
+           <a (click)="selectDataFilterUnit($index)" [ngClass]="{'active': selectIndexUnit == $index }" >{{item}}</a>                   
+  }
+               
+                    </div>
+                    </div>
+                    
+
+
+                   
+
+                    <div class="line">
+                        <svg width="1" height="18" viewBox="0 0 1 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect width="1" height="18" fill="#BED2BF"/>
+</svg>
+
+                    </div>
+
+                    <div class="search" style="cursor: pointer;" (click)="searchFilterUnit(searchValUnit)">
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M10.4168 17.5C6.04458 17.5 2.50016 13.9555 2.50016 9.58329C2.50016 5.21104 6.04458 1.66663 10.4168 1.66663C14.7891 1.66663 18.3335 5.21104 18.3335 9.58329C18.3335 13.9555 14.7891 17.5 10.4168 17.5Z" stroke="#7F7F7F" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M1.66683 18.3333L3.3335 16.6666" stroke="#7F7F7F" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+
+                    </div>
+                  </div>
+            </div>
+</div>
+</div>
+
+          <app-formerror-msg [control]="formDataUnit.controls['PropertyId']" [Messages]="{
+            required:'الوحده مطلوب'
+          }"></app-formerror-msg>
         </div>
 
+        
         <div class="col-lg-4">
           <div class="mb-3">
             <label for="property"class="form-label">العقار</label>
-            <input type="text" readonly placeholder="العقار" id="property" class="form-control">
+            <input type="text" readonly placeholder="العقار" id="property" class="form-control" formControlName="propertyName">
 
 
           </div>
@@ -207,7 +264,7 @@
         <div class="col-lg-4">
           <div class="mb-3">
             <label for="door" class="form-label">الدور</label>
-            <input type="text" readonly placeholder="الدور" id="door" class="form-control">
+            <input type="text" readonly placeholder="الدور" id="door" class="form-control" formControlName="floorNumber">
 
 
           </div>
@@ -215,25 +272,25 @@
         <div class="col-lg-4">
           <div class="mb-3">
             <label for="building" class="form-label">الوحده</label>
-            <input type="text" placeholder="الوحده" id="building" class="form-control" readonly>
+            <input type="text" placeholder="الوحده" id="building" class="form-control" readonly formControlName="name">
           </div>
         </div>
         <div class="col-lg-4">
           <div class="mb-3">
             <label for="city" class="form-label">المدينه</label>
-            <input type="text" placeholder="المدينه" id="city" class="form-control" readonly>
+            <input type="text" placeholder="المدينه" id="city" class="form-control" readonly formControlName="city">
           </div>
         </div>
         <div class="col-lg-4">
           <div class="mb-3">
             <label for="hay" class="form-label">الحي</label>
-            <input type="text" placeholder="الحي" id="hay" class="form-control" readonly>
+            <input type="text" placeholder="الحي" id="hay" class="form-control" readonly formControlName="district">
           </div>
         </div>
         <div class="col-lg-4">
           <div class="mb-3">
             <label for="street" class="form-label">الشارع</label>
-            <input type="text" placeholder="الشارع" id="street" class="form-control" readonly>
+            <input type="text" placeholder="الشارع" id="street" class="form-control" readonly formControlName="street">
           </div>
         </div>
       
@@ -254,23 +311,54 @@
       <div ngbAccordionBody>
         <ng-template>
 
-     <form class="forms_dashboard">
+     <form class="forms_dashboard" [formGroup]="formDataTenant">
     <div class="row">
          <div class="col-sm-12 mb-4 px-0">
-                 <div class="search_Input">
+            <div class="search_forms_container" >
+            <div class="search_container">
+                  <input type="text" placeholder="بحث" formControlName="TenantId" (keyup.enter)="searchFilterTenant(searchValTenant)" #searchValTenant>
+                  <div class="icons_search icon_search_Tenant">    
 
-             <input type="text" class="form-control" placeholder="بحث">
-
-             <div class="icon">
-                          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M10.4163 17.5013C6.04409 17.5013 2.49967 13.9569 2.49967 9.58464C2.49967 5.21238 6.04409 1.66797 10.4163 1.66797C14.7886 1.66797 18.333 5.21238 18.333 9.58464C18.333 13.9569 14.7886 17.5013 10.4163 17.5013Z" stroke="#7F7F7F" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-<path d="M1.66634 18.3346L3.33301 16.668" stroke="#7F7F7F" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    <div class="filter_data" (click)="showPopupFilterTenant()">
+                        <svg width="20" height="18" viewBox="0 0 20 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M3.17752 0H11.8225C12.405 0 12.8875 -1.58054e-07 13.2613 0.0359987C13.6325 0.0719976 14.025 0.15171 14.3338 0.413987C14.7563 0.770119 14.9963 1.30496 15 1.86551C15.0025 2.27179 14.825 2.63692 14.6238 2.96862C14.42 3.3029 14.1238 3.70531 13.7613 4.19515L10.5238 8.58444C10.2163 9.001 10.115 9.14243 10.045 9.29285C9.97626 9.43957 9.92586 9.59466 9.89501 9.75441C9.86251 9.92155 9.86001 10.1015 9.86001 10.6312V16.0774C9.86001 16.3538 9.86001 16.6019 9.84376 16.8012C9.82626 16.9979 9.78626 17.2627 9.62251 17.4916C9.51902 17.6382 9.38541 17.7596 9.23116 17.8472C9.07691 17.9347 8.90581 17.9863 8.73001 17.9981C8.44627 18.0161 8.20627 17.8992 8.04002 17.8027C7.87377 17.7063 7.67752 17.5674 7.46377 17.4157L6.23377 16.5415L6.18127 16.5042C5.93127 16.3281 5.70627 16.1699 5.53877 15.9514C5.39192 15.7601 5.28164 15.542 5.21377 15.3085C5.13877 15.0411 5.13877 14.7595 5.13877 14.4394V10.6325C5.13877 10.1028 5.13752 9.92155 5.10502 9.75569C5.07417 9.59594 5.02377 9.44086 4.95502 9.29414C4.88502 9.14371 4.78377 9.00229 4.47627 8.58573L1.27877 4.25301L1.27127 4.24015L1.23752 4.19644C0.933854 3.80019 0.646518 3.39099 0.376276 2.96991C0.175026 2.63949 -0.0024739 2.27307 2.60942e-05 1.8668C0.00252609 1.30624 0.243776 0.771404 0.666275 0.413987C0.975025 0.152995 1.36627 0.0732832 1.73877 0.0372843C2.11252 -2.49054e-07 2.59502 0 3.17752 0ZM3.03127 4.49986L5.47127 7.80661L5.50627 7.85418C5.76627 8.20646 5.94877 8.45202 6.08002 8.73101C6.19668 8.97786 6.28085 9.23671 6.33252 9.50756C6.39002 9.81098 6.39002 10.1234 6.39002 10.5721V14.3726C6.39002 14.7968 6.39502 14.8804 6.41502 14.946C6.43668 15.0231 6.47085 15.0917 6.51752 15.1517C6.55502 15.2005 6.61127 15.2481 6.94377 15.4847L8.15127 16.3409C8.36001 16.4888 8.49751 16.5852 8.60126 16.6508C8.61001 16.5183 8.61001 16.3345 8.61001 16.0504V10.5721C8.61001 10.1221 8.61001 9.81098 8.66751 9.50756C8.72001 9.23671 8.80418 8.97786 8.92001 8.73101C9.05126 8.45202 9.23376 8.20646 9.49501 7.8529L9.52876 7.80661L11.9688 4.49986H3.03127ZM12.9163 3.21418C13.2113 2.81434 13.42 2.52249 13.5638 2.28721C13.7388 1.99922 13.7513 1.89508 13.75 1.87194C13.7503 1.78327 13.7317 1.6956 13.6954 1.61517C13.6591 1.53474 13.6061 1.4635 13.54 1.40653C13.5338 1.40138 13.4625 1.34739 13.145 1.31653C12.8363 1.28567 12.4125 1.28567 11.79 1.28567H3.21002C2.58627 1.28567 2.16377 1.28567 1.85502 1.31653C1.53752 1.34739 1.46627 1.40138 1.46002 1.40653C1.39396 1.4635 1.3409 1.53474 1.30461 1.61517C1.26832 1.6956 1.24968 1.78327 1.25002 1.87194C1.25002 1.89508 1.26127 2.00051 1.43627 2.28721C1.58002 2.52249 1.78877 2.81434 2.08377 3.21418H12.9163ZM15 7.07121C15 6.90072 15.0659 6.73721 15.1831 6.61665C15.3003 6.4961 15.4592 6.42837 15.625 6.42837H19.375C19.5408 6.42837 19.6997 6.4961 19.8169 6.61665C19.9342 6.73721 20 6.90072 20 7.07121C20 7.2417 19.9342 7.40521 19.8169 7.52576C19.6997 7.64632 19.5408 7.71404 19.375 7.71404H15.625C15.4592 7.71404 15.3003 7.64632 15.1831 7.52576C15.0659 7.40521 15 7.2417 15 7.07121ZM13.125 10.2854C13.125 10.1149 13.1909 9.95139 13.3081 9.83084C13.4253 9.71028 13.5842 9.64256 13.75 9.64256H19.375C19.5408 9.64256 19.6997 9.71028 19.8169 9.83084C19.9342 9.95139 20 10.1149 20 10.2854C20 10.4559 19.9342 10.6194 19.8169 10.7399C19.6997 10.8605 19.5408 10.9282 19.375 10.9282H13.75C13.5842 10.9282 13.4253 10.8605 13.3081 10.7399C13.1909 10.6194 13.125 10.4559 13.125 10.2854ZM12.5 13.4996C12.5 13.3291 12.5659 13.1656 12.6831 13.045C12.8003 12.9245 12.9592 12.8567 13.125 12.8567H19.375C19.5408 12.8567 19.6997 12.9245 19.8169 13.045C19.9342 13.1656 20 13.3291 20 13.4996C20 13.6701 19.9342 13.8336 19.8169 13.9541C19.6997 14.0747 19.5408 14.1424 19.375 14.1424H13.125C12.9592 14.1424 12.8003 14.0747 12.6831 13.9541C12.5659 13.8336 12.5 13.6701 12.5 13.4996ZM12.5 16.7138C12.5 16.5433 12.5659 16.3798 12.6831 16.2592C12.8003 16.1387 12.9592 16.0709 13.125 16.0709H16.25C16.4158 16.0709 16.5747 16.1387 16.6919 16.2592C16.8092 16.3798 16.875 16.5433 16.875 16.7138C16.875 16.8843 16.8092 17.0478 16.6919 17.1683C16.5747 17.2889 16.4158 17.3566 16.25 17.3566H13.125C12.9592 17.3566 12.8003 17.2889 12.6831 17.1683C12.5659 17.0478 12.5 16.8843 12.5 16.7138Z" fill="#7F7F7F"/>
 </svg>
-             </div>
 
 
-          </div>
+ <div class="data_filters"  [ngClass]="{'active':this.showPopupFilterTanentProperty}">
+
+  @for(item of dataFilterTenant; track $index){
+           <a (click)="selectDataFilterTenant($index)" [ngClass]="{'active': selectIndexTenant == $index }" >{{item}}</a>                   
+  }
+               
+                    </div>
+                    </div>
+                    
+
+
+                   
+
+                    <div class="line">
+                        <svg width="1" height="18" viewBox="0 0 1 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect width="1" height="18" fill="#BED2BF"/>
+</svg>
+
+                    </div>
+
+                    <div class="search" style="cursor: pointer;" (click)="searchFilterTenant(searchValTenant)">
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M10.4168 17.5C6.04458 17.5 2.50016 13.9555 2.50016 9.58329C2.50016 5.21104 6.04458 1.66663 10.4168 1.66663C14.7891 1.66663 18.3335 5.21104 18.3335 9.58329C18.3335 13.9555 14.7891 17.5 10.4168 17.5Z" stroke="#7F7F7F" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M1.66683 18.3333L3.3335 16.6666" stroke="#7F7F7F" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+
+                    </div>
+                  </div>
+            </div>
+</div>
          
+          <app-formerror-msg [control]="formDataTenant.controls['TenantId']" [Messages]="{
+            required:'المستاجر مطلوب'  
+          }"></app-formerror-msg>
         </div>
 
            <div class="row row_part m-auto px-0">
@@ -281,37 +369,37 @@
 <div class="mb-3 col-sm-12  col-lg-4 readonly_input">
                  <label for="username" class="form-label">الاسم</label>
                  <input type="text" style="padding-right: 50px;"  class="form-control" id="username" readonly   
-        name="fullName" [value]="'شريف يحيي جادالله'">
+        name="fullName" formControlName="name">
         </div>
         <div class="mb-3 col-sm-12  col-lg-4 readonly_input">
                  <label for="phonenumber" class="form-label"  >رقم الجوال</label>
               
-                 <input type="text" [value]="'01026381737'" name="phonenumber" readonly style="padding-right: 74px;" id="phonenumber"  class="form-control" >
+                 <input type="text" formControlName="mobile" name="phonenumber" readonly style="padding-right: 74px;" id="phonenumber"  class="form-control" >
         </div>
 
          <div class="mb-3 col-sm-12  col-lg-4 readonly_input">
                  <label for="nationality" class="form-label" >الجنسيه</label>
-                 <input type="text" class="form-control" [value]="'سعودي'" readonly id="nationality"  style="padding-right: 60px;" >
+                 <input type="text" class="form-control" formControlName="nationality" readonly id="nationality"  style="padding-right: 60px;" >
         </div>
                 <div class="mb-3 col-sm-12  col-lg-4 readonly_input">
-                 <label for="email" class="form-label">البريد الالكتروني</label>
+                 <label for="email" class="form-label" >البريد الالكتروني</label>
  
 
-        <input type="email" class="form-control" id="email" [value]="'sherifyehia11@gmail.com'"  readonly style="padding-right: 105px;">
+        <input type="email" class="form-control" id="email" formControlName="email"  readonly style="padding-right: 105px;">
  </div>  
 
        <div class="mb-3 col-sm-12  col-lg-4 readonly_input">
                  <label  class="form-label" >رقم الهويه </label>
  
 
-            <input type="text" class="form-control" [value]="'30008181601316'" style="padding-right: 75px;" id="idnumber" >
+            <input type="text" class="form-control" formControlName="nationalID" style="padding-right: 75px;" id="idnumber" >
  </div>  
 
 
        <div class="mb-3 col-sm-12  col-lg-4 readonly_input">
                  <label  class="form-label d-block"> عدد المرافقين    
                  </label>      
-                 <input type="text" class="form-control" id="copy" value="2"    readonly style="pointer-events: none; padding-right    : 100px;"> 
+                 <input type="text" class="form-control" id="copy" formControlName="attachments"    readonly style="pointer-events: none; padding-right    : 100px;"> 
                  
                
             </div>   
@@ -347,22 +435,54 @@
       <div ngbAccordionBody>
         <ng-template>
 
-     <form class="forms_dashboard">
+     <form class="forms_dashboard" [formGroup]="formDataBroker">
     <div class="row">
          <div class="col-sm-12 mb-4 px-0">
-                 <div class="search_Input">
+             <div class="search_forms_container" >
+            <div class="search_container">
+                  <input type="text" placeholder="بحث" formControlName="BrokerId" (keyup.enter)="searchFilterBroker(searchValBroker)" #searchValBroker>
+                  <div class="icons_search icon_search_Broker">    
 
-             <input type="text" class="form-control" placeholder="بحث">
-
-             <div class="icon">
-                          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M10.4163 17.5013C6.04409 17.5013 2.49967 13.9569 2.49967 9.58464C2.49967 5.21238 6.04409 1.66797 10.4163 1.66797C14.7886 1.66797 18.333 5.21238 18.333 9.58464C18.333 13.9569 14.7886 17.5013 10.4163 17.5013Z" stroke="#7F7F7F" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-<path d="M1.66634 18.3346L3.33301 16.668" stroke="#7F7F7F" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    <div class="filter_data" (click)="showPopupFilterBroker()">
+                        <svg width="20" height="18" viewBox="0 0 20 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M3.17752 0H11.8225C12.405 0 12.8875 -1.58054e-07 13.2613 0.0359987C13.6325 0.0719976 14.025 0.15171 14.3338 0.413987C14.7563 0.770119 14.9963 1.30496 15 1.86551C15.0025 2.27179 14.825 2.63692 14.6238 2.96862C14.42 3.3029 14.1238 3.70531 13.7613 4.19515L10.5238 8.58444C10.2163 9.001 10.115 9.14243 10.045 9.29285C9.97626 9.43957 9.92586 9.59466 9.89501 9.75441C9.86251 9.92155 9.86001 10.1015 9.86001 10.6312V16.0774C9.86001 16.3538 9.86001 16.6019 9.84376 16.8012C9.82626 16.9979 9.78626 17.2627 9.62251 17.4916C9.51902 17.6382 9.38541 17.7596 9.23116 17.8472C9.07691 17.9347 8.90581 17.9863 8.73001 17.9981C8.44627 18.0161 8.20627 17.8992 8.04002 17.8027C7.87377 17.7063 7.67752 17.5674 7.46377 17.4157L6.23377 16.5415L6.18127 16.5042C5.93127 16.3281 5.70627 16.1699 5.53877 15.9514C5.39192 15.7601 5.28164 15.542 5.21377 15.3085C5.13877 15.0411 5.13877 14.7595 5.13877 14.4394V10.6325C5.13877 10.1028 5.13752 9.92155 5.10502 9.75569C5.07417 9.59594 5.02377 9.44086 4.95502 9.29414C4.88502 9.14371 4.78377 9.00229 4.47627 8.58573L1.27877 4.25301L1.27127 4.24015L1.23752 4.19644C0.933854 3.80019 0.646518 3.39099 0.376276 2.96991C0.175026 2.63949 -0.0024739 2.27307 2.60942e-05 1.8668C0.00252609 1.30624 0.243776 0.771404 0.666275 0.413987C0.975025 0.152995 1.36627 0.0732832 1.73877 0.0372843C2.11252 -2.49054e-07 2.59502 0 3.17752 0ZM3.03127 4.49986L5.47127 7.80661L5.50627 7.85418C5.76627 8.20646 5.94877 8.45202 6.08002 8.73101C6.19668 8.97786 6.28085 9.23671 6.33252 9.50756C6.39002 9.81098 6.39002 10.1234 6.39002 10.5721V14.3726C6.39002 14.7968 6.39502 14.8804 6.41502 14.946C6.43668 15.0231 6.47085 15.0917 6.51752 15.1517C6.55502 15.2005 6.61127 15.2481 6.94377 15.4847L8.15127 16.3409C8.36001 16.4888 8.49751 16.5852 8.60126 16.6508C8.61001 16.5183 8.61001 16.3345 8.61001 16.0504V10.5721C8.61001 10.1221 8.61001 9.81098 8.66751 9.50756C8.72001 9.23671 8.80418 8.97786 8.92001 8.73101C9.05126 8.45202 9.23376 8.20646 9.49501 7.8529L9.52876 7.80661L11.9688 4.49986H3.03127ZM12.9163 3.21418C13.2113 2.81434 13.42 2.52249 13.5638 2.28721C13.7388 1.99922 13.7513 1.89508 13.75 1.87194C13.7503 1.78327 13.7317 1.6956 13.6954 1.61517C13.6591 1.53474 13.6061 1.4635 13.54 1.40653C13.5338 1.40138 13.4625 1.34739 13.145 1.31653C12.8363 1.28567 12.4125 1.28567 11.79 1.28567H3.21002C2.58627 1.28567 2.16377 1.28567 1.85502 1.31653C1.53752 1.34739 1.46627 1.40138 1.46002 1.40653C1.39396 1.4635 1.3409 1.53474 1.30461 1.61517C1.26832 1.6956 1.24968 1.78327 1.25002 1.87194C1.25002 1.89508 1.26127 2.00051 1.43627 2.28721C1.58002 2.52249 1.78877 2.81434 2.08377 3.21418H12.9163ZM15 7.07121C15 6.90072 15.0659 6.73721 15.1831 6.61665C15.3003 6.4961 15.4592 6.42837 15.625 6.42837H19.375C19.5408 6.42837 19.6997 6.4961 19.8169 6.61665C19.9342 6.73721 20 6.90072 20 7.07121C20 7.2417 19.9342 7.40521 19.8169 7.52576C19.6997 7.64632 19.5408 7.71404 19.375 7.71404H15.625C15.4592 7.71404 15.3003 7.64632 15.1831 7.52576C15.0659 7.40521 15 7.2417 15 7.07121ZM13.125 10.2854C13.125 10.1149 13.1909 9.95139 13.3081 9.83084C13.4253 9.71028 13.5842 9.64256 13.75 9.64256H19.375C19.5408 9.64256 19.6997 9.71028 19.8169 9.83084C19.9342 9.95139 20 10.1149 20 10.2854C20 10.4559 19.9342 10.6194 19.8169 10.7399C19.6997 10.8605 19.5408 10.9282 19.375 10.9282H13.75C13.5842 10.9282 13.4253 10.8605 13.3081 10.7399C13.1909 10.6194 13.125 10.4559 13.125 10.2854ZM12.5 13.4996C12.5 13.3291 12.5659 13.1656 12.6831 13.045C12.8003 12.9245 12.9592 12.8567 13.125 12.8567H19.375C19.5408 12.8567 19.6997 12.9245 19.8169 13.045C19.9342 13.1656 20 13.3291 20 13.4996C20 13.6701 19.9342 13.8336 19.8169 13.9541C19.6997 14.0747 19.5408 14.1424 19.375 14.1424H13.125C12.9592 14.1424 12.8003 14.0747 12.6831 13.9541C12.5659 13.8336 12.5 13.6701 12.5 13.4996ZM12.5 16.7138C12.5 16.5433 12.5659 16.3798 12.6831 16.2592C12.8003 16.1387 12.9592 16.0709 13.125 16.0709H16.25C16.4158 16.0709 16.5747 16.1387 16.6919 16.2592C16.8092 16.3798 16.875 16.5433 16.875 16.7138C16.875 16.8843 16.8092 17.0478 16.6919 17.1683C16.5747 17.2889 16.4158 17.3566 16.25 17.3566H13.125C12.9592 17.3566 12.8003 17.2889 12.6831 17.1683C12.5659 17.0478 12.5 16.8843 12.5 16.7138Z" fill="#7F7F7F"/>
 </svg>
-             </div>
 
 
-          </div>
+ <div class="data_filters"  [ngClass]="{'active':this.showPopupFilterBrokerProperty}">
+
+  @for(item of dataFilterBroker; track $index){
+           <a (click)="selectDataFilterBroker($index)" [ngClass]="{'active': selectIndexBroker == $index }" >{{item}}</a>                   
+  }
+               
+                    </div>
+                    </div>
+                    
+
+
+                   
+
+                    <div class="line">
+                        <svg width="1" height="18" viewBox="0 0 1 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect width="1" height="18" fill="#BED2BF"/>
+</svg>
+
+                    </div>
+
+                    <div class="search" style="cursor: pointer;" (click)="searchFilterBroker(searchValBroker)">
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M10.4168 17.5C6.04458 17.5 2.50016 13.9555 2.50016 9.58329C2.50016 5.21104 6.04458 1.66663 10.4168 1.66663C14.7891 1.66663 18.3335 5.21104 18.3335 9.58329C18.3335 13.9555 14.7891 17.5 10.4168 17.5Z" stroke="#7F7F7F" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M1.66683 18.3333L3.3335 16.6666" stroke="#7F7F7F" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+
+                    </div>
+                  </div>
+            </div>
+</div>
+         
+          <app-formerror-msg [control]="contractsForm.controls['BrokerId']" [Messages]="{
+            required:'السمسار مطلوب'  
+          }"></app-formerror-msg>
          
         </div>
 
@@ -374,19 +494,19 @@
 <div class="mb-3 col-sm-12  col-lg-4 readonly_input">
                  <label for="username" class="form-label">الاسم</label>
                  <input type="text" style="padding-right: 50px;"  class="form-control" id="username" readonly   
-        name="fullName" [value]="'شريف يحيي جادالله'">
+        name="fullName" formControlName="name">
         </div>
 
          <div class="mb-3 col-sm-12  col-lg-4 readonly_input">
                  <label  class="form-label" >رقم الهويه </label>
  
 
-            <input type="text" class="form-control" [value]="'30008181601316'" style="padding-right: 75px;" id="idnumber" >
+            <input type="text" class="form-control" style="padding-right: 75px;" id="idnumber" formControlName="nationalID">
  </div>  
         <div class="mb-3 col-sm-12  col-lg-4 readonly_input">
                  <label for="phonenumber" class="form-label"  >رقم الجوال</label>
               
-                 <input type="text" [value]="'01026381737'" name="phonenumber" readonly style="padding-right: 74px;" id="phonenumber"  class="form-control" >
+                 <input type="text"  name="phonenumber" formControlName="mobile" readonly style="padding-right: 74px;" id="phonenumber"  class="form-control" >
         </div>
 
       
@@ -426,48 +546,57 @@
       <div ngbAccordionBody>
         <ng-template>
 
-   <form class="forms_dashboard">
+   <form class="forms_dashboard" [formGroup]="contractsForm">
     <div class="row">
         <div class="col-lg-4">
           <div class="mb-4">
             <label for="valueEgar" class="form-label">قيمه العقد</label>
-            <input type="text" placeholder="قيمه العقد" id="valueEgar" class="form-control" readonly>
+            <input type="text" placeholder="قيمه العقد" id="valueEgar" class="form-control" readonly formControlName="ContractValue">
           </div>
         </div>
         <div class="col-lg-4">
           <div class="mb-4">
             <label for="dareba" class="form-label">الضريبه</label>
-            <input type="text" placeholder="الضريبه" id="dareba" class="form-control" readonly>
+            <input type="text" placeholder="الضريبه" id="dareba" class="form-control" readonly formControlName="TaxAmount">
           </div>
         </div>
         <div class="col-lg-4">
           <div class="mb-4">
             <label for="total" class="form-label">الاجمالي</label>
-            <input type="text" placeholder="الاجمالي" id="total" class="form-control" readonly>
+            <input type="text" placeholder="الاجمالي" id="total" class="form-control" readonly formControlName="TotalAmount">
           </div>
         </div>
         <div class="col-lg-3">
           <div class="mb-3">
             <label for="commisionAkra" class="form-label">عموله السمسار</label>
-            <input type="text" placeholder="عموله السمسار" id="commisionAkra" class="form-control" readonly>
+            <input type="text" placeholder="عموله السمسار" id="commisionAkra" class="form-control" readonly formControlName="BrokerCommission">
+            <app-formerror-msg [control]="contractsForm.controls['BrokerCommission']" [Messages]="{
+            required:' عموله السمسار مطلوبه'  
+          }"></app-formerror-msg>
           </div>
         </div>
         <div class="col-lg-3">
           <div class="mb-3">
             <label for="commisionAkra" class="form-label">عموله اخري</label>
-            <input type="text" placeholder="عموله اخري" id="commisionAkra" class="form-control" readonly>
+            <input type="text" placeholder="عموله اخري" id="commisionAkra" class="form-control"  formControlName="OtherCommission">
+            <app-formerror-msg [control]="contractsForm.controls['OtherCommission']" [Messages]="{
+            required:' عموله اخري مطلوبه'
+          }"></app-formerror-msg>
           </div>
         </div>
         <div class="col-lg-3">
           <div class="mb-3">
             <label for="Tamen" class="form-label">قيمه التامين</label>
-            <input type="text" placeholder="قيمه التامين" id="Tamen" class="form-control" readonly>
+            <input type="text" placeholder="قيمه التامين" id="Tamen" class="form-control" formControlName="InsuranceValue">
+            <app-formerror-msg [control]="contractsForm.controls['InsuranceValue']" [Messages]="{
+            required:' قيمه التامين مطلوبه'
+          }"></app-formerror-msg>
           </div>
         </div>
         <div class="col-lg-3">
           <div class="mb-3">
             <label for="safi" class="form-label">الصافي</label>
-            <input type="text" placeholder="الصافي" id="safi" class="form-control" readonly>
+            <input type="text" placeholder="الصافي" id="safi" class="form-control" readonly formControlName="NetAmount">
           </div>
         </div>
 
@@ -490,11 +619,11 @@
       <div ngbAccordionBody>
         <ng-template>
 
-      <form class="forms_dashboard">
+      <form class="forms_dashboard" [formGroup]="contractsForm">
     <div class="row">
        <div class="col-sm-12 " style="margin-bottom: 30px;"> 
         <label for="message" class="form-label">اسم الرساله</label>
-        <ng-select [items]="datamsg" (change)="changeMsg($event)" bindLabel="messageName" bindValue="messageValue"  placeholder="اسم الرساله"></ng-select>
+        <ng-select [items]="datamsg" (change)="changeMsg($event)" bindLabel="name" bindValue="id"  placeholder="اسم الرساله" formControlName="MessageId"></ng-select>
        </div>
 
        <div class="col-sm-12">
@@ -502,14 +631,20 @@
         border: 1px solid #BED2BF !important;
         border-radius: 5px;
         width: 100%; height: 78px;
-        margin-bottom: 30px;
+        margin-bottom: -9px;
         padding: 10px;
         
 
-        " >{{this.msgTextarea}}</textarea>
+        " formControlName="MessageText"></textarea>
+        <app-formerror-msg [control]="this.contractsForm.controls['MessageText']" [Messages]="
+        {
+          required:' يجب ارسال رساله عن طريق الاختيار او كتابتها بشكل يدوي'
+        }
+        "></app-formerror-msg>
        </div>
 
-       <div class="col-lg-6">
+       <div style="margin-bottom: 20px;"> </div>
+       <div class="col-lg-6" >
         <label for="day" class="form-label">ارسال قبل موعد السداد بمدة</label>
         <div class="name_day">
 <input type="number" class="form-control" id="day" value="5">
@@ -517,24 +652,24 @@
         </div>
         
        </div>
-
-       <div class="col-lg-6">
+<!-- align-self: anchor-center; -->
+       <div class="col-lg-6" style=" margin-top: 7px;   ">
         <label for="tareka" class="form-label">طريقه الارسال </label>
 
         <div class="tareka_send">
           <div class="d-flex algin-items-center gap-5 flex-wrap">
            <div class="d-flex align-items-center gap-2">
          
-             <input type="checkbox" class="form-check" name="" id="sms">
+             <input type="checkbox" class="form-check" name="" id="sms" formControlName="UseSms">
                  <label for="sms">SMS</label>
            </div>
            <div class="d-flex align-items-center gap-2">
-            <input type="checkbox" class="form-check" name="" id="whatsapp"> 
+            <input type="checkbox" class="form-check" name="" id="whatsapp" formControlName="UseWhatsApp"> 
             <label for="whatsapp">واتساب</label>
              
            </div>
            <div class="d-flex align-items-center gap-2">
-            <input type="checkbox" class="form-check" name="" id="email"> 
+            <input type="checkbox" class="form-check" name="" id="email" formControlName="UseEmail"> 
             <label for="email">البريد الالكتروني</label>
              
            </div>
@@ -542,7 +677,11 @@
 
           </div>
           
-        </div>
+        </div>  <app-formerror-msg  [control]="contractsForm"
+  [Messages]="{
+    methodRequired: 'طريقة الإرسال مطلوبة'
+  }" ></app-formerror-msg>
+      
        </div>
     </div>
     </form>
@@ -555,10 +694,12 @@
 </div>
 
 
-  <div class="btns_add_edit">
- <button data-type="save">حفظ</button>
- <button>جديد</button>
- <button>حذف</button>
- <button>طباعه </button>
- <button>تعديل </button>
+  <div class="btn_add_reset">
+ <button data-type="save" data-button="send" (click)="onSubmit()" [ngClass]="{'btnEdit':this.btnAddandUpdate=='update','btnAdd':this.btnAddandUpdate=='add'}">{{this.btnAddandUpdate == 'add' ? 'اضافه':"تعديل"}}</button>
+ <button data-button="reset">جديد</button>
+ <button data-button="reset" *ngIf="showBtns" (click)="showPopupDelete()">حذف</button>
+ <button data-button="reset" *ngIf="showBtns">طباعه </button>
   </div>
+
+
+  <app-confirm-delete [isVisible]="showDelete" (onDelete)="deleteConfirmed($event)" [itemId]="this.deleteId" (toggleModal)="onClose()"></app-confirm-delete>

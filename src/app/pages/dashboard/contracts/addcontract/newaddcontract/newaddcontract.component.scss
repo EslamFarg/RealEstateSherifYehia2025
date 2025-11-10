@@ -39,6 +39,12 @@
 
         .container_months{
             @include flex_box(flex,space-between,center);
+            max-width: 350px !important;
+            overflow-x: scroll !important;
+
+            &::-webkit-scrollbar{
+                display: none;
+            }
 
             .box{
                 text-align: center;
@@ -50,6 +56,7 @@
                 border-radius: 2px;
                 margin: 0px 4px;
                 color: $main_color;
+                // padding: 2px;
 
             }
             
@@ -213,4 +220,82 @@ display: inline-block;
         
     }
 }
+}
+
+
+
+// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+
+
+.search_forms_container{
+    .search_container{
+        position: relative;
+
+         input{
+                height: 38px !important;
+                background-color: #FBFBFB !important; 
+                width: 100% !important;
+                padding: 10px;
+                border: 1px solid #BFDBC9;
+                outline: none;
+                color: #7F7F7F;
+                font-size: 12px !important;
+                
+            }
+        .icons_search{
+            position: absolute;
+            left:10px;
+            top: 50%;
+            transform: translateY(-50%);
+            @include flex_box(flex,center,center,10px);
+            z-index: 200;
+
+
+            .filter_data{
+                position: relative;
+                cursor: pointer;
+.data_filters{
+    position: absolute;
+    left: 0;
+    top: calc(100% + 10px);
+    background-color: white;
+    min-width: 20px;
+    min-height:20px;
+    border: 1px solid $border-color;
+    border-radius: 4px;
+    overflow: hidden;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: all 0.3s ease;
+    z-index: 200000;
+
+    &.active{
+        opacity: 1;
+        transform: translateY(0);
+        visibility: visible;
+    }
+
+
+    a{
+        width: 120px;
+        padding: 8px;
+        font-size: 12px;
+        color: $main_color;
+        &:not(:last-of-type){
+            margin-bottom: 5px;
+        }
+        &.active{
+            background-color: $main_color;
+            color: $white_color;
+        }
+    }
+
+            }
+            }
+            
+           
+        }
+    }
 }

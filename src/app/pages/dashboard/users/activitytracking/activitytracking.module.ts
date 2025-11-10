@@ -6,6 +6,10 @@ import { ActivitytrackingComponent } from './activitytracking.component';
 import { PageHeadingComponent } from '../../../../shared/ui/page-heading/page-heading.component';
 import { SearchinformsComponent } from '../../../../shared/ui/searchinforms/searchinforms.component';
 import { PaginationComponent } from '../../../../shared/ui/pagination/pagination.component';
+import { FormerrorMsgComponent } from "../../../../shared/ui/formerror-msg/formerror-msg.component";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { IntersectionDirective } from "../../../../shared/directives/intersection.directive";
+import { EmptytableComponent } from '../../../../shared/ui/emptytable/emptytable.component';
 
 
 @NgModule({
@@ -17,7 +21,12 @@ import { PaginationComponent } from '../../../../shared/ui/pagination/pagination
     ActivitytrackingRoutingModule,
     PageHeadingComponent,
     SearchinformsComponent,
-    PaginationComponent
-  ]
+    PaginationComponent,
+    FormerrorMsgComponent,
+    FormsModule,
+    IntersectionDirective,
+    ReactiveFormsModule,
+    EmptytableComponent
+]
 })
 export class ActivitytrackingModule { }

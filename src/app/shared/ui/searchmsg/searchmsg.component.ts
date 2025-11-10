@@ -5,13 +5,14 @@ import { SharedService } from '../../services/shared.service';
 import { SendmessageService } from '../../../pages/dashboard/messages/sendmessage/services/sendmessage.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ToastrService } from '../toastr/services/toastr.service';
+import { EmptytableComponent } from '../emptytable/emptytable.component';
 
 @Component({
   selector: 'app-searchmsg',
   templateUrl: './searchmsg.component.html',
   styleUrl: './searchmsg.component.scss',
   standalone:true,
-  imports: [FormsModule, NgSelectModule, ReactiveFormsModule]
+  imports: [FormsModule, NgSelectModule, ReactiveFormsModule,EmptytableComponent]
 })
 export class SearchmsgComponent {
 @Input() showPopup:any = false;
@@ -48,63 +49,63 @@ closePopup() {
 
  @Output() arrDataCheck=new EventEmitter();
 
-  dataSearch=[
-  {
-    "id": 1,
-    name: "Ahmed Ali",
-    "phone": "01001234567",
-    "email": "ahmed.ali@example.com",
-    checked:false
-  },
-  {
-    "id": 2,
-    name: "Sara Mohamed",
-    "phone": "01007654321",
-    "email": "sara.mohamed@example.com",
-    checked:false
-  },
-  {
-    "id": 3,
-    name: "Omar Khaled",
-    "phone": "01009876543",
-    "email": "omar.khaled@example.com",
-    checked:false
-  },
-  {
-    "id": 4,
-    name: "Noor Hassan",
-    "phone": "01005556667",
-    "email": "noor.hassan@example.com",
-    checked:false
-  },
-  {
-    "id": 5,
-    name: "Layla Ibrahim",
-    "phone": "01003334444",
-    "email": "layla.ibrahim@example.com",
-    checked:false
-  },
-   {
-    "id": 6,
-    name: "Layla Ibrahim",
-    "phone": "01003334444",
-    "email": "layla.ibrahim@example.com",
-    checked:false
-  },
-   {
-    "id": 7,
-    name: "Layla Ibrahim",
-    "phone": "01003334444",
-    "email": "layla.ibrahim@example.com",
-    checked:false
-  },
-   {
-    "id": 8,
-    name: "Layla Ibrahim",
-    "phone": "01003334444",
-    "email": "layla.ibrahim@example.com",
-    checked:false
-  }
+  dataSearch:any=[
+  // {
+  //   "id": 1,
+  //   name: "Ahmed Ali",
+  //   "phone": "01001234567",
+  //   "email": "ahmed.ali@example.com",
+  //   checked:false
+  // },
+  // {
+  //   "id": 2,
+  //   name: "Sara Mohamed",
+  //   "phone": "01007654321",
+  //   "email": "sara.mohamed@example.com",
+  //   checked:false
+  // },
+  // {
+  //   "id": 3,
+  //   name: "Omar Khaled",
+  //   "phone": "01009876543",
+  //   "email": "omar.khaled@example.com",
+  //   checked:false
+  // },
+  // {
+  //   "id": 4,
+  //   name: "Noor Hassan",
+  //   "phone": "01005556667",
+  //   "email": "noor.hassan@example.com",
+  //   checked:false
+  // },
+  // {
+  //   "id": 5,
+  //   name: "Layla Ibrahim",
+  //   "phone": "01003334444",
+  //   "email": "layla.ibrahim@example.com",
+  //   checked:false
+  // },
+  //  {
+  //   "id": 6,
+  //   name: "Layla Ibrahim",
+  //   "phone": "01003334444",
+  //   "email": "layla.ibrahim@example.com",
+  //   checked:false
+  // },
+  //  {
+  //   "id": 7,
+  //   name: "Layla Ibrahim",
+  //   "phone": "01003334444",
+  //   "email": "layla.ibrahim@example.com",
+  //   checked:false
+  // },
+  //  {
+  //   "id": 8,
+  //   name: "Layla Ibrahim",
+  //   "phone": "01003334444",
+  //   "email": "layla.ibrahim@example.com",
+  //   checked:false
+  // }
 ]
 
 
@@ -114,7 +115,7 @@ closePopup() {
   toggleAll(){
    this.selectCheck = !this.selectCheck;
 
-  this.dataSearch.forEach((data) => {
+  this.dataSearch.forEach((data:any) => {
     data.checked = this.selectCheck;
   });
 
@@ -171,9 +172,10 @@ closePopup() {
 
     let idSearchProperties=this.SearchForm.value.property;
     // this.SelectedDistritByProperty(idSearchProperties);
-    this._SendMsgSer.getAndPropertyByTenant(idSearchProperties,{}).pipe(takeUntilDestroyed(this.destroyRef)).subscribe((res)=>{
+    this._SendMsgSer.getAndPropertyByTenant(idSearchProperties,{}).pipe(takeUntilDestroyed(this.destroyRef)).subscribe((res:any)=>{
       console.log(res);
       // this.dataSearch=res.rows
+      this.dataSearch=res.rows
     })
     
   }else{

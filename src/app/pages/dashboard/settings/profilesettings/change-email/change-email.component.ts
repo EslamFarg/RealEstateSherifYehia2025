@@ -26,7 +26,7 @@ export class ChangeEmailComponent {
   }
   changeemailForm=this.fb.group({
    userId: [this.payloadUser.userId,[Validators.required]],
-  newEmail: ['',[Validators.required]],
+  newEmail: ['',[Validators.required,Validators.email]],
   password: ['',Validators.required]
   })
 

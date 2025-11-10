@@ -67,7 +67,7 @@ ngOnInit() {
 
   // auth:AuthService=inject(AuthService)
   authForm=this.fb.group({
-    emailOrUserName:[JSON.parse(localStorage.getItem('rememberData')!)?.emailOrUserName ||'',[Validators.required,Validators.minLength(3),checkUsername.ValidationUsername()]],
+    email:[JSON.parse(localStorage.getItem('rememberData')!)?.email ||'',[Validators.required,Validators.minLength(3),Validators.email]],
     password:[JSON.parse(localStorage.getItem('rememberData')!)?.password || '',Validators.required]
   })
 
@@ -106,7 +106,7 @@ this.vcr.createEmbeddedView(this.login);
     
  if(this.authForm.valid){
       const data={
-        emailOrUserName:this.authForm.value.emailOrUserName,
+        email:this.authForm.value.email,
         password:this.authForm.value.password
       }
 
@@ -128,7 +128,7 @@ this.vcr.createEmbeddedView(this.login);
 
         if(this.remember) {
           localStorage.setItem('rememberData',JSON.stringify({
-            emailOrUserName:data.emailOrUserName,
+            email:data.email,
             password:data.password
           }));
         }else{

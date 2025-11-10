@@ -5,6 +5,7 @@ import { ProgramsettingsRoutingModule } from './programsettings-routing.module';
 import { ProgramsettingsComponent } from './programsettings.component';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { ReactiveFormsModule } from '@angular/forms';
+import { DirectivesModule } from "../../../../../shared/directives/directives.module";
 
 
 @NgModule({
@@ -15,7 +16,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     CommonModule,
     ProgramsettingsRoutingModule,
     NgSelectModule,
-    ReactiveFormsModule
-  ]
+    ReactiveFormsModule,
+    DirectivesModule
+]
 })
 export class ProgramsettingsModule { }

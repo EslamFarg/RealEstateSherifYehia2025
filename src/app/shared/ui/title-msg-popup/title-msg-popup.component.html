@@ -28,7 +28,7 @@
                 <div class="number_msg">{{$index + 1}}.</div>
                  <input type="radio"  [name]="'checkmsg'" (change)="selectMsg(item)" [id]="'check_inp'+$index" >
                 <label [for]="'check_inp'+$index" style="width: 100%;">
-                    <h5 class="title">{{item.name}}</h5>
+                    <h5 class="title" >{{item.name}}</h5>
                     <p>{{item.body}}</p>
                 </label>
                 

@@ -11,30 +11,43 @@ export const errorInterceptor: HttpInterceptorFn = (req, next) => {
       let errorMsg = 'حدث خطأ غير متوقع، يرجى المحاولة لاحقًا.';
 
       if (err.error instanceof ErrorEvent) {
+       
         // Error من جهة العميل (مشكلة في الاتصال)
         errorMsg = `خطأ في الاتصال: ${err.error.message}`;
 
       
       } else {
 
-        if (err.error?.detail) {
-          errorMsg = err.error.detail;
-        } else if (err.error?.message) {
-          errorMsg = err.error.message;
-        }else if(err.error.errors && err.error.errors.length > 0 && Array.isArray(err.error.errors)){
-          err.error.errors.detail.forEach((error:any) => {
-            const message = error;
+       
+
+        if (err.error.errors && err.error.errors.length > 0 && Array.isArray(err.error.errors)) {
+
+
+
+       err.error.errors.forEach((error:any) => {
+            const message = error.detail;
             
 
             toastr.show(message, 'error');
-            
           });
-          
-        } else if(err.error.detail){
-          errorMsg = err.error.detail
-
+        }else   if (err.error?.errors && typeof err.error.errors === 'object' && !Array.isArray(err.error.errors)) {
+          // كل حقل يمكن أن يحتوي على مصفوفة من الرسائل
+          for (const field in err.error.errors) {
+            if (Array.isArray(err.error.errors[field])) {
+              err.error.errors[field].forEach((message: string) => {
+                toastr.show(` ${message}`, 'error');
+              });
+            }
+          }
+        } 
+        else if(err.error?.detail){
+              errorMsg = err.error.detail;   
+               toastr.show(errorMsg, 'error');       
+        } 
+        
+        else if (err.error?.message) {
+          errorMsg = err.error.message;
           toastr.show(errorMsg, 'error');
-
         }
         
         else {
@@ -61,7 +74,7 @@ export const errorInterceptor: HttpInterceptorFn = (req, next) => {
         }
       }
       // ✅ عرض الرسالة في التوستر
-      toastr.show(errorMsg, 'error');
+      // toastr.show(errorMsg, 'error');
 
       // ✅ ارجع الخطأ بشكل سليم لـ RxJS
       return throwError(() => err);

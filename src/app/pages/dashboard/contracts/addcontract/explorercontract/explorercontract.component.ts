@@ -1,4 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, DestroyRef, inject } from '@angular/core';
+import { AddcontractService } from '../services/addcontract.service';
+import { ToastrService } from '../../../../../shared/ui/toastr/services/toastr.service';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { EditBehaviorServiceService } from '../../../../../shared/services/edit-behavior-service.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-explorercontract',
@@ -7,132 +12,30 @@ import { Component } from '@angular/core';
 })
 export class ExplorercontractComponent {
 
-  dataFilter=['رقم العقد','اسم المستأجر','تاريخ ابرام العقد']
+  // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!11 Services
+
+  _addContractService:AddcontractService=inject(AddcontractService)
+  toastr:ToastrService=inject(ToastrService);
+  destroyRef:DestroyRef=inject(DestroyRef)
+  editBehaviorService:EditBehaviorServiceService=inject(EditBehaviorServiceService)
+  router:Router=inject(Router)
 
 
-  getAllData= [
-  {
-    id: 1,
-    contractNumber: "CN-2025-001",
-    tenantName: "أحمد علي",
-    contractDate: "2025-01-10",
-    rentMonths: 12,
-    property: "شقة رقم 4 - برج النيل",
-  },
-  {
-    id: 2,
-    contractNumber: "CN-2025-002",
-    tenantName: "سارة محمد",
-    contractDate: "2025-02-01",
-    rentMonths: 6,
-    property: "فيلا رقم 2 - كمبوند الزهور",
-  },
-  {
-    id: 3,
-    contractNumber: "CN-2025-003",
-    tenantName: "محمد سعيد",
-    contractDate: "2025-03-15",
-    rentMonths: 24,
-    property: "مكتب 12 - برج العاصمة",
-  },
-  {
-    id: 4,
-    contractNumber: "CN-2025-004",
-    tenantName: "ريم خالد",
-    contractDate: "2025-04-05",
-    rentMonths: 18,
-    property: "شقة 8 - عمارة الهدى",
-  },
-  {
-    id: 5,
-    contractNumber: "CN-2025-005",
-    tenantName: "خالد حسن",
-    contractDate: "2025-05-01",
-    rentMonths: 12,
-    property: "محل رقم 3 - مول السلام",
-  },
-  {
-    id: 6,
-    contractNumber: "CN-2025-006",
-    tenantName: "نور أحمد",
-    contractDate: "2025-05-15",
-    rentMonths: 9,
-    property: "شقة 2 - عمارة النخيل",
-  },
-  {
-    id: 7,
-    contractNumber: "CN-2025-007",
-    tenantName: "عبدالله إبراهيم",
-    contractDate: "2025-06-01",
-    rentMonths: 12,
-    property: "مخزن رقم 5 - المنطقة الصناعية",
-  },
-  {
-    id: 8,
-    contractNumber: "CN-2025-008",
-    tenantName: "مها سامي",
-    contractDate: "2025-06-10",
-    rentMonths: 6,
-    property: "شقة رقم 9 - برج المروة",
-  },
-  {
-    id: 9,
-    contractNumber: "CN-2025-009",
-    tenantName: "طارق فؤاد",
-    contractDate: "2025-07-01",
-    rentMonths: 12,
-    property: "فيلا رقم 10 - كمبوند الأندلس",
-  },
-  {
-    id: 10,
-    contractNumber: "CN-2025-010",
-    tenantName: "ليلى عماد",
-    contractDate: "2025-07-20",
-    rentMonths: 18,
-    property: "مكتب 22 - برج البستان",
-  },
-  {
-    id: 11,
-    contractNumber: "CN-2025-011",
-    tenantName: "أكرم زين",
-    contractDate: "2025-08-01",
-    rentMonths: 12,
-    property: "شقة 5 - عمارة الياسمين",
-  },
-  {
-    id: 12,
-    contractNumber: "CN-2025-012",
-    tenantName: "نجلاء عادل",
-    contractDate: "2025-08-15",
-    rentMonths: 6,
-    property: "محل رقم 8 - مول العاصمة",
-  },
-  {
-    id: 13,
-    contractNumber: "CN-2025-013",
-    tenantName: "رامي يوسف",
-    contractDate: "2025-09-01",
-    rentMonths: 24,
-    property: "مكتب 30 - برج الهدى",
-  },
-  {
-    id: 14,
-    contractNumber: "CN-2025-014",
-    tenantName: "دعاء حاتم",
-    contractDate: "2025-09-10",
-    rentMonths: 9,
-    property: "شقة رقم 6 - عمارة الفجر",
-  },
-  {
-    id: 15,
-    contractNumber: "CN-2025-015",
-    tenantName: "مازن طارق",
-    contractDate: "2025-10-01",
-    rentMonths: 12,
-    property: "فيلا رقم 5 - كمبوند اللوتس",
-  },
-];
 
+  // !!!!!!!!!!!!!!!!!!!!!!!!!!!!! Properties
+ 
+  dataFilter=['رقم العقد','اسم المستأجر','اسم الوحده']
+
+
+  getAllData:any= [];
+
+
+// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! Methods
+
+
+ngOnInit(){
+  this.getAllDataContracts();
+}
 // pagination
 
 pageIndex=1
@@ -142,11 +45,97 @@ pageSize=10
 
 onPageChanged(page: number) {
   this.pageIndex = page;
-  // this.fetchEmployees(); // أعد جلب البيانات
-  // this.getData()
+  this.getAllDataContracts();
+}
+
+
+getAllDataContracts(){  
+  let pagination={
+  "paginationInfo": {
+    "pageIndex": this.pageIndex,
+    "pageSize": this.pageSize
+  }
+}
+this._addContractService.getAllDataContracts(pagination).pipe(takeUntilDestroyed(this.destroyRef)).subscribe(res=>{
+  console.log(res);
+  this.getAllData=res
+})
+
+}
+onSelectedPagination(page:any){
+  this.pageSize=page;
+  this.getAllDataContracts();
+
+}
+
+
+onSearchFilter(e:any){
+
+
+  let shapeSearch={
+  "criteriaDto": {
+    "paginationInfo": {
+      "pageIndex": 0,
+      "pageSize": 0
+    }
+  },
+  "searchFilter": {
+    "column": 0,
+    "value": e.value
+  }
+}
+  console.log(e);
+
+  if(e.index==0){
+    shapeSearch.searchFilter.column= 0;
+  }else if(e.index==1){
+
+    shapeSearch.searchFilter.column= 12;
+  }else if(e.index==2){
+    shapeSearch.searchFilter.column= 7;
+  }
+
+  this._addContractService.searchByContract(shapeSearch).pipe(takeUntilDestroyed(this.destroyRef)).subscribe(res=>{
+    console.log(res);
+    this.getAllData=res
+  }
+  )
+
 }
 
 
 
+showDelete=false;
+deleteId:any;
 
+
+showPopupDelete(id:any){
+  this.showDelete=true;
+  console.log(id);
+  this.deleteId=id;
+
+}
+
+
+deleteConfirmed(id:any){
+  this.showDelete=false;
+  this._addContractService.deleteContract(id).pipe(takeUntilDestroyed(this.destroyRef)).subscribe((res:any)=>{
+    this.toastr.show("تم الحذف بنجاح",'success');
+    this.getAllDataContracts();
+
+  })
+}
+
+onClose(){
+  this.showDelete=false;
+}
+
+
+sendIdToContracts(id:any){
+  console.log(id);
+  // this._addContractService.contractId=id;
+  this.editBehaviorService.setId(id);
+  this.router.navigate(['/dashboard/addcontract/newaddcontract']);
+
+}
 }

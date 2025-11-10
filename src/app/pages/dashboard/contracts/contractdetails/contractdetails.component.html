@@ -1,11 +1,12 @@
 <app-page-heading [title]="'العقود'" [subtitle]="'استعلام عن عقد'"></app-page-heading>
-<app-searchinforms [dataFilter]="dataFilter"></app-searchinforms>
+<app-searchinforms [dataFilter]="dataFilter" (selectedDataFilter)="onFilterSearch($event)"></app-searchinforms>
 
 <div class="addContract_acco">
 
 
 <div ngbAccordion [closeOthers]="true">
-  <div ngbAccordionItem [collapsed]="false">
+  @for(item of getAllDataContract; track $index) {
+    <div ngbAccordionItem [collapsed]="true" class="my-4">
     <h2 ngbAccordionHeader>
       <button ngbAccordionButton>
 
@@ -13,25 +14,36 @@
             <div class="right">
 
                 <div class="box">
-                    <h5>رقم العقد: 12345</h5>
-                    <p>20  يناير  2025  </p>
+                    <h5>رقم العقد: {{item.id}}</h5>
+                    <p>{{item.leaseStartDate}} </p>
                 </div>
 
                 <h4 class="title_name">
-                    محمد محمود احمد
+                    {{item.tenantName}}
                 </h4>
 
             </div>
 
             <div class="left">
                 <div class="btns">
-                    <button >انهاء</button>
-                    <button *ngIf="statusContract">تجديد</button>
+                  <!-- !isEnded(item.leaseEndDate) || -->
+                    <button (click)="endingContract($event,item.id)" *ngIf=" item.contractStatus == 0
+                    ">انهاء</button>
+                    <!-- isEnded(item.leaseEndDate) &&  -->
+                    <button *ngIf="
+                    item.contractStatus == 1
+                    " (click)="newingContract($event,item.id)"
+                    >تجديد</button>
                 </div>
 
                 <div class="status_contract">
-                    <div class="sarry" >ساري</div>
-                    <div class="montahy" *ngIf="statusContract">منتهي</div>
+                  <!-- !isEnded(item.leaseEndDate) || -->
+                   <!-- isEnded(item.leaseEndDate) && -->
+                    <div class="sarry" *ngIf=" item.contractStatus == 0" >ساري</div>
+                    <div class="montahy" *ngIf=" item.contractStatus == 1">منتهي</div>
+                    <div class="bg-danger text-white" *ngIf="item.contractStatus == 2"
+                    
+                    >ملغي</div>
                 </div>
             </div>
 
@@ -48,31 +60,31 @@
         <div class="row px-0">
           <div class="col-sm-6 col-lg-3 mb-3 readonly_input">
             <label for="" class="form-label">مكان ابرام العقد</label>
-            <input type="text" class="form-control" placeholder="مكان ابرام العقد" readonly value="مكه" style="padding-right: 113px;">
+            <input type="text" class="form-control" placeholder="مكان ابرام العقد" readonly [value]="item.contractPlace" style="padding-right: 113px;">
           </div>
           <div class="col-sm-6 col-lg-3 mb-3 readonly_input">
             <label for="" class="form-label">تاريخ ابرام العقد</label>
-            <input type="text" class="form-control" placeholder="مكان ابرام العقد" readonly value="14 يناير 2029" style="padding-right: 109px;">
+            <input type="text" class="form-control" placeholder="مكان ابرام العقد" readonly [value]="item.contractDate" style="padding-right: 109px;">
           </div>
           <div class="col-sm-6 col-lg-2 mb-3 readonly_input">
             <label for="" class="form-label">العقار</label>
-            <input type="text" class="form-control" placeholder="العقار" readonly value="302" style="padding-right: 51px;">
+            <input type="text" class="form-control" placeholder="العقار" readonly [value]="item.propertyName" style="padding-right: 51px;">
           </div>
           <div class="col-sm-6 col-lg-2 mb-3 readonly_input">
             <label for="" class="form-label">الدور</label>
-            <input type="text" class="form-control" placeholder="الدور" readonly value="الاول" style="padding-right: 43px;">
+            <input type="text" class="form-control" placeholder="الدور" readonly [value]="item.floorNumber" style="padding-right: 43px;">
           </div>
           <div class="col-sm-6 col-lg-2 mb-3 readonly_input">
             <label for="" class="form-label">الوحده</label>
-            <input type="text" class="form-control" placeholder="الوحده" readonly value="123" style="padding-right: 51px;">
+            <input type="text" class="form-control" placeholder="الوحده" readonly [value]="item.unitName" style="padding-right: 51px;">
           </div>
           <div class="col-sm-12 col-lg-3 mb-3 readonly_input">
             <label for="" class="form-label">تاريخ بدايه العقد</label>
-            <input type="text" class="form-control" placeholder="تاريخ بدايه العقد" readonly value="20  يناير  2025  " style="padding-right: 113px;">
+            <input type="text" class="form-control" placeholder="تاريخ بدايه العقد" readonly [value]="item.leaseStartDate" style="padding-right: 113px;">
           </div>
           <div class="col-sm-12 col-lg-3 mb-3 readonly_input">
             <label for="" class="form-label">تاريخ نهايه العقد</label>
-            <input type="text" class="form-control" placeholder="تاريخ نهايه العقد" readonly value="25 يناير 2026" style="padding-right: 113px;">
+            <input type="text" class="form-control" placeholder="تاريخ نهايه العقد" readonly [value]="item.leaseEndDate" style="padding-right: 113px;">
           </div>
           <div class="col-sm-12 col-lg-6 mb-3 align-self-end">
          <div class="input_rent_container">
@@ -80,30 +92,25 @@
 
                 <div class="months">
 
-                  <div class="prev_month">
+                  <div class="prev_month" (click)="prevMonth()">
                     <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
 <rect x="16" y="16" width="16" height="16" rx="2" transform="rotate(180 16 16)" fill="#D4AF37"/>
 <path d="M10.0605 2.72003L5.71388 7.0667C5.20055 7.58003 5.20055 8.42003 5.71388 8.93336L10.0605 13.28" stroke="white" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
 </svg>
 
                   </div>
-                  <div class="container_months">
-   <div class="box">
-                    ديسمبر
-                    2025
+                  <div class="container_months" #containerMonths>
+                    
+   <div class="box" *ngFor="let m of item.months" (click)="toggleMonthSelection(item, m)"   [class.active]="item.selectedMonths?.[0] === m">
+                    
+                     {{m.monthName}}
+                     {{m.year}}
                   </div>
-                  <div class="box">
-                    ديسمبر
-                    2025
-                  </div>
-                  <div class="box">
-                    ديسمبر
-                    2025
-                  </div>
+                
                   </div>
 
 
-                  <div class="next_months">
+                  <div class="next_months" (click)="nextMonth()">
                   <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                       <rect width="16" height="16" rx="2" transform="matrix(1 0 0 -1 0 16)" fill="#D4AF37"/>
                       <path d="M5.93945 2.72003L10.2861 7.0667C10.7995 7.58003 10.7995 8.42003 10.2861 8.93336L5.93945 13.28" stroke="white" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
@@ -113,34 +120,34 @@
                
                 </div>
                 <p class="count_months">
-                 12 شهر
+                  {{item.leaseMonths}} شهور
                 </p>
             </div>
           </div>
 
              <div class="col-sm-12 col-lg-6 mb-3 readonly_input">
             <label for="" class="form-label">المستاجر</label>
-            <input type="text" class="form-control" placeholder="المستاجر" readonly value="محمد احمد محمود" style="padding-right: 74px;">
+            <input type="text" class="form-control" placeholder="المستاجر" readonly [value]="item.tenantName" style="padding-right: 74px;">
           </div>
              <div class="col-sm-12 col-lg-3 mb-3 readonly_input">
             <label for="" class="form-label">رقم الجوال</label>
-            <input type="text" class="form-control" placeholder="رقم الجوال" readonly value="123456789" style="padding-right: 77px;">
+            <input type="text" class="form-control" placeholder="رقم الجوال" readonly [value]="item.phoneNumber" style="padding-right: 77px;">
           </div>
              <div class="col-sm-12 col-lg-3 mb-3 readonly_input">
             <label for="" class="form-label">المرافقين</label>
-            <input type="text" class="form-control" placeholder="المرافقين" readonly value="12" style="padding-right: 77px;">
+            <input type="text" class="form-control" placeholder="المرافقين" readonly [value]="item.tenantDependanceCounter" style="padding-right: 77px;">
           </div>
              <div class="col-sm-12 col-lg-6 mb-3 readonly_input">
             <label for="" class="form-label">الضريبه</label>
-            <input type="text" class="form-control" placeholder="الضريبه" readonly value="900" style="padding-right:60px;">
+            <input type="text" class="form-control" placeholder="الضريبه" readonly [value]="item.taxAmount" style="padding-right:60px;">
           </div>
              <div class="col-sm-12 col-lg-6 mb-3 readonly_input">
             <label for="" class="form-label">الاجمالي</label>
-            <input type="text" class="form-control" placeholder="الاجمالي" readonly value="6900" style="padding-right: 60px;">
+            <input type="text" class="form-control" placeholder="الاجمالي" readonly [value]="item.netAmount" style="padding-right: 60px;">
           </div>
 
 
-          <div class="show_contract">
+          <div class="show_contract" (click)="showPopupImgContract(item.attachments)">
             <h5>إضغط هنا لإظهار العقد</h5>
             <div class="icon">
               <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -158,8 +165,55 @@
       </div>
     </div>
   </div>
+
+ <div class="overlay" [ngClass]="{'active': isPopupVisibleContract && item.attachments.length > 0}" >
+  <div class="popup">
+
+    <!-- زر الإغلاق -->
+     <div class="d-flex">
+   <button class="close-btn" (click)="isPopupVisibleContract = false" >×</button>
+   
+     </div>
+ 
+     <h5 class="" style="margin-top: 17px;
+    text-align: center;     font-size: 17px;">المرفقات</h5>
+
+    <!-- شريط معلومات الصورة -->
+     @for(file of item.attachments; track $index) {
+
+<div class="image-info" >
+      <span class="image-name">{{file.fileName}}</span>
+      <span class="eye-icon">
+
+          <div class="icon" (click)="showImgInNewTap(file.filePath)">
+              <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect width="30" height="30" rx="5" fill="white"/>
+<path d="M17.9823 14.9999C17.9823 16.6499 16.649 17.9833 14.999 17.9833C13.349 17.9833 12.0156 16.6499 12.0156 14.9999C12.0156 13.3499 13.349 12.0166 14.999 12.0166C16.649 12.0166 17.9823 13.3499 17.9823 14.9999Z" stroke="#16601A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M14.9999 21.8918C17.9415 21.8918 20.6832 20.1584 22.5915 17.1584C23.3415 15.9834 23.3415 14.0084 22.5915 12.8334C20.6832 9.83343 17.9415 8.1001 14.9999 8.1001C12.0582 8.1001 9.31654 9.83343 7.4082 12.8334C6.6582 14.0084 6.6582 15.9834 7.4082 17.1584C9.31654 20.1584 12.0582 21.8918 14.9999 21.8918Z" stroke="#16601A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+
+            </div>
+      </span>
+    </div>
+     }
+    
+
+
+
+  </div>
+</div>
+
+  }@empty {
+    <div class="no_data_contracts">
+      <app-emptytable></app-emptytable>
+    </div>
+  }
+
+  
 </div>
 </div>
+
+
 
 
 <div class="modal_overlay" >
@@ -175,4 +229,6 @@
   </div>
   <!-- </svg> -->
 </div>
+
+
 

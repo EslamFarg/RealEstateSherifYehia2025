@@ -7,6 +7,7 @@ import { PageHeadingComponent } from '../../../../shared/ui/page-heading/page-he
 import { SearchinformsComponent } from '../../../../shared/ui/searchinforms/searchinforms.component';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { NgbAccordionModule } from '@ng-bootstrap/ng-bootstrap';
+import { EmptytableComponent } from '../../../../shared/ui/emptytable/emptytable.component';
 
 
 @NgModule({
@@ -19,7 +20,8 @@ import { NgbAccordionModule } from '@ng-bootstrap/ng-bootstrap';
     PageHeadingComponent,
     SearchinformsComponent,
     NgSelectModule,
-    NgbAccordionModule
+    NgbAccordionModule,
+    EmptytableComponent
   ]
 })
 export class ContractdetailsModule { }

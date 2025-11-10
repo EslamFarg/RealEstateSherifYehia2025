@@ -9,6 +9,9 @@ import { NgbAccordionModule } from '@ng-bootstrap/ng-bootstrap';
 import { ImgattachmentsComponent } from "../../../../../shared/ui/imgattachments/imgattachments.component";
 import { InputAttachmentsComponent } from "../../../../../shared/ui/input-attachments/input-attachments.component";
 import { NgSelectModule } from '@ng-select/ng-select';
+import { ReactiveFormsModule } from '@angular/forms';
+import { FormerrorMsgComponent } from '../../../../../shared/ui/formerror-msg/formerror-msg.component';
+import { ConfirmDeleteComponent } from '../../../../../shared/components/confirm-delete/confirm-delete.component';
 
 
 @NgModule({
@@ -24,7 +27,10 @@ import { NgSelectModule } from '@ng-select/ng-select';
     ImgattachmentsComponent,
     InputAttachmentsComponent,
     // NgSelectComponent,
-    NgSelectModule
+    NgSelectModule,
+    ReactiveFormsModule,
+    FormerrorMsgComponent,
+    ConfirmDeleteComponent
 ]
 })
 export class NewaddcontractModule { }

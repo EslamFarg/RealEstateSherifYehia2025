@@ -52,7 +52,7 @@
 
             <div class="col-sm-12">
                 <label for="msgText" class="form-label">نص الرساله</label>
-                <textarea name="" id="" id="msgText"  formControlName="messageText" (keydown)="writeMessage($event)"  (focus)="requiredMsg()"  class="form-control" placeholder="اكتب المحتوي"></textarea>
+                <textarea name="" id="" id="msgText"  formControlName="messageText" (input)="writeMessage($event)"  (focus)="requiredMsg()"  class="form-control" placeholder="اكتب المحتوي"></textarea>
                 <div class="d-flex align-items-center justify-content-between">
                        <small class="error_msg_form" *ngIf="this.sendMessageForm.invalid">{{errorMsgWithMessage}}</small>
                        <p></p>

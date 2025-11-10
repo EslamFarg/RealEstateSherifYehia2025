@@ -133,4 +133,10 @@ deleteConfirmed(id:any){
     this.getAllDataPaymentVoucher();
   })
 }
+
+
+goToEditPopup(id:any){
+  // this.
+
+}
 }

@@ -17,14 +17,14 @@
 
   <div class="row">
     <div class="col-sm-12 col-lg-6">
-        <app-tree-property-package></app-tree-property-package>
+        <app-tree-property-package (sendDataSelect)="getAllDataSelectedUnit($event)"></app-tree-property-package>
     </div>
 
-    <div class="col-sm-12 col-lg-6 box_col">
+    <div class="col-sm-12 col-lg-6 box_col" *ngIf="this.getDataSelected">
       <div class="box_treeproperty">
         <div class="head_box">
           <p class="city_title">
-            المدينه
+            {{this.getDataSelected.city}}
           </p>
           <div class="icon">
             <svg width="21" height="21" viewBox="0 0 21 21" fill="none" xmlns="httdiv://www.w3.org/2000/svg">
@@ -32,7 +32,10 @@
 </svg>
 
           </div>
-          <p class="hay_title">الحي</p>
+          <p class="hay_title">
+
+            {{this.getDataSelected.district}}
+          </p>
 
                  <div class="icon">
             <svg width="21" height="21" viewBox="0 0 21 21" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -40,7 +43,7 @@
 </svg>
 
           </div>
-          <p class="property_title">العقار</p>
+          <p class="property_title">{{this.getDataSelected.propertyName}}</p>
 
                  <div class="icon">
             <svg width="21" height="21" viewBox="0 0 21 21" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -48,7 +51,7 @@
 </svg>
 
           </div>
-          <p class="unit_title">الوحده 1</p>
+          <p class="unit_title">{{this.getDataSelected.name}}</p>
 
 
 
@@ -77,32 +80,32 @@
         </div>
 
         <div class="footer_box">
-          <p>مكة المكرمة هي أقدس مدن المسلمين، وتُعرف بأنها مسقط رأس النبي محمد ﷺ، وبها نزول الوحي، وتضم الكعبة المشرفة والمسجد الحرام، وهما أهم المواقع الدينية للمسلمين الذين يتوجهون إليها لأداء فريضة الحج والعمرة. تاريخ المدينة قديم ويرتبط بقصص الأنبياء إبراهيم وإسماعيل عليهما السلام، وتُعد مكة مركزًا للإيمان والروحانية وتستقبل ملايين الزوار سنويًا. </p>
+          <p class="text-center">{{this.getDataSelected.description}}</p>
 
           <div class="table_container">
             <div class="box">
                 <h6>الدور</h6>
-                <p>الاول</p>
+                <p>{{this.getDataSelected.floorNumber}}</p>
             </div>
             <div class="box">
                 <h6>رقم الوحده</h6>
-                <p>123</p>
+                <p>{{this.getDataSelected.id}}</p>
             </div>
             <div class="box">
                 <h6>عدد الغرف</h6>
-                <p>5</p>
+                <p>{{this.getDataSelected.roomsCount}}</p>
             </div>
             <div class="box">
                 <h6>نوع الوحده</h6>
-                <p>مفروش</p>
+                <p>{{this.getDataSelected.unitType}}</p>
             </div>
             <div class="box">
                 <h6>مساحه الوحده</h6>
-                <p>180 م2</p>
+                <p>{{this.getDataSelected.area}}</p>
             </div>
             <div class="box">
                 <h6>تصنيف الوحده</h6>
-                <p>اسره 4 افراد</p>
+                <p>{{this.getDataSelected.unitCategoryName}}</p>
             </div>
 
           </div>

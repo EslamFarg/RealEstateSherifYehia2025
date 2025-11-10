@@ -22,6 +22,17 @@ export class SendmessageService extends BasehttpservicesService{
 
 
   getAndPropertyByTenant(id:any,pagination:any){
-    return this.post(`/Tenants/searchByPropertyId?${id}`,pagination);
+    return this.post(`/Tenants/searchByPropertyId?propertyId=${id}`,pagination);
   }
+
+
+searchByTenant(searchVal: any,Page:any,PageSize:any) {
+  return this.get(`/MessageSender/ListGroup?Search=${searchVal}&Page=${Page}&PageSize=${PageSize}`);
+}
+
+
+redirectSearch(id:any){
+  return this.get('/MessageSender/'+id);
+}
+
 }

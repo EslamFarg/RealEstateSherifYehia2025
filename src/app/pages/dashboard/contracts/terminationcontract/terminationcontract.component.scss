@@ -34,8 +34,13 @@
 
         .container_months{
             @include flex_box(flex,space-between,center);
-
+            width: 300px;
+            overflow-x: scroll;
+            &::-webkit-scrollbar {
+                display: none;
+            }
             .box{
+                flex:  0 0 auto;
                 text-align: center;
                 font-size: 8px;
                 font-weight: 400;
@@ -149,4 +154,9 @@ display: inline-block;
         background-color: #16601A !important;
     }
 
+}
+
+
+.forms_dashboard{
+    padding:0px 5px !important;
 }

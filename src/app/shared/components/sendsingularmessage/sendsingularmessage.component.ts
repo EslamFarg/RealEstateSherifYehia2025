@@ -1,13 +1,19 @@
 import { ChangeDetectorRef, Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
+import { ToastrService } from '../../ui/toastr/services/toastr.service';
+import { DirectivesModule } from "../../directives/directives.module";
+import { TitleMsgPopupComponent } from '../../ui/title-msg-popup/title-msg-popup.component';
+import { SendsmsComponent } from "../sendsms/sendsms.component";
+import { SendwhatappComponent } from "../sendwhatapp/sendwhatapp.component";
+import { SendemailComponent } from "../sendemail/sendemail.component";
 
 @Component({
   selector: 'app-sendsingularmessage',
   templateUrl: './sendsingularmessage.component.html',
   styleUrl: './sendsingularmessage.component.scss',
   standalone:true,
-  imports:[NgbNavModule,FormsModule]
+  imports: [NgbNavModule, FormsModule, DirectivesModule, TitleMsgPopupComponent, SendsmsComponent, SendwhatappComponent, SendemailComponent]
 })
 export class SendsingularmessageComponent {
 active = 1;
@@ -18,6 +24,8 @@ searchdataCheckRealtor:any=[];
 
 showPopupRealtor=false
  cdr:ChangeDetectorRef=inject(ChangeDetectorRef)
+
+ toastr:ToastrService=inject(ToastrService)
 arrDataCheck(val:any){
 
   this.searchdataCheckRealtor=val;
@@ -43,4 +51,8 @@ showMsg(val:any){
  
 
 }
+
+
+
+
 }

@@ -51,7 +51,7 @@ export class AddtenantComponent {
     NationalID:['',[Validators.required,Validators.minLength(10)]],
     JobTitle:['',[Validators.required]],
     ParentId:[null,[Validators.required]],
-    Dependants:this.fb.control<Apartments[]>([], [Validators.required]),
+    Dependants:this.fb.control<Apartments[]>([]),
     Files:[null]
   })
 

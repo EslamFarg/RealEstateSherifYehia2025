@@ -315,10 +315,11 @@ onClose(){
 deleteConfirmed(id:any){
 
   this.showDelete=false;
-  // this._ownerPaymentVoucherServices.deleteData(id).pipe(takeUntilDestroyed(this.destroyRef)).subscribe((res:any)=>{
-  //   this.toastr.show('تم حذف السند بنجاح','success');
-  //   this.getAllDataVouchers();
-  // })
+  this._ownerPaymentVoucherServices.deleteData(id).pipe(takeUntilDestroyed(this.destroyRef)).subscribe((res:any)=>{
+    this.toastr.show('تم حذف السند بنجاح','success');
+    // this.getAllDataVouchers();
+    this.resetForm();
+  })
 }
 
 

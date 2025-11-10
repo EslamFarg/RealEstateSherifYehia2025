@@ -7,4 +7,14 @@ import { Component } from '@angular/core';
 })
 export class TreerealComponent {
 
+  getDataSelected:any
+  
+
+
+  getAllDataSelectedUnit(e:any){
+    console.log("Selected",e);
+    
+
+    this.getDataSelected=e;
+  }
 }

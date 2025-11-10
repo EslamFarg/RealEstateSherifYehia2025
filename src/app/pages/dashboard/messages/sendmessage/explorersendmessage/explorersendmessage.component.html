@@ -1,6 +1,6 @@
 <app-page-heading [title]="'الرئيسيه'" [subtitle]="'ارسال رساله'" [explorerBtn]="true" [TitlePageExplorerBtn]="'ارسال رساله '" [AddRoute]="'/dashboard/sendmessage/addsendmessage'"></app-page-heading>
 
-<app-search-data [dataFilter]="dataFilter" [dropDownTitle]="'الرسايل'"></app-search-data>
+<app-search-data [dataFilter]="dataFilter" [dropDownTitle]="'الرسايل'"  (selectedDataFilter)="onSearchFilter($event)"  (sendDataSelect)="onSelectedPagination($event)"></app-search-data>
 
 
 <div class="table-responsive">
@@ -34,17 +34,17 @@
             </tr>
         </thead>
         <tbody>
-      @for (item of messagesData; track $index) {
+      @for (item of messagesData.items; track $index) {
         <tr>
             <td>{{$index+1}}</td>
-            <td>{{item.recipients_count}}</td>
-            <td>{{item.date}}</td>
-            <td>{{item.message}}</td>
-            <td><input type="checkbox" readonly [checked]="item.smsChecked" class="form-check-input"></td>
-            <td><input type="checkbox" readonly [checked]="item.whatsappChecked" class="form-check-input"></td>
-            <td><input type="checkbox" readonly [checked]="item.emailChecked" class="form-check-input"></td>
+            <td>{{item.numberOfContacts}}</td>
+            <td>{{item.createdAt.split('T')[0]}}</td>
+            <td>{{item.messageText}}</td>
+            <td><input type="checkbox" readonly [checked]="item.useSms" class="form-check-input"></td>
+            <td><input type="checkbox" readonly [checked]="item.useWhatsApp" class="form-check-input"></td>
+            <td><input type="checkbox" readonly [checked]="item.useEmail" class="form-check-input"></td>
             <td>
-                <div class="btn_edit">
+                <div class="btn_edit" (click)="sendGetDataById(item.id)">
                <svg width="36" height="28" viewBox="0 0 36 28" fill="none" xmlns="http://www.w3.org/2000/svg">
 <rect width="36" height="28" rx="2" fill="#E0ECE1"/>
 <path d="M17.9993 11.5491V9.41656C17.9996 9.25187 18.0486 9.09095 18.1402 8.95407C18.2318 8.81719 18.3618 8.71048 18.5139 8.64739C18.6661 8.58429 18.8334 8.56764 18.995 8.59952C19.1566 8.63141 19.3051 8.7104 19.4218 8.82656L24.666 13.9999L19.4218 19.1724C19.3446 19.25 19.2528 19.3117 19.1517 19.3537C19.0506 19.3958 18.9422 19.4174 18.8327 19.4174C18.7232 19.4174 18.6147 19.3958 18.5136 19.3537C18.4125 19.3117 18.3207 19.25 18.2435 19.1724C18.0872 19.0161 17.9994 18.8042 17.9993 18.5832V16.5091C15.7077 16.5657 13.2035 16.9807 11.3327 19.8332V18.9999C11.3327 15.1391 14.2493 11.9641 17.9993 11.5491Z" fill="#16601A"/>
@@ -53,6 +53,12 @@
                 </div>
             </td>
         </tr>
+      }@empty{
+                     <tr>
+    <td class="empty-cell" colspan="8">
+     <app-emptytable></app-emptytable>
+    </td>
+  </tr>
       }
         </tbody>
     </table>
@@ -61,7 +67,8 @@
 
  
 <app-pagination
-  [totalPages]="10"
+*ngIf="messagesData.items.length > 0"
+[totalPages]="messagesData.total"
   [currentPage]="pageIndex"
   (pageChange)="onPageChanged($event)">
 </app-pagination>

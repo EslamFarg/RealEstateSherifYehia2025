@@ -53,14 +53,17 @@
 </svg>
 
                                         </div>
-                                        <p (click)="toggle(property)">
+                                        <div (click)="getDataUnit(property)">
+    <p (click)="toggle(property)">
                                             {{property.title}}
                                         </p>
+                                        </div>
+                                    
                                     </div>
 
                                     @for (lonelinees of property.children; track $index) {
                                         <div class="loneliness_container" *ngIf="property.expanded">
-                                        <div class="loneliness">
+                                        <div class="loneliness" >
                                             <div class="loneliness_info">
                                                 <div class="icon">
                                                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -69,9 +72,12 @@
 </svg>
 
                                                 </div>
-                                                <p (click)="toggle(lonelinees)">
+                                                <div >
+ <p >
                                                     {{lonelinees.title}}
                                                 </p>
+                                                </div>
+                                               
                                             </div>
                                         </div>
                                     

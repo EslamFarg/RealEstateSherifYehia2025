@@ -1,7 +1,7 @@
 <div class="mb-3">
 <div class="search_forms_container">
             <div class="search_container">
-                  <input type="text" placeholder="بحث" (keydown.enter)="SearchAboutData(searchVal)"  [formControl]="fc"  (paste)="onPaste($event)" #searchVal [style.backgroud]="''" class="form-control" (keydown)="valueSearch(searchVal.value)">
+                  <input type="text" placeholder="بحث" (input)="SearchInVal($event)"  (keydown.enter)="SearchAboutData(searchVal)"  [formControl]="fc"  (paste)="onPaste($event)" #searchVal [style.backgroud]="''" class="form-control" (keydown)="valueSearch(searchVal.value)">
                   <div class="icons_search">    
 
                     <div class="filter_data" (click)="showFilterData=!showFilterData ">
@@ -38,6 +38,17 @@
 
                     </div>
                   </div>
+
+            
+                  <div class="auto_complete_container"  [ngClass]="{'active':this.showAutocomplete}">
+                      <ul>
+                        @for (item of filteredList; track $index) {
+                        <li (click)="selectedUser(item)">{{item.fullName}}</li>  
+                        }
+                        
+                      </ul>
+                  </div>
+
             </div>
 </div>
 </div>

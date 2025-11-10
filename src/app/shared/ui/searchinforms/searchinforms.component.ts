@@ -1,16 +1,20 @@
-import { NgClass } from '@angular/common';
-import { Component, ElementRef, EventEmitter, HostListener, inject, Input, Output, ViewChild } from '@angular/core';
+import { NgClass, NgFor, NgIf } from '@angular/common';
+import { Component, DestroyRef, ElementRef, EventEmitter, HostListener, inject, Input, Output, ViewChild } from '@angular/core';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ToastrService } from '../toastr/services/toastr.service';
+import { AuthService } from '../../../pages/auth/services/auth.service';
+import { SearchinformsService } from './services/searchinforms.service';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-searchinforms',
   templateUrl: './searchinforms.component.html',
   styleUrl: './searchinforms.component.scss',
   standalone:true,
-  imports:[NgClass,FormsModule,ReactiveFormsModule]
+  imports:[NgClass,FormsModule,ReactiveFormsModule,NgFor,NgIf]
 })
 export class SearchinformsComponent {
+  searchInFormsServices=inject(SearchinformsService)
 showFilterData=false;
 selectIndex:any=0
 @Input() backgroundForm:any;
@@ -21,7 +25,8 @@ selectIndex:any=0
 @Output() selectedDataFilter=new EventEmitter()
 DataValue:any
 toastr:ToastrService=inject(ToastrService)
-
+@Input() autoList: any[] = [];
+destroyRef:DestroyRef=inject(DestroyRef)
 // @
 
 
@@ -90,5 +95,62 @@ this.DataValue=val;
 }
 
 
+filteredList: any[] = [];
+showAutocomplete: boolean = false;
+
+ngOnInit(){
+  this.getAllDataUser();
+}
+
+getDatausers:any=[]
+
+
+getAllDataUser(){
+    this.searchInFormsServices.getAllDataUsers().pipe((takeUntilDestroyed(this.destroyRef))).subscribe((res:any)=>{
+      this.getDatausers=res;
+      console.log(this.getDatausers);
+    })
+}
+
+
+
+
+SearchInVal(e:any){
+  const val = e.target.value?.trim();
+
+  if(!val){
+    this.showAutocomplete = false;
+    this.filteredList = [];
+    return;
+  }
+
+  if(this.selectIndex === 0){
+    this.filteredList = this.getDatausers.filter((item:any) =>
+      item?.fullName?.toLowerCase().includes(val.toLowerCase())
+    );
+  } else if(this.selectIndex === 1){ 
+    this.filteredList = this.getDatausers.filter((item:any) =>
+      item?.phoneNumber?.toString().includes(val)
+    );
+  } 
+
+
+  this.showAutocomplete = this.filteredList.length > 0;
+}
+
+
+
+@Output() selectedUserId=new EventEmitter();
+selectedUser(item:any){
+
+
+  this.showAutocomplete = false;
+  this.filteredList = [];
+  this.searchVal.nativeElement.value=item.fullName
+
+  
+  this.selectedUserId.emit(item.userId);
+
+}
 
 }

@@ -6,6 +6,8 @@ import { TerminationcontractComponent } from './terminationcontract.component';
 import { PageHeadingComponent } from '../../../../shared/ui/page-heading/page-heading.component';
 import { NgbAccordionModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgSelectModule } from '@ng-select/ng-select';
+import { ReactiveFormsModule } from '@angular/forms';
+import { DirectivesModule } from "../../../../shared/directives/directives.module";
 
 
 
@@ -19,7 +21,8 @@ import { NgSelectModule } from '@ng-select/ng-select';
     PageHeadingComponent,
     NgbAccordionModule,
     NgSelectModule,
-    
+    ReactiveFormsModule,
+    DirectivesModule
 ]
 })
 export class TerminationcontractModule { }

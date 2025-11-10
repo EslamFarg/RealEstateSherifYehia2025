@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, inject } from '@angular/core';
+import { ChangeDetectorRef, Component, DestroyRef, inject } from '@angular/core';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
 import { SearchmsgComponent } from '../../ui/searchmsg/searchmsg.component';
@@ -7,6 +7,8 @@ import { SharedService } from '../../services/shared.service';
 import { SendmessageService } from '../../../pages/dashboard/messages/sendmessage/services/sendmessage.service';
 import { NgIf } from '@angular/common';
 import { ToastrService } from '../../ui/toastr/services/toastr.service';
+import { EditBehaviorServiceService } from '../../services/edit-behavior-service.service';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 
 @Component({
@@ -25,12 +27,14 @@ showPopup=false;
 searchdataCheckRealtor:any=[];
 _sendMessageServices:SendmessageService=inject(SendmessageService)
 toastr:ToastrService=inject(ToastrService);
+editBehaviorSubject:EditBehaviorServiceService=inject(EditBehaviorServiceService);
 
 intervalId:any
 
 errorMsgWithMessage:any;
 realtorMsgErrorMsg:any
 methodMsgSend:any
+destroyRef:DestroyRef=inject(DestroyRef);
 
 
 sendMessageForm=this.fb.group({
@@ -49,8 +53,14 @@ dateTimeObj = {
   };
 
 
+  
+
+
 showPopupRealtor=false
  cdr:ChangeDetectorRef=inject(ChangeDetectorRef)
+
+
+
 
 arrDataCheck(val:any){
 
@@ -77,6 +87,7 @@ showMsg(val:any){
 
  this.sendMessageForm.patchValue({
   messageText: this.msgDataDescription1
+  
  })
   
  this.cdr.detectChanges(); 
@@ -96,6 +107,48 @@ openPopupMsg(){
 
 ngOnInit(){
 
+  this.editBehaviorSubject.idSubscribe.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((id:any)=>{
+
+    if(id){
+      this._sendMessageServices.redirectSearch(id).pipe(takeUntilDestroyed(this.destroyRef)).subscribe((res:any)=>{
+
+        console.log("AllData",res)
+        this.sendMessageForm.patchValue({
+          messageText: res.messageText,
+          useEmail: res.useEmail,
+          useWhatsApp: res.useWhatsApp,
+          useSms: res.useSms,
+          contacts:res.contacts.map((item:any)=>{
+            return {
+            id: item.id,
+      name: item.name,
+      phone: item.phone,
+      email: item.email,
+      refId: res.refId,
+      typeType: res.typeType
+
+            }
+          })
+        })
+
+
+        
+
+        console.log(res)
+        this.msgDataDescription1 = res.messageText;
+        this.searchdataCheckRealtor=res.contacts
+        console.log(this.searchdataCheckRealtor)
+                this.getMsgCount();
+        
+      })
+
+    }else{
+      // 
+    }
+    
+
+  })
+
   this.updateDateTime();
   console.log(this.msgDataDescription1.length);
 
@@ -107,15 +160,24 @@ ngOnInit(){
 
 }
 
-getMsgCount(){
-  // if(this.msgDataDescription1){
-  //   return this.msgDataDescription1.length
-  // }
-  if(this.msgDataDescription1.length <= 0){
-    return '0';
+// getMsgCount(){
+//   // if(this.msgDataDescription1){
+//   //   return this.msgDataDescription1.length
+//   // }
+//   if(this.msgDataDescription1.length <= 0){
+//     return '0';
+//   }
+//   const count=Math.ceil(this.msgDataDescription1.length / 48);
+//   return count
+// }
+
+
+getMsgCount(): number {
+  if (!this.msgDataDescription1 || this.msgDataDescription1.length === 0) {
+    return 0;
   }
-  const count=Math.ceil(this.msgDataDescription1.length / 48);
-  return count
+  const charsPerMessage = 48; // عدد الحروف لكل رسالة SMS
+  return Math.ceil(this.msgDataDescription1.length / charsPerMessage);
 }
 
 
@@ -147,6 +209,8 @@ onSubmit(){
   contacts:this.searchdataCheckRealtor
     }
     // console.log("YEEEEES")
+
+    console.log(data);
     this._sendMessageServices.sendDataMessageGroup(data).subscribe((res:any)=>{
       this.toastr.show('تم ارسال الرساله بنجاح','success');
       this.sendMessageForm.reset(
@@ -159,6 +223,8 @@ onSubmit(){
         }
       );
       this.searchdataCheckRealtor=[]
+      this.msgDataDescription1=''
+      this.getMsgCount();
       // console.log(res);
     
     
@@ -185,12 +251,32 @@ onSubmit(){
 }
 
 
-writeMessage(e:any){
-  if(e.target.value == '' && this.msgDataDescription1 == ''){
-    this.errorMsgWithMessage='الرساله مطلوب';
-  } 
+// writeMessage(e:any){
+//   if(e.target.value == '' && this.msgDataDescription1 == ''){
+//     this.errorMsgWithMessage='الرساله مطلوب';
+//   }else {
+//     this.errorMsgWithMessage='';
+//   }
+
+//   const messageCount = this.getMsgCount();
+//   console.log('عدد الرسائل:', messageCount);
+//   // this.getMsgCount();
+
   
   
+// }
+
+writeMessage(e: any) {
+  this.msgDataDescription1 = e.target.value;
+  if (this.msgDataDescription1.trim() === '') {
+    this.errorMsgWithMessage = 'الرساله مطلوب';
+  } else {
+    this.errorMsgWithMessage = '';
+  }
+
+  // تحديث عدد الرسائل
+  const messageCount = this.getMsgCount();
+  console.log('عدد الرسائل:', messageCount);
 }
 
 requiredMsg(){

@@ -6,6 +6,7 @@ import { ExplorersendmessageComponent } from './explorersendmessage.component';
 import { PageHeadingComponent } from '../../../../../shared/ui/page-heading/page-heading.component';
 import { SearchDataComponent } from '../../../../../shared/ui/search-data/search-data.component';
 import { PaginationComponent } from '../../../../../shared/ui/pagination/pagination.component';
+import { EmptytableComponent } from '../../../../../shared/ui/emptytable/emptytable.component';
 
 
 @NgModule({
@@ -17,7 +18,8 @@ import { PaginationComponent } from '../../../../../shared/ui/pagination/paginat
     ExplorersendmessageRoutingModule,
     PageHeadingComponent,
     SearchDataComponent,
-    PaginationComponent
+    PaginationComponent,
+    EmptytableComponent
   ]
 })
 export class ExplorersendmessageModule { }
