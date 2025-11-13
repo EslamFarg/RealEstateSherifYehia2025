@@ -1,0 +1,97 @@
+.date_time {
+  text-align: end;
+  color: #16601A;
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 20px !important;
+}
+
+.data_tenant.form-control {
+  line-height: 0;
+  height: 104px !important;
+  background-color: #FBFBFB !important;
+  padding: 20px 10px;
+  margin-bottom: 20px !important;
+}
+
+#msgText.form-control {
+  min-height: 124px !important;
+  padding: 20px 10px;
+}
+
+.countMsg1 {
+  color: #16601A;
+  font-weight: 700;
+}
+
+.countMsg2 {
+  color: #16601A;
+  font-weight: 700;
+  text-align: end;
+  margin: 10px 0px !important;
+}
+
+.tarekasend input {
+  width: 16px !important;
+  height: 16px !important;
+}
+.tarekasend input:checked {
+  background-color: #4C6D5F;
+  border: 0 !important;
+  box-shadow: none;
+}
+
+.parent_textareaTenant {
+  position: relative;
+}
+.parent_textareaTenant .boxes {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+.parent_textareaTenant .boxes .box {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  padding: 4px 8px;
+  background-color: #E0ECE1;
+  border-radius: 4px;
+}
+.parent_textareaTenant .boxes .box .delete {
+  cursor: pointer;
+}
+
+.links_msg {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+  margin-bottom: 20px !important;
+}
+.links_msg li a {
+  color: #86AC88;
+  font-weight: 700;
+  font-size: 18px;
+  position: relative;
+}
+.links_msg li a.active {
+  color: #16601A !important;
+}
+.links_msg li a.active::after {
+  content: "";
+  position: absolute;
+  left: 53%;
+  transform: translateX(-50%);
+  bottom: -10px;
+  width: 80%;
+  background-color: #16601A;
+  height: 4px;
+  border-radius: 4px;
+}
+
+.forms_dashboard {
+  margin-top: 40px !important;
+}/*# sourceMappingURL=sendsms.component.css.map */

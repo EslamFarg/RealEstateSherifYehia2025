@@ -27,21 +27,45 @@
 
         <div class="col-sm-12 col-lg-4">
             <div class="mb-3">
-                    <label for="phoneOwner" class="form-label">رقم الجوال</label>
-                    <input type="text" appNoStringPaste class="form-control" maxlength="14" id="phoneOwner" placeholder="رقم الجوال" formControlName="Mobile">
-                    <ng-container *ngIf="ownerData.controls['Mobile'].invalid && ownerData.controls['Mobile'].touched">
+                    <label for="phoneOwner" class="form-label d-block">رقم الجوال</label>
+                  <!-- <ngx-intl-tel-input
+    [cssClass]="'form-control'"
+    [preferredCountries]="['sa', 'eg']"
+    [enableAutoCountrySelect]="true"
+    [enablePlaceholder]="false"
+    [customPlaceholder]="'رقم الجوال'"
+    [searchCountryFlag]="true"
+    
+    [selectFirstCountry]="false"
+    [maxLength]="14"
+   [separateDialCode]="true"
+   (change)="onPhoneInput($event)"
+     (countryChange)="onCountryChange($event)"
+    
+    formControlName="Mobile"
+  ></ngx-intl-tel-input> -->
+
+  <!-- [separateDialCode]="true" -->
+  <!-- [searchCountryField]="['iso2', 'name']" -->
+    <!-- [tooltipField]="'name'" -->
+    <!-- [numberFormat]="1" -->
+  
+  <input type="text" appNoStringPaste class="form-control" maxlength="14" id="phoneOwner" placeholder="رقم الجوال" formControlName="Mobile">
+              <ng-container *ngIf="ownerData.controls['Mobile'].invalid && ownerData.controls['Mobile'].touched">
                         <small class="error_msg_form" *ngIf="ownerData.controls['Mobile'].hasError('required')" >رقم الجوال مطلوب</small>
-                        <small class="error_msg_form" *ngIf="ownerData.controls['Mobile'].hasError('saudiPhoneInvalid')" >
+                      <small class="error_msg_form" *ngIf="ownerData.controls['Mobile'].hasError('saudiPhoneInvalid')" >
                             {{ ownerData.controls['Mobile'].getError('saudiPhoneInvalid') }}
                         </small>
                     </ng-container>
             </div>
+                  
         </div>
         <div class="col-sm-12 col-lg-4">
             <div class="mb-3">
                     <label for="emailOwner" class="form-label">البريد الالكتروني</label>
                     <input type="email" class="form-control" id="emailOwner" placeholder="البريد الالكتروني" formControlName="Email">
                     <ng-container *ngIf="ownerData.controls['Email'].invalid && ownerData.controls['Email'].touched">
+                        <small class="error_msg_form" *ngIf="ownerData.controls['Email'].hasError('required')" >البريد الالكتروني مطلوب</small>
                         <small class="error_msg_form" *ngIf="ownerData.controls['Email'].hasError('inValidEmail')" >  {{ ownerData.get('Email')?.errors?.['inValidEmail'] }}</small>
                     </ng-container>
             </div>
@@ -49,7 +73,7 @@
         <div class="col-sm-12 col-lg-4">
             <div class="mb-3">
                     <label for="idNational" class="form-label">رقم الهويه</label>
-                    <input type="text" class="form-control" appNoStringPaste id="idNational" maxlength="10" placeholder="رقم الهويه" formControlName="NationalID">
+                    <input type="text" class="form-control" appNoStringPaste id="idNational" maxlength="14" placeholder="رقم الهويه" formControlName="NationalID">
                     <ng-container *ngIf="ownerData.controls['NationalID'].invalid && ownerData.controls['NationalID'].touched">
                         <small class="error_msg_form" *ngIf="ownerData.controls['NationalID'].hasError('required')" >رقم الهويه مطلوب</small>
                         <small class="error_msg_form" *ngIf="ownerData.controls['NationalID'].hasError('minlength')" >

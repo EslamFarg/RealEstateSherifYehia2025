@@ -2,6 +2,7 @@ import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
 import { PopupAttachmentsComponent } from '../popup-attachments/popup-attachments.component';
 import { ToastrService } from '../toastr/services/toastr.service';
 import { ToastrComponent } from "../toastr/toastr.component";
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 // import { ToastrComponent } from '../toastr/toastr.component';
 
 @Component({

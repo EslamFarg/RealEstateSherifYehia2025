@@ -1,0 +1,139 @@
+.form_group_search {
+  position: relative;
+}
+.form_group_search .search_number_sanad {
+  position: absolute;
+  left: 8px;
+  top: 8%;
+  cursor: pointer;
+}
+
+.btns_add_edit {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 13px;
+  flex-wrap: wrap;
+}
+@media (max-width: 768px) {
+  .btns_add_edit {
+    gap: 10px !important;
+  }
+}
+.btns_add_edit button {
+  min-width: 113px;
+  height: 32px;
+  border-radius: 4px;
+  border: 1px solid #16601A;
+  background-color: transparent;
+  color: #16601A;
+  font-size: 14px;
+  font-weight: 700;
+  margin: 10px 0px !important;
+}
+.btns_add_edit button[data-type=save] {
+  border: 0 !important;
+  color: white;
+  background-color: #16601A !important;
+}
+
+@media (max-width: 768px) {
+  .title-page {
+    font-size: 12px;
+  }
+}
+@media (max-width: 768px) {
+  .title-page img {
+    margin: 0px 10px !important;
+  }
+}
+@media (max-width: 768px) {
+  .title-page span {
+    font-size: 12px !important;
+  }
+}
+
+.btn_addTenant {
+  transition: 0.6s;
+  width: 220px;
+  height: 44px;
+  text-align: center;
+  line-height: 44px;
+  border-radius: 4px;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 700;
+  color: #ffffff;
+  background-color: #D4AF37;
+}
+.btn_addTenant i {
+  margin-left: 5px;
+}
+@media (max-width: 767px) {
+  .btn_addTenant {
+    width: 170px;
+    font-size: 12px;
+  }
+}
+
+.modal_popup {
+  width: 430px;
+  height: 352px;
+  background-color: #FFFFFF;
+  border-radius: 15px;
+  padding: 16px 32px 16px 32px;
+  position: relative;
+  z-index: 900000000;
+}
+@media (max-width: 768px) {
+  .modal_popup {
+    width: 80% !important;
+  }
+}
+
+.modal_overlay {
+  position: fixed;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 900000000;
+  opacity: 0;
+  visibility: hidden;
+  transition: 0.3s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.modal_overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+.modal_overlay .table-responsive {
+  max-height: 187px !important;
+}
+.modal_overlay .head_popup {
+  text-align: left;
+  margin-bottom: 16px;
+}
+.modal_overlay .head_popup svg {
+  cursor: pointer;
+}
+.modal_overlay .body_popup h4 {
+  text-align: center;
+  font-size: 16px;
+  color: #1B803D;
+  font-weight: 700;
+}
+.modal_overlay .body_popup .table-responsive table tr {
+  min-width: 100px !important;
+}
+.modal_overlay .body_popup .table-responsive table tr:nth-child(1) td {
+  border: 0 !important;
+}
+
+.check_box:checked {
+  background-color: #4C6D5F;
+  border: 0;
+}/*# sourceMappingURL=printemployee.component.css.map */

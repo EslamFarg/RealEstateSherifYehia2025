@@ -1,0 +1,29 @@
+@charset "UTF-8";
+/* ضبط الحقول داخل الفورم */
+.forms_dashboard .form-control {
+  position: relative !important;
+}
+
+.forms_dashboard {
+  min-height: 50px !important;
+}
+
+/* تنسيق رسالة الخطأ */
+.error_msg_form {
+  position: absolute !important;
+  bottom: -33px !important;
+  right: 15px !important;
+  white-space: nowrap !important; /* تمنع السطر من النزول تحت */
+}
+
+/* لضمان أن الحاوية فيها مساحة للخطأ */
+.mb-3 {
+  position: relative !important;
+  margin-bottom: 2.2rem !important; /* نزيد شويه المسافة عشان الخطأ يظهر بوضوح */
+}
+
+/* في حال كانت اللغة إنجليزية */
+html[dir=ltr] .error_msg_form {
+  left: 0;
+  right: auto;
+}/*# sourceMappingURL=programsettings.component.css.map */

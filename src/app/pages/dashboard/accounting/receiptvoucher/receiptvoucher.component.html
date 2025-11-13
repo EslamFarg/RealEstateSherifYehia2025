@@ -34,7 +34,7 @@
         <div class="col-sm-12 col-lg-6 mb-3">
             <label for="" class="form-label">الصندوق / البنك</label>
             <!-- <input type="text"> -->
-             <ng-select [items]="getAllDataAccount" bindLabel="name" bindValue="financiallyAccountId"  placeholder="صندوق / بنك" formControlName="debitAccountId"></ng-select>
+             <ng-select [items]="getAllDataAccount" bindLabel="name" bindValue="financiallyAccountId" (change)="changeBank($event)"  placeholder="صندوق / بنك" formControlName="debitAccountId"></ng-select>
              <app-formerror-msg [control]="receiptForm.controls['debitAccountId']" [Messages]="{
                required:'الصندوق / البنك مطلوب'
 
@@ -53,7 +53,7 @@
          <div class="col-sm-12 mb-3">
             <label for="" class="form-label">الحساب</label>
             <!-- <input type="text"> -->
-             <ng-select [items]="getAllDataFinancialAccount" bindLabel="name" bindValue="id"  placeholder="الحساب" formControlName="creditAccountId"></ng-select>
+             <ng-select [items]="getAllDataFinancialAccount" bindLabel="name" bindValue="id" (change)="onChanges($event)"  placeholder="الحساب" formControlName="creditAccountId"></ng-select>
              <app-formerror-msg [control]="receiptForm.controls['creditAccountId']" [Messages]="{
                required:'الحساب مطلوب'
 
@@ -100,7 +100,7 @@
     @for (item of receiptVouchersData.rows; track $index) {
 <tr>
       <td scope="row">{{$index + 1}}</td>
-      <td>{{item.voucherNo}}</td>
+      <td>{{item.id}}</td>
       <td>{{item.voucherDate.split('T')[0]}}</td>
       <td>{{item.debitAccountName}} </td>
       <td>{{item.creditAccountName}}</td>

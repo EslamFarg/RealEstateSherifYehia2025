@@ -41,7 +41,19 @@ treeProperty:any=[];
 
   AllDataTreeProperty:any=[]
   getAllDataPropertyTree(){
-  this.treeRealServices.getDataPropertyTree().pipe(takeUntilDestroyed(this.destroyRef)).subscribe((res:any)=>{
+//     let pagination={
+//   "criteriaDto": {
+//     "paginationInfo": {
+//       "pageIndex": 0,
+//       "pageSize": 0
+//     }
+//   },
+//   "searchFilter": {
+//     "column": 0,
+//     "value": "string"
+//   }
+// }
+  this.treeRealServices.getDataPropertyTree({}).pipe(takeUntilDestroyed(this.destroyRef)).subscribe((res:any)=>{
     // console.log(res);
 
     this.treeProperty=res.map((item:any)=>{

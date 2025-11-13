@@ -112,6 +112,7 @@ export class AddSalaryDisbursementComponent {
 
 btnAddandUpdate='add'
 idUpdateAndDelete:any
+canShowAdd=true;
 
 
 
@@ -192,7 +193,7 @@ calculateNetPay() {
     // const absenceDeduction = Number(values.absenceDeduction) || 0; 
       const absenceDays = Number(values.absenceDays) || 0;
 
-     const absenceDeduction = absenceDays * 20;  // ✅ اليوم = 20 ريال
+     const absenceDeduction = absenceDays ;  // ✅ اليوم = 20 ريال
 
     // const net = salary - absenceDeduction - loanRepayment - penalties + rewards;
 
@@ -231,11 +232,14 @@ if(this.btnAddandUpdate=='add'){
 
     this.salaryDisbursementService.createPayrollVoucher(this.formExchange.value).pipe(takeUntilDestroyed(this.destroyRef)).subscribe((res:any)=>{
       this.toastr.show('تم انشاء البيانات بنجاح','success');
-      this.btnAddandUpdate='update';
+      this.btnAddandUpdate='add';
       this.formExchange.get('voucherNo')?.setValue(res);
+      this.employeesSalary=[];
+      this.formExchange.reset();
       this.idUpdateAndDelete=res;
       console.log(res);
       this.showCanBtns=true
+      
     })
 }else{
   // Update
@@ -279,6 +283,12 @@ const lineData = { ...this.FormLines.value,
   // 2) أضف السطر لـ FormArray
   this.lines.push(this.fb.group(lineData));
 
+  if (this.employeesSalary.length > 0) {
+    this.formExchange.get('month')?.disable();
+  }else{
+    this.formExchange.get('month')?.enable();
+  }
+
     this.FormLines.reset();
 
 
@@ -292,8 +302,12 @@ const lineData = { ...this.FormLines.value,
 
 deleteItem(i:any){
 
+
   this.employeesSalary.splice(i,1); 
 
+  if(this.employeesSalary.length==0){
+    this.formExchange.get('month')?.enable();
+  }  
 }
 
 changeEmployees(e:any){
@@ -359,10 +373,11 @@ searchById(valSearchById: any) {
     });
     console.log(res);
     this.employeesSalary=res.lines;
-    this.btnAddandUpdate='update';
+    this.btnAddandUpdate='add';
     this.idUpdateAndDelete=res.id
     this.formExchange.get('voucherNo')?.patchValue(res.id);
-    this.showCanBtns=true
+    this.showCanBtns=true;
+    this.canShowAdd=false;
   });
 
 }

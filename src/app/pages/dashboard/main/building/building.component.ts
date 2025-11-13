@@ -48,7 +48,7 @@ export class BuildingComponent {
   showDelete:any=false;
 
   formProperty:any=this.fb.group({
-    PropertyNumber:['',[Validators.required,Validators.minLength(3)]],
+    PropertyNumber:[''],
     Name:['',[Validators.required,Validators.minLength(3),checkUsername.ValidationUsername()]],
     OwnerID:[null,[Validators.required]],
     City:[null,[Validators.required]],
@@ -166,7 +166,9 @@ export class BuildingComponent {
 
       })
       this._BuildingServices.createProperty(formData).pipe(takeUntilDestroyed(this.$destroyRef)).subscribe((res:any)=>{
-       this.resetForm();
+      //  this.resetForm(
+      //  console.log(res);
+        this.formProperty.get('PropertyNumber')?.setValue(res.id);
         this.toastr.show('تم اضافه العقار بنجاح','success');
         this.getAllDataProperties();
       })       
@@ -259,7 +261,7 @@ getUpdateData(id:any){
   this._BuildingServices.getDataUpdate(id).pipe(takeUntilDestroyed(this.$destroyRef)).subscribe((res:any)=>{
     this.formProperty.patchValue({
       Name:res.name,
-      PropertyNumber:res.buildingNumber,
+      PropertyNumber:res.id,
       OwnerID:res.ownerID,
       City:res.city,
       District:res.district,
@@ -323,7 +325,9 @@ deleteConfirmed(id:any){
   this.showDelete=false;
   this._BuildingServices.deleteData(id).pipe(takeUntilDestroyed(this.$destroyRef)).subscribe((res:any)=>{
     this.toastr.show('تم حذف العقار بنجاح','success');
+    this.resetForm();
     this.getAllDataProperties();
+    
   })
 
 }
@@ -333,6 +337,17 @@ showDeletePopup(id:any){
   this.deleteId=id;
   this.showDelete=true
 
+}
+
+searchData(val:any){
+
+ if(!val){
+  this.resetForm();
+  return;
+ }
+
+  this.getUpdateData(val);
+  val='';
 }
 
 }

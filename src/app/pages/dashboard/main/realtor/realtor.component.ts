@@ -74,6 +74,7 @@ pageSize=10
 
 
 
+ 
 
 //
 //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! methods !!!!!!!!!!!!!!!!!!!!!!!!1
@@ -295,6 +296,8 @@ deleteConfirmed(id:any){
   this._BrokerServices.deleteData(id).pipe(takeUntilDestroyed(this.$destroyRef)).subscribe((res:any)=>{
     this.toastr.show('تم حذف السمسار بنجاح','success');
     this.getAllDataRealtor();
+    this.resetData();
+    this.BrokerData.reset();
   })
 
 }

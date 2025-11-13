@@ -8,6 +8,7 @@ import { SearchinformsComponent } from '../../../../shared/ui/searchinforms/sear
 import { NgSelectModule } from '@ng-select/ng-select';
 import { NgbAccordionModule } from '@ng-bootstrap/ng-bootstrap';
 import { EmptytableComponent } from '../../../../shared/ui/emptytable/emptytable.component';
+import { PaginationComponent } from '../../../../shared/ui/pagination/pagination.component';
 
 
 @NgModule({
@@ -21,7 +22,8 @@ import { EmptytableComponent } from '../../../../shared/ui/emptytable/emptytable
     SearchinformsComponent,
     NgSelectModule,
     NgbAccordionModule,
-    EmptytableComponent
+    EmptytableComponent,
+    PaginationComponent
   ]
 })
 export class ContractdetailsModule { }

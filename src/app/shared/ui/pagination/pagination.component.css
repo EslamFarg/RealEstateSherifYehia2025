@@ -1,0 +1,127 @@
+@media (max-width: 992px) {
+  .pagination_page_style {
+    margin-top: 30px !important;
+  }
+}
+
+.pagination-wrapper {
+  overflow-x: auto;
+  max-width: 100%;
+  -webkit-overflow-scrolling: touch;
+  padding: 0;
+  margin: 0;
+}
+.pagination-wrapper::-webkit-scrollbar {
+  height: 8px;
+}
+.pagination-wrapper::-webkit-scrollbar-thumb {
+  background-color: #16601A;
+  border-radius: 10px;
+}
+.pagination-wrapper::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.pagination {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: flex-start;
+  padding-left: 0;
+  list-style: none;
+  border-radius: 8px;
+  flex-wrap: nowrap;
+  margin-bottom: 0 !important;
+  min-width: auto;
+}
+.pagination .page-item {
+  margin: 0 2px;
+  margin-bottom: 8px;
+  margin-bottom: 0 !important;
+}
+.pagination .page-item .page-link {
+  color: #16601A;
+  background-color: #ffffff;
+  border: 1px solid #CECECE;
+  border-radius: 4px;
+  padding: 6px 12px;
+  font-weight: 600;
+  transition: 0.3s ease;
+}
+.pagination .page-item .page-link:hover {
+  background-color: #16601A;
+  color: #ffffff;
+  border-color: #16601A;
+}
+.pagination .page-item.active .page-link {
+  background-color: #16601A;
+  color: #ffffff;
+  border-color: #16601A;
+}
+.pagination .page-item.disabled .page-link {
+  color: #ffffff !important;
+  background-color: #16601A;
+  border-color: #CECECE;
+  cursor: not-allowed;
+}
+
+.max-pagination {
+  max-width: 200px;
+  display: flex;
+  align-items: center;
+  flex-direction: row-reverse;
+  overflow-x: auto;
+  white-space: nowrap;
+}
+.max-pagination::-webkit-scrollbar {
+  height: 6px;
+}
+.max-pagination::-webkit-scrollbar-thumb {
+  background-color: #16601A;
+  border-radius: 10px;
+}
+.max-pagination::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.btn-previous,
+.btn-next {
+  width: 27px !important;
+  height: 40px !important;
+  border-radius: 2px;
+  background-color: transparent;
+  border: 1px solid #16601A;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: 0.3s ease;
+  text-decoration: none;
+  color: #16601A;
+}
+.btn-previous:hover,
+.btn-next:hover {
+  background-color: #16601A;
+  color: white;
+}
+
+.circle_pagination {
+  width: 30px !important;
+  height: 30px !important;
+  border-radius: 50% !important;
+  border: 1px solid #BED2BF !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  margin: 0px 4px;
+  flex: 0 0 auto;
+}
+.circle_pagination.active {
+  background-color: #16601A;
+  border-color: #16601A;
+}
+.circle_pagination.active a {
+  color: white;
+}
+.circle_pagination a {
+  color: #619363;
+}/*# sourceMappingURL=pagination.component.css.map */

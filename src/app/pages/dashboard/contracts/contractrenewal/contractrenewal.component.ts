@@ -31,27 +31,11 @@ export class ContractrenewalComponent {
 paymentMethods=[
   {
     id:1,
-    name:'شهر'
+    name:'كاش'
   },
   {
     id:2,
-    name:'شهرين'
-  },
-  {
-    id:3,
-    name:'ثلاث شهور'
-  },
-  {
-    id:3,
-    name:'اربع شهور'
-  },
-  {
-    id:4,
-    name:'خمس شهور'
-  },
-  {
-    id:5,
-    name:'ست شهور'
+    name:'فيزا'
   }
 ]
 
@@ -192,6 +176,8 @@ ngOnInit(): void {
 this.contractsForm.patchValue({
    ContractPlace: res.contractPlace,
    ContractDate: res.contractDate,
+//    LeaseStartDate: res.leaseStartDate,
+// LeaseEndDate: res.leaseEndDate,
 
    LeaseMonths: res.leaseMonths,
    BookNumber: res.bookNumber,
@@ -217,7 +203,10 @@ this.contractsForm.patchValue({
 });
 
 
+
 this.contractsForm.patchValue({ BrokerCommission: 0 });
+
+this.unitMonthlyPrice = Number(res.unit?.price || 0);
 
 // ✅ إعادة حساب الصافي
 this.getNet();
@@ -272,28 +261,52 @@ this.showBtns = true;
     this.monthsList = [];
     return;
 }
-    if(res.LeaseStartDate && res.LeaseEndDate){
-      let startDate=new Date(res.LeaseStartDate);
-      let endDate=new Date(res.LeaseEndDate);
-      let monthsCount1:any=this.getMonthsDiff(startDate,endDate);
-      this.contractsForm?.patchValue(
-          { LeaseMonths: monthsCount1 },
-          { emitEvent: false }
-      );
-      this.monthsList = this.getMonthsList(startDate, endDate);
+    // if(res.LeaseStartDate && res.LeaseEndDate){
+    //   let startDate=new Date(res.LeaseStartDate);
+    //   let endDate=new Date(res.LeaseEndDate);
+    //   let monthsCount1:any=this.getMonthsDiff(startDate,endDate);
+    //   this.contractsForm?.patchValue(
+    //       { LeaseMonths: monthsCount1 },
+    //       { emitEvent: false }
+    //   );
+    //   this.monthsList = this.getMonthsList(startDate, endDate);
         
-    }
+    // }
 
-     if (res.LeaseMonths && this.unitMonthlyPrice) {
-    const totalPrice = Number(res.LeaseMonths) * Number(this.unitMonthlyPrice);
+  //    if (res.LeaseMonths && this.unitMonthlyPrice) {
+  //   const totalPrice = Number(res.LeaseMonths) * Number(this.unitMonthlyPrice);
 
+  //   this.contractsForm.patchValue(
+  //     { ContractValue: totalPrice },
+  //     { emitEvent: false }
+  //   );
+  // } 
+
+  if(res.LeaseStartDate && res.LeaseEndDate){
+  let startDate=new Date(res.LeaseStartDate);
+  let endDate=new Date(res.LeaseEndDate);
+  let monthsCount1:any=this.getMonthsDiff(startDate,endDate);
+
+  this.contractsForm.patchValue(
+      { LeaseMonths: monthsCount1 },
+      { emitEvent: false }
+  );
+  this.monthsList = this.getMonthsList(startDate, endDate);
+
+  
+  if (this.unitMonthlyPrice) {
+    const totalPrice = monthsCount1 * Number(this.unitMonthlyPrice);
     this.contractsForm.patchValue(
       { ContractValue: totalPrice },
       { emitEvent: false }
     );
-  } 
+    this.getTaxes();
+    this.getTotal();
+  }
+}
 
-         this.getNet();
+
+        //  this.getNet();
   })
   
 
@@ -491,13 +504,23 @@ searchFilterUnit(val:any){
     }
    console.log(res);
    this.getAllDataUnitProperty=res.rows[0]
+
+
+         this.unitMonthlyPrice = Number(res.rows[0].price);
+
+      // ✅ الحصول على عدد الشهور الحالي
+      const months = Number(this.contractsForm.get('LeaseMonths')?.value || 0);
+
+      // ✅ حساب قيمة العقد = سعر الوحدة × عدد الشهور
+      let totalPrice = this.unitMonthlyPrice * months;
+
    
    this.formDataUnit.patchValue(this.getAllDataUnitProperty)
    console.log(this.getAllDataUnitProperty);
    this.contractsForm.patchValue({
     PropertyId: res.rows[0].propertyID,
     UnitId: res.rows[0].id,
-    ContractValue:res.rows[0].price
+    ContractValue:totalPrice
    })
    this.unitMonthlyPrice = Number(res.rows[0].price);
     this.getTaxes();

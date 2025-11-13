@@ -266,4 +266,16 @@ onClose(){
   this.showDelete=false;
 }
 
+
+onChanges(e:any){
+  console.log(e)
+
+}
+
+
+changeBank(e:any){
+  console.log(e);
+
+}
+
 }

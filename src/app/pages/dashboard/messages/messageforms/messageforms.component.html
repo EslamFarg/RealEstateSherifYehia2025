@@ -46,7 +46,7 @@
         <tr>
             <td>{{$index+1}}</td>
             <td>{{item.name}}</td>  
-            <td>{{item.body}}</td>
+            <td [title]="item.body" class="wrap-text">{{item.body}}</td>
             <td>
                 <div class="d-flex align-items-center justify-content-center">
 

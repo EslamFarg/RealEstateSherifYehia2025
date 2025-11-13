@@ -2,6 +2,8 @@ import { Component, DestroyRef, inject } from '@angular/core';
 import { OwnerpaymentvoucherService } from '../services/ownerpaymentvoucher.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ToastrService } from '../../../../../shared/ui/toastr/services/toastr.service';
+import { EditBehaviorServiceService } from '../../../../../shared/services/edit-behavior-service.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-explorerpaymentvoucher',
@@ -14,6 +16,8 @@ export class ExplorerpaymentvoucherComponent {
   _ownerPaymentVoucherSer:OwnerpaymentvoucherService=inject(OwnerpaymentvoucherService)
   destroyRef:DestroyRef=inject(DestroyRef)
   toastr:ToastrService=inject(ToastrService)
+  editBehaviorSubject:EditBehaviorServiceService=inject(EditBehaviorServiceService)
+  router:Router=inject(Router)
 
   // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1 Property
 
@@ -136,7 +140,7 @@ deleteConfirmed(id:any){
 
 
 goToEditPopup(id:any){
-  // this.
-
+ this.editBehaviorSubject.setId(id);
+ this.router.navigate(['/dashboard/paymentvoucher/addpaymentvoucher'])
 }
 }

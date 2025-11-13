@@ -1,0 +1,61 @@
+<app-page-heading [title]="'المستخدمين'" [subtitle]="'ربط المجموعه بالصلاحيات'"></app-page-heading>
+
+
+<form action="" class="forms_dashboard" [formGroup]="FormPermissionGroup" (ngSubmit)="onSubmit()">
+    <div class="row">
+        <div class="col-sm-6">
+            <label for="page" class="form-label">المجموعه</label>
+            <ng-select [items]="[]" [bindLabel]="'name'" placeholder="اسم المجموعه" [bindValue]="'id'" formControlName="groupName"></ng-select>
+            <!-- <ng-container *ngIf="groupForm.controls['groupName'].invalid && groupForm.controls['groupName'].touched">
+                <small class="error_msg_form" *ngIf="groupForm.controls['groupName'].hasError('required')" >اسم المجموعه مطلوب</small>
+            </ng-container> -->
+        </div>
+
+  
+      
+    </div>
+
+
+    <div>
+<div formArrayName="items">
+  <div class="row my-4" *ngFor="let item of items.controls; let i=index"  [formGroupName]="i">
+  <div class="col-sm-6 mb-3">
+            <label for="pages" class="form-label">الصفحات</label>
+            <ng-select [items]="[]" [bindLabel]="'name'" placeholder="اسم الصفحه" [bindValue]="'id'" formControlName="pages"></ng-select>
+            <!-- <ng-container *ngIf="groupForm.controls['pages'].invalid && groupForm.controls['pages'].touched">
+                <small class="error_msg_form" *ngIf="groupForm.controls['pages'].hasError('required')" >اسم الصفحه مطلوب</small>
+            </ng-container> -->
+        </div>
+  <div class="col-sm-6 mb-3">
+            <label for="permission" class="form-label">الصلاحيه</label>
+            <div class="w-100 d-flex" >
+
+ <ng-select [items]="[]" [bindLabel]="'name'"  style="width: 85%;" placeholder="اسم الصفحه" [bindValue]="'id'" formControlName="permissions"></ng-select>
+            
+ <!-- check if its last item in form array -->
+            @if ( i === items.length - 1) {
+     <button  type="button"  (click)="addPageAndPermission()" style="
+       
+        
+       width: 10%; margin-right: 10px; border: 0; border-radius: 8px; background-color: #88BD9A; color: #fff;">
+                <i class="fa fa-plus" aria-hidden="true"></i>
+            </button>
+            }
+       
+ 
+            </div>
+           
+        </div>
+        </div>
+    </div>
+        </div>
+    
+      
+        
+
+
+        <div class="btn_add_reset">
+        <button type="sumbit" data-button="send" [ngClass]="{'btnEdit':this.btnaddAndUpdate=='update','btnAdd':this.btnaddAndUpdate=='add'}">{{btnaddAndUpdate == 'add' ? 'اضافه' : 'تعديل'}}</button>
+        <button type="reset" data-button="reset">جديد</button>
+    </div>
+</form>

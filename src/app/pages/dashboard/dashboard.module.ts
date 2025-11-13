@@ -4,6 +4,8 @@ import { DashboardRoutingModule } from './dashboard-routing.module';
 import { DashboardComponent } from './dashboard.component';
 import { SharedModule } from '../../shared/components/shared.module';
 import { EmptytableComponent } from '../../shared/ui/emptytable/emptytable.component';
+import { BrowserModule } from '@angular/platform-browser';
+
 
 
 
@@ -12,12 +14,14 @@ import { EmptytableComponent } from '../../shared/ui/emptytable/emptytable.compo
 @NgModule({
   declarations: [
     DashboardComponent,
+   
     
   ],
   imports: [
     CommonModule,
     DashboardRoutingModule,
     SharedModule,
+
     // EmptytableComponent
   
   

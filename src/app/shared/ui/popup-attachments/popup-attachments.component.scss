@@ -4,10 +4,13 @@
 .overlay_popup{
    
     .popup_attachment{
-        @include width_height(397px,276px);
+        // @include width_height(45%,276px);
+        width: 45% !important;
+        min-height: 153px;
         background-color:$white_color ;
         border-radius: 15px;
         padding: 16px 32px 32px 32px;
+      
         @media (max-width:768px) {
             width: 90% !important;
             
@@ -28,7 +31,9 @@
 
         .content_info{
             overflow: scroll;
-            height: 200px;
+            // height: 200px;
+                min-height: 50px;
+                max-height: 145px;
                &::-webkit-scrollbar{
                     width: 2px !important;
                 }
@@ -43,16 +48,18 @@
                 margin-top: 20px;
                 background-color: #BED2BF;
                 border: 1px solid #86AC88;
-                height: 66px;
+                // height: 66px;
+                height: 44px;
                 border-radius: 4px;
                 padding: 0px 10px;
                 @include flex_box(flex,space-between,center,10px);
+
              
 
                 .content_img{
                     @include flex_box(flex,null,center,10px);
                     .square{
-                        @include square(50px,8px);
+                        @include square(20px,4px);
                         background-color: $main_color;
                     }
 

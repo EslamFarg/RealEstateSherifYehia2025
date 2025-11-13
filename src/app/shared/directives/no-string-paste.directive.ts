@@ -1,7 +1,7 @@
 import { Directive, ElementRef, HostListener } from '@angular/core';
 
 @Directive({
-  selector: '[appNoStringPaste]' 
+  selector: '[appNoStringPaste]' ,
 })
 export class NoStringPasteDirective {
   constructor(private el: ElementRef) {}

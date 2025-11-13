@@ -8,6 +8,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { SharedService } from '../../../../shared/services/shared.service';
 import { checkUsername } from '../../../../shared/validations/checkUsername';
 import { CheckEmail } from '../../../../shared/validations/emailValidation';
+import { PhoneValidator } from '../../../../shared/validations/phoneNumber2';
 
 @Component({
   selector: 'app-owner',
@@ -46,7 +47,7 @@ pageSize=10
   ownerData=this.fb.group({
     Name:['',[Validators.required,Validators.minLength(3),checkUsername.ValidationUsername()]],
     Mobile:['',[Validators.required,saudiPhoneValidator.phoneNumberValidator]],
-    Email:['',[CheckEmail.ValidationEmail()]],
+    Email:['',[Validators.required,CheckEmail.ValidationEmail()]],
     NationalID:['',[Validators.required,Validators.minLength(10)]],
     parentId: [null,[Validators.required]],
     financiallyAccountId: [0], 
@@ -92,6 +93,10 @@ this.getAllDataOwner();
 
 
 onSubmit(){
+
+
+  console.log(this.ownerData.value);
+  // debugger;
   if(this.ownerData.valid){
 
 
@@ -116,14 +121,32 @@ onSubmit(){
 
 
     this._ownerServices.createOwner(formData).pipe(takeUntilDestroyed(this.$destroyRef)).subscribe((res:any)=>{
-      this.ownerData.reset();
+      this.toastr.show('تم اضافه المالك بنجاح','success');
       this.btnAddAndUpdate='add'
+
+
+
+     
       this.dataFiles=[];
       this.idUpdate = null;
+      this.resetData();
+//  this.ownerData.reset({
+//     Name: '',
+//     Mobile: '',
+//     Email: '',
+//     NationalID: '',
+//     parentId: null,
+//     financiallyAccountId: 0,
+//     Files: null
+//   });
+
       this.idRemoveFiles = [];
-      this.toastr.show('تم اضافه المالك بنجاح','success');
+   
       
       this.getAllDataOwner();
+      this.ownerData.markAsPristine();
+this.ownerData.markAsUntouched();
+this.ownerData.updateValueAndValidity();
     })
     
     }else{
@@ -199,6 +222,7 @@ getAllDataOwner(){
 }
 
 OnDataFiles(ValueDataFiles:any){
+    this.dataFiles = ValueDataFiles;  
   this.ownerData.get('Files')?.setValue(ValueDataFiles);
  
 }
@@ -245,6 +269,9 @@ deleteConfirmed(e:any){
   this._ownerServices.deleteData(e).pipe(takeUntilDestroyed(this.$destroyRef)).subscribe((res:any)=>{
     this.toastr.show('تم حذف المالك بنجاح','success');
     this.getAllDataOwner();
+    this.ownerData.reset();
+    this.btnAddAndUpdate='add';
+    
   })
 }
 
@@ -284,8 +311,27 @@ fnIdRemoveFiles(id:any){
 
 }
 
-resetData(){
-  this.btnAddAndUpdate='add'
-  this.dataFiles=[];
+resetData() {
+  this.btnAddAndUpdate = 'add';
+  this.dataFiles = [];
+  this.idUpdate = null;
+  this.idRemoveFiles = [];
+
+  this.ownerData.reset({
+    Name: '',
+    Mobile: '',
+    Email: '',
+    NationalID: '',
+    parentId: null,
+    financiallyAccountId: 0,
+    Files: null
+  });
+
+  this.ownerData.markAsPristine();
+  this.ownerData.markAsUntouched();
+  this.ownerData.updateValueAndValidity();
 }
+
+
+
 }

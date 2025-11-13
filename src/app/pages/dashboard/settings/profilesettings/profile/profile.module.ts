@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { ProfileRoutingModule } from './profile-routing.module';
 import { ProfileComponent } from './profile.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { DirectivesModule } from "../../../../../shared/directives/directives.module";
 
 
 @NgModule({
@@ -13,7 +14,8 @@ import { ReactiveFormsModule } from '@angular/forms';
   imports: [
     CommonModule,
     ProfileRoutingModule,
-    ReactiveFormsModule
-  ]
+    ReactiveFormsModule,
+    DirectivesModule
+]
 })
 export class ProfileModule { }

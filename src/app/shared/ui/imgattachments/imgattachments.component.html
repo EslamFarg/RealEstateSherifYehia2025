@@ -20,11 +20,21 @@
   <div class="box">
          <img [src]="item?.url" alt="imgs" (click)="this.showoverlay = $index">
          <div class="overlay" [ngClass]="{'active':this.showoverlay == $index}">
-            <div (click)="deleteItem($index,item.id)"><svg width="33" height="25" viewBox="0 0 33 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <div (click)="deleteItem($index,item.id)" ><svg width="33" height="25" viewBox="0 0 33 25" fill="none" xmlns="http://www.w3.org/2000/svg">
 <rect width="33" height="25" rx="2" fill="#FFE5E5" fill-opacity="0.5"/>
 <path d="M23.5 4.5H20L19 3.5H14L13 4.5H9.5V6.5H23.5M10.5 19.5C10.5 20.0304 10.7107 20.5391 11.0858 20.9142C11.4609 21.2893 11.9696 21.5 12.5 21.5H20.5C21.0304 21.5 21.5391 21.2893 21.9142 20.9142C22.2893 20.5391 22.5 20.0304 22.5 19.5V7.5H10.5V19.5Z" fill="#FF3D00"/>
 </svg>
 </div>
+<!-- (click)="viewItem($index, item.id)" -->
+         <div (click)="viewItem($index, item)" style="margin-right: 10px; width: 30px; height: 25px; cursor: pointer; border-radius: 2px; text-align: center; background-color: #ffffff78;">
+  <svg width="100%" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path 
+      d="M12 5C7 5 2.73 8.11 1 12C2.73 15.89 7 19 12 19C17 19 21.27 15.89 23 12C21.27 8.11 17 5 12 5ZM12 17C9.24 17 7 14.76 7 12C7 9.24 9.24 7 12 7C14.76 7 17 9.24 17 12C17 14.76 14.76 17 12 17ZM12 9C10.34 9 9 10.34 9 12C9 13.66 10.34 15 12 15C13.66 15 15 13.66 15 12C15 10.34 13.66 9 12 9Z" 
+      fill="#16601A"
+    />
+  </svg>
+</div>
+ 
          </div>
         </div>
 

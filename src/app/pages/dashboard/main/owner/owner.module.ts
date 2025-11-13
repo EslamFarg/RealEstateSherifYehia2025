@@ -15,6 +15,7 @@ import { ConfirmDeleteComponent } from '../../../../shared/components/confirm-de
 import { EmptytableComponent } from '../../../../shared/ui/emptytable/emptytable.component';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { IntersectionDirective } from "../../../../shared/directives/intersection.directive";
+import { NgxIntlTelInputModule } from 'ngx-intl-tel-input';
 
 
 @NgModule({
@@ -34,7 +35,8 @@ import { IntersectionDirective } from "../../../../shared/directives/intersectio
     ConfirmDeleteComponent,
     EmptytableComponent,
     NgSelectModule,
-    IntersectionDirective
+    IntersectionDirective,
+    // NgxIntlTelInputModule
 ]
 })
 export class OwnerModule { }

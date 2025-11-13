@@ -9,8 +9,8 @@ export class TreerealService extends BasehttpservicesService{
   // constructor() { }
 
 
-  getDataPropertyTree(){
-    return this.get('/Properties/GetPropertyTree')
+  getDataPropertyTree(search:any){
+    return this.post('/Properties/GetPropertyTree',search)
   }
 
   getDataUnitById(id:any){

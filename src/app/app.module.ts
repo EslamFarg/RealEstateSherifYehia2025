@@ -9,6 +9,8 @@ import { ToastrComponent } from "./shared/ui/toastr/toastr.component";
 import { DirectivesModule } from './shared/directives/directives.module';
 import { authInterceptor } from './core/interceptors/auth.interceptor';
 import { LoadingComponent } from './shared/components/loading/loading.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { CommonModule } from '@angular/common';
 
 
 
@@ -23,10 +25,12 @@ import { LoadingComponent } from './shared/components/loading/loading.component'
   ],
   imports: [
     BrowserModule,
+    CommonModule,
     AppRoutingModule,
     HttpClientModule,
     ToastrComponent,
     DirectivesModule,
+    BrowserAnimationsModule,
     LoadingComponent
 ],
   providers: [

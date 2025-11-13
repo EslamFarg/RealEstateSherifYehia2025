@@ -1,0 +1,33 @@
+.links {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin: 10px 0px;
+}
+.links a {
+  font-size: 18px;
+  font-weight: 700;
+  color: #86AC88;
+  margin: 20px;
+  padding-bottom: 10px;
+  position: relative;
+}
+.links a::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: 0px;
+  transform: translateX(-50%);
+  width: 70%;
+  height: 4px;
+  background-color: #16601A;
+  border-radius: 4px;
+  display: none;
+}
+.links a.active {
+  color: #16601A;
+}
+.links a.active::after {
+  display: block;
+}/*# sourceMappingURL=maindata.component.css.map */

@@ -48,15 +48,17 @@ export class ContractdetailsComponent {
   getAllDataContract:any=[];
 
 
-
+pageIndex = 1;
+pageSize = 4;
 // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!11 Methods
 
 today=new Date();
 isExpired=false;
-// ngOnInit(){
+ngOnInit(){
 
-//   const contractEnd=new Date('2024-06-15');
-// }
+  // const contractEnd=new Date('2024-06-15');
+  this.getAllContracts();
+}
 
 
 isEnded(date: string): boolean {
@@ -109,8 +111,8 @@ itemSelectedMonths: any[] = [];
   let shapeSearch={
   "criteriaDto": {
     "paginationInfo": {
-      "pageIndex": 0,
-      "pageSize": 0
+      "pageIndex": this.pageIndex,
+      "pageSize": this.pageSize
     }
   },
   "searchFilter": {
@@ -131,9 +133,9 @@ itemSelectedMonths: any[] = [];
 
   this.contractdetailsService.filterSearchContract(shapeSearch).pipe(takeUntilDestroyed(this.destroyRef)).subscribe((res:any)=>{
     console.log(res);
-    this.getAllDataContract=res.rows;
+    this.getAllDataContract=res;
 
-    this.getAllDataContract.forEach((item: any) => {
+    this.getAllDataContract.rows.forEach((item: any) => {
   item.months = this.generateMonths(item.leaseStartDate, item.leaseMonths);
 });
     console.log(this.getAllDataContract)
@@ -286,6 +288,28 @@ toggleMonthSelection(item: any, month: any) {
 
 
 
+// getAllDataContract(){
+
+// }
 
 
+
+getAllContracts(){
+  let pagination={
+  "paginationInfo": {
+    "pageIndex": this.pageIndex,
+    "pageSize": this.pageSize
+  }
+}
+  this.contractdetailsService.getAllDataContract(pagination).pipe(takeUntilDestroyed(this.destroyRef)).subscribe((res:any)=>{
+    this.getAllDataContract=res
+    console.log(this.getAllDataContract)
+  })
+}
+
+onPageChanged(page:any){
+  this.pageIndex = page;
+  this.getAllContracts();
+
+}
 }

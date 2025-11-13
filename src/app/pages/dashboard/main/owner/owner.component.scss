@@ -2,3 +2,15 @@
     min-height: 50px;
     max-height: 240px;
 }
+
+// :host ::ng-deep ngx-intl-tel-input input {
+//   direction: rtl;         /* يجعل النص والplaceholder من اليمين لليسار */
+//   text-align: right;      /* يضع النص داخل input على اليمين */
+//   padding-left: 12px;     /* تضبط padding إذا ليس لديك separateDialCode */
+// }
+
+// /* لو تستخدم separateDialCode=true */
+// :host ::ng-deep ngx-intl-tel-input input {
+//   padding-left: 0;        /* إزالة البادينج على اليسار */
+//   padding-right: 95px;    /* ترك مساحة لرمز الدولة على اليمين */
+// }

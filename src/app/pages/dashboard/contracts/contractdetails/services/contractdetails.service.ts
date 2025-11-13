@@ -10,4 +10,8 @@ export class ContractdetailsService extends BasehttpservicesService{
   filterSearchContract(data:any){
     return this.post('/Contracts/search',data);
   }
+
+  getAllDataContract(pagination:any){
+    return this.post('/Contracts',pagination);
+  }
 }

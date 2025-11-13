@@ -70,6 +70,9 @@
                         <small class="error_msg_form" *ngIf="BrokerData.controls['NationalID'].hasError('minlength')" >
                            يجب ان يكون رقم الهويه 10 ارقام
                         </small>
+                         <small class="error_msg_form" *ngIf="BrokerData.controls['NationalID'].hasError('nationalIDExists')">
+    {{ BrokerData.controls['NationalID'].getError('nationalIDExists') }}
+  </small>
 
                     </ng-container>
             </div>

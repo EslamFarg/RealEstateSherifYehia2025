@@ -137,6 +137,8 @@ deleteConfirmed(id:any){
   this._unitCategoryServices.deleteData(id).pipe(takeUntilDestroyed(this.$destroyRef)).subscribe((res:any)=>{
     this.toastr.show('تم حذف التصنيف بنجاح','success');
     this.getAllDataUnitCategories();
+    this.unitCategory.reset();
+    this.btnaddandupdate='add';
   })
 }
 

@@ -11,7 +11,7 @@
   <div class="col-sm-12 col-lg-2 mb-3" >
         <label for="numberUnit" class="form-label " ></label>
         <div class="search_number_component">
-<input type="text" name="" #valSearch  placeholder="بحث برقم الوحده" style="margin-top: 8px;" id="numberUnit" class="form-control">
+<input type="text" name="" #valSearch  placeholder="بحث برقم الوحده" (keydown.enter)="searchData(valSearch.value)" style="margin-top: 8px;" id="numberUnit" class="form-control">
 
 <div class="search" (click)="searchData(valSearch.value)">
     <svg width="21" height="20" viewBox="0 0 21 20" fill="none" xmlns="http://www.w3.org/2000/svg">

@@ -1,0 +1,112 @@
+@charset "UTF-8";
+.search_data .input_search {
+  position: relative;
+}
+.search_data .input_search input {
+  height: 38px;
+  border: 1px solid #CECECE;
+  border-radius: 4px;
+  background-color: #f5f5f5;
+  font-size: 12px;
+  font-weight: 400;
+  color: #7F7F7F;
+  padding-inline: 18px;
+}
+.search_data .input_search .search {
+  cursor: pointer;
+}
+.search_data .input_search .filter_data {
+  cursor: pointer;
+  position: relative;
+}
+.search_data .input_search .filter_data .data_search {
+  position: absolute;
+  top: calc(100% + 10px);
+  left: 0;
+  width: 120px;
+  min-height: 5px;
+  background-color: #ffffff;
+  border-radius: 4px;
+  border: 1px solid #CECECE;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.06);
+  opacity: 0;
+  transform: translateY(-10px);
+  visibility: hidden;
+  transition: 0.3s;
+}
+.search_data .input_search .filter_data .data_search.active {
+  opacity: 1;
+  transform: translateY(0);
+  visibility: visible;
+}
+.search_data .input_search .filter_data .data_search a {
+  padding: 9px;
+  color: #000000;
+  font-size: 12px;
+  font-weight: 400;
+  margin: 2px 0px;
+}
+.search_data .input_search .filter_data .data_search a.active {
+  color: #ffffff;
+  background-color: #16601A;
+}
+.search_data .input_search .icon_search {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  position: absolute;
+  left: 10px;
+  top: 48%;
+  transform: translateY(-50%);
+  z-index: 200;
+}
+
+.content_search {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+}
+@media (max-width: 767px) {
+  .content_search {
+    margin-top: 10px;
+  }
+}
+@media (min-width: 768px) and (max-width: 992px) {
+  .content_search {
+    margin-top: 10px;
+  }
+}
+.content_search p {
+  color: #000000;
+  font-size: 14px;
+  font-weight: 700;
+}
+.content_search .custom_select {
+  position: relative;
+}
+.content_search .custom_select::after {
+  content: "▼";
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 14px;
+  font-weight: 700;
+  color: #A7A7A7;
+}
+.content_search select {
+  width: 100px !important;
+  border-radius: 8px;
+  border: 1px solid #BED2BF;
+  font-size: 14px;
+  color: #16601A;
+  font-weight: 700;
+  padding-inline: 16px;
+  appearance: none;
+  padding-block: 8px;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  position: relative;
+}/*# sourceMappingURL=search-data.component.css.map */

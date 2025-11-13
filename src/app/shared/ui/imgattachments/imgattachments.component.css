@@ -1,0 +1,36 @@
+.boxes {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin: 10px 0px;
+}
+.boxes .box {
+  position: relative;
+}
+.boxes .box img {
+  min-width: 150px;
+  height: 100px;
+  border-radius: 4px;
+  max-width: 150px;
+}
+.boxes .box img:hover {
+  cursor: pointer;
+}
+.boxes .overlay {
+  left: 0;
+  top: 0;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5019607843);
+  border-radius: 4px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0;
+  display: none;
+}
+.boxes .overlay.active {
+  display: flex;
+}/*# sourceMappingURL=imgattachments.component.css.map */

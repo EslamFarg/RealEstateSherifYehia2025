@@ -9,5 +9,10 @@ export interface Newuser {
     createdAt: string,
     isActive:boolean,
     groupName:string
+      groupIds?: number[]; // IDs فقط إذا تحتاجها
+  groups?: {
+    groupId: number;
+    groupName: string;
+  }[]; // ✅ أضف هذا
 
 }

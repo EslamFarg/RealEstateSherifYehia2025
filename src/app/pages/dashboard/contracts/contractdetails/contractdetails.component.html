@@ -5,7 +5,7 @@
 
 
 <div ngbAccordion [closeOthers]="true">
-  @for(item of getAllDataContract; track $index) {
+  @for(item of  getAllDataContract.rows; track $index) {
     <div ngbAccordionItem [collapsed]="true" class="my-4">
     <h2 ngbAccordionHeader>
       <button ngbAccordionButton>
@@ -215,6 +215,12 @@
 
 
 
+<app-pagination
+*ngIf="getAllDataContract.rows.length > 0"
+[totalPages]="getAllDataContract?.paginationInfo?.totalPagesCount"
+  [currentPage]="pageIndex"
+  (pageChange)="onPageChanged($event)">
+</app-pagination>
 
 <div class="modal_overlay" >
   <div class="modal_popup">

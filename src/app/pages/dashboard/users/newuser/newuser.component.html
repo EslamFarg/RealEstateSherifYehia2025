@@ -41,7 +41,7 @@
         </div>
         <div class="col-sm-12 col-lg-6">
             <div class="mb-3">
-                <app-refresh-select [titleLabel]="'المجموعه'"></app-refresh-select>
+                <app-refresh-select [titleLabel]="'المجموعه'" [fc]="getFc('groupIds')"  [dataItems]="getAllDataGroupName" [bindLabel]="'groupName'" [bindValue]="'id'" ></app-refresh-select>
             </div>
        
         </div>
@@ -85,7 +85,14 @@
         <tr>
             <td>{{$index+1}}</td>
             <td>{{item.userName}}</td>
-            <td>{{item.groupName || 'لايوجد اسم مجموعه'}}</td>
+            <td>
+              <ng-container *ngIf="item.groups && item.groups.length > 0; else noGroup">
+    {{ item.groups[0].groupName }}
+  </ng-container>
+  <ng-template #noGroup>
+    لايوجد اسم مجموعه
+  </ng-template>
+            </td>
             <td>{{item.email    }}</td>
             <td>{{item.phoneNumber}}</td>
             <td>{{item.isActive ? 'نشط' : 'غير نشط'}}</td>

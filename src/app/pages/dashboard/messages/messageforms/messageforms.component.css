@@ -1,0 +1,8 @@
+textarea.form-control {
+  height: 124px !important;
+}
+
+.table-responsive {
+  max-height: 240px;
+  min-height: 50px;
+}/*# sourceMappingURL=messageforms.component.css.map */

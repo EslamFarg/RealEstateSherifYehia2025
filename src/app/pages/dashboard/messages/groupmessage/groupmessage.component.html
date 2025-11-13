@@ -62,14 +62,14 @@
       @for (item of messagesData; track $index) {
         <tr>
             <td>{{$index+1}}</td>
-            <td>{{item.sender}}</td>
-            <td>{{item.receiver}}</td>
-            <td>{{item.date}}</td>
-            <td>{{item.message}}</td>
+            <td>{{item.name}}</td>
+            <td>{{item.phone}}</td>
+            <td>{{item.createdAt.split("T")[0]}}</td>
+            <td>{{item.messageText}}</td>
             <!-- <td>{{item.message}}</td> -->
-                <td><input type="checkbox" readonly [checked]="item.smsChecked" class="form-check-input"></td>
-                <td><input type="checkbox" readonly [checked]="item.whatsappChecked" class="form-check-input"></td>
-                <td><input type="checkbox" readonly [checked]="item.emailChecked" class="form-check-input"></td>
+                <td><input type="checkbox" readonly [checked]="item.useSms" class="form-check-input"></td>
+                <td><input type="checkbox" readonly [checked]="item.useWhatsApp" class="form-check-input"></td>
+                <td><input type="checkbox" readonly [checked]="item.useEmail" class="form-check-input"></td>
         
         </tr>
       }@empty {
@@ -86,7 +86,7 @@
 
  
 <app-pagination
-  [totalPages]="messagesData.total"
-  [currentPage]="pageIndex"
+  [totalPages]="totalItems"
+    [currentPage]="pageIndex"
   (pageChange)="onPageChanged($event)">
 </app-pagination>

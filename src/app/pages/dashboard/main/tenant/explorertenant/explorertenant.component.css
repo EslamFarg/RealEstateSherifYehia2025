@@ -1,0 +1,9 @@
+.table-responsive {
+  max-height: 443px;
+  min-height: 50px;
+}
+@media (max-width: 992px) {
+  .table-responsive {
+    height: 500px;
+  }
+}/*# sourceMappingURL=explorertenant.component.css.map */

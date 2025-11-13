@@ -40,6 +40,12 @@ const routes: Routes = [
       {path:'accountstatement',loadChildren:()=>import('./accounting/accountstatement/accountstatement.module').then(m=>m.AccountstatementModule)},
       {path:'messagesetting',loadChildren:()=>import('./messages/messagesettings/messagesettings.module').then(m=>m.MessagesettingsModule)},
       {path:'groupmessage',loadChildren:()=>import('./messages/groupmessage/groupmessage.module').then(m=>m.GroupmessageModule)},
+      {path:'linkpagepermission',loadChildren:()=>import('./users/linkpagepermissions/linkpagepermissions.module').then(m=>m.LinkpagepermissionsModule)},
+      {path:'linkgrouppage',loadChildren:()=>import('./users/linkgrouppages/linkgrouppages.module').then(m=>m.LinkgrouppagesModule)},
+      {path:'modifynamepermission',loadChildren:()=>import('./users/modifynamepermission/modifynamepermission.module').then(m=>m.ModifynamepermissionModule)},
+      {path:'concatgrouppermission',loadChildren:()=>import('./users/concatgrouppermissions/concatgrouppermissions.module').then(m=>m.ConcatgrouppermissionsModule)},
+      {path:'editorialcredits',loadChildren:()=>import('./accounting/editorialcredits/editorialcredits.module').then(m=>m.EditorialcreditsModule)},
+      {path:'accountcard',loadChildren:()=>import('./accounting/accountcard/accountcard.module').then(m=>m.AccountcardModule)},
     ]
   }
 ];

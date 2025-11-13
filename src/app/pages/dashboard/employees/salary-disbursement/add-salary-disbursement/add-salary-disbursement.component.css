@@ -1,0 +1,32 @@
+.forms_dashboard {
+  min-height: 240px;
+}
+
+.table-responsive {
+  height: 240px;
+}
+.table-responsive table th, .table-responsive table td {
+  padding: 6px;
+  vertical-align: middle;
+}
+.table-responsive table td ng-select .ng-select-container {
+  border: 0 !important;
+}
+.table-responsive table td input {
+  font-size: 14px;
+  font-weight: 400;
+  border: 0;
+}
+.table-responsive table td input:focus {
+  box-shadow: none !important;
+  outline: 0 !important;
+}
+.table-responsive table td input:not(.salary) {
+  color: #A7A7A7 !important;
+}
+.table-responsive table td input:not(.salary)::-moz-placeholder {
+  color: #A7A7A7 !important;
+}
+.table-responsive table td input:not(.salary)::placeholder {
+  color: #A7A7A7 !important;
+}/*# sourceMappingURL=add-salary-disbursement.component.css.map */

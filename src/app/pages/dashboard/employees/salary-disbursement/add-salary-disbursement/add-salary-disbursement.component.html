@@ -35,7 +35,7 @@
     </div>
        <div class="col-sm-12 col-lg-3 mb-3">
         <label for="numberbala" class="form-label">الشهر</label>
-        <ng-select [items]="months" bindLabel="name" placeholder="اختر" bindValue="id" formControlName="month"></ng-select>
+        <ng-select [items]="months" bindLabel="name" placeholder="اختر" bindValue="id" formControlName="month" [disabled]="employeesSalary.length  > 0" ></ng-select>
          <app-formerror-msg [control]="formExchange.controls['month']" [Messages]="{
                   required:'الشهر مطلوب' ,
              
@@ -43,7 +43,7 @@
     </div>
        <div class="col-sm-12 col-lg-2 mb-3">
         <label for="numberbala" class="form-label">التاريخ</label>
-        <input type="date" name=""  class="form-control" placeholder="التاريخ" id="numberbala" formControlName="dateTime">
+        <input type="datetime-local" name=""  class="form-control" placeholder="التاريخ" id="numberbala" formControlName="dateTime">
           <app-formerror-msg [control]="formExchange.controls['dateTime']" [Messages]="{
                   required:'التاريخ مطلوب' ,
              
@@ -73,7 +73,7 @@
           <th>اسم الموظف</th>
           <th>الراتب</th>
           <th>الصندوق</th>
-          <th>عدد ايام الغياب</th>
+          <th>قيمه الغياب</th>
           <th>تسديد سلفه</th>
           <th>جزاءات</th>
           <th>مكافاءات</th>
@@ -110,8 +110,8 @@
            <td><input type="text" class="form-control text-center" placeholder="0"  readonly formControlName="netPay"></td>
 
             <td>
-                <div class="btn_add_reset mt-0">
- <button type="button" data-button="send" (click)="addLine()"
+                <div class="btn_add_reset " style="margin-top: 0 !important;">
+ <button type="button" style="background-color: #D4AF37 !important;" data-button="send" (click)="addLine()"
          
             >اضافه</button>
                 </div>
@@ -148,7 +148,7 @@
   </div>
 
   <div class="btn_add_reset">
- <button type="button" data-button="send" (click)="onSubmit()" [ngClass]="{'btnEdit':this.btnAddandUpdate=='update','btnAdd':this.btnAddandUpdate=='add'}">{{this.btnAddandUpdate == 'add' ? 'اضافه':"تعديل"}}</button>
+ <button type="button" data-button="send" (click)="onSubmit()" *ngIf="canShowAdd" [ngClass]="{'btnEdit':this.btnAddandUpdate=='update','btnAdd':this.btnAddandUpdate=='add'}">{{this.btnAddandUpdate == 'add' ? 'اضافه':"تعديل"}}</button>
  <!-- <button type="button" data-button="reset">تعديل</button> -->
  <button type="button" data-button="reset" (click)="deletePayrollVoucher()" *ngIf="showCanBtns">حذف</button>
  <button type="button" data-button="reset" *ngIf="showCanBtns">طباعه بالسند</button>

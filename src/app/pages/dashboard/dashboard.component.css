@@ -1,0 +1,33 @@
+.content_page {
+  width: calc(100% - 256px);
+  margin-right: auto;
+  transition: 0.3s;
+}
+@media (max-width: 767px) {
+  .content_page {
+    width: 100%;
+  }
+}
+.content_page::after {
+  content: "";
+  position: fixed;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 800;
+}
+@media (min-width: 768px) {
+  .content_page::after {
+    display: none;
+  }
+}
+.content_page.active {
+  width: 100%;
+  margin-right: 0;
+  transition: 0.3s;
+}
+.content_page.active::after {
+  display: none;
+}/*# sourceMappingURL=dashboard.component.css.map */

@@ -910,3 +910,61 @@ input[readonly]{
   }
 }
 }
+
+
+.wrap-text{
+    white-space: nowrap;
+    width: 200px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+
+
+
+// ngx-Tel-input
+
+    .iti--allow-dropdown{
+        width: 100% !important;
+    }
+
+
+    ngx-intl-tel-input {
+  display: block;
+  width: 100%;
+}
+
+ngx-intl-tel-input input {
+  padding-left: 50px; /* اتأكد من مساحة العلم */
+}
+
+// .iti__selected-flag{
+// .iti__dropdown-content{
+//     left: -120px !important;
+// }
+// }
+
+
+.dropdown-menu[_ngcontent-ng-c2444536406] {
+
+    // left: -200px !important;
+        left: -207px !important;
+}
+
+
+// :host ::ng-deep ngx-intl-tel-input input {
+//   &::placeholder {
+//     color: #aaa;
+//     opacity: 1;
+//   }
+//   padding-left: 50px; /* لو تستخدم separateDialCode */
+// }
+
+// :host ::ng-deep ngx-intl-tel-input input::placeholder {
+//   content: "أدخل رقم الجوال";  /* placeholder ثابت */
+// }
+
+.iti__tel-input{
+// padding-right: 90px !important;
+padding-left: 10px !important;
+}

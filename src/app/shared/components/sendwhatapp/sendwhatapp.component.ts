@@ -181,7 +181,7 @@ import { FormerrorMsgComponent } from '../../ui/formerror-msg/formerror-msg.comp
   templateUrl: './sendwhatapp.component.html',
   styleUrl: './sendwhatapp.component.scss',
   standalone:true,
-  imports: [NgIf, TitleMsgPopupComponent, ReactiveFormsModule, DirectivesModule,FormerrorMsgComponent]
+  imports: [NgIf, TitleMsgPopupComponent, ReactiveFormsModule,FormerrorMsgComponent]
 })
 export class SendwhatappComponent {
 

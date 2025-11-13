@@ -13,7 +13,7 @@ import { SendemailComponent } from "../sendemail/sendemail.component";
   templateUrl: './sendsingularmessage.component.html',
   styleUrl: './sendsingularmessage.component.scss',
   standalone:true,
-  imports: [NgbNavModule, FormsModule, DirectivesModule, TitleMsgPopupComponent, SendsmsComponent, SendwhatappComponent, SendemailComponent]
+  imports: [NgbNavModule, FormsModule, TitleMsgPopupComponent, SendsmsComponent, SendwhatappComponent, SendemailComponent]
 })
 export class SendsingularmessageComponent {
 active = 1;

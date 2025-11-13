@@ -1,0 +1,9 @@
+.forms_dashboard {
+  min-height: 337px;
+  position: relative;
+}
+.forms_dashboard .btn_add_reset {
+  position: absolute;
+  left: 10px;
+  bottom: 20px;
+}/*# sourceMappingURL=change-email.component.css.map */

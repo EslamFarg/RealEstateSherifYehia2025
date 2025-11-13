@@ -47,7 +47,7 @@
     <div class="col-sm-12">
         <div class="mb-3">
             <label for="box" class="form-label">صندوق / بنك</label>
-            <ng-select [items]="accountData" bindLabel="name" bindValue="financiallyAccountId"  placeholder="صندوق / بنك" formControlName="creditAccountId"></ng-select>
+            <ng-select [items]="accountData" bindLabel="name" bindValue="financiallyAccountId"  placeholder="صندوق / بنك" formControlName="creditAccountId" (change)="ChangeSelect($event)"></ng-select>
                <app-formerror-msg [control]="paymentVoucherForm.controls['creditAccountId']" [Messages]="{
                   required:'صندوق / بنك مطلوب'
                }"></app-formerror-msg>
@@ -128,7 +128,7 @@
     <td>{{item.unitName}} </td>
     <td>{{this.Months[item.monthIndex] || this.Months[item.monthNumber]}}</td>
     <td><div #amountDueElement>{{item.amountDue || item.amount}}</div></td>
-    <td><input type="text" class="form-control"  #paidAmount placeholder="0" appNoStringPaste (input)="writePaidAmount($event,item)"></td>
+    <td><input type="text" class="form-control"  #paidAmount placeholder="0" appNoStringPaste    [readonly]="!isItemEditable(item)" (input)="writePaidAmount($event,item)"></td>
   
     <td><input type="text" class="form-control" [value]="item.totalWithAmount || 0" readonly #remainingAmount></td>
     </tr>

@@ -1,0 +1,21 @@
+input[type=checkbox] {
+  width: 16px;
+  height: 16px;
+  box-shadow: none;
+  outline: none;
+  pointer-events: none;
+}
+input[type=checkbox]:focus {
+  outline: none;
+}
+input[type=checkbox]:checked {
+  background-color: #4C6D5F;
+  border-color: transparent;
+  box-shadow: none;
+  outline: none;
+}
+
+.table-responsive {
+  min-height: 50px;
+  max-height: 443px;
+}/*# sourceMappingURL=explorersendmessage.component.css.map */

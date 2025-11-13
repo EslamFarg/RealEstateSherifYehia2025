@@ -3,7 +3,7 @@ import { Apartments, nationality } from '../models/tenant';
 import { SharedService } from '../../../../../shared/services/shared.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Apartment } from '../../apartment/models/apartment';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { TenantService } from '../services/tenant.service';
 import { ToastrService } from '../../../../../shared/ui/toastr/services/toastr.service';
 import { EditBehaviorServiceService } from '../../../../../shared/services/edit-behavior-service.service';
@@ -11,6 +11,7 @@ import { Router } from '@angular/router';
 import { CheckEmail } from '../../../../../shared/validations/emailValidation';
 import { checkUsername } from '../../../../../shared/validations/checkUsername';
 import { saudiPhoneValidator } from '../../../../../shared/validations/phoneNumber';
+import { uniqueNationalIDValidator } from '../../../../../shared/validations/uniqueeNationalId';
 
 @Component({
   selector: 'app-addtenant',
@@ -36,18 +37,26 @@ export class AddtenantComponent {
   _sharedServices:SharedService=inject(SharedService)
   _router:Router=inject(Router)
 
+
+
+
   // getAllNationality
   // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! Properties !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
+
+  dependantError: string = '';
+
   dataNationality:nationality[]=[]
   dataRelation:any[]=[]
   destoryRef:DestroyRef=inject(DestroyRef);
   dataDependants:any[]=[]
+
+
   tenantForm=this.fb.group({
     Name:['',[Validators.required,Validators.minLength(3),checkUsername.ValidationUsername()]],
     TenantType:[null,[Validators.required]],
     Nationality:[null,[Validators.required]],
     Mobile:['',[Validators.required,saudiPhoneValidator.phoneNumberValidator]],
-    Email:['',[CheckEmail.ValidationEmail()]],
+    Email:['',[CheckEmail.ValidationEmail(),Validators.required]],
     NationalID:['',[Validators.required,Validators.minLength(10)]],
     JobTitle:['',[Validators.required]],
     ParentId:[null,[Validators.required]],
@@ -56,7 +65,7 @@ export class AddtenantComponent {
   })
 
 
-  DependantsForm:any=this.fb.group({
+  DependantsForm:FormGroup =this.fb.group({
     Name:['',[Validators.required,Validators.minLength(3),checkUsername.ValidationUsername()]],
     phoneNumber:['',[Validators.required,saudiPhoneValidator.phoneNumberValidator]],
     nationalID:['',[Validators.required,Validators.minLength(10)]],
@@ -80,6 +89,9 @@ export class AddtenantComponent {
   
 ];
 
+
+
+
 // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! Methods
 
 
@@ -89,6 +101,8 @@ ngOnInit(): void {
   this.getAllNationality();
   this.getAllRelations();
   this.getAllFinicalData();
+
+ 
 
   this._editBehaviorServices.idSubscribe.pipe(takeUntilDestroyed(this.$destroyRef)).subscribe((id)=>{
     if(id){
@@ -239,6 +253,41 @@ onSubmit(){
   }
 }
 
+
+initDependantsFormWatcher() {
+  // امسح أي اشتراكات قديمة أولاً
+  this.DependantsForm.get('nationalID')?.valueChanges.subscribe((value: string) => {
+    this.checkDuplicateDependants({ nationalID: value });
+  });
+}
+
+
+checkDuplicateDependants(val: any) {
+  if (!val || !val.nationalID) {
+    this.dependantError = '';
+    return;
+  }
+
+  const nationalId = val.nationalID.trim();
+
+  // التحقق مع المستأجر الرئيسي
+  if (nationalId === this.tenantForm.value.NationalID) {
+    this.dependantError = 'رقم الهوية مستخدم بالفعل في بيانات المستأجر';
+    return;
+  }
+
+  // التحقق مع باقي المرافقين
+  const duplicate = this.dataDependants.some(dep => dep.nationalID === nationalId);
+
+  if (duplicate) {
+    this.dependantError = 'رقم الهوية مستخدم بالفعل في بيانات المرافقين';
+  } else {
+    this.dependantError = ''; // لو مش مكرر امسح الرسالة
+  }
+}
+
+
+
 onSubmitDependents(){
 
   if(this.DependantsForm.valid){
@@ -251,12 +300,30 @@ onSubmitDependents(){
       relation: this.DependantsForm.value.relation ?? '',
     };
 
+      if (
+      data.nationalID === this.tenantForm.value.NationalID
+    ) {
+        this.dependantError = 'رقم الهويه مستخدم من قبل في بيانات المستاجر';
+      return;
+    }
+
+
+    const duplicate = this.dataDependants.some(dep => 
+       dep.nationalID === data.nationalID
+    );
+
+    if (duplicate) {
+    this.dependantError = 'رقم الهويه مستخدم من قبل في بيانات المستاجر';
+      return;
+    }
     this.dataDependants.push(data);
     this.apartmentsData.push(data);
     this.tenantForm.get('Dependants')?.setValue(this.dataDependants);
     // console.log(this.dataDependants);
     // console.log(this.tenantForm.value)
+    this.dependantError=''
     this.DependantsForm.reset(); // لو حابب تمسح القيم بعد الإضافة
+    this.initDependantsFormWatcher();
     this.btnaddandupdateMoraphk='add'
  }else{
   //!!!!!!!!!!! Update
@@ -272,6 +339,7 @@ onSubmitDependents(){
   this.apartmentsData[this.indexEdit]=data;
   this.tenantForm.get('Dependants')?.setValue(this.dataDependants);
   this.DependantsForm.reset(); 
+  this.initDependantsFormWatcher();
   this.btnaddandupdateMoraphk='add'
 
  }

@@ -6,7 +6,7 @@
 
 <div class="mb-4">
     <h4 class="head_forms_dashboard">بيانات المستأجر</h4>
-    <form class="forms_dashboard" [formGroup]="tenantForm" (ngSubmit)="onSubmit()">
+    <form class="forms_dashboard" [formGroup]="tenantForm" >
 
         <div class="row">
             <div class="col-sm-12 col-lg-4">
@@ -60,7 +60,7 @@
               <div class="col-sm-12 col-lg-4">
                 <div class="mb-3">
                     <label for="phonenumber" class="form-label">رقم الجوال</label>
-                <input type="text" class="form-control" id="phonenumber" appNoStringPaste placeholder="رقم الجوال" formControlName="Mobile">
+                <input type="text" class="form-control" maxlength="14" id="phonenumber" appNoStringPaste placeholder="رقم الجوال" formControlName="Mobile">
                 <ng-container *ngIf="tenantForm.controls['Mobile'].invalid && tenantForm.controls['Mobile'].touched">
                         <small class="error_msg_form" *ngIf="tenantForm.controls['Mobile'].hasError('required')" >رقم الجوال مطلوب</small>
                         <small class="error_msg_form" *ngIf="tenantForm.controls['Mobile'].hasError('saudiPhoneInvalid')" > {{ tenantForm.controls['Mobile'].getError('saudiPhoneInvalid') }}</small>
@@ -85,6 +85,9 @@
                 <ng-container *ngIf="tenantForm.controls['NationalID'].invalid && tenantForm.controls['NationalID'].touched">
                         <small class="error_msg_form" *ngIf="tenantForm.controls['NationalID'].hasError('required')" >رقم الهويه مطلوب</small>
                         <small class="error_msg_form" *ngIf="tenantForm.controls['NationalID'].hasError('minlength')" >   يجب ان يكون رقم الهويه 10 ارقام</small>
+                  
+                        
+                  
                 </ng-container>
                 </div>
             
@@ -148,7 +151,11 @@
               <small class="error_msg_form" *ngIf="DependantsForm.controls['nationalID'].hasError('minlength')" >
                            يجب ان يكون رقم الهويه 10 ارقام
                         </small>
+                       
+                        <!-- <small class="error_msg_form" *ngIf="dependantError">{{ dependantError }}</small> -->
+       
             </ng-container>
+            <small class="error_msg_form" *ngIf="dependantError">{{ dependantError }}</small>
                 </div>
             
             </div>
@@ -236,9 +243,8 @@
 </div>
 
    <div class="btn_add_reset mb-3" style="margin-top: 30px !important;">
-        <button type="sumbit" data-button="send" (click)="onSubmit()" [ngClass]="{'btnEdit':this.btnaddandupdate=='update','btnAdd':this.btnaddandupdate=='add'}">{{btnaddandupdate == 'add' ? 'اضافه' : 'تعديل'}}</button>
+        <button type="button" data-button="send" (click)="onSubmit()" [ngClass]="{'btnEdit':this.btnaddandupdate=='update','btnAdd':this.btnaddandupdate=='add'}">{{btnaddandupdate == 'add' ? 'اضافه' : 'تعديل'}}</button>
         <button type="button" data-button="reset" (click)="resetForms()">جديد</button>
-        <!-- <button type="button" data-button="reset">تعديل </button> -->
         <button type="button" data-button="reset" (click)="deleteTenant()" *ngIf="this.idEdit">حذف</button>
     </div>
 

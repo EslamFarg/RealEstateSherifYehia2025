@@ -14,7 +14,7 @@
     templateUrl: './sendsms.component.html',
     styleUrl: './sendsms.component.scss',
     standalone:true,
-    imports: [FormsModule, TitleMsgPopupComponent, DirectivesModule, FormerrorMsgComponent, ReactiveFormsModule,NgIf]
+    imports: [FormsModule, TitleMsgPopupComponent, FormerrorMsgComponent, ReactiveFormsModule,NgIf]
   })
   export class SendsmsComponent {
 

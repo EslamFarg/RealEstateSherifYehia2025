@@ -30,4 +30,19 @@ export class SharedService {
   allRegions=regions
 
 
+
+
+  getAllPages(pageIndex:any,pageSize:any){
+    return this.http.get(environment.apiUrl+`/Pages?PageIndex=${pageIndex}&PageSize=${pageSize}`)
+  }
+
+  getAllPermissions(pageIndex:any,pageSize:any){
+    return this.http.get(environment.apiUrl+`/Actions?PageIndex=${pageIndex}&PageSize=${pageSize}`)
+  }
+
+
+
+  getAllGroups(){
+    return this.http.get(environment.apiUrl+`/Groups?PageIndex=0&PageSize=0`)
+  }
 }

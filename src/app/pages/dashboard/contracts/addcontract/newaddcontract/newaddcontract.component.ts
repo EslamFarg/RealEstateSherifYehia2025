@@ -28,7 +28,18 @@ export class NewaddcontractComponent {
 
 
 // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1 Property
+paymentMethods:any[]=[
+  {
+    id:1,
+    name:'كاش'
 
+  },
+  {
+    id:2,
+    name:'فيزا'
+
+  }
+];
 contractsForm=this.fb.group({
   ContractPlace:['',[Validators.required,Validators.minLength(3)]],
   ContractDate:['',Validators.required],
@@ -37,7 +48,7 @@ contractsForm=this.fb.group({
   //  MonthsCount: [{ value: '', disabled: true }]
   LeaseMonths:['',Validators.required],
   BookNumber:['',Validators.required],
-  PaymentMethod:['cash',Validators.required],
+  PaymentMethod:[null,Validators.required],
   Description:[''],
   Files:[''],
   // Property
@@ -50,8 +61,8 @@ contractsForm=this.fb.group({
 TaxAmount:['',Validators.required],
 TotalAmount:['',Validators.required],
 BrokerCommission:[''] ,
-OtherCommission:[''],
-InsuranceValue:[''],
+OtherCommission:['0'],
+InsuranceValue:['0'],
 NetAmount:['',Validators.required],
 
   MessageId:[null,Validators.required],
@@ -385,10 +396,20 @@ searchFilterUnit(val:any){
    
    this.formDataUnit.patchValue(this.getAllDataUnitProperty)
    console.log(this.getAllDataUnitProperty);
+
+   // ✅ ثق سعر الوحدة
+let unitPrice = Number(res.rows[0].price);
+
+// ✅ خذ عدد الشهور الحالي
+let months = Number(this.contractsForm.get('LeaseMonths')?.value) || 0;
+
+// ✅ احسب القيمة الجديدة
+let newContractValue = unitPrice * months;
+
    this.contractsForm.patchValue({
     PropertyId: res.rows[0].propertyID,
     UnitId: res.rows[0].id,
-    ContractValue: res.rows[0].price
+    ContractValue: newContractValue
    })
     this.getTaxes();
     this.getTotal();
@@ -976,6 +997,9 @@ resetAllData() {
   this.formDataTenant.markAsUntouched();
   this.formDataBroker.markAsUntouched();
 }
+
+
+
 
 
 ngOnDestroy(): void {

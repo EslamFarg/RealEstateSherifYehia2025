@@ -1,0 +1,23 @@
+aside {
+  width: 256px;
+  position: fixed;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background-color: #EEF5EF;
+  transition: 0.3s;
+  z-index: 999;
+  overflow-x: hidden;
+  overflow-y: scroll;
+}
+aside::-webkit-scrollbar {
+  width: 0.2px !important;
+}
+aside.active {
+  right: -100%;
+}
+@media (max-width: 768px) {
+  aside .logo {
+    margin-top: 65px;
+  }
+}/*# sourceMappingURL=sidebar.component.css.map */

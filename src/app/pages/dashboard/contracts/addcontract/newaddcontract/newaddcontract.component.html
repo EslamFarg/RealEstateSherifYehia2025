@@ -145,7 +145,7 @@
         </div>
  <div class="mb-3 col-sm-12 col-lg-3">
                  <label for="mara" class="form-label">طريقه السداد</label>
-                <ng-select [items]="[]" bindLabel="name" placeholder="طريقه السداد" bindValue="id" formControlName="PaymentMethod"></ng-select>
+                <ng-select [items]="paymentMethods" bindLabel="name" placeholder="طريقه السداد" bindValue="name" formControlName="PaymentMethod"></ng-select>
                 <app-formerror-msg [control]="contractsForm.controls['PaymentMethod']" [Messages]="
                   {required:'طريقه السداد مطلوب'}
                  "></app-formerror-msg>

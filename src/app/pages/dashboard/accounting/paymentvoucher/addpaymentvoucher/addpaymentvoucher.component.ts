@@ -4,6 +4,7 @@ import { AccountService } from '../../accounts/services/account.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { OwnerpaymentvoucherService } from '../services/ownerpaymentvoucher.service';
 import { ToastrService } from '../../../../../shared/ui/toastr/services/toastr.service';
+import { EditBehaviorServiceService } from '../../../../../shared/services/edit-behavior-service.service';
 
 @Component({
   selector: 'app-addpaymentvoucher',
@@ -17,6 +18,7 @@ _accountServices:AccountService=inject(AccountService);
 _ownerPaymentVoucherServices:OwnerpaymentvoucherService=inject(OwnerpaymentvoucherService);
 destroyRef:DestroyRef=inject(DestroyRef);
 toastr:ToastrService=inject(ToastrService)
+editBehaviorSubject:EditBehaviorServiceService=inject(EditBehaviorServiceService)
 
 
 
@@ -107,6 +109,12 @@ calcTotalTaxPaidAmount(amount:any,item: any) {
 
 ngOnInit(){
  
+  this.editBehaviorSubject.idSubscribe.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((id:any)=>{
+    if(id){
+      this.getDataById({value:id})
+    }
+  })
+
   this.getAllAccounts();
 }
 
@@ -153,6 +161,8 @@ if(e.index == 0){
   this._ownerPaymentVoucherServices.searchOwner(shapeSearch).pipe(takeUntilDestroyed(this.destroyRef)).subscribe((res:any)=>{
 
     const row=res.rows[0]
+
+    console.log(row)
     this.formDataSearch.patchValue(
       {
         financiallyAccountId:row.financiallyAccountId,
@@ -222,11 +232,18 @@ writePaidAmount(e:any,item:any){
   const paid = Number(e.target.value) || 0;
   let amountDue = Number(item.amountDue) || 0;
 
+   if (paid > amountDue) {
+    e.target.value = amountDue;
+  }
+
+
+  this.itemChecked = this.itemChecked.filter(x => x.contractInstallmentId !== item.id);
+
   if(this.checksWrite){
     this.itemChecked = this.itemChecked.filter(x => x.id != item.id);
     this.itemChecked.push({
       contractInstallmentId:item.id,
-      amount:item.amountDue
+      amount:paid
     })
     
     // console.log(this.itemChecked);
@@ -277,13 +294,15 @@ writePaidAmount(e:any,item:any){
 checkDataItem(e:any,item:any){
 
   const checked=e.target.checked;
-
+   const paid = Number(item.paidAmount || 0); // أو من input إذا موجود
 
 
   if(checked){
+    // const amountDue = Number(item.amountDue) || 0;
+   
     this.itemChecked.push({
       contractInstallmentId:item.id,
-      amount:item.amountDue
+      amount:paid
     })
     this.checksWrite=true
     // console.log("Elktorki")
@@ -324,6 +343,9 @@ deleteConfirmed(id:any){
 
 
 onSubmit(){
+
+
+
   if(this.paymentVoucherForm.valid){
 // if(this.realtorPaymentVoucherForm.valid){
     if(this.formDataSearch.get('financiallyAccountId')?.value == null || this.formDataSearch.get('financiallyAccountId')?.value == undefined){
@@ -341,6 +363,10 @@ this.itemChecked.forEach((item) => {
 })
 
 
+
+
+
+
   let data={
     
   voucherNo: this.paymentVoucherForm.get('voucherNo')?.value,
@@ -356,16 +382,26 @@ this.itemChecked.forEach((item) => {
   }
   
 
+  console.log(data);
+  
+
   if(this.btnAddandUpdate == 'add'){
 
     // this.itemChecked.forEach((item) => {
     //   data.ownerPaymentDetails.push(item)
     //  console.log(data.ownerPaymentDetails)
     // })
-    data.ownerPaymentDetails = this.itemChecked.map(x => ({
-  contractInstallmentId: x.contractInstallmentId,
-  amount: x.amount 
-}));
+//     data.ownerPaymentDetails = this.itemChecked.map(x => ({
+//   contractInstallmentId: x.contractInstallmentId,
+//   amount: x.amount 
+// }));
+
+data.ownerPaymentDetails = this.itemChecked
+  .filter(x => Number(x.amount) > 0) // فقط العناصر المدفوعة
+  .map(x => ({
+    contractInstallmentId: x.contractInstallmentId,
+    amount: x.amount
+  }));
 
 
     //  console.log(data);
@@ -391,10 +427,17 @@ this.itemChecked.forEach((item) => {
      let updateData={
       id:this.idUpdate,
       ...data,
-       ownerPaymentDetails: this.itemChecked.map(item => ({
-    contractInstallmentId: item.contractInstallmentId,
-    amount: item.amount
-  }))
+  //      ownerPaymentDetails: this.itemChecked.map(item => ({
+  //   contractInstallmentId: item.contractInstallmentId,
+  //   amount: item.amount
+  // }))
+
+   ownerPaymentDetails: this.itemChecked
+    .filter(x => Number(x.amount) > 0)
+    .map(x => ({
+      contractInstallmentId: x.contractInstallmentId,
+      amount: x.amount
+    }))
     }
     // updateData.ownerPaymentDetails = [];
 
@@ -549,6 +592,14 @@ getDataById(e:any){
 }
 
 
+isItemEditable(item: any): boolean {
+  return this.itemChecked.some(x => x.contractInstallmentId === item.id);
+}
 
+
+ChangeSelect(e:any){
+  console.log(e);
+
+}
 
 }
