@@ -6,6 +6,7 @@ import { ModifynamepermissionComponent } from './modifynamepermission.component'
 import { PageHeadingComponent } from '../../../../shared/ui/page-heading/page-heading.component';
 import { PaginationComponent } from '../../../../shared/ui/pagination/pagination.component';
 import { EmptytableComponent } from '../../../../shared/ui/emptytable/emptytable.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -18,7 +19,8 @@ import { EmptytableComponent } from '../../../../shared/ui/emptytable/emptytable
     ModifynamepermissionRoutingModule,
     PageHeadingComponent,
     PaginationComponent,
-    EmptytableComponent
+    EmptytableComponent,
+    ReactiveFormsModule
   ]
 })
 export class ModifynamepermissionModule { }

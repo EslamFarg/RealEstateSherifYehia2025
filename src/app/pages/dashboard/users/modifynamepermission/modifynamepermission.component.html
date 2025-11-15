@@ -3,27 +3,27 @@
 
 
 
-<form action="" class="forms_dashboard" >
+<form action="" class="forms_dashboard" [formGroup]="modifyPermissionForm" (ngSubmit)="onSubmit()">
     <div class="row">
         <div class="col-sm-12 col-md-6">
             <label for="permission" class="form-label">اسم الصلاحيه بالعربي</label>
-            <input type="text" placeholder="اسم الصلاحيه" id="permission" class="form-control">
-            <!-- <ng-container *ngIf="groupForm.controls['groupName'].invalid && groupForm.controls['groupName'].touched">
-                <small class="error_msg_form" *ngIf="groupForm.controls['groupName'].hasError('required')" >اسم المجموعه مطلوب</small>
-            </ng-container> -->
+            <input type="text" placeholder="اسم الصلاحيه بالعربي"  id="permission" class="form-control" formControlName="displayNameAr">
+            <ng-container *ngIf="modifyPermissionForm.controls['displayNameAr'].invalid && modifyPermissionForm.controls['displayNameAr'].touched">
+                <small class="error_msg_form" *ngIf="modifyPermissionForm.controls['displayNameAr'].hasError('required')" >اسم الصلاحيه مطلوب</small>
+            </ng-container>
         </div>
         <div class="col-sm-12 col-md-6">
             <label for="permission" class="form-label">اسم الصلاحيه بالانجليزي</label>
-            <input type="text" placeholder="اسم الصلاحيه" id="permission" class="form-control">
-            <!-- <ng-container *ngIf="groupForm.controls['groupName'].invalid && groupForm.controls['groupName'].touched">
-                <small class="error_msg_form" *ngIf="groupForm.controls['groupName'].hasError('required')" >اسم المجموعه مطلوب</small>
-            </ng-container> -->
+            <input type="text" placeholder="اسم الصلاحيه بالانجليزي"  id="permission" class="form-control" formControlName="displayNameEn">
+            <ng-container *ngIf="modifyPermissionForm.controls['displayNameEn'].invalid && modifyPermissionForm.controls['displayNameEn'].touched">
+                <small class="error_msg_form" *ngIf="modifyPermissionForm.controls['displayNameEn'].hasError('required')" >اسم المجموعه مطلوب</small>
+            </ng-container>
         </div>
      
     </div>
-        <div class="btn_add_reset">
-        <button type="sumbit" data-button="send" [ngClass]="{'btnEdit':this.btnaddAndUpdate=='update','btnAdd':this.btnaddAndUpdate=='add'}">{{btnaddAndUpdate == 'add' ? 'اضافه' : 'تعديل'}}</button>
-        <button type="reset" data-button="reset">جديد</button>
+        <div class="btn_add_reset" *ngIf="showBtnUpdate">
+        <button type="submit" data-button="send" [ngClass]="{'btnEdit':this.btnaddAndUpdate=='update','btnAdd':this.btnaddAndUpdate=='add'}">{{btnaddAndUpdate == 'add' ? 'اضافه' : 'تعديل'}}</button>
+        <button type="button" data-button="reset" (click)="resetForm()">جديد</button>
     </div>
 </form>
 
@@ -41,11 +41,11 @@
             </tr>
         </thead>
         <tbody>
-      @for (item of pagePermissionsData.rows; track $index) {
+      @for (item of pagePermissionsData?.rows; track $index) {
         <tr>
-            <td>{{$index+1}}</td>
-            <td>{{item.pageName}}</td>
-            <td>{{item.permissionsCount}}</td>
+            <td>{{($index + 1) + (pageIndex - 1) * pageSize}}</td>
+            <td>{{item.displayNameAr}}</td>
+            <td>{{item.displayNameEn}}</td>
             <td>
                 <div class="btn_edit">
                     <button type="button" (click)="getDataUpdate(item.id)" data-button="edit"><svg width="33" height="26" viewBox="0 0 33 26" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -54,11 +54,11 @@
 <path d="M20 6.50011L23 9.50011M24.385 8.08511C24.7788 7.69126 25.0001 7.15709 25.0001 6.60011C25.0001 6.04312 24.7788 5.50895 24.385 5.11511C23.9912 4.72126 23.457 4.5 22.9 4.5C22.343 4.5 21.8088 4.72126 21.415 5.11511L13 13.5001V16.5001H16L24.385 8.08511Z" stroke="#16601A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
 </svg>
 </button>
-                    <button type="button" (click)="deleteData(item.id)" data-button="delete"><svg width="33" height="26" viewBox="0 0 33 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <!-- <button type="button" (click)="deleteData(item.id)" data-button="delete"><svg width="33" height="26" viewBox="0 0 33 26" fill="none" xmlns="http://www.w3.org/2000/svg">
 <rect y="0.5" width="33" height="25" rx="2" fill="#FFE5E5"/>
 <path d="M23.5 5H20L19 4H14L13 5H9.5V7H23.5M10.5 20C10.5 20.5304 10.7107 21.0391 11.0858 21.4142C11.4609 21.7893 11.9696 22 12.5 22H20.5C21.0304 22 21.5391 21.7893 21.9142 21.4142C22.2893 21.0391 22.5 20.5304 22.5 20V8H10.5V20Z" fill="#FF3D00"/>
 </svg>
-</button>
+</button> -->
                 </div>
             </td>
         </tr>
@@ -74,8 +74,10 @@
 </div>
 
 
- <app-pagination
-  [totalPages]="10"
+ <app-pagination 
+
+    *ngIf="pagePermissionsData?.rows?.length > 0"
+  [totalPages]="pagePermissionsData?.paginationInfo?.totalPagesCount"
   [currentPage]="pageIndex"
   (pageChange)="onPageChanged($event)">
 </app-pagination> 

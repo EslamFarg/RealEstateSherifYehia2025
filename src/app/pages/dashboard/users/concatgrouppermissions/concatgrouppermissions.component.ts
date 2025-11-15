@@ -1,5 +1,8 @@
-import { Component, inject } from '@angular/core';
+import { Component, DestroyRef, inject } from '@angular/core';
 import { FormArray, FormBuilder, Validators } from '@angular/forms';
+import { ConcatgrouppermissionsService } from './services/contactgrouppermissions.service';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { SharedService } from '../../../../shared/services/shared.service';
 
 @Component({
   selector: 'app-concatgrouppermissions',
@@ -9,7 +12,9 @@ import { FormArray, FormBuilder, Validators } from '@angular/forms';
 export class ConcatgrouppermissionsComponent {
 // !!!!!!!!!!!!!!!!!!!!!!!! Services
 fb:FormBuilder=inject(FormBuilder)
-
+contactgroupServices:ConcatgrouppermissionsService=inject(ConcatgrouppermissionsService)
+_sharedServices:SharedService=inject(SharedService)
+destroyRef:DestroyRef=inject(DestroyRef)
 
 // !!!!!!!!!!!!!!!!!!!!!1 Properties
 
@@ -24,6 +29,12 @@ FormPermissionGroup:any=this.fb.group({
 
 // !!!!!!!!!!!!!!!!!!!!!!!!1 Methods
 
+ngOnInit(): void {
+  //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
+  //Add 'implements OnInit' to the class.
+  this.getAllDataGroup();
+  this.getAllDataPages();
+}
 
 addPageAndPermission(){
   this.items.push(this.createItem())
@@ -50,6 +61,32 @@ addItem(){
   this.items.push(this.createItem())
 }
 onSubmit(){
+
+}
+
+
+getDataGroup:any
+getAllDataGroup(){
+this.contactgroupServices.getAllDataGroup(``).pipe(takeUntilDestroyed(this.destroyRef)).subscribe((res:any)=>{
+ 
+  this.getDataGroup=res.rows;
+  
+})
+}
+
+getAllPages:any
+getAllDataPages(){
+this._sharedServices.getAllPages(0,0).pipe(takeUntilDestroyed(this.destroyRef)).subscribe((res:any)=>{
+ 
+  this.getAllPages=res.rows
+})
+}
+
+
+
+changePages(e:any){
+  let id=e.id
+  console.log(id);
 
 }
 }

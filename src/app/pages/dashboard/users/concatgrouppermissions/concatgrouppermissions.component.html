@@ -5,7 +5,7 @@
     <div class="row">
         <div class="col-sm-6">
             <label for="page" class="form-label">المجموعه</label>
-            <ng-select [items]="[]" [bindLabel]="'name'" placeholder="اسم المجموعه" [bindValue]="'id'" formControlName="groupName"></ng-select>
+            <ng-select [items]="getDataGroup" [bindLabel]="'groupName'" placeholder="اسم المجموعه"  [bindValue]="'id'" formControlName="groupName"></ng-select>
             <!-- <ng-container *ngIf="groupForm.controls['groupName'].invalid && groupForm.controls['groupName'].touched">
                 <small class="error_msg_form" *ngIf="groupForm.controls['groupName'].hasError('required')" >اسم المجموعه مطلوب</small>
             </ng-container> -->
@@ -21,7 +21,7 @@
   <div class="row my-4" *ngFor="let item of items.controls; let i=index"  [formGroupName]="i">
   <div class="col-sm-6 mb-3">
             <label for="pages" class="form-label">الصفحات</label>
-            <ng-select [items]="[]" [bindLabel]="'name'" placeholder="اسم الصفحه" [bindValue]="'id'" formControlName="pages"></ng-select>
+            <ng-select [items]="getAllPages" [bindLabel]="'pageName'" placeholder="اسم الصفحه" (change)="changePages($event)" [bindValue]="'id'" formControlName="pages"></ng-select>
             <!-- <ng-container *ngIf="groupForm.controls['pages'].invalid && groupForm.controls['pages'].touched">
                 <small class="error_msg_form" *ngIf="groupForm.controls['pages'].hasError('required')" >اسم الصفحه مطلوب</small>
             </ng-container> -->
