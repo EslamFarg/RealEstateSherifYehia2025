@@ -5,10 +5,10 @@
     <div class="row">
         <div class="col-sm-6">
             <label for="page" class="form-label">المجموعه</label>
-            <ng-select [items]="getDataGroup" [bindLabel]="'groupName'" placeholder="اسم المجموعه"  [bindValue]="'id'" formControlName="groupName"></ng-select>
-            <!-- <ng-container *ngIf="groupForm.controls['groupName'].invalid && groupForm.controls['groupName'].touched">
-                <small class="error_msg_form" *ngIf="groupForm.controls['groupName'].hasError('required')" >اسم المجموعه مطلوب</small>
-            </ng-container> -->
+            <ng-select [items]="getDataGroup" [bindLabel]="'groupName'" placeholder="اسم المجموعه"  [bindValue]="'id'" formControlName="groupId"></ng-select>
+            <ng-container *ngIf="FormPermissionGroup.controls['groupId'].invalid && FormPermissionGroup.controls['groupId'].touched">
+                <small class="error_msg_form" *ngIf="FormPermissionGroup.controls['groupId'].hasError('required')" >اسم المجموعه مطلوب</small>
+            </ng-container>
         </div>
 
   
@@ -22,16 +22,24 @@
   <div class="col-sm-6 mb-3">
             <label for="pages" class="form-label">الصفحات</label>
             <ng-select [items]="getAllPages" [bindLabel]="'pageName'" placeholder="اسم الصفحه" (change)="changePages($event)" [bindValue]="'id'" formControlName="pages"></ng-select>
-            <!-- <ng-container *ngIf="groupForm.controls['pages'].invalid && groupForm.controls['pages'].touched">
-                <small class="error_msg_form" *ngIf="groupForm.controls['pages'].hasError('required')" >اسم الصفحه مطلوب</small>
+            <!-- <ng-container *ngIf="FormPermissionGroup.controls['items'].controls[i].invalid && FormPermissionGroup.controls['items'].controls[i].touched">
+                <small class="error_msg_form" *ngIf="FormPermissionGroup.controls['items'].controls[i].hasError('required')" >اسم الصفحه مطلوب</small>
             </ng-container> -->
+            <ng-container *ngIf="item.get('pages')?.invalid && item.get('pages')?.touched">
+    <small class="error_msg_form" *ngIf="item.get('pages')?.hasError('required')">اسم الصفحه مطلوب</small>
+</ng-container>
         </div>
   <div class="col-sm-6 mb-3">
             <label for="permission" class="form-label">الصلاحيه</label>
             <div class="w-100 d-flex" >
 
- <ng-select [items]="[]" [bindLabel]="'name'"  style="width: 85%;" placeholder="اسم الصفحه" [bindValue]="'id'" formControlName="permissions"></ng-select>
+ <ng-select [items]="getDataPermissions" [bindLabel]="'actionName'" [multiple]="true"   style="width: 85%;" placeholder="اسم الصفحه" [bindValue]="'actionId'" formControlName="pageActionsId"></ng-select>
             
+  <!-- <ng-container *ngIf="FormPermissionGroup.controls['items'].controls[i].invalid && FormPermissionGroup.controls['items'].controls[i].touched">
+                <small class="error_msg_form" *ngIf="FormPermissionGroup.controls['items'].controls[i].hasError('required')" >اسم الصلاحيه مطلوب</small>
+            </ng-container> -->
+
+   
  <!-- check if its last item in form array -->
             @if ( i === items.length - 1) {
      <button  type="button"  (click)="addPageAndPermission()" style="
@@ -44,6 +52,9 @@
        
  
             </div>
+                     <ng-container *ngIf="item.get('pageActionsId')?.invalid && item.get('pageActionsId')?.touched">
+    <small class="error_msg_form" *ngIf="item.get('pageActionsId')?.hasError('required')">اسم الصلاحيه مطلوب</small>
+</ng-container>
            
         </div>
         </div>

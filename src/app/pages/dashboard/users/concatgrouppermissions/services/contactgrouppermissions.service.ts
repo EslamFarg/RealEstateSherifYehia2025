@@ -13,5 +13,14 @@ export class ConcatgrouppermissionsService extends BasehttpservicesService{
   getAllDataGroup(pagination:any){
     return this.get(`/Groups?${pagination}`);
   }
-  
+
+
+  getPermissionsbyPagesId(id:any){
+    return this.get(`/PageActions/GetActionsByPageIdAsync/${id}`);
+  }
+
+
+  addPermission(data:any){
+    return this.post(`/GroupActions/AddPermission`,data);
+  }
 }
