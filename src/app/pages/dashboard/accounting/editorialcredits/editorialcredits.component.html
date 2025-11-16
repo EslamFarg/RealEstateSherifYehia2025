@@ -1,21 +1,15 @@
 <app-page-heading [title]="'المحاسبه'" [subtitle]="'ارصده افتتاحيه'"></app-page-heading>
-
-<!-- <app-page-heading [title]="'المستخدمين'" [subtitle]="'تتبع النشاط'"></app-page-heading> -->
-<!-- [dataFilter]="dataFilter"   (selectedDataFilter)="searchUserId($event)" (selectedUserId)="dataSelectedUser($event)" -->
-<app-searchinforms></app-searchinforms>
-<!-- <app-formerror-msg [control]="formData.controls['userId']" [Messages]="{
-    'required':'المستخدم مطلوب'
-}"></app-formerror-msg> -->
-<!-- <small class="error_msg_form" *ngIf="showErrorUserID">المستخدم مطلوب</small> -->
+<app-searchinforms [fc]="$any(editorialForm.controls[selectedFilterControl])" [dataFilter]="dataFilter"
+    (selectedDataFilter)="selectFilterData($event)">
+</app-searchinforms>
 
 
-<form class="forms_dashboard" >
-
+<form class="forms_dashboard" [formGroup]="editorialForm">
     <div class="row">
         <div class="col-sm-12 col-lg-6">
             <div class="mb-3">
                 <label for="startdate" class="form-label">من تاريخ</label>
-                <input type="date" class="form-control" id="startdate" placeholder="التاريخ" formControlName="startDate">
+                <input type="date" class="form-control" id="startdate" placeholder="التاريخ" formControlName="fromDate">
                 <!-- <app-formerror-msg [control]="formData.controls['startDate']"
                 [Messages]="{
                     'required':'من تاريخ مطلوب'
@@ -26,22 +20,17 @@
         <div class="col-sm-12 col-lg-6">
             <div class="mb-3">
                 <label for="enddate" class="form-label">الي تاريخ</label>
-                    <div class="d-flex align-content-center gap-3">
-                            <input type="date" class="form-control" id="enddate" placeholder="التاريخ" formControlName="endDate">
-                          
-                     <button class="search_btn">بحث</button>
-                     
+                <div class="d-flex align-content-center gap-3">
+                    <input type="date" class="form-control" id="enddate" placeholder="التاريخ" formControlName="toDate">
+                    <button class="search_btn" type="button" (click)="applyFilter()">بحث</button>
                 </div>
-                  <!-- <app-formerror-msg style="display: block;" [control]="formData.controls['endDate']" [Messages]="{
+                <!-- <app-formerror-msg style="display: block;" [control]="formData.controls['endDate']" [Messages]="{
                                 'required' :'الي تاريخ مطلوب'
                             }"></app-formerror-msg>  -->
             </div>
         </div>
-       
     </div>
 </form>
-
-
 
 <div class="table-responsive">
     <table>
@@ -49,34 +38,41 @@
             <tr>
                 <th>م</th>
                 <th>اسم الحساب</th>
+                <th>رقم الحساب</th>
                 <th>دائن</th>
                 <th>مدين</th>
-                <th>الادوات</th>
+                <!-- <th>الادوات</th> -->
             </tr>
         </thead>
         <tbody>
-      <!-- @for (item of activityTrackingData.rows; track $index) { -->
-        <tr>
-            <td>1</td>
-            <td>شريف يحيي جادالله</td>
-            <td><input type="text" class="inp_credit" placeholder="00.00"></td>
-            <td><input type="text" class="inp_depit" placeholder="00.00"></td>
-            <td>
-                <button class="edit_btn">تعديل</button>
-            
-            </td>
-
- 
-        </tr>
-      <!-- }@empty { -->
-               <!-- <tr> -->
-    <!-- <td class="empty-cell" colspan="6"> -->
-     <!-- <app-emptytable></app-emptytable> -->
-    <!-- </td> -->
-  <!-- </tr> -->
-      <!-- } -->
+            @for (item of editotialCreditsList; track $index) {
+            <tr>
+                <td>{{$index+1}}</td>
+                <td>{{item.accountName}}</td>
+                <td>{{item.accountId}}</td>
+                <td>
+                    <input type="number" [(ngModel)]="item.openingCredit" placeholder="00.00" class="inp_credit"
+                        [value]="item.openingCredit">
+                </td>
+                <td>
+                    <input type="number" [(ngModel)]="item.openingDebit" placeholder="00.00" class="inp_depit"
+                        [value]="item.openingDebit">
+                </td>
+            </tr>
+            }@empty {
+            <tr>
+                <td class="empty-cell" colspan="6">
+                    <app-emptytable></app-emptytable>
+                </td>
+            </tr>
+            }
         </tbody>
     </table>
+    @if (editotialCreditsList.length > 0) {
+    <div class="d-flex justify-content-end mx-2">
+        <button class="edit_btn" type="button" (click)="updateAll()">تعديل</button>
+    </div>
+    }
 </div>
 
 
