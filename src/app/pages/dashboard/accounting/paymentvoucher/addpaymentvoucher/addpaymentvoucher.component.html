@@ -118,7 +118,8 @@
 <tr>
       <td scope="row">
         <div class="d-flex align-items-center justify-content-center">
-<input type="checkbox" aria-label="Checkbox for following text input" #oneCheckElement (change)="checkDataItem($event,item)">
+<input type="checkbox" aria-label="Checkbox for following text input" #oneCheckElement  [checked]="item.isInThisVoucher"
+ (change)="checkDataItem($event,item)">
         {{$index + 1}}
         </div>
          
@@ -127,10 +128,11 @@
     <td>{{item.propertyName}}</td>
     <td>{{item.unitName}} </td>
     <td>{{this.Months[item.monthIndex] || this.Months[item.monthNumber]}}</td>
-    <td><div #amountDueElement>{{item.amountDue || item.amount}}</div></td>
-    <td><input type="text" class="form-control"  #paidAmount placeholder="0" appNoStringPaste    [readonly]="!isItemEditable(item)" (input)="writePaidAmount($event,item)"></td>
+    <td><div #amountDueElement>{{item.amount  || item.amountDue}}</div></td>
+    <!-- [readonly]="!isItemEditable(item)" -->
+    <td><input type="text" class="form-control"  #paidAmount placeholder="0" appNoStringPaste  [value]="item.paidAmount || item.paid || 0" [readonly]="!isItemEditable(item)"   (input)="onPaidAmountChange($event,item)"></td>
   
-    <td><input type="text" class="form-control" [value]="item.totalWithAmount || 0" readonly #remainingAmount></td>
+    <td><input type="text" class="form-control" [value]="item.totalWithAmount  || item.remainingAmount  || 0" readonly #remainingAmount></td>
     </tr>
     }@empty {
                       <tr>
@@ -153,10 +155,14 @@
         <td></td>
         <td></td>
           <td></td>
-          <td>{{TotalAmountDue }}</td>
+          <!-- <td>{{this.TotalAmountDue }}</td>
         <td>{{this.PaidTotalAmount}}</td>
         
-        <td>{{this.RemainingTotalAmount}}</td>
+        <td>{{this.RemainingTotalAmount}}</td> -->
+        <td>{{ TotalAmountDue | number:'1.2-2' }}</td>
+<td>{{ PaidTotalAmount | number:'1.2-2' }}</td>
+<td>{{ RemainingTotalAmount | number:'1.2-2' }}</td>
+
             </tr>
         </tbody>
     </table>

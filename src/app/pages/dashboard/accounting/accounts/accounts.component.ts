@@ -215,6 +215,7 @@ deleteConfirmed(id:any){
   this._accountServices.deleteData(id).pipe(takeUntilDestroyed(this.destroyRef)).subscribe((res:any)=>{
     this.toastr.show('تم حذف الحساب بنجاح','success');
     this.getAllData();
+    this.accountData.reset();
   })
 
 }

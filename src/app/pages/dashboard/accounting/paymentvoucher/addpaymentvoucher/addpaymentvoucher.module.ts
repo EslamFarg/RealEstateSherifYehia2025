@@ -6,7 +6,7 @@ import { AddpaymentvoucherComponent } from './addpaymentvoucher.component';
 import { PageHeadingComponent } from '../../../../../shared/ui/page-heading/page-heading.component';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { SearchinformsComponent } from '../../../../../shared/ui/searchinforms/searchinforms.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FormerrorMsgComponent } from '../../../../../shared/ui/formerror-msg/formerror-msg.component';
 import { EmptytableComponent } from '../../../../../shared/ui/emptytable/emptytable.component';
 import { DirectivesModule } from "../../../../../shared/directives/directives.module";
@@ -29,7 +29,8 @@ import { ConfirmDeleteComponent } from '../../../../../shared/components/confirm
     FormerrorMsgComponent,
     EmptytableComponent,
     DirectivesModule,
-    ConfirmDeleteComponent
+    ConfirmDeleteComponent,
+    FormsModule
 ]
 })
 export class AddpaymentvoucherModule { }

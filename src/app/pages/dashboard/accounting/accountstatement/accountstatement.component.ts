@@ -63,7 +63,7 @@ getAllAccounts(){
   }
 }
 this._accountsStatementSer.getAllaccountsfinancially(pagination).pipe(takeUntilDestroyed(this.destroyRef)).subscribe((res: any) => {
-  this.accountData = res;
+  this.accountData = res.rows;
   console.log(this.accountData);
 })
 }

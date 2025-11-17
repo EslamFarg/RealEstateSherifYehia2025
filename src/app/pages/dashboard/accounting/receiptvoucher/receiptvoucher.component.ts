@@ -91,7 +91,7 @@ getAllAccounts() {
 getAllFinancialAccounts() {
   this._ReceiptVoucherService.getAllFinancialAccount().pipe(takeUntilDestroyed(this.destroyRef)).subscribe((res: any) => {
     console.log(res)
-    this.getAllDataFinancialAccount = res
+    this.getAllDataFinancialAccount = res.rows
     // console.log("No",this.getAllDataFinancialAccount)
 
   })
@@ -234,7 +234,7 @@ getDataUpdate(id: any) {
         voucherNo: res.voucherNo,
         voucherDate: res.voucherDate.split('T')[0],
         paymentMethod: res.paymentMethod,
-        amount: Number(amountWithoutTax.toFixed(2)), // ✅ هنا الحل
+        amount: res.net, // ✅ هنا الحل
         notes: res.notes,
         debitAccountId: res.debitAccountNumber,
         creditAccountId: res.creditAccountNumber

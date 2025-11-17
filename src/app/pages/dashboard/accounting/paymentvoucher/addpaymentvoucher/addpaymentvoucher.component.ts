@@ -187,6 +187,8 @@ if(e.index == 0){
     this._ownerPaymentVoucherServices.getDatailsContracts(this.idSearchOwner,pagination).pipe(takeUntilDestroyed(this.destroyRef)).subscribe((res:any)=>{
      
       this.paymentData=res;
+
+      console.log(this.paymentData);
       this.totalAmount=row.amountDue
 
       setTimeout(() => {
@@ -228,65 +230,172 @@ calcTotalRemaining() {
 
 
 
-writePaidAmount(e:any,item:any){
-  const paid = Number(e.target.value) || 0;
-  let amountDue = Number(item.amountDue) || 0;
+// writePaidAmount(e:any,item:any){
+//   const paid = Number(e.target.value) || 0;
+//   let amountDue = Number(item.amountDue) || 0;
 
-   if (paid > amountDue) {
-    e.target.value = amountDue;
-  }
+//    if (paid > amountDue) {
+//     e.target.value = amountDue;
+//   }
 
 
-  this.itemChecked = this.itemChecked.filter(x => x.contractInstallmentId !== item.id);
+//   // this.itemChecked = this.itemChecked.filter(x => x.contractInstallmentId !== item.id);
+//   // this.itemChecked = this.itemChecked.filter(x => x.contractInstallmentId !== item.id);
 
-  if(this.checksWrite){
-    this.itemChecked = this.itemChecked.filter(x => x.id != item.id);
-    this.itemChecked.push({
-      contractInstallmentId:item.id,
-      amount:paid
-    })
+//   this.itemChecked = this.itemChecked.filter(x => x.contractInstallmentId !== item.contractInstallmentId);
+
+
+//   if(this.checksWrite){
+//     this.itemChecked = this.itemChecked.filter(x => x.id != item.id);
+//     this.itemChecked.push({
+//       contractInstallmentId:item.id,
+//       amount:paid
+//     })
     
-    // console.log(this.itemChecked);
-  }
+//     // console.log(this.itemChecked);
+//   }
   
 
 
-  if(paid > amountDue){
-    e.target.value = amountDue;
-    item.totalWithAmount = 0;
-  }else{
-    item.totalWithAmount = amountDue - paid
+//   if(paid > amountDue){
+//     e.target.value = amountDue;
+//     item.totalWithAmount = 0;
+//   }else{
+//     item.totalWithAmount = amountDue - paid
   
-  setTimeout(() => {
+//   setTimeout(() => {
 
-    let TotalPaidAmount = 0;
-    let calcTotalRemaining = 0;
+//     let TotalPaidAmount = 0;
+//     let calcTotalRemaining = 0;
 
-    this.paidAmountElement?.forEach((el: ElementRef) => {
-      const value = parseFloat(el.nativeElement.value) || 0;
-      TotalPaidAmount += value;
-    });
-    this.PaidTotalAmount = TotalPaidAmount;
+//     this.paidAmountElement?.forEach((el: ElementRef) => {
+//       const value = parseFloat(el.nativeElement.value) || 0;
+//       TotalPaidAmount += value;
+//     });
+//     this.PaidTotalAmount = TotalPaidAmount;
 
-    this.remainingAmountElement?.forEach((el: ElementRef) => {
-      const value = parseFloat(el.nativeElement.value) || 0;
-      calcTotalRemaining += value;
-    });
-    this.RemainingTotalAmount = calcTotalRemaining;
+//     this.remainingAmountElement?.forEach((el: ElementRef) => {
+//       const value = parseFloat(el.nativeElement.value) || 0;
+//       calcTotalRemaining += value;
+//     });
+//     this.RemainingTotalAmount = calcTotalRemaining;
 
-  }, 0);
+//   }, 0);
 
     
-  }
+//   }
 
   
-  if(paid == 0){
-    item.totalWithAmount = 0
+//   if(paid == 0){
+//     item.totalWithAmount = 0
+//   }
+
+//     // console.log(item.totalWithTax)
+
+// }
+
+
+// writePaidAmount(e:any, item:any){
+//   let paid = Number(e.target.value) || 0;
+//   const amountDue = Number(item.amount) || 0;
+
+//   if(paid > amountDue){
+//     paid = amountDue;
+//     e.target.value = paid;
+//   }
+
+//   // تحديث قيمة المدفوع مباشرة في item
+//   item.paidAmount = paid;
+
+//   // تحديث itemChecked
+//   const existingIndex = this.itemChecked.findIndex(x => x.contractInstallmentId === item.contractInstallmentId);
+//   if(existingIndex > -1){
+//     this.itemChecked[existingIndex].amount = paid;
+//   } else {
+//     this.itemChecked.push({
+//       contractInstallmentId: item.contractInstallmentId,
+//       amount: paid
+//     });
+//   }
+
+//   // تحديث المجموعات
+//   this.calculateTotals();
+// }
+
+
+// onPaidAmountChange(event: any, item: any) {
+//   let value = Number(event.target.value) || 0;
+  
+//   // عدم السماح بالقيمة أكبر من المبلغ المستحق
+//   if (value > item.amount) {
+//     value = item.amount;
+//     event.target.value = value;
+//   }
+
+//   // حفظ القيمة مباشرة في الـ item
+//   item.paidAmount = value;
+
+//   // إعادة حساب المجموعات
+ 
+
+//   // تحديث قائمة العناصر المختارة
+//   const index = this.itemChecked.findIndex(x => x.contractInstallmentId === item.contractInstallmentId);
+//   if (index > -1) {
+//     this.itemChecked[index].amount = value;
+//   } else {
+//     this.itemChecked.push({ contractInstallmentId: item.contractInstallmentId, amount: value });
+//   }
+
+//    this.calculateTotals();
+// }
+
+
+// onPaidAmountChange(event: any, item: any) {
+//   let value = Number(event.target.value) || 0;
+
+//   if (value > item.amount) {
+//     value = item.amount;
+//     event.target.value = value;
+//   }
+
+//   item.paidAmount = value;
+
+//   const index = this.itemChecked.findIndex(x => x.contractInstallmentId === item.contractInstallmentId);
+//   if (index > -1) {
+//     this.itemChecked[index].amount = value;
+//   } else {
+//     this.itemChecked.push({ contractInstallmentId: item.contractInstallmentId, amount: value });
+//   }
+
+//   this.calculateTotals();
+// }
+
+
+onPaidAmountChange(event: any, item: any) {
+  let value = Number(event.target.value) || 0;
+
+  if (value > item.amount) {
+    value = item.amount;
+    event.target.value = value;
   }
 
-    // console.log(item.totalWithTax)
+  // حفظ القيمة مباشرة في الـ item
+  item.paidAmount = value;
 
+  // تحديث العناصر المختارة
+  const index = this.itemChecked.findIndex(x => x.contractInstallmentId === item.contractInstallmentId);
+  if (index > -1) {
+    this.itemChecked[index].amount = value;
+  } else {
+    this.itemChecked.push({ contractInstallmentId: item.contractInstallmentId, amount: value });
+  }
+
+  this.calculateTotals();
 }
+
+
+
+
 
 
 
@@ -301,7 +410,8 @@ checkDataItem(e:any,item:any){
     // const amountDue = Number(item.amountDue) || 0;
    
     this.itemChecked.push({
-      contractInstallmentId:item.id,
+      // contractInstallmentId:item.contractInstallmentId:item.contractInstallmentId,
+      contractInstallmentId:item.contractInstallmentId,
       amount:paid
     })
     this.checksWrite=true
@@ -380,29 +490,29 @@ this.itemChecked.forEach((item) => {
   ownerPaymentDetails:[] as { contractInstallmentId: number; amount: number }[]  
 
   }
+
   
-
-  console.log(data);
-  
-
-  if(this.btnAddandUpdate == 'add'){
-
-    // this.itemChecked.forEach((item) => {
-    //   data.ownerPaymentDetails.push(item)
-    //  console.log(data.ownerPaymentDetails)
-    // })
-//     data.ownerPaymentDetails = this.itemChecked.map(x => ({
-//   contractInstallmentId: x.contractInstallmentId,
-//   amount: x.amount 
-// }));
-
 data.ownerPaymentDetails = this.itemChecked
   .filter(x => Number(x.amount) > 0) // فقط العناصر المدفوعة
   .map(x => ({
     contractInstallmentId: x.contractInstallmentId,
     amount: x.amount
+
   }));
 
+
+  console.log(this.itemChecked)
+  console.log(data);
+  
+
+  if(this.btnAddandUpdate == 'add'){
+
+
+
+
+
+
+  console.log("data.ownerPaymentDetails",data.ownerPaymentDetails)
 
     //  console.log(data);
 
@@ -491,29 +601,75 @@ resetForm(){
 }
 
 
-checkAllData(e:any){
+// checkAllData(e:any){
 
+//   const checked = e.target.checked;
+
+//   if(checked){
+//     this.oneCheckElement.forEach(element => {
+//       element.nativeElement.checked = true;
+//     });
+//     this.itemChecked = this.paymentData.rows.map((item:any) => ({
+//       contractInstallmentId: item.contractInstallmentId,
+//       amount: item.amount
+//     }));
+//   }else{
+//     this.oneCheckElement.forEach(element => {
+//       element.nativeElement.checked = false;
+//     });
+//     this.itemChecked = [];
+//   }
+
+
+//   console.log(this.itemChecked)
+  
+
+// }
+
+
+checkAllData(e: any) {
   const checked = e.target.checked;
 
-  if(checked){
+  if (!this.paymentData || !this.paymentData.rows) return;
+
+  if (checked) {
+    // تفعيل كل الـ checkboxes
     this.oneCheckElement.forEach(element => {
       element.nativeElement.checked = true;
     });
-    this.itemChecked = this.paymentData.rows.map((item:any) => ({
+
+    // تحديث itemChecked بشكل صحيح
+    this.itemChecked = this.paymentData.rows.map((item: any) => ({
       contractInstallmentId: item.contractInstallmentId,
       amount: item.amount
     }));
-  }else{
+  } else {
+    // إلغاء كل الـ checkboxes
     this.oneCheckElement.forEach(element => {
       element.nativeElement.checked = false;
     });
     this.itemChecked = [];
   }
 
+  console.log(this.itemChecked);
+}
 
-  console.log(this.itemChecked)
-  
 
+
+calculateTotals() {
+  this.TotalAmountDue = 0;
+  this.PaidTotalAmount = 0;
+  this.RemainingTotalAmount = 0;
+
+  this.paymentData.rows.forEach((item: any) => {
+    item.remainingAmount = item.amount - item.paidAmount;
+
+    this.TotalAmountDue += item.amount;
+    this.PaidTotalAmount += item.paidAmount;
+    this.RemainingTotalAmount += item.remainingAmount;
+
+    // this.TotalAmountDue=this.TotalAmountDue.toFixed(2);
+  });
 }
 
 
@@ -533,12 +689,15 @@ getDataById(e:any){
         notes: res.notes,
         ownerId: res.ownerId,
         debitAccountId: res.debitAccountId,
-        creditAccountId: res.creditAccountId
+        creditAccountId: res.creditAccountId,
+
       });
      
 
+      console.log("paymentVoucherForm",this.paymentVoucherForm.value)
+
       this.formDataSearch.patchValue({
-        financiallyAccountId: res.ownerId,
+        financiallyAccountId: res.debitAccountId,
         name: res.debitAccountName,
         email: res.email,
         mobile: res.mobile,
@@ -547,43 +706,47 @@ getDataById(e:any){
       console.log(this.formDataSearch.value);
       // table
       this.paymentData = {
-        rows: res.ownerPaymentDetails.map((item: any) => ({
+        rows: res.listOwnerMonths.map((item: any) => ({
+ 
+          contractInstallmentId: item.id, 
           contractId: item.contractId,
           propertyName: item.propertyName,
           unitName: item.unitName,
           monthNumber: item.monthNumber,
-          amount:item.amount,
-          paidAmount: item.paidAmount
+          amount:item.amountDue,
+          paidAmount: item.netPaidInThisVoucher,
+          isInThisVoucher:item.isInThisVoucher,
+          monthIndex: item.monthIndex,
+          // amountDue:item.amountDue,
+          remainingAmount:item.amountDue - (item.netPaidInThisVoucher || 0)
         }))
       };
 
-      this.paymentData.rows.forEach((item: any) => {
-        item.remainingAmount = item.amount - item.paidAmount;
 
-      })
+   
 
-      this.itemChecked = res.ownerPaymentDetails.map((item: any) => ({
-        contractInstallmentId: item.contractInstallmentId,
-        amount: item.amount
-      }));
+      this.calculateTotals();
+
+      console.log(this.TotalAmountDue);
 
 
-    
+      this.itemChecked = res.listOwnerMonths
+       .filter((item: any) => item.netPaidInThisVoucher > 0)
+  .map((item:any) => ({
+    contractInstallmentId: item.id,
+    amount: item.amountDue
+  }));
+
+
+  console.log(this.itemChecked)
+
+
+
 
       
       this.idUpdate=res.id
       this.canBtnsShow=true
       console.log(this.idUpdate)
-      setTimeout(() => {
-        this.TotalAmountDue=0
-       
-          this.checkAll.nativeElement.checked = true;
-        this.oneCheckElement.forEach(cb => cb.nativeElement.checked = true);
-        this.amountDueElement?.forEach((item)=>{
-          this.TotalAmountDue+=Number(item.nativeElement.textContent)
-        })
-
-      },100);
 
       
 
@@ -593,7 +756,9 @@ getDataById(e:any){
 
 
 isItemEditable(item: any): boolean {
-  return this.itemChecked.some(x => x.contractInstallmentId === item.id);
+  // return this.itemChecked.some(x => x.contractInstallmentId === item.id);
+  return this.itemChecked.some(x => x.contractInstallmentId === item.contractInstallmentId);
+
 }
 
 
@@ -602,4 +767,13 @@ ChangeSelect(e:any){
 
 }
 
+
+
+ngOnDestroy(): void {
+  //Called once, before the instance is destroyed.
+  //Add 'implements OnDestroy' to the class.
+  if(this.editBehaviorSubject.clearId){
+    this.editBehaviorSubject.clearId();
+  }
+}
 }
