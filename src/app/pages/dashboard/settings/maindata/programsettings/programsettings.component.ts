@@ -4,6 +4,8 @@ import { MaindataService } from '../services/maindata.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ToastrService } from '../../../../../shared/ui/toastr/services/toastr.service';
 import { SharedService } from '../../../../../shared/services/shared.service';
+import { CountryISO } from 'ngx-intl-tel-input';
+import { ksaEgyptPhoneValidator } from '../../../../../shared/validations/phoneNumber2';
 
 @Component({
   selector: 'app-programsettings',
@@ -20,7 +22,7 @@ export class ProgramsettingsComponent {
   _sharedServices: SharedService = inject(SharedService);
 
   // !!!!!!!!!!!!!!!!!!!!!!!!!! Property
-
+selectedCountry = CountryISO.Egypt;
   systemSettings = this.fb.group({
     companyNameAr: ['', [Validators.required, Validators.minLength(3)]],
     companyNameEn: ['', [Validators.required, Validators.minLength(3)]],
@@ -30,7 +32,7 @@ export class ProgramsettingsComponent {
     website: ['', Validators.required],
     phone: ['', Validators.required],
     fax: ['', Validators.required],
-    mobile: ['', Validators.required],
+    mobile: [null as any, [Validators.required , ksaEgyptPhoneValidator]],
     region: [null, Validators.required],
     city: [null, Validators.required],
     district: [null, Validators.required],
@@ -77,6 +79,8 @@ btnAddandUpdate = 'add';
   onSubmit() {
     if (this.systemSettings.valid) {
     if(this.btnAddandUpdate == 'add' || this.btnAddandUpdate=='update'){
+      const phoneControl = this.systemSettings.value.mobile as any;
+        const mobile = phoneControl?.e164Number || phoneControl;
         let data = {
         companyNameAr: this.systemSettings.value.companyNameAr,
         companyNameEn: this.systemSettings.value.companyNameEn,
@@ -86,7 +90,7 @@ btnAddandUpdate = 'add';
         website: this.systemSettings.value.website,
         phone: this.systemSettings.value.phone,
         fax: this.systemSettings.value.fax,
-        mobile: this.systemSettings.value.mobile,
+        mobile: mobile,
         region: this.systemSettings.value.region,
         city: this.systemSettings.value.city,
         district: this.systemSettings.value.district,
@@ -170,9 +174,14 @@ btnAddandUpdate = 'add';
     this._mainDataServices.getDataSystemSettings().pipe(takeUntilDestroyed(this.destroyRef)).subscribe((res:any)=>{
       console.log(res);
       if(res){
+        const phone = this._sharedServices.parsePhoneNumber(res.mobile);
         this.systemSettings.patchValue(res)
         this.btnAddandUpdate='update'
-        
+         this.selectedCountry = phone.countryCode;
+
+        setTimeout(() => {
+          this.systemSettings.get('mobile')?.setValue(phone);
+        });
       }
       // this.systemSettings.patchValue(res)
     })

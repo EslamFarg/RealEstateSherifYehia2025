@@ -25,7 +25,7 @@
 
        <div class="col-sm-12 col-lg-3 mb-3">
         <label for="numberbala" class="form-label">رقم الدفتري</label>
-        <input type="text" name=""  class="form-control number_notes" placeholder="رقم الوحده" id="numberbala" formControlName="bookNumber">
+        <input type="text" name=""  class="form-control number_notes" placeholder="رقم الدفتري" id="numberbala" formControlName="bookNumber">
          <app-formerror-msg [control]="formExchange.controls['bookNumber']" [Messages]="{
                   required:'الرقم الدفتري مطلوب ' ,
                   minlength:'الرقم الدفتري يجب ان يكون اكثر من 3 حروف'
@@ -43,7 +43,7 @@
     </div>
        <div class="col-sm-12 col-lg-2 mb-3">
         <label for="numberbala" class="form-label">التاريخ</label>
-        <input type="datetime-local" name=""  class="form-control" placeholder="التاريخ" id="numberbala" formControlName="dateTime">
+        <input type="date" name=""  class="form-control" placeholder="التاريخ" id="numberbala" formControlName="dateTime">
           <app-formerror-msg [control]="formExchange.controls['dateTime']" [Messages]="{
                   required:'التاريخ مطلوب' ,
              

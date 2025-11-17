@@ -10,6 +10,6 @@ export class SearchinformsService extends BasehttpservicesService{
 
 
     getAllDataUsers(){
-        return this.get('/Users');
+        return this.get('/Users?PageIndex=0&pageSize=0');
     }
 }

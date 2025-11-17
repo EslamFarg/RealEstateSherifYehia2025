@@ -8,142 +8,133 @@ import { Group } from './models/group';
 @Component({
   selector: 'app-group',
   templateUrl: './group.component.html',
-  styleUrl: './group.component.scss'
+  styleUrl: './group.component.scss',
 })
 export class GroupComponent {
-
   // !!!!!!!!!!!!!!!!!!!!!!! Services
 
-
-  fb:FormBuilder=inject(FormBuilder)
-  _groupServices:GroupService=inject(GroupService)
-  destroyRef:DestroyRef=inject(DestroyRef)
-  toastr:ToastrService=inject(ToastrService)
-
-
-
+  fb: FormBuilder = inject(FormBuilder);
+  _groupServices: GroupService = inject(GroupService);
+  destroyRef: DestroyRef = inject(DestroyRef);
+  toastr: ToastrService = inject(ToastrService);
 
   // !!!!!!!!!!!!!!!!!!!!!!!1 Property
 
+  groupForm = this.fb.group({
+    groupName: ['', [Validators.required, Validators.minLength(3)]],
+    description: ['Hello Marco'],
+  });
 
-  groupForm=this.fb.group({
-  groupName: ['',[Validators.required,Validators.minLength(3)]],
-  description:['Hello Marco']
+  btnaddAndUpdate = 'add';
+  idUpdate: any;
+  // pagination
+  deleteId: any;
 
-  })
+  pageIndex = 1;
+  pageSize = 10;
 
-  btnaddAndUpdate='add';
-  idUpdate:any
-    // pagination
-    deleteId:any
+  showDelete = false;
 
-pageIndex=1
-pageSize=10
-
-showDelete=false;
-
-  groupsData:{rows:Group[],paginationInfo:any}={
+  groupsData: { rows: Group[]; paginationInfo: any } = {
     rows: [],
-    paginationInfo: null
-  }
+    paginationInfo: null,
+  };
 
+  // !!!!!!!!!!!!!!!!!!!!!!!!!!!11 Methods
 
-  
-
-
-// !!!!!!!!!!!!!!!!!!!!!!!!!!!11 Methods
-
-
-ngOnInit(): void {
-  //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
-  //Add 'implements OnInit' to the class.
-  this.getAllDataGroup();
-}
-
-
-onSubmit(){
-  // debugger
-  if(this.groupForm.valid){
- if(this.btnaddAndUpdate == 'add'){
-     let data={
-      groupName: this.groupForm.value.groupName,
-      description: this.groupForm.value.description ?? "Hello Marco"
-    }
-    this._groupServices.CreateGroup(data).pipe(takeUntilDestroyed(this.destroyRef)).subscribe((res:any)=>{
-      this.toastr.show('تم اضافه المجموعه بنجاح','success');
-      this.groupForm.reset();
-     
-      this.getAllDataGroup();
-
-      
-    })
-     this.btnaddAndUpdate='add'
- }else{
-
-  let data={
-    groupId:this.idUpdate,
-    groupName: this.groupForm.value.groupName,
-    description: this.groupForm.value.description ?? 'Hello Marco'
-  }
-
-  this._groupServices.updateData(data).pipe(takeUntilDestroyed(this.destroyRef)).subscribe((res:any)=>{
-    this.toastr.show('تم تعديل المجموعه بنجاح','success');
-    this.groupForm.reset();
-     this.btnaddAndUpdate='add'
+  ngOnInit(): void {
+    //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
+    //Add 'implements OnInit' to the class.
     this.getAllDataGroup();
-   
-  })
-
- }
-
-  }else{
-    this.groupForm.markAllAsTouched();
   }
-}
 
+  onSubmit() {
+    // debugger
+    if (this.groupForm.valid) {
+      if (this.btnaddAndUpdate == 'add') {
+        let data = {
+          groupName: this.groupForm.value.groupName,
+          description: this.groupForm.value.description ?? 'Hello Marco',
+        };
+        this._groupServices
+          .CreateGroup(data)
+          .pipe(takeUntilDestroyed(this.destroyRef))
+          .subscribe((res: any) => {
+            this.toastr.show('تم اضافه المجموعه بنجاح', 'success');
+            this.groupForm.reset();
 
+            this.getAllDataGroup();
+          });
+        this.btnaddAndUpdate = 'add';
+      } else {
+        let data = {
+          groupId: this.idUpdate,
+          groupName: this.groupForm.value.groupName,
+          description: this.groupForm.value.description ?? 'Hello Marco',
+        };
 
-getAllDataGroup(){
-  this._groupServices.getAllDataGroup(`PageIndex=${this.pageIndex}&PageSize=${this.pageSize}`).pipe(takeUntilDestroyed(this.destroyRef)).subscribe((res:any)=>{
-    this.groupsData=res;
-  })
-}
-
-
-getDataUpdate(id:any){
-  if(id){
-    this._groupServices.getDataUpdate(id).pipe(takeUntilDestroyed(this.destroyRef)).subscribe((res:any)=>{
-      this.groupForm.patchValue({
-        groupName:res.groupName,
-        description:res.description
-      })
-      console.log(res);
-     
-      this.idUpdate=res.id
-      this.btnaddAndUpdate='update'
-    })
-
-     
+        this._groupServices
+          .updateData(data)
+          .pipe(takeUntilDestroyed(this.destroyRef))
+          .subscribe((res: any) => {
+            this.toastr.show('تم تعديل المجموعه بنجاح', 'success');
+            this.groupForm.reset();
+            this.btnaddAndUpdate = 'add';
+            this.getAllDataGroup();
+          });
+      }
+    } else {
+      this.groupForm.markAllAsTouched();
+    }
   }
-}
-onPageChanged(page: number) {
-  this.pageIndex = page;
-  this.getAllDataGroup();
-}
 
-deleteConfirmed(id:any){
-this._groupServices.deleteData(id).pipe(takeUntilDestroyed(this.destroyRef)).subscribe((res:any)=>{
-  this.toastr.show('تم حذف المجموعه بنجاح','success');
-  this.getAllDataGroup();
-  this.showDelete=false
-})
-}
+  getAllDataGroup() {
+    this._groupServices
+      .getAllDataGroup(`PageIndex=${this.pageIndex}&PageSize=${this.pageSize}`)
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((res: any) => {
+        this.groupsData = res;
+      });
+  }
 
-deleteData(id:any){
-  this.showDelete=true;
-  this.deleteId=id
-}
-onClose(){
-  this.showDelete=false;
-}
+  getDataUpdate(id: any) {
+    if (id) {
+      this._groupServices
+        .getDataUpdate(id)
+        .pipe(takeUntilDestroyed(this.destroyRef))
+        .subscribe((res: any) => {
+          this.groupForm.patchValue({
+            groupName: res.groupName,
+            description: res.description,
+          });
+          console.log(res);
+
+          this.idUpdate = res.id;
+          this.btnaddAndUpdate = 'update';
+        });
+    }
+  }
+  onPageChanged(page: number) {
+    this.pageIndex = page;
+    this.getAllDataGroup();
+  }
+
+  deleteConfirmed(id: any) {
+    this._groupServices
+      .deleteData(id)
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((res: any) => {
+        this.toastr.show('تم حذف المجموعه بنجاح', 'success');
+        this.getAllDataGroup();
+        this.showDelete = false;
+      });
+  }
+
+  deleteData(id: any) {
+    this.showDelete = true;
+    this.deleteId = id;
+  }
+  onClose() {
+    this.showDelete = false;
+  }
 }

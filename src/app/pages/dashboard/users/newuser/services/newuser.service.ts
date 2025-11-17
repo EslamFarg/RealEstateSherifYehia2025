@@ -22,8 +22,8 @@ export class NewuserService extends BasehttpservicesService{
   }
 
 
-  getAllDataUser():Observable<Newuser>{
-    return this.get<Newuser>(`/Users`);
+  getAllDataUser(pageIndex:number , pageSize:number):Observable<Newuser>{
+    return this.get<Newuser>(`/Users?PageIndex=${pageIndex}&pageSize=${pageSize}`);
   }
 
 

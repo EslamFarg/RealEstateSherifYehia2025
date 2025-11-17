@@ -6,6 +6,7 @@ import { ProgramsettingsComponent } from './programsettings.component';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { ReactiveFormsModule } from '@angular/forms';
 import { DirectivesModule } from "../../../../../shared/directives/directives.module";
+import { NgxIntlTelInputModule } from 'ngx-intl-tel-input';
 
 
 @NgModule({
@@ -17,7 +18,8 @@ import { DirectivesModule } from "../../../../../shared/directives/directives.mo
     ProgramsettingsRoutingModule,
     NgSelectModule,
     ReactiveFormsModule,
-    DirectivesModule
+    DirectivesModule,
+    NgxIntlTelInputModule
 ]
 })
 export class ProgramsettingsModule { }

@@ -110,7 +110,7 @@
         <tbody>
             @for (item of getAllData.rows; track $index) {
             <tr>
-                <td>{{$index+1}}</td>
+                <td>{{ ((pageIndex - 1) * pageSize) + ($index + 1) }}</td>
                 <td>{{item.name}}</td>
                 <td><span dir="ltr">{{item.mobile}}</span></td>
                 <td>{{item.nationalID}}</td>

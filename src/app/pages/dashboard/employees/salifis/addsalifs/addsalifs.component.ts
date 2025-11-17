@@ -32,7 +32,7 @@ showPopup=false;
 salafisData=this.fb.group({
   // salifName: ['',[Validators.required]],
   bookNumber:['',[Validators.required,Validators.minLength(3)]],
- voucherDate:['',[Validators.required]],
+ voucherDate:[new Date().toISOString().split('T')[0],[Validators.required]],
  amount:['',[Validators.required]],
  notes:[''],
  accountId:[null,[Validators.required]],

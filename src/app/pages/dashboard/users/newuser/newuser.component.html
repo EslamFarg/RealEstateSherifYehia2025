@@ -21,11 +21,13 @@
         <div class="col-sm-12 col-lg-6">
             <div class="mb-3">
                 <label for="phonenumber" maxlength="20" class="form-label">رقم الجوال</label>
-                <ngx-intl-tel-input [cssClass]="'form-control'" [onlyCountries]="['sa', 'eg']" 
+                <ngx-intl-tel-input [cssClass]="'form-control'" [onlyCountries]="['sa', 'eg']"
                     [selectedCountryISO]="selectedCountry" [enableAutoCountrySelect]="true" [enablePlaceholder]="true"
-                    [selectFirstCountry]="false" [separateDialCode]="true" [maxLength]="14" formControlName="phoneNumber">
+                    [selectFirstCountry]="false" [separateDialCode]="true" [maxLength]="14"
+                    formControlName="phoneNumber">
                 </ngx-intl-tel-input>
-                <ng-container *ngIf="formData.controls['phoneNumber'].invalid && formData.controls['phoneNumber'].touched">
+                <ng-container
+                    *ngIf="formData.controls['phoneNumber'].invalid && formData.controls['phoneNumber'].touched">
                     <small class="error_msg_form" *ngIf="formData.controls['phoneNumber'].hasError('required')">
                         رقم الجوال مطلوب
                     </small>
@@ -96,7 +98,7 @@
         <tbody>
             @for (item of getAllData; track $index) {
             <tr>
-                <td>{{$index+1}}</td>
+                <td>{{ ((pageIndex - 1) * pageSize) + ($index + 1) }}</td>
                 <td>{{item.userName}}</td>
                 <td>
                     <ng-container *ngIf="item.groups && item.groups.length > 0; else noGroup">
@@ -146,8 +148,7 @@
     </table>
 </div>
 
-
-<app-pagination [totalPages]="10" [currentPage]="pageIndex" (pageChange)="onPageChanged($event)">
+<app-pagination [totalPages]="totalPages" [currentPage]="pageIndex" (pageChange)="onPageChanged($event)">
 </app-pagination>
 
 <app-confirm-delete [isVisible]="showDelete" (onDelete)="deleteConfirmed($event)" [itemId]="this.deleteId"

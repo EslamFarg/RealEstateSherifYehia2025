@@ -22,7 +22,7 @@ export class NewuserComponent {
   _newUserServices: NewuserService = inject(NewuserService);
   destroyRef: DestroyRef = inject(DestroyRef);
   _toastrSer: ToastrService = inject(ToastrService);
-_sharedServices: SharedService = inject(SharedService);
+  _sharedServices: SharedService = inject(SharedService);
   groupServices: GroupService = inject(GroupService);
 
   // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! Property
@@ -33,7 +33,11 @@ _sharedServices: SharedService = inject(SharedService);
   showDelete: any = false;
   deleteId: any;
   selectedCountry = CountryISO.Egypt;
+    // pagination
 
+  pageIndex = 1;
+  pageSize = 10;
+  totalPages = 0;
   formData = this.fb.group({
     userName: [
       '',
@@ -47,7 +51,7 @@ _sharedServices: SharedService = inject(SharedService);
       JSON.parse(localStorage.getItem('payloadUser')!)?.fullName || 'sherif',
     ],
     email: ['', [Validators.required, Validators.email]],
-    phoneNumber: [null as any , Validators.required],
+    phoneNumber: [null as any, Validators.required],
     password: ['Sh12345678Sh'],
     // groupIds:[[],Validators.required],
     groupIds: this.fb.control<number[]>([]),
@@ -140,10 +144,11 @@ _sharedServices: SharedService = inject(SharedService);
 
   getAllDataUser() {
     this._newUserServices
-      .getAllDataUser()
+      .getAllDataUser(this.pageIndex , this.pageSize)
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((res: any) => {
-        this.getAllData = res;
+        this.getAllData = res.items;
+        this.totalPages = res.totalPages;
       });
   }
 
@@ -163,7 +168,7 @@ _sharedServices: SharedService = inject(SharedService);
         this.selectedCountry = phone.countryCode;
 
         setTimeout(() => {
-           this.formData.get('phoneNumber')?.setValue(phone);
+          this.formData.get('phoneNumber')?.setValue(phone);
         });
       });
   }
@@ -189,15 +194,10 @@ _sharedServices: SharedService = inject(SharedService);
       });
   }
 
-  // pagination
-
-  pageIndex = 1;
-  pageSize = 10;
 
   onPageChanged(page: number) {
     this.pageIndex = page;
-    // this.fetchEmployees(); // أعد جلب البيانات
-    // this.getData()
+    this.getAllDataUser();
   }
 
   getAllDataGroupName = [];

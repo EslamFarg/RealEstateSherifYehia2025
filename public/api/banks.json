@@ -1,0 +1,141 @@
+[
+    {
+      "arabic_name": "البنك الأهلي السعودي",
+      "english_name": "Saudi National Bank",
+      "code": "SNB",
+      "prefix": "101"
+    },
+    {
+      "arabic_name": "مصرف الراجحي",
+      "english_name": "Al Rajhi Bank",
+      "code": "RAJHI",
+      "prefix": "102"
+    },
+    {
+      "arabic_name": "بنك الرياض",
+      "english_name": "Riyadh Bank",
+      "code": "RIBL",
+      "prefix": "103"
+    },
+    {
+      "arabic_name": "البنك السعودي الفرنسي",
+      "english_name": "Saudi Fransi Bank",
+      "code": "BSF",
+      "prefix": "104"
+    },
+    {
+      "arabic_name": "البنك العربي الوطني",
+      "english_name": "Arab National Bank",
+      "code": "ANB",
+      "prefix": "105"
+    },
+    {
+      "arabic_name": "بنك البلاد",
+      "english_name": "Bank Albilad",
+      "code": "ALBILAD",
+      "prefix": "106"
+    },
+    {
+      "arabic_name": "بنك الجزيرة",
+      "english_name": "Bank AlJazira",
+      "code": "BJAZ",
+      "prefix": "107"
+    },
+    {
+      "arabic_name": "البنك السعودي للاستثمار",
+      "english_name": "The Saudi Investment Bank",
+      "code": "SAIB",
+      "prefix": "108"
+    },
+    {
+      "arabic_name": "البنك السعودي البريطاني (ساب)",
+      "english_name": "Saudi British Bank (SABB)",
+      "code": "SABB",
+      "prefix": "109"
+    },
+    {
+      "arabic_name": "مصرف الإنماء",
+      "english_name": "Alinma Bank",
+      "code": "INMA",
+      "prefix": "110"
+    },
+    {
+      "arabic_name": "بنك الخليج الدولي - السعودية",
+      "english_name": "Gulf International Bank - Saudi Arabia",
+      "code": "GIBSA",
+      "prefix": "111"
+    },
+    {
+      "arabic_name": "بنك الإمارات دبي الوطني",
+      "english_name": "Emirates NBD",
+      "code": "ENBD",
+      "prefix": "112"
+    },
+    {
+      "arabic_name": "بنك مسقط",
+      "english_name": "Bank Muscat",
+      "code": "BMUS",
+      "prefix": "113"
+    },
+    {
+      "arabic_name": "بنك الكويت الوطني",
+      "english_name": "National Bank of Kuwait",
+      "code": "NBK",
+      "prefix": "114"
+    },
+    {
+      "arabic_name": "بنك أبوظبي الأول",
+      "english_name": "First Abu Dhabi Bank",
+      "code": "FAB",
+      "prefix": "115"
+    },
+    {
+      "arabic_name": "بنك قطر الوطني",
+      "english_name": "Qatar National Bank",
+      "code": "QNB",
+      "prefix": "116"
+    },
+    {
+      "arabic_name": "بنك ستاندرد تشارترد",
+      "english_name": "Standard Chartered Bank",
+      "code": "SCB",
+      "prefix": "117"
+    },
+    {
+      "arabic_name": "بنك الصين المحدود",
+      "english_name": "Bank of China Limited",
+      "code": "BOC",
+      "prefix": "118"
+    },
+    {
+      "arabic_name": "بنك بي إن بي باريبا",
+      "english_name": "BNP Paribas",
+      "code": "BNPP",
+      "prefix": "119"
+    },
+    {
+      "arabic_name": "بنك كريدي سويس",
+      "english_name": "Credit Suisse",
+      "code": "CS",
+      "prefix": "120"
+    },
+    {
+      "arabic_name": "بنك جي بي مورجان تشيس",
+      "english_name": "JPMorgan Chase Bank",
+      "code": "JPM",
+      "prefix": "121"
+    },
+    {
+      "arabic_name": "بنك دويتشه بنك",
+      "english_name": "Deutsche Bank",
+      "code": "DB",
+      "prefix": "122"
+    },
+    {
+      "arabic_name": "بنك ICBC السعودي",
+      "english_name": "Industrial and Commercial Bank of China (ICBC)",
+      "code": "ICBC",
+      "prefix": "123"
+    }
+  ]
+  

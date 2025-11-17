@@ -1,6 +1,7 @@
 <app-page-heading [title]="'المستخدمين'" [subtitle]="'تتبع النشاط'"></app-page-heading>
 
-<app-searchinforms [dataFilter]="dataFilter"   (selectedDataFilter)="searchUserId($event)" (selectedUserId)="dataSelectedUser($event)"></app-searchinforms>
+<app-searchinforms [dataFilter]="dataFilter" (selectedDataFilter)="searchUserId($event)"
+    (selectedUserId)="dataSelectedUser($event)"></app-searchinforms>
 <!-- <app-formerror-msg [control]="formData.controls['userId']" [Messages]="{
     'required':'المستخدم مطلوب'
 }"></app-formerror-msg> -->
@@ -13,33 +14,31 @@
         <div class="col-sm-12 col-lg-6">
             <div class="mb-3">
                 <label for="startdate" class="form-label">من تاريخ</label>
-                <input type="date" class="form-control" id="startdate" placeholder="التاريخ" formControlName="startDate">
-                <app-formerror-msg [control]="formData.controls['startDate']"
-                [Messages]="{
+                <input type="date" class="form-control" id="startdate" placeholder="التاريخ"
+                    formControlName="startDate">
+                <app-formerror-msg [control]="formData.controls['startDate']" [Messages]="{
                     'required':'من تاريخ مطلوب'
-                }"
-                ></app-formerror-msg>
+                }"></app-formerror-msg>
             </div>
         </div>
         <div class="col-sm-12 col-lg-6">
             <div class="mb-3">
                 <label for="enddate" class="form-label">الي تاريخ</label>
-                    <div class="d-flex align-content-center gap-3">
-                            <input type="date" class="form-control" id="enddate" placeholder="التاريخ" formControlName="endDate">
-                          
-                     <button class="search_btn">بحث</button>
-                     
+                <div class="d-flex align-content-center gap-3">
+                    <input type="date" class="form-control" id="enddate" placeholder="التاريخ"
+                        formControlName="endDate">
+
+                    <button class="search_btn">بحث</button>
+
                 </div>
-                  <app-formerror-msg style="display: block;" [control]="formData.controls['endDate']" [Messages]="{
+                <app-formerror-msg style="display: block;" [control]="formData.controls['endDate']" [Messages]="{
                                 'required' :'الي تاريخ مطلوب'
-                            }"></app-formerror-msg> 
+                            }"></app-formerror-msg>
             </div>
         </div>
-       
+
     </div>
 </form>
-
-
 
 <div class="table-responsive">
     <table>
@@ -54,31 +53,28 @@
             </tr>
         </thead>
         <tbody>
-      @for (item of activityTrackingData.rows; track $index) {
-        <tr>
-            <td>{{$index+1}}</td>
-            <td>{{item.recordId}}</td>
-            <td>{{item.actionDate.split('T')[0]}}</td>
-            <td>{{item.screenName}}</td>
-            <td>{{item.actionType}}</td>
-            <td>{{item.userName}}</td>
- 
-        </tr>
-      }@empty {
-               <tr>
-    <td class="empty-cell" colspan="6">
-     <app-emptytable></app-emptytable>
-    </td>
-  </tr>
-      }
+            @for (item of activityTrackingData.rows; track $index) {
+            <tr>
+                <td>{{ ((pageIndex - 1) * pageSize) + ($index + 1) }}</td>
+                <td>{{item.recordId}}</td>
+                <td>{{item.actionDate.split('T')[0]}}</td>
+                <td>{{item.screenName}}</td>
+                <td>{{item.actionType}}</td>
+                <td>{{item.userName}}</td>
+
+            </tr>
+            }@empty {
+            <tr>
+                <td class="empty-cell" colspan="6">
+                    <app-emptytable></app-emptytable>
+                </td>
+            </tr>
+            }
         </tbody>
     </table>
 </div>
 
-
-<app-pagination
-  *ngIf="activityTrackingData?.rows?.length > 0"
-  [totalPages]="activityTrackingData.paginationInfo?.totalPagesCount"
-  [currentPage]="pageIndex"
-  (pageChange)="onPageChanged($event)">
+<app-pagination *ngIf="activityTrackingData?.rows?.length > 0"
+    [totalPages]="activityTrackingData.paginationInfo?.totalPagesCount" [currentPage]="pageIndex"
+    (pageChange)="onPageChanged($event)">
 </app-pagination>

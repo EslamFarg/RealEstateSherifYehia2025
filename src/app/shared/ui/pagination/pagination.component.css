@@ -15,7 +15,7 @@
   height: 8px;
 }
 .pagination-wrapper::-webkit-scrollbar-thumb {
-  background-color: #16601A;
+  background-color: #16601a;
   border-radius: 10px;
 }
 .pagination-wrapper::-webkit-scrollbar-track {
@@ -23,9 +23,10 @@
 }
 
 .pagination {
+  direction: ltr;
   display: flex;
   flex-direction: row-reverse;
-  justify-content: flex-start;
+  justify-content: flex-end;
   padding-left: 0;
   list-style: none;
   border-radius: 8px;
@@ -39,28 +40,28 @@
   margin-bottom: 0 !important;
 }
 .pagination .page-item .page-link {
-  color: #16601A;
+  color: #16601a;
   background-color: #ffffff;
-  border: 1px solid #CECECE;
+  border: 1px solid #cecece;
   border-radius: 4px;
   padding: 6px 12px;
   font-weight: 600;
   transition: 0.3s ease;
 }
 .pagination .page-item .page-link:hover {
-  background-color: #16601A;
+  background-color: #16601a;
   color: #ffffff;
-  border-color: #16601A;
+  border-color: #16601a;
 }
 .pagination .page-item.active .page-link {
-  background-color: #16601A;
+  background-color: #16601a;
   color: #ffffff;
-  border-color: #16601A;
+  border-color: #16601a;
 }
 .pagination .page-item.disabled .page-link {
   color: #ffffff !important;
-  background-color: #16601A;
-  border-color: #CECECE;
+  background-color: #16601a;
+  border-color: #cecece;
   cursor: not-allowed;
 }
 
@@ -76,7 +77,7 @@
   height: 6px;
 }
 .max-pagination::-webkit-scrollbar-thumb {
-  background-color: #16601A;
+  background-color: #16601a;
   border-radius: 10px;
 }
 .max-pagination::-webkit-scrollbar-track {
@@ -89,17 +90,17 @@
   height: 40px !important;
   border-radius: 2px;
   background-color: transparent;
-  border: 1px solid #16601A;
+  border: 1px solid #16601a;
   display: flex;
   align-items: center;
   justify-content: center;
   transition: 0.3s ease;
   text-decoration: none;
-  color: #16601A;
+  color: #16601a;
 }
 .btn-previous:hover,
 .btn-next:hover {
-  background-color: #16601A;
+  background-color: #16601a;
   color: white;
 }
 
@@ -107,7 +108,7 @@
   width: 30px !important;
   height: 30px !important;
   border-radius: 50% !important;
-  border: 1px solid #BED2BF !important;
+  border: 1px solid #bed2bf !important;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -116,12 +117,12 @@
   flex: 0 0 auto;
 }
 .circle_pagination.active {
-  background-color: #16601A;
-  border-color: #16601A;
+  background-color: #16601a;
+  border-color: #16601a;
 }
 .circle_pagination.active a {
   color: white;
 }
 .circle_pagination a {
   color: #619363;
-}/*# sourceMappingURL=pagination.component.css.map */
+} /*# sourceMappingURL=pagination.component.css.map */

@@ -59,8 +59,6 @@ export class ExplorersendmessageComponent {
   }
 
   onSearchFilter(e: any) {
-    console.log(e);
-
     this.pageIndex = 0;
     this.pageSize = 10;
 
@@ -68,8 +66,6 @@ export class ExplorersendmessageComponent {
       .searchByTenant(e.value, this.pageIndex, this.pageSize)
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((res: any) => {
-        console.log(res);
-
         this.messagesData = res;
         this.totalPages = Math.ceil(res.total / this.pageSize);
       });

@@ -107,7 +107,7 @@ getDatausers:any=[]
 
 getAllDataUser(){
     this.searchInFormsServices.getAllDataUsers().pipe((takeUntilDestroyed(this.destroyRef))).subscribe((res:any)=>{
-      this.getDatausers=res;
+      this.getDatausers=res.items;
       console.log(this.getDatausers);
     })
 }
