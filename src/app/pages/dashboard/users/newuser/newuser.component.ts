@@ -191,6 +191,10 @@ export class NewuserComponent {
       .subscribe((res: any) => {
         this._toastrSer.show('تم حذف المستخدم بنجاح', 'success');
         this.getAllDataUser();
+        this.btnAddAndUpdate = 'add';
+        this.idUpdate = null;
+        this.formData.reset();
+        
       });
   }
 

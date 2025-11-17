@@ -143,6 +143,9 @@ export class MessageformsComponent implements OnInit {
       .subscribe((res: any) => {
         this.toastr.show('تم حذف الرسالة بنجاح', 'success');
         this.getAllDataMessageForms();
+        this.btnAddandUpdate = 'add';
+        this.idUpdate = null;
+        this.messageForm.reset();
       });
   }
 

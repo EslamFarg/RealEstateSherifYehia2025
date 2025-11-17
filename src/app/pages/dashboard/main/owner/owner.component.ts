@@ -244,7 +244,6 @@ export class OwnerComponent {
 
   deleteConfirmed(e: any) {
     this.showDelete = false;
-    console.log(e);
     this._ownerServices
       .deleteData(e)
       .pipe(takeUntilDestroyed(this.$destroyRef))

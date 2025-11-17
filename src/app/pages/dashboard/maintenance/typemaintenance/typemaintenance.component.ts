@@ -128,6 +128,9 @@ export class TypemaintenanceComponent {
       .subscribe((res: any) => {
         this.toastr.show('تم حذف الصيانه بنجاح', 'success');
         this.getAllDatamaintenance();
+        this.btnAddandUpdate = 'add';
+        this.idUpdate = null;
+        this.maintenanceData.reset();
       });
   }
 }

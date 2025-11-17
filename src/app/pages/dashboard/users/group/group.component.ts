@@ -127,6 +127,9 @@ export class GroupComponent {
         this.toastr.show('تم حذف المجموعه بنجاح', 'success');
         this.getAllDataGroup();
         this.showDelete = false;
+        this.idUpdate = null;
+        this.groupForm.reset();
+        this.btnaddAndUpdate = 'add';
       });
   }
 

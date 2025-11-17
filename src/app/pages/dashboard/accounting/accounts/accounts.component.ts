@@ -216,6 +216,8 @@ deleteConfirmed(id:any){
     this.toastr.show('تم حذف الحساب بنجاح','success');
     this.getAllData();
     this.accountData.reset();
+    this.btnAddandUpdate='add';
+    this.idUpdate=null;
   })
 
 }

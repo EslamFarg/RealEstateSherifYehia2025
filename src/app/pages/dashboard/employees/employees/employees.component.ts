@@ -241,9 +241,13 @@ export class EmployeesComponent {
       .deleteData(id)
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((res: any) => {
-        console.log(res);
         this.toastr.show('تم حذف البيانات بنجاح', 'success');
         this.getAllData();
+        this.employeesData.reset();
+        this.btnAddandUpdate = 'add';
+        this.idUpdate = null;
+        this.dataFiles = [];
+        this.idsRemoveFiles = [];
       });
   }
 }

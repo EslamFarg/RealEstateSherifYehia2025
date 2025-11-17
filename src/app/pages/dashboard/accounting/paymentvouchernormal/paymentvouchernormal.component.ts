@@ -30,7 +30,7 @@ export class PaymentvouchernormalComponent {
   // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!111 Properties
   paymentVoucherForm=this.fb.group({
        voucherNo: ['',[Validators.required,Validators.minLength(3)]],
-      voucherDate: ['',[Validators.required]],
+      voucherDate: [new Date().toISOString().split('T')[0],[Validators.required]],
       paymentMethod: ['نقدي',[Validators.required]],
       amount: ['',[Validators.required]],
       notes: ['',[Validators.required]],
@@ -167,6 +167,9 @@ deleteConfirmed(e:any){
   this._paymentVoucherService.deleteData(e).pipe(takeUntilDestroyed(this.destroyRef)).subscribe((res:any)=>{
     this.toastr.show('تم حذف السند بنجاح','success');
     this.getAllDataPaymentVoucher1();
+    this.paymentVoucherForm.reset();
+    this.btnAddandUpdate='add';
+    this.idUpdate=null;
   }
   )
 

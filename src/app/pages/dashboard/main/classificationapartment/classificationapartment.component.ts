@@ -133,6 +133,7 @@ export class ClassificationapartmentComponent {
         this.getAllDataUnitCategories();
         this.unitCategory.reset();
         this.btnaddandupdate = 'add';
+        this.idUpdate = null;
       });
   }
 

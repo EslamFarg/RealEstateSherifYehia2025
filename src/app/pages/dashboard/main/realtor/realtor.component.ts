@@ -291,6 +291,7 @@ export class RealtorComponent {
         this.getAllDataRealtor();
         this.resetData();
         this.BrokerData.reset();
+        this.btnAddandUpdate = 'add';
       });
   }
 

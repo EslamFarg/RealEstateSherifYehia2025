@@ -156,6 +156,8 @@ this._linkPagePermissionsServices.deleteData(id).pipe(takeUntilDestroyed(this.de
   this.toastr.show('تم حذف البيانات بنجاح','success');
   this.getAllDataPageAndPermissions();
   this.resetForm();
+  this.btnaddAndUpdate='add';
+  this.idUpdate=null;
 })
 }
 
