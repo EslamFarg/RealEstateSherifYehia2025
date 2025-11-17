@@ -130,25 +130,29 @@ ngOnInit(){
 
       console.log("Search",this.formDataSearch.value)
       // fill itemsChecked
-      res.brokerPaymentVoucherDetails.forEach((d: any) => {
-        this.itemsChecked.push({
-          contractId: d.contractId,
-          paidAmount: d.paidAmmount 
-        });
+      res.brokerCommissionResponseDtos.forEach((d: any) => {
+          if (d.isInThisVoucher) {
+    this.itemsChecked.push({
+      contractId: d.contractId,
+      paidAmount: d.netPaidInThisVoucher
+    });
+  }
+    
       });
 
 
 
       // table
       this.getAllDataSearch = {
-        rows: res.brokerPaymentVoucherDetails.map((item: any) => ({
+        rows: res.brokerCommissionResponseDtos.map((item: any) => ({
           contractId: item.contractId,
           propertyName: item.propertyName,
           unitName: item.unitName,
           month: item.month,
-          brokerCommission: item.totalAmount,
-          brokerPaidAmount: item.paidAmmount,
-          remainingAmount: item.totalAmount - item.paidAmmount
+          brokerCommission: item.brokerCommission,
+          brokerPaidAmount: item.netPaidInThisVoucher,
+          remainingAmount: item.brokerCommission - item.netPaidInThisVoucher,
+            isInThisVoucher: item.isInThisVoucher
         }))
       };
 
@@ -162,8 +166,16 @@ ngOnInit(){
       this.canShowBtns=true
       console.log(this.idUpdate)
       setTimeout(() => {
-        if (this.checkAll) this.checkAll.nativeElement.checked = true;
-        this.checkboxes.forEach(cb => cb.nativeElement.checked = true);
+      //   if (this.checkAll) this.checkAll.nativeElement.checked = true;
+      //   this.checkboxes.forEach(cb =>
+      //      cb.nativeElement.checked = true);
+
+    
+        this.checkboxes.forEach((checkbox, index) => {
+    if (this.getAllDataSearch.rows[index].isInThisVoucher) {
+      checkbox.nativeElement.checked = true;
+    }
+  });
       });
 
     });

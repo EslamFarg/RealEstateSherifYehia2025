@@ -122,7 +122,7 @@
 <tr>
       <td scope="row">
         <div class="d-flex align-items-center justify-content-center">
-<input type="checkbox" aria-label="Checkbox for following text input" #rowCheckbox (change)="checkDataId($event,item)">
+<input type="checkbox" aria-label="Checkbox for following text input" #rowCheckbox [checked]="item.isInThisVoucher" (change)="checkDataId($event,item)">
         {{$index + 1}}
         </div>
          
@@ -141,6 +141,7 @@
     [value]="item.brokerPaidAmount"
     (input)="onPaidChange($event, item)"
     #paidAmountInput
+     [class.border-danger]="item.brokerPaidAmount == 0 && item.isChecked"
   />
 </td> 
       <td>{{item.remainingAmount}}</td>
