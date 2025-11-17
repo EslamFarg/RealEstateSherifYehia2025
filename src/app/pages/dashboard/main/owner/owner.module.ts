@@ -36,7 +36,7 @@ import { NgxIntlTelInputModule } from 'ngx-intl-tel-input';
     EmptytableComponent,
     NgSelectModule,
     IntersectionDirective,
-    // NgxIntlTelInputModule
+    NgxIntlTelInputModule
 ]
 })
 export class OwnerModule { }

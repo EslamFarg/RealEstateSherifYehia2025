@@ -68,7 +68,7 @@
  
 <app-pagination
 *ngIf="messagesData.items.length > 0"
-[totalPages]="messagesData.total"
+[totalPages]="totalPages"
   [currentPage]="pageIndex"
   (pageChange)="onPageChanged($event)">
 </app-pagination>

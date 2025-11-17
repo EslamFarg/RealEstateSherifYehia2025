@@ -11,7 +11,7 @@ export class SendmessageService extends BasehttpservicesService{
   }
 
   getAllDataMessagesListgroup(page:any,pageSize:any){
-    return this.get(`/MessageSender/ListGroup?${page}&${pageSize}`);
+    return this.get(`/MessageSender/ListGroup?Page=${page}&PageSize=${pageSize}`);
   }
 
 

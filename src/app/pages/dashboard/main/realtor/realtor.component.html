@@ -28,13 +28,27 @@
         <div class="col-sm-12 col-lg-3">
             <div class="mb-3">
                     <label for="phoneRealtor" class="form-label">رقم الجوال</label>
-                    <input type="text" class="form-control" id="phoneRealtor" placeholder="رقم الجوال" appNoStringPaste formControlName="Mobile">
+                    <ngx-intl-tel-input [cssClass]="'form-control'" [onlyCountries]="['sa', 'eg']"
+                     [selectedCountryISO]="selectedCountry"
+                    [enableAutoCountrySelect]="true" [enablePlaceholder]="true" 
+                    [selectFirstCountry]="false" [separateDialCode]="true" [maxLength]="14" formControlName="Mobile">
+                </ngx-intl-tel-input>
+                <ng-container *ngIf="BrokerData.controls['Mobile'].invalid && BrokerData.controls['Mobile'].touched">
+                    <small class="error_msg_form" *ngIf="BrokerData.controls['Mobile'].hasError('required')">
+                        رقم الجوال مطلوب
+                    </small>
+
+                    <small class="error_msg_form" *ngIf="BrokerData.controls['Mobile'].hasError('invalidPhone')">
+                        {{ BrokerData.controls['Mobile'].getError('invalidPhone') }}
+                    </small>
+                </ng-container> 
+                    <!-- <input type="text" class="form-control" id="phoneRealtor" placeholder="رقم الجوال" appNoStringPaste formControlName="Mobile">
               <ng-container *ngIf="BrokerData.controls['Mobile'].invalid && BrokerData.controls['Mobile'].touched">
                         <small class="error_msg_form" *ngIf="BrokerData.controls['Mobile'].hasError('required')" >رقم الجوال مطلوب</small>
                         <small class="error_msg_form" *ngIf="BrokerData.controls['Mobile'].hasError('saudiPhoneInvalid')" >
                             {{ BrokerData.controls['Mobile'].getError('saudiPhoneInvalid') }}
                         </small>
-                    </ng-container> 
+                    </ng-container>  -->
                 </div>
              
         </div>
@@ -118,7 +132,7 @@
         <tr>
             <td>{{$index+1}}</td>
             <td>{{item.name}}</td>
-            <td>{{item.mobile}}</td>
+            <td><span dir="ltr">{{item.mobile}}</span></td>
             <td>{{item.bonus}}</td>
             <td>
                 <div class="btn_edit">

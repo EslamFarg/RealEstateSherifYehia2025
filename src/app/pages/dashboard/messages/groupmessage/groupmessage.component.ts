@@ -151,7 +151,7 @@ const from = new Date(fromDate).toLocaleDateString('en-CA'); // يعطي '2025-1
     this._groupMessageService.searchMessage(paramsData).pipe(takeUntilDestroyed(this.destroyRef)).subscribe((res: any) => {
       console.log(res);
       this.messagesData = res.items;    // البيانات الفعلية
-      this.totalItems = res.total;      // إجمالي العناصر للpagination
+      this.totalItems = Math.ceil(res.total / this.pageSize);      // إجمالي العناصر للpagination
       // this.pageIndex = res.page;        // الصفحة الحالية
       // this.pageSize = res.pageSize;     // حجم الصفحة
     });

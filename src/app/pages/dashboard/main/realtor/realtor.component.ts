@@ -9,6 +9,9 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ToastrService } from '../../../../shared/ui/toastr/services/toastr.service';
 import { CheckEmail } from '../../../../shared/validations/emailValidation';
 import { checkUsername } from '../../../../shared/validations/checkUsername';
+import { CountryISO } from 'ngx-intl-tel-input';
+import { PhoneNumber } from '../owner/models/phoneNumber';
+import { ksaEgyptPhoneValidator } from '../../../../shared/validations/phoneNumber2';
 
 @Component({
   selector: 'app-realtor',
@@ -34,7 +37,9 @@ _sharedServices:SharedService=inject(SharedService)
 
 BrokerData=this.fb.group({
   Name: ['',[Validators.required,Validators.minLength(3),checkUsername.ValidationUsername()]],
-  Mobile: ['',[Validators.required,saudiPhoneValidator.phoneNumberValidator]],
+   Mobile: this.fb.control<PhoneNumber | string | null>(null, {
+        validators: [Validators.required, ksaEgyptPhoneValidator],
+      }),
   Nationality: [null,[Validators.required]],
   Bonus: ['',[Validators.required]],
   NationalID:['',[Validators.required,Validators.minLength(10)]],
@@ -52,6 +57,8 @@ dataFiles:any[]=[]
 idRemoveFiles:any =[] 
 showDelete=false;
 deleteId:any;
+  preferredCountries: CountryISO[] = [CountryISO.Egypt];
+  selectedCountry = CountryISO.Egypt;
 // :DestroyRef=inject(DestroyRef);
 
 
@@ -121,9 +128,13 @@ onSubmit(){
 
     let formData=new FormData();
 
-
+const mobileControl = this.BrokerData.value.Mobile;
+        const mobile =
+          typeof mobileControl === 'string'
+            ? mobileControl
+            : mobileControl?.e164Number || '';
     formData.append('Name',this.BrokerData.value.Name || '');
-    formData.append('Mobile',this.BrokerData.value.Mobile || '');
+    formData.append('Mobile',mobile || '');
     formData.append('Nationality',this.BrokerData.value.Nationality || '');
     formData.append('Bonus',this.BrokerData.value.Bonus || '');
     formData.append('NationalID',this.BrokerData.value.NationalID || '');
@@ -158,10 +169,14 @@ onSubmit(){
 }
 
     let formdata=new FormData();
-      
+      const mobileControl = this.BrokerData.value.Mobile;
+        const mobile =
+          typeof mobileControl === 'string'
+            ? mobileControl
+            : mobileControl?.e164Number || '';
 
     formdata.append('Name',this.BrokerData.value.Name || '');
-    formdata.append('Mobile',this.BrokerData.value.Mobile || '');
+    formdata.append('Mobile',mobile || '');
     formdata.append('Nationality',this.BrokerData.value.Nationality || '');
     formdata.append('Bonus',this.BrokerData.value.Bonus || '');
     formdata.append('NationalID',this.BrokerData.value.NationalID || '');
@@ -237,10 +252,9 @@ getAllDataRealtor(){
 getUpdateData(id:any){
 
   this._BrokerServices.getDataUpdate(id).pipe(takeUntilDestroyed(this.$destroyRef)).subscribe((res:any)=>{
-    console.log(res);
+    const phone = this._sharedServices.parsePhoneNumber(res.mobile);
     this.BrokerData.patchValue({
       Name:res.name,
-      Mobile:res.mobile,
       Nationality:res.nationality,
       Bonus:res.bonus,
       NationalID:res.nationalID,
@@ -250,7 +264,11 @@ getUpdateData(id:any){
       FinanciallyAccountId:res.financiallyAccountId
 
     })
+     this.selectedCountry = phone.countryCode;
 
+        setTimeout(() => {
+          this.BrokerData.get('Mobile')?.setValue(phone);
+        });
     this.dataFiles=res.attachments
     this.idUpdate= id ?? res.id ?? res.Id;
 
@@ -317,7 +335,7 @@ getAllFinicalData(){
 
   this._sharedServices.getAllfinancialData(pagination).pipe(takeUntilDestroyed(this.$destroyRef)).subscribe((res:any)=>{
     console.log(res);
-    this.accountParent=res;
+    this.accountParent=res.rows;
   })
   
 

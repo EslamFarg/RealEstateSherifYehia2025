@@ -12,6 +12,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { ConfirmDeleteComponent } from '../../../../shared/components/confirm-delete/confirm-delete.component';
 import { DirectivesModule } from '../../../../shared/directives/directives.module';
 import { EmptytableComponent } from '../../../../shared/ui/emptytable/emptytable.component';
+import { NgxIntlTelInputModule } from 'ngx-intl-tel-input';
 // import { NoStringPasteDirective } from '../../../../shared/directives/no-string-paste.directive';
 
 
@@ -30,8 +31,8 @@ import { EmptytableComponent } from '../../../../shared/ui/emptytable/emptytable
     ReactiveFormsModule,
     ConfirmDeleteComponent,
     DirectivesModule,
-    EmptytableComponent
-    
+    EmptytableComponent,
+    NgxIntlTelInputModule
   ]
 })
 export class NewuserModule { }

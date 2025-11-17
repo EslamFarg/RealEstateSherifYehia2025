@@ -1,34 +1,30 @@
 import { AbstractControl, ValidationErrors } from '@angular/forms';
 
-export class PhoneValidator {
-  static validate(control: AbstractControl): ValidationErrors | null {
-    const valObj = control.value;
 
-    // الرقم الدولي الكامل مع الكود المختار تلقائيًا
-    const value: string = typeof valObj === 'string' 
-      ? valObj 
-      : valObj?.internationalNumber;
+export function ksaEgyptPhoneValidator(control: AbstractControl): ValidationErrors | null {
+  const value = control.value;
 
-    if (!value) return null;
+  if (!value) return { required: true };
+  if (!value.e164Number) return { invalidPhone: 'رقم الجوال غير صالح' };
 
-    // إزالة أي فراغات
-    const trimmed = value.replace(/\s+/g, '');
+  const phone = value.e164Number;   // +9665xxxxxxx or +201xxxxxxxxx
+  const country = value.countryCode; // 'sa' or 'eg'
 
-    // حساب الطول: + تحسب كرقمين
-    let digitsOnly = trimmed.replace(/\D/g, '');
-    if (trimmed.startsWith('+')) {
-      digitsOnly = '00' + digitsOnly.slice(1);
-    }
+  // KSA pattern (starts with 5 and 9 digits after country code)
+  const ksaPattern = /^\+9665[0-9]{8}$/;
 
-    const maxLength = 14;
-    if (digitsOnly.length > maxLength) {
-      return { maxLengthExceeded: 'رقم الجوال طويل جدًا بما في ذلك كود الدولة' };
-    }
+  // Egypt mobile pattern (starts with 1 then 0/1/2/5)
+  const egyptPattern = /^\+201[0125][0-9]{8}$/;
 
-    // Regex يتحقق من السعودية ومصر
-    const regex = /^(?:\+966|00966|05)\d{8}$|^(?:\+20|0020|01)\d{8}$/;
-    return regex.test(trimmed)
-      ? null
-      : { invalidPhone: 'رقم الجوال يجب أن يكون سعودي أو مصري وصحيح.' };
+  if (country === 'sa' && !ksaPattern.test(phone)) {
+    return { invalidPhone: 'رقم سعودي غير صالح' };
   }
+
+  if (country === 'eg' && !egyptPattern.test(phone)) {
+    return { invalidPhone: 'رقم مصري غير صالح' };
+  }
+
+  return null;
 }
+
+

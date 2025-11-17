@@ -7,78 +7,76 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-explorersendmessage',
   templateUrl: './explorersendmessage.component.html',
-  styleUrl: './explorersendmessage.component.scss'
+  styleUrl: './explorersendmessage.component.scss',
 })
 export class ExplorersendmessageComponent {
-dataFilter=['الاسم','رقم التليفون']
-_sendMessageServices:SendmessageService=inject(SendmessageService)
-destroyRef:DestroyRef=inject(DestroyRef);
-editBehaviorService:EditBehaviorServiceService=inject(EditBehaviorServiceService)
-router:Router=inject(Router);
-messagesData: any = { items: [], total: 0 };
-pageIndex = 1;
-pageSize = 10;
-totalPages = 0;
+  dataFilter = ['الاسم', 'رقم التليفون'];
+  _sendMessageServices: SendmessageService = inject(SendmessageService);
+  destroyRef: DestroyRef = inject(DestroyRef);
+  editBehaviorService: EditBehaviorServiceService = inject(
+    EditBehaviorServiceService
+  );
+  router: Router = inject(Router);
+  messagesData: any = { items: [], total: 0 };
+  pageIndex = 1;
+  pageSize = 10;
+  totalPages = 0;
 
-getAllListGroupMessages() {
-  this._sendMessageServices
-    .getAllDataMessagesListgroup(this.pageIndex, this.pageSize)
-    .pipe(takeUntilDestroyed(this.destroyRef))
-    .subscribe((res: any) => {
-      this.messagesData= res;
-      console.log(res);
-    });
-}
+  getAllListGroupMessages() {
+    this._sendMessageServices
+      .getAllDataMessagesListgroup(this.pageIndex, this.pageSize)
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((res: any) => {
+        this.messagesData = res;
+        this.totalPages = Math.ceil(res.total / this.pageSize);
+      });
+  }
 
+  ngOnInit() {
+    this.getAllListGroupMessages();
+  }
+  onPageChanged(page: number) {
+    this.pageIndex = page;
+    this.getAllListGroupMessages();
+  }
 
+  //  getAllListGroupMessages() {
+  //     this._sendMessageServices
+  //       .getAllDataMessagesListgroup(this.pageIndex, this.pageSize)
+  //       .pipe(takeUntilDestroyed(this.destroyRef))
+  //       .subscribe((res: any) => {
+  //         this.messagesData.items = res.items;
+  //         this.messagesData.total = res.total;
+  //         this.pageIndex = res.page;
+  //         this.pageSize = res.pageSize;
+  //       });
+  //   }
 
+  onSelectedPagination(data: any) {
+    // this.pageIndex = data.pageIndex;
+    this.pageSize = data;
+    this.getAllListGroupMessages();
+  }
 
-ngOnInit(){
-  this.getAllListGroupMessages();
-}
-onPageChanged(page: number) {
-  this.pageIndex = page;
-  this.getAllListGroupMessages();
-}
+  onSearchFilter(e: any) {
+    console.log(e);
 
-//  getAllListGroupMessages() {
-//     this._sendMessageServices
-//       .getAllDataMessagesListgroup(this.pageIndex, this.pageSize)
-//       .pipe(takeUntilDestroyed(this.destroyRef))
-//       .subscribe((res: any) => {
-//         this.messagesData.items = res.items;
-//         this.messagesData.total = res.total;
-//         this.pageIndex = res.page;
-//         this.pageSize = res.pageSize;
-//       });
-//   }
+    this.pageIndex = 0;
+    this.pageSize = 10;
 
+    this._sendMessageServices
+      .searchByTenant(e.value, this.pageIndex, this.pageSize)
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((res: any) => {
+        console.log(res);
 
-onSelectedPagination(data: any) {
-  // this.pageIndex = data.pageIndex;
-  this.pageSize = data;
-  this.getAllListGroupMessages();
-}
+        this.messagesData = res;
+        this.totalPages = Math.ceil(res.total / this.pageSize);
+      });
+  }
 
-
-
-onSearchFilter(e:any){
-  console.log(e);
-
-
-  this.pageIndex=0
-  this.pageSize=10;
-
-  this._sendMessageServices.searchByTenant(e.value,this.pageIndex,this.pageSize).pipe(takeUntilDestroyed(this.destroyRef)).subscribe((res:any)=>{
-    console.log(res);
-    
-    this.messagesData=res})
-}
-
-sendGetDataById(id:any){
-
-  this.editBehaviorService.setId(id);
-  this.router.navigate(['/dashboard/sendmessage/addsendmessage']);
-
-}
+  sendGetDataById(id: any) {
+    this.editBehaviorService.setId(id);
+    this.router.navigate(['/dashboard/sendmessage/addsendmessage']);
+  }
 }

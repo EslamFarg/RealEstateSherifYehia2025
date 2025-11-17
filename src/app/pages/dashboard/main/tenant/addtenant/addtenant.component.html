@@ -60,11 +60,25 @@
               <div class="col-sm-12 col-lg-4">
                 <div class="mb-3">
                     <label for="phonenumber" class="form-label">رقم الجوال</label>
-                <input type="text" class="form-control" maxlength="14" id="phonenumber" appNoStringPaste placeholder="رقم الجوال" formControlName="Mobile">
+                <!-- <input type="text" class="form-control" maxlength="14" id="phonenumber" appNoStringPaste placeholder="رقم الجوال" formControlName="Mobile">
                 <ng-container *ngIf="tenantForm.controls['Mobile'].invalid && tenantForm.controls['Mobile'].touched">
                         <small class="error_msg_form" *ngIf="tenantForm.controls['Mobile'].hasError('required')" >رقم الجوال مطلوب</small>
                         <small class="error_msg_form" *ngIf="tenantForm.controls['Mobile'].hasError('saudiPhoneInvalid')" > {{ tenantForm.controls['Mobile'].getError('saudiPhoneInvalid') }}</small>
-                </ng-container>
+                </ng-container> -->
+                <ngx-intl-tel-input [cssClass]="'form-control'" [onlyCountries]="['sa', 'eg']"
+                     [selectedCountryISO]="selectedCountry"
+                    [enableAutoCountrySelect]="true" [enablePlaceholder]="true" 
+                    [selectFirstCountry]="false" [separateDialCode]="true" [maxLength]="14" formControlName="Mobile">
+                </ngx-intl-tel-input>
+                <ng-container *ngIf="tenantForm.controls['Mobile'].invalid && tenantForm.controls['Mobile'].touched">
+                    <small class="error_msg_form" *ngIf="tenantForm.controls['Mobile'].hasError('required')">
+                        رقم الجوال مطلوب
+                    </small>
+
+                    <small class="error_msg_form" *ngIf="tenantForm.controls['Mobile'].hasError('invalidPhone')">
+                        {{ tenantForm.controls['Mobile'].getError('invalidPhone') }}
+                    </small>
+                </ng-container> 
                 </div>
             
             </div>
@@ -134,11 +148,25 @@
                 <div class="col-sm-12 col-lg-4">
                 <div class="mb-3">
                     <label for="phonenumber2" class="form-label">رقم الجوال</label>
-                <input type="text" class="form-control" id="phonenumber2" placeholder="رقم الجوال" formControlName="phoneNumber" appNoStringPaste>
+                     <ngx-intl-tel-input [cssClass]="'form-control'" [onlyCountries]="['sa', 'eg']"
+                     [selectedCountryISO]="selectedCountry"
+                    [enableAutoCountrySelect]="true" [enablePlaceholder]="true" 
+                    [selectFirstCountry]="false" [separateDialCode]="true" [maxLength]="14" formControlName="phoneNumber">
+                </ngx-intl-tel-input>
+                <ng-container *ngIf="DependantsForm.controls['phoneNumber'].invalid && DependantsForm.controls['phoneNumber'].touched">
+                    <small class="error_msg_form" *ngIf="DependantsForm.controls['phoneNumber'].hasError('required')">
+                        رقم الجوال مطلوب
+                    </small>
+
+                    <small class="error_msg_form" *ngIf="DependantsForm.controls['phoneNumber'].hasError('invalidPhone')">
+                        {{ DependantsForm.controls['phoneNumber'].getError('invalidPhone') }}
+                    </small>
+                </ng-container> 
+                <!-- <input type="text" class="form-control" id="phonenumber2" placeholder="رقم الجوال" formControlName="phoneNumber" appNoStringPaste>
                 <ng-container *ngIf="DependantsForm.controls['phoneNumber'].invalid && DependantsForm.controls['phoneNumber'].touched">
                     <small class="error_msg_form" *ngIf="DependantsForm.controls['phoneNumber'].hasError('required')" >رقم الجوال مطلوب</small>
                     <small class="error_msg_form" *ngIf="DependantsForm.controls['phoneNumber'].hasError('saudiPhoneInvalid')" >{{DependantsForm.get('phoneNumber')?.errors?.['saudiPhoneInvalid']}}</small>
-                    </ng-container>
+                    </ng-container> -->
                 </div>
             
             </div>
@@ -206,13 +234,9 @@
             <td>{{$index+1}}</td>
             <td>{{item.name}}</td>
             <td>{{item.nationalID}}</td>
-            <td>  {{item.mobile}}</td>
+            <td><span dir="ltr">{{item.mobile}}</span></td>
             <td> {{item.nationality}}</td>
-            <td>{{item.relation}}</td>
-  
-          
-           
-            
+            <td>{{item.relation}}</td>          
             <td>
                 <div class="btn_edit">
                     <button type="button" data-button="edit" (click)="editmorafqa($index)"><svg width="33" height="26" viewBox="0 0 33 26" fill="none" xmlns="http://www.w3.org/2000/svg">

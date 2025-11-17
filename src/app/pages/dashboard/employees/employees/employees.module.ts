@@ -11,6 +11,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { EmptytableComponent } from '../../../../shared/ui/emptytable/emptytable.component';
 import { ConfirmDeleteComponent } from '../../../../shared/components/confirm-delete/confirm-delete.component';
 import { DirectivesModule } from "../../../../shared/directives/directives.module";
+import { NgxIntlTelInputModule } from 'ngx-intl-tel-input';
 
 
 @NgModule({
@@ -27,7 +28,8 @@ import { DirectivesModule } from "../../../../shared/directives/directives.modul
     ReactiveFormsModule,
     EmptytableComponent,
     ConfirmDeleteComponent,
-    DirectivesModule
+    DirectivesModule,
+    NgxIntlTelInputModule
 ]
 })
 export class EmployeesModule { }
