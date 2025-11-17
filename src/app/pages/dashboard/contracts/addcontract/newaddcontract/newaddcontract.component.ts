@@ -42,9 +42,9 @@ paymentMethods:any[]=[
 ];
 contractsForm=this.fb.group({
   ContractPlace:['',[Validators.required,Validators.minLength(3)]],
-  ContractDate:['',Validators.required],
-  LeaseStartDate:['',Validators.required],
-  LeaseEndDate:['',Validators.required],
+  ContractDate:[this.formatDate(),[Validators.required]],
+  LeaseStartDate:[this.formatDateMinusYear(),Validators.required],
+  LeaseEndDate:[this.formatDateaddYear(),Validators.required],
   //  MonthsCount: [{ value: '', disabled: true }]
   LeaseMonths:['',Validators.required],
   BookNumber:['',Validators.required],
@@ -119,10 +119,88 @@ atLeastOneMethod() {
   
 // !!!!!!!!!!!!!!!!!!!!!!!!!!1 Methods
 
+recalculateFromTotal() {
+  const total = Number(this.contractsForm.get('TotalAmount')?.value) || 0;
+
+  this.addContractServices.getTaxes().subscribe((taxValue: any) => {
+    const taxRate = taxValue / 100;
+    const contractValue = total / (1 + taxRate);
+    const taxAmount = total - contractValue;
+
+    this.contractsForm.patchValue({
+      ContractValue: contractValue,
+      TaxAmount: taxAmount
+    }, { emitEvent: false });
+
+    this.getNet();
+  });
+}
+
+
+formatDateMinusYear(yearsToSubtract: number = 1) {
+  const date = new Date();
+  date.setFullYear(date.getFullYear() - yearsToSubtract); // نقص سنة
+  return date.toISOString().split('T')[0]; // صيغة YYYY-MM-DD
+}
+
+formatDateaddYear(yearsToSubtract: number = 1) {
+  const date = new Date();
+  date.setFullYear(date.getFullYear() + yearsToSubtract); // نقص سنة
+  return date.toISOString().split('T')[0]; // صيغة YYYY-MM-DD
+}
+
+formatDate(){
+   const date = new Date();
+  return date.toISOString().split("T")[0];
+  }
 
 ngOnInit(): void {
 
   // getDataUpdate
+
+  // this.contractsForm.get('TotalAmount')?.valueChanges
+  // .pipe(takeUntilDestroyed(this.destroyRef))
+  // .subscribe(total => {
+  //   if (total) {
+  //     this.recalculateFromTotal();
+  //   }
+  // });
+
+
+
+
+  // console.log(date);
+
+  const startDate = new Date(this.contractsForm.get('LeaseStartDate')?.value);
+  const endDate = new Date(this.contractsForm.get('LeaseEndDate')?.value);
+
+  // حساب عدد الأشهر
+  const monthsCount = this.getMonthsDiff(startDate, endDate);
+  this.contractsForm.patchValue({ LeaseMonths: monthsCount }, { emitEvent: false });
+
+  // توليد قائمة الأشهر لواجهة المستخدم
+  this.monthsList = this.getMonthsList(startDate, endDate);
+
+  // الاستماع للتغيرات لاحقًا
+  this.contractsForm.valueChanges.subscribe(res => {
+    if(res.LeaseStartDate && res.LeaseEndDate){
+      let start = new Date(res.LeaseStartDate);
+      let end = new Date(res.LeaseEndDate);
+      let monthsCount1 = this.getMonthsDiff(start, end);
+      this.contractsForm.patchValue({ LeaseMonths: monthsCount1 }, { emitEvent: false });
+      this.monthsList = this.getMonthsList(start, end);
+    }
+  });
+
+
+  this.contractsForm.get('ContractValue')?.valueChanges
+  .pipe(takeUntilDestroyed(this.destroyRef))
+  .subscribe(value => {
+    if (value) {
+      this.getTaxes();
+    }
+  });
+
 
   this.editBehaviorService.idSubscribe.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((id:any)=>{
     if(id){

@@ -303,6 +303,9 @@ getAllContracts(){
 }
   this.contractdetailsService.getAllDataContract(pagination).pipe(takeUntilDestroyed(this.destroyRef)).subscribe((res:any)=>{
     this.getAllDataContract=res
+       this.getAllDataContract.rows.forEach((item: any) => {
+        item.months = this.generateMonths(item.leaseStartDate, item.leaseMonths);
+      });
     console.log(this.getAllDataContract)
   })
 }

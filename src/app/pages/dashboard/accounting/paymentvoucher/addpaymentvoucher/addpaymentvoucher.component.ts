@@ -185,11 +185,34 @@ if(e.index == 0){
   }
 }
     this._ownerPaymentVoucherServices.getDatailsContracts(this.idSearchOwner,pagination).pipe(takeUntilDestroyed(this.destroyRef)).subscribe((res:any)=>{
-     
-      this.paymentData=res;
+ 
+
+      console.log(res);
+
+    this.paymentData = {
+    rows: res.rows.map((item: any) => ({
+      ...item,
+      paidAmount: item.netPaidInThisVoucher || 0,
+      remainingAmount: item.amountDue - (item.netPaidInThisVoucher || 0)
+    }))
+  };
+
+  // ✅ تحديث itemChecked بالقيم الحالية
+  this.itemChecked = this.paymentData.rows
+    .filter((item: any) => item.paidAmount > 0)
+    .map((item: any) => ({
+      contractInstallmentId: item.contractInstallmentId,
+      amount: item.paidAmount
+    }));
+
+  // إعادة حساب المجموعات
+  this.calculateTotals();
+
 
       console.log(this.paymentData);
       this.totalAmount=row.amountDue
+      
+      
 
       setTimeout(() => {
         // this.calcTotalRemaining();
@@ -374,14 +397,17 @@ calcTotalRemaining() {
 onPaidAmountChange(event: any, item: any) {
   let value = Number(event.target.value) || 0;
 
-  if (value > item.amount) {
-    value = item.amount;
+  if (value > item.amountDue) {
+    value = item.amountDue;
     event.target.value = value;
   }
 
   // حفظ القيمة مباشرة في الـ item
   item.paidAmount = value;
 
+   item.remainingAmount = item.amountDue - value; // ✅ تحديث المتبقي مباشرة
+   item.totalWithAmount=item.amountDue - value
+  //  this.RemainingTotalAmount=item.remainingAmount
   // تحديث العناصر المختارة
   const index = this.itemChecked.findIndex(x => x.contractInstallmentId === item.contractInstallmentId);
   if (index > -1) {
@@ -409,16 +435,21 @@ checkDataItem(e:any,item:any){
   if(checked){
     // const amountDue = Number(item.amountDue) || 0;
    
-    this.itemChecked.push({
-      // contractInstallmentId:item.contractInstallmentId:item.contractInstallmentId,
-      contractInstallmentId:item.contractInstallmentId,
-      amount:paid
-    })
+    // this.itemChecked.push({
+    //   // contractInstallmentId:item.contractInstallmentId:item.contractInstallmentId,
+    //   contractInstallmentId:item.contractInstallmentId,
+    //   amount:paid
+    // })
+
+      if(!this.itemChecked.some(x => x.contractInstallmentId === item.contractInstallmentId)){
+      this.itemChecked.push({ contractInstallmentId:item.contractInstallmentId, amount: paid });
+    }
+
     this.checksWrite=true
     // console.log("Elktorki")
   }else{
    this.itemChecked = this.itemChecked.filter(
-  x => Number(x.contractInstallmentId) !== Number(item.id)
+  x => Number(x.contractInstallmentId) !== Number(item.contractInstallmentId)
 );
 
 this.checksWrite=false;
