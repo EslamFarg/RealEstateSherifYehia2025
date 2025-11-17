@@ -551,7 +551,7 @@
         <div class="col-lg-4">
           <div class="mb-4">
             <label for="valueEgar" class="form-label">قيمه العقد</label>
-            <input type="text" placeholder="قيمه العقد" id="valueEgar" class="form-control" readonly formControlName="ContractValue">
+            <input type="text" placeholder="قيمه العقد" id="valueEgar" class="form-control" appNoStringPaste  formControlName="ContractValue">
           </div>
         </div>
         <div class="col-lg-4">
@@ -578,7 +578,7 @@
         <div class="col-lg-3">
           <div class="mb-3">
             <label for="commisionAkra" class="form-label">عموله اخري</label>
-            <input type="text" placeholder="عموله اخري" id="commisionAkra" class="form-control"  formControlName="OtherCommission">
+            <input type="text" placeholder="عموله اخري" id="commisionAkra" appNoStringPaste class="form-control"  formControlName="OtherCommission">
             <app-formerror-msg [control]="contractsForm.controls['OtherCommission']" [Messages]="{
             required:' عموله اخري مطلوبه'
           }"></app-formerror-msg>
@@ -587,7 +587,7 @@
         <div class="col-lg-3">
           <div class="mb-3">
             <label for="Tamen" class="form-label">قيمه التامين</label>
-            <input type="text" placeholder="قيمه التامين" id="Tamen" class="form-control" formControlName="InsuranceValue">
+            <input type="text" placeholder="قيمه التامين" id="Tamen" appNoStringPaste class="form-control" formControlName="InsuranceValue">
             <app-formerror-msg [control]="contractsForm.controls['InsuranceValue']" [Messages]="{
             required:' قيمه التامين مطلوبه'
           }"></app-formerror-msg>
