@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { TreerealRoutingModule } from './treereal-routing.module';
@@ -8,6 +8,7 @@ import { PageHeadingComponent } from '../../../../shared/ui/page-heading/page-he
 import { SearchDataComponent } from "../../../../shared/ui/search-data/search-data.component";
 import { TreePropertyPackageComponent } from '../../../../shared/ui/tree-property-package/tree-property-package.component';
 import { SearchinformsComponent } from '../../../../shared/ui/searchinforms/searchinforms.component';
+import { IntersectionDirective } from "../../../../shared/directives/intersection.directive";
 
 
 @NgModule({
@@ -20,7 +21,9 @@ import { SearchinformsComponent } from '../../../../shared/ui/searchinforms/sear
     PageHeadingComponent,
     SearchDataComponent,
     TreePropertyPackageComponent,
-    SearchinformsComponent
-]
+    SearchinformsComponent,
+    IntersectionDirective
+],
+schemas:[CUSTOM_ELEMENTS_SCHEMA]
 })
 export class TreerealModule { }

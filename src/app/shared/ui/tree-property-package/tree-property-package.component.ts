@@ -1,5 +1,5 @@
 import { NgIf } from '@angular/common';
-import { Component, DestroyRef, EventEmitter, inject, Output } from '@angular/core';
+import { Component, DestroyRef, EventEmitter, inject, Input, Output } from '@angular/core';
 import { TreerealService } from '../../../pages/dashboard/main/treereal/services/treereal.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
@@ -16,9 +16,10 @@ export class TreePropertyPackageComponent {
   treeRealServices:TreerealService=inject(TreerealService)
   destroyRef:DestroyRef=inject(DestroyRef);
 
+  
 
 
-treeProperty:any=[];
+@Input() treeProperty:any=[];
 
 @Output() sendDataSelect=new EventEmitter()
 
@@ -53,31 +54,43 @@ treeProperty:any=[];
 //     "value": "string"
 //   }
 // }
-  this.treeRealServices.getDataPropertyTree({}).pipe(takeUntilDestroyed(this.destroyRef)).subscribe((res:any)=>{
-    // console.log(res);
+
+let searchData=
+  {
+  "criteriaDto": {
+    "paginationInfo": {
+      "pageIndex": 0,
+      "pageSize": 0
+    }
+  }
+
+
+}
+  this.treeRealServices.getDataPropertyTree(searchData).pipe(takeUntilDestroyed(this.destroyRef)).subscribe((res:any)=>{
+    console.log(res);
 
     this.treeProperty=res.map((item:any)=>{
       return{
         id:item.id,
-        title:item.name,
+        name:item.name,
         type:item.type,
         expanded:false,
         children:item.children.map((child:any)=>{
           return{
             id:child.id,
-            title:child.name,
+            name:child.name,
             type:child.type,
             expanded:false,
             children:child.children.map((child2:any)=>{
               return{
                 id:child2.id,
-                title:child2.name,
+                name:child2.name,
                 type:child2.type,
                 expanded:false,
                 children:child2.children.map((child3:any)=>{
                   return{
                     id:child3.id,
-                    title:child3.name,
+                    name:child3.name,
                     type:child3.type,
                     expanded:false,
                   }

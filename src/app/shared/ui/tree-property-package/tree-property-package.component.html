@@ -11,7 +11,7 @@
 </svg>
 
                     </div>
-                   <p (click)="toggle(city)">{{city.title}}</p>
+                   <p (click)="toggle(city)">{{city.name}}</p>
                 </div>
 
                 @for (hay of city.children; track $index) {
@@ -25,7 +25,7 @@
 </svg>
 
                             </div>
-                            <p (click)="toggle(hay)">{{hay.title}}</p>
+                            <p (click)="toggle(hay)">{{hay.name}}</p>
                         </div>
 
                         @for (street of hay.children; track $index) {
@@ -39,7 +39,7 @@
 </svg>
 
                                 </div>
-                                <p (click)="toggle(street)">{{street.title}}</p>
+                                <p (click)="toggle(street)">{{street.name}}</p>
                             </div>
 
                             @for (property of street.children; track $index) {
@@ -55,7 +55,7 @@
                                         </div>
                                         <div (click)="getDataUnit(property)">
     <p (click)="toggle(property)">
-                                            {{property.title}}
+                                            {{property.name}}
                                         </p>
                                         </div>
                                     
@@ -74,7 +74,7 @@
                                                 </div>
                                                 <div >
  <p >
-                                                    {{lonelinees.title}}
+                                                    {{lonelinees.name}}
                                                 </p>
                                                 </div>
                                                
