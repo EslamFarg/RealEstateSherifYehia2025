@@ -50,7 +50,7 @@ export class AddpaymentreceiptvoucherComponent {
   PaymentReceiptVoucherForm=this.fb.group({
     
   voucherNo: ['',[Validators.required,Validators.minLength(3)]],
-  voucherDate: ['',[Validators.required]],
+  voucherDate: [new Date().toISOString().split('T')[0],[Validators.required]],
   paymentMethod: ['cash',[Validators.required]],
   amount: [0,[Validators.required]],
   notes: [''],
@@ -173,6 +173,7 @@ deleteId:any
 
   selectFilterData(e:any){
     console.log(e);
+    if(!e || !e.value){return;}
 
     let ShapeSearch={
   "criteriaDto": {
@@ -200,6 +201,16 @@ deleteId:any
 
 
     this._TenantServices.searchContracts(ShapeSearch).pipe(takeUntilDestroyed(this.destroyRef)).subscribe((res:any)=>{
+
+
+      if(!res.rows.length || !res.rows || !res){
+        this.PaymentReceiptVoucherForm.reset();
+        this.formSearchData.reset();
+        this.PaymentReceiptVoucherForm.patchValue({
+          voucherDate:new Date().toISOString().split('T')[0]
+        })
+        return
+      }
 
       console.log(res);
       this.PaymentReceiptVoucherForm.patchValue({

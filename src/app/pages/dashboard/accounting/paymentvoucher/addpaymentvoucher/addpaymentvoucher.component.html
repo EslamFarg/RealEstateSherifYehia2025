@@ -118,7 +118,7 @@
 <tr>
       <td scope="row">
         <div class="d-flex align-items-center justify-content-center">
-<input type="checkbox" aria-label="Checkbox for following text input" #oneCheckElement  [checked]="item.isInThisVoucher"
+<input type="checkbox" aria-label="Checkbox for following text input" #oneCheckElement   [attr.data-id]="item.contractInstallmentId  || item.id"  [checked]="item.isInThisVoucher"
  (change)="checkDataItem($event,item)">
         {{$index + 1}}
         </div>
@@ -129,8 +129,8 @@
     <td>{{item.unitName}} </td>
     <td>{{this.Months[item.monthIndex] || this.Months[item.monthNumber]}}</td>
     <td><div #amountDueElement>{{item.amount  || item.amountDue}}</div></td>
-    <!-- [readonly]="!isItemEditable(item)" -->
-    <td><input type="text" class="form-control"  #paidAmount placeholder="0" appNoStringPaste  [value]="item.paidAmount || item.paid || 0" [readonly]="!isItemEditable(item)"   (input)="onPaidAmountChange($event,item)"></td>
+    <!--  -->
+    <td><input type="text" class="form-control"  #paidAmount placeholder="0" appNoStringPaste    [value]="item.paidAmount || item.paid || 0"   (input)="onPaidAmountChange($event,item)"></td>
   
     <td><input type="text" class="form-control" [value]="item.totalWithAmount  || item.remainingAmount  || 0" readonly #remainingAmount></td>
     </tr>
@@ -180,7 +180,7 @@
 
 
   <div class="btn_add_reset mb-3">
- <button  data-type="save" data-button="send"  [ngClass]="{'btnEdit':this.btnAddandUpdate=='update','btnAdd':this.btnAddandUpdate=='add'}" (click)="onSubmit()">{{this.btnAddandUpdate == 'add' ? 'اضافه':"تعديل"}}</button>
+ <button type="button" data-type="save" data-button="send"  [ngClass]="{'btnEdit':this.btnAddandUpdate=='update','btnAdd':this.btnAddandUpdate=='add'}" (click)="onSubmit()">{{this.btnAddandUpdate == 'add' ? 'اضافه':"تعديل"}}</button>
  <button (click)="resetForm()" data-button="reset" >جديد</button>
  <button data-button="reset" (click)="showDeletePopup()" *ngIf="canBtnsShow">حذف</button>
  <button data-button="reset" *ngIf="canBtnsShow">طباعه </button>
@@ -188,3 +188,4 @@
 
 
 <app-confirm-delete [isVisible]="showDelete" (onDelete)="deleteConfirmed($event)" [itemId]="this.deleteId" (toggleModal)="onClose()"></app-confirm-delete>
+<app-popup-search [isVisible]="showPopupSearch" [dataArraySearch]="dataArraySearch" (closePopup)="showPopupSearch = false" (sendDataSelectedSearch)="sendDataSelectedSearch($event)"></app-popup-search>

@@ -11,6 +11,7 @@ import { FormerrorMsgComponent } from '../../../../../shared/ui/formerror-msg/fo
 import { EmptytableComponent } from '../../../../../shared/ui/emptytable/emptytable.component';
 import { DirectivesModule } from "../../../../../shared/directives/directives.module";
 import { ConfirmDeleteComponent } from '../../../../../shared/components/confirm-delete/confirm-delete.component';
+import { PopupSearchComponent } from "../../../../../shared/ui/popup-search/popup-search.component";
 // import { NgSelectComponent } from "../../../../../../../node_modules/@ng-select/ng-select/lib/ng-select.component";
 
 
@@ -22,7 +23,6 @@ import { ConfirmDeleteComponent } from '../../../../../shared/components/confirm
     CommonModule,
     AddpaymentvoucherRoutingModule,
     PageHeadingComponent,
-    // NgSelectComponent
     NgSelectModule,
     SearchinformsComponent,
     ReactiveFormsModule,
@@ -30,7 +30,8 @@ import { ConfirmDeleteComponent } from '../../../../../shared/components/confirm
     EmptytableComponent,
     DirectivesModule,
     ConfirmDeleteComponent,
-    FormsModule
+    FormsModule,
+    PopupSearchComponent
 ]
 })
 export class AddpaymentvoucherModule { }

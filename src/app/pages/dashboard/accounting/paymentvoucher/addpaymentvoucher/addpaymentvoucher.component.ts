@@ -19,7 +19,7 @@ _ownerPaymentVoucherServices:OwnerpaymentvoucherService=inject(Ownerpaymentvouch
 destroyRef:DestroyRef=inject(DestroyRef);
 toastr:ToastrService=inject(ToastrService)
 editBehaviorSubject:EditBehaviorServiceService=inject(EditBehaviorServiceService)
-
+showPopupSearch:any;
 
 
 // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!111 Properties
@@ -31,19 +31,14 @@ FilterData=[
 paymentVoucherForm=this.fb.group({
   
   voucherNo: ['',[Validators.required,Validators.minLength(3)]],
-  voucherDate: ['',[Validators.required]],
+  voucherDate: [new Date().toISOString().split('T')[0],[Validators.required]],
   paymentMethod: ['cash'],
   amount: 0,
   notes: [''],
   ownerId: [0,[Validators.required]],
   debitAccountId:[0,Validators.required] ,
   creditAccountId:  [null,Validators.required],
-  ownerPaymentDetails: [
-    {
-      contractInstallmentId: 0,
-      amount: 0
-    }
-  ]
+  ownerPaymentDetails: this.fb.array([])
 
 })
 
@@ -82,6 +77,8 @@ btnAddandUpdate='add'
   itemChecked:any[]=[];
   checksWrite:any=false
   idUpdate:any
+  // showPopupSearch=false
+  dataArraySearch:any=[];
 // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! Methods
 calcTotalPaidAmout() {
   this.PaidTotalAmount = 0; 
@@ -160,78 +157,28 @@ if(e.index == 0){
 
   this._ownerPaymentVoucherServices.searchOwner(shapeSearch).pipe(takeUntilDestroyed(this.destroyRef)).subscribe((res:any)=>{
 
-    const row=res.rows[0]
 
-    console.log(row)
-    this.formDataSearch.patchValue(
-      {
-        financiallyAccountId:row.financiallyAccountId,
-        name:row.name,
-        nationalID:row.nationalID,
-        email:row.email,
-        mobile:row.mobile
-      }
-    )
+    this.showPopupSearch=!this.showPopupSearch
+
+    this.dataArraySearch=res.rows
+
 
     
-    this.idSearchOwner=row.id;
-    this.paymentVoucherForm.get('ownerId')?.setValue(row.id);
-    
-    
-    let pagination={
-  "paginationInfo": {
-    "pageIndex": 0,
-    "pageSize": 0
-  }
-}
-    this._ownerPaymentVoucherServices.getDatailsContracts(this.idSearchOwner,pagination).pipe(takeUntilDestroyed(this.destroyRef)).subscribe((res:any)=>{
- 
+  
 
-      console.log(res);
+  
 
-    this.paymentData = {
-    rows: res.rows.map((item: any) => ({
-      ...item,
-      paidAmount: item.netPaidInThisVoucher || 0,
-      remainingAmount: item.amountDue - (item.netPaidInThisVoucher || 0)
-    }))
-  };
-
-  // ✅ تحديث itemChecked بالقيم الحالية
-  this.itemChecked = this.paymentData.rows
-    .filter((item: any) => item.paidAmount > 0)
-    .map((item: any) => ({
-      contractInstallmentId: item.contractInstallmentId,
-      amount: item.paidAmount
-    }));
-
-  // إعادة حساب المجموعات
-  this.calculateTotals();
-
-
-      console.log(this.paymentData);
-      this.totalAmount=row.amountDue
-      
-      
-
-      setTimeout(() => {
-        // this.calcTotalRemaining();
-              let TotalAmountDue=0;
-  this.amountDueElement?.forEach((amountDue)=>{
-    TotalAmountDue += Number(amountDue.nativeElement.textContent)
-  })
-  this.TotalAmountDue=TotalAmountDue
-      }, 200);
-    })
-
+   
+   
+    // !!!!!!!!!!!!1 end
 
     // Get Tax;
 
     this._ownerPaymentVoucherServices.getDataTaxes().pipe(takeUntilDestroyed(this.destroyRef)).subscribe((res:any)=>{
-      // console.log("Tax",res);
+  
       this.getTax=res
 
-      // item.amountDue / (1 + (getTax / 100)) | number:'1.1-2'
+      
 
       this.TotalpaidTaxAmount=this.totalAmount / (1 + (this.getTax / 100));
       // this.canBtnsShow=true;
@@ -253,144 +200,31 @@ calcTotalRemaining() {
 
 
 
-// writePaidAmount(e:any,item:any){
-//   const paid = Number(e.target.value) || 0;
-//   let amountDue = Number(item.amountDue) || 0;
-
-//    if (paid > amountDue) {
-//     e.target.value = amountDue;
-//   }
-
-
-//   // this.itemChecked = this.itemChecked.filter(x => x.contractInstallmentId !== item.id);
-//   // this.itemChecked = this.itemChecked.filter(x => x.contractInstallmentId !== item.id);
-
-//   this.itemChecked = this.itemChecked.filter(x => x.contractInstallmentId !== item.contractInstallmentId);
-
-
-//   if(this.checksWrite){
-//     this.itemChecked = this.itemChecked.filter(x => x.id != item.id);
-//     this.itemChecked.push({
-//       contractInstallmentId:item.id,
-//       amount:paid
-//     })
-    
-//     // console.log(this.itemChecked);
-//   }
-  
-
-
-//   if(paid > amountDue){
-//     e.target.value = amountDue;
-//     item.totalWithAmount = 0;
-//   }else{
-//     item.totalWithAmount = amountDue - paid
-  
-//   setTimeout(() => {
-
-//     let TotalPaidAmount = 0;
-//     let calcTotalRemaining = 0;
-
-//     this.paidAmountElement?.forEach((el: ElementRef) => {
-//       const value = parseFloat(el.nativeElement.value) || 0;
-//       TotalPaidAmount += value;
-//     });
-//     this.PaidTotalAmount = TotalPaidAmount;
-
-//     this.remainingAmountElement?.forEach((el: ElementRef) => {
-//       const value = parseFloat(el.nativeElement.value) || 0;
-//       calcTotalRemaining += value;
-//     });
-//     this.RemainingTotalAmount = calcTotalRemaining;
-
-//   }, 0);
-
-    
-//   }
-
-  
-//   if(paid == 0){
-//     item.totalWithAmount = 0
-//   }
-
-//     // console.log(item.totalWithTax)
-
-// }
-
-
-// writePaidAmount(e:any, item:any){
-//   let paid = Number(e.target.value) || 0;
-//   const amountDue = Number(item.amount) || 0;
-
-//   if(paid > amountDue){
-//     paid = amountDue;
-//     e.target.value = paid;
-//   }
-
-//   // تحديث قيمة المدفوع مباشرة في item
-//   item.paidAmount = paid;
-
-//   // تحديث itemChecked
-//   const existingIndex = this.itemChecked.findIndex(x => x.contractInstallmentId === item.contractInstallmentId);
-//   if(existingIndex > -1){
-//     this.itemChecked[existingIndex].amount = paid;
-//   } else {
-//     this.itemChecked.push({
-//       contractInstallmentId: item.contractInstallmentId,
-//       amount: paid
-//     });
-//   }
-
-//   // تحديث المجموعات
-//   this.calculateTotals();
-// }
-
 
 // onPaidAmountChange(event: any, item: any) {
 //   let value = Number(event.target.value) || 0;
-  
-//   // عدم السماح بالقيمة أكبر من المبلغ المستحق
-//   if (value > item.amount) {
-//     value = item.amount;
+
+//   if (value > item.amountDue) {
+//     value = item.amountDue;
 //     event.target.value = value;
 //   }
 
 //   // حفظ القيمة مباشرة في الـ item
 //   item.paidAmount = value;
 
-//   // إعادة حساب المجموعات
- 
-
-//   // تحديث قائمة العناصر المختارة
+//    item.remainingAmount = item.amountDue - value; // ✅ تحديث المتبقي مباشرة
+//    item.totalWithAmount=item.amountDue - value
+//   //  this.RemainingTotalAmount=item.remainingAmount
+//   // تحديث العناصر المختارة
 //   const index = this.itemChecked.findIndex(x => x.contractInstallmentId === item.contractInstallmentId);
 //   if (index > -1) {
 //     this.itemChecked[index].amount = value;
 //   } else {
-//     this.itemChecked.push({ contractInstallmentId: item.contractInstallmentId, amount: value });
-//   }
-
-//    this.calculateTotals();
-// }
-
-
-// onPaidAmountChange(event: any, item: any) {
-//   let value = Number(event.target.value) || 0;
-
-//   if (value > item.amount) {
-//     value = item.amount;
-//     event.target.value = value;
-//   }
-
-//   item.paidAmount = value;
-
-//   const index = this.itemChecked.findIndex(x => x.contractInstallmentId === item.contractInstallmentId);
-//   if (index > -1) {
-//     this.itemChecked[index].amount = value;
-//   } else {
-//     this.itemChecked.push({ contractInstallmentId: item.contractInstallmentId, amount: value });
+//     // this.itemChecked.push({ contractInstallmentId: item.contractInstallmentId ?? item.id, amount: value });
 //   }
 
 //   this.calculateTotals();
+// }
 // }
 
 
@@ -402,18 +236,30 @@ onPaidAmountChange(event: any, item: any) {
     event.target.value = value;
   }
 
-  // حفظ القيمة مباشرة في الـ item
   item.paidAmount = value;
+  item.remainingAmount = item.amountDue - value;
 
-   item.remainingAmount = item.amountDue - value; // ✅ تحديث المتبقي مباشرة
-   item.totalWithAmount=item.amountDue - value
-  //  this.RemainingTotalAmount=item.remainingAmount
-  // تحديث العناصر المختارة
-  const index = this.itemChecked.findIndex(x => x.contractInstallmentId === item.contractInstallmentId);
-  if (index > -1) {
-    this.itemChecked[index].amount = value;
+  const id = item.contractInstallmentId ?? item.id;
+
+  // لو فيه مبلغ → اعمل check واضف للـ array
+  if (value > 0) {
+    const index = this.itemChecked.findIndex(x => x.contractInstallmentId === id);
+    if (index === -1) {
+      this.itemChecked.push({ contractInstallmentId: id, amount: value });
+    } else {
+      this.itemChecked[index].amount = value;
+    }
+
+    // 🔹 تعليم checkbox تلقائيًا
+    const checkbox = this.oneCheckElement?.find(el => Number(el.nativeElement.dataset.id) === id);
+    if (checkbox) checkbox.nativeElement.checked = true;
+
   } else {
-    this.itemChecked.push({ contractInstallmentId: item.contractInstallmentId, amount: value });
+    // لو صفر → احذف من itemChecked وشيّل الـ check
+    this.itemChecked = this.itemChecked.filter(x => x.contractInstallmentId !== id);
+
+    const checkbox = this.oneCheckElement?.find(el => Number(el.nativeElement.dataset.id) === id);
+    if (checkbox) checkbox.nativeElement.checked = false;
   }
 
   this.calculateTotals();
@@ -426,39 +272,91 @@ onPaidAmountChange(event: any, item: any) {
 
 
 
-checkDataItem(e:any,item:any){
-
-  const checked=e.target.checked;
-   const paid = Number(item.paidAmount || 0); // أو من input إذا موجود
 
 
-  if(checked){
-    // const amountDue = Number(item.amountDue) || 0;
+// checkDataItem(e:any,item:any){
+
+//   const checked=e.target.checked;
+//    const paid = Number(item.paid || 0); // أو من input إذا موجود
+
+
+//    console.log(item);
+
+//   if(checked){
+//     // const amountDue = Number(item.amountDue) || 0;
    
-    // this.itemChecked.push({
-    //   // contractInstallmentId:item.contractInstallmentId:item.contractInstallmentId,
-    //   contractInstallmentId:item.contractInstallmentId,
-    //   amount:paid
-    // })
+//     //  this.checksWrite=true
+//     // this.itemChecked.push({
+//     //   // contractInstallmentId:item.contractInstallmentId:item.contractInstallmentId,
+//     //   contractInstallmentId:item.id,
+//     //   amount:paid
+//     // })
 
-      if(!this.itemChecked.some(x => x.contractInstallmentId === item.contractInstallmentId)){
-      this.itemChecked.push({ contractInstallmentId:item.contractInstallmentId, amount: paid });
+//     const index = this.itemChecked.findIndex(x => x.contractInstallmentId === item.contractInstallmentId);
+//     if (index === -1) {
+//       this.itemChecked.push({
+//         contractInstallmentId: item.contractInstallmentId ?? item.id,
+//         amount: paid
+//       });
+//     }
+
+
+//       if(!this.itemChecked.some(x => x.contractInstallmentId === item.id)){
+//       this.itemChecked.push({ contractInstallmentId:item.id, amount: paid });
+//     }
+
+
+  
+//     console.log(this.itemChecked);
+
+   
+    
+//   }else{
+//    this.itemChecked = this.itemChecked.filter(
+//   x => Number(x.contractInstallmentId) !== Number(item.id)
+// );
+
+// this.checksWrite=false;
+
+//   }
+
+
+//   this.calculateTotals();
+ 
+
+// }
+
+
+checkDataItem(e: any, item: any) {
+  const checked = e.target.checked;
+  const paid = Number(item.paidAmount || 0);
+
+  console.log(item)
+
+  if (checked) {
+    const index = this.itemChecked.findIndex(x => x.contractInstallmentId === item.contractInstallmentId || x.contractInstallmentId === item.id);
+    if (index === -1) {
+      this.itemChecked.push({
+        contractInstallmentId: item.contractInstallmentId ?? item.id,
+        amount: paid
+      });
     }
+  } else {
+    // حذف العنصر باستخدام contractInstallmentId الصحيح
+    // this.itemChecked = this.itemChecked.filter(
+    //   x => x.contractInstallmentId !== item.contractInstallmentId || x.contractInstallmentId !== item.id
+    // );
 
-    this.checksWrite=true
-    // console.log("Elktorki")
-  }else{
-   this.itemChecked = this.itemChecked.filter(
-  x => Number(x.contractInstallmentId) !== Number(item.contractInstallmentId)
+    this.itemChecked = this.itemChecked.filter(
+  x => x.contractInstallmentId !== (item.contractInstallmentId ?? item.id)
 );
-
-this.checksWrite=false;
 
   }
 
- 
-
+  console.log(this.itemChecked);
+  this.calculateTotals();
 }
+
 
 showDeletePopup(){
   this.showDelete=true
@@ -486,6 +384,10 @@ deleteConfirmed(id:any){
 onSubmit(){
 
 
+
+  if(this.paymentVoucherForm.invalid){
+    this.paymentVoucherForm.markAllAsTouched();
+  }
 
   if(this.paymentVoucherForm.valid){
 // if(this.realtorPaymentVoucherForm.valid){
@@ -524,16 +426,16 @@ this.itemChecked.forEach((item) => {
 
   
 data.ownerPaymentDetails = this.itemChecked
-  .filter(x => Number(x.amount) > 0) // فقط العناصر المدفوعة
+  .filter(x => x.contractInstallmentId !== undefined) // فقط العناصر المدفوعة
   .map(x => ({
-    contractInstallmentId: x.contractInstallmentId,
+    // contractInstallmentId: x.contractInstallmentId,
+    contractInstallmentId: x.contractInstallmentId ?? x.id,
     amount: x.amount
 
   }));
 
 
-  console.log(this.itemChecked)
-  console.log(data);
+
   
 
   if(this.btnAddandUpdate == 'add'){
@@ -542,10 +444,6 @@ data.ownerPaymentDetails = this.itemChecked
 
 
 
-
-  console.log("data.ownerPaymentDetails",data.ownerPaymentDetails)
-
-    //  console.log(data);
 
 
     this._ownerPaymentVoucherServices.createOwnerPaymentVoucher(data).pipe(takeUntilDestroyed(this.destroyRef)).subscribe((res:any)=>{
@@ -632,31 +530,6 @@ resetForm(){
 }
 
 
-// checkAllData(e:any){
-
-//   const checked = e.target.checked;
-
-//   if(checked){
-//     this.oneCheckElement.forEach(element => {
-//       element.nativeElement.checked = true;
-//     });
-//     this.itemChecked = this.paymentData.rows.map((item:any) => ({
-//       contractInstallmentId: item.contractInstallmentId,
-//       amount: item.amount
-//     }));
-//   }else{
-//     this.oneCheckElement.forEach(element => {
-//       element.nativeElement.checked = false;
-//     });
-//     this.itemChecked = [];
-//   }
-
-
-//   console.log(this.itemChecked)
-  
-
-// }
-
 
 checkAllData(e: any) {
   const checked = e.target.checked;
@@ -682,7 +555,7 @@ checkAllData(e: any) {
     this.itemChecked = [];
   }
 
-  console.log(this.itemChecked);
+
 }
 
 
@@ -693,23 +566,25 @@ calculateTotals() {
   this.RemainingTotalAmount = 0;
 
   this.paymentData.rows.forEach((item: any) => {
-    item.remainingAmount = item.amount - item.paidAmount;
 
-    this.TotalAmountDue += item.amount;
-    this.PaidTotalAmount += item.paidAmount;
+
+    
+    item.remainingAmount = item.amountDue - item.paid;
+
+    this.TotalAmountDue += item.amountDue;
+    this.PaidTotalAmount += item.paid;
     this.RemainingTotalAmount += item.remainingAmount;
 
-    // this.TotalAmountDue=this.TotalAmountDue.toFixed(2);
   });
 }
 
 
 getDataById(e:any){
-  // console.log(val)
+ 
   this._ownerPaymentVoucherServices.getDataById(e.value).pipe(takeUntilDestroyed(this.destroyRef)).subscribe((res:any)=>{
       this.btnAddandUpdate = 'update';
 
-      console.log('res', res);
+    
       this.deleteId=res.id;
 
       this.paymentVoucherForm.patchValue({
@@ -725,16 +600,16 @@ getDataById(e:any){
       });
      
 
-      console.log("paymentVoucherForm",this.paymentVoucherForm.value)
+
 
       this.formDataSearch.patchValue({
         financiallyAccountId: res.debitAccountId,
         name: res.debitAccountName,
         email: res.email,
-        mobile: res.mobile,
+        mobile: res.mobile ?? res.phoneNumber,
         nationalID: res.nationalID
       })
-      console.log(this.formDataSearch.value);
+      
       // table
       this.paymentData = {
         rows: res.listOwnerMonths.map((item: any) => ({
@@ -758,18 +633,18 @@ getDataById(e:any){
 
       this.calculateTotals();
 
-      console.log(this.TotalAmountDue);
+
 
 
       this.itemChecked = res.listOwnerMonths
        .filter((item: any) => item.netPaidInThisVoucher > 0)
   .map((item:any) => ({
     contractInstallmentId: item.id,
-    amount: item.amountDue
+    amount: item.netPaidInThisVoucher  
   }));
 
 
-  console.log(this.itemChecked)
+
 
 
 
@@ -777,7 +652,7 @@ getDataById(e:any){
       
       this.idUpdate=res.id
       this.canBtnsShow=true
-      console.log(this.idUpdate)
+
 
       
 
@@ -788,17 +663,89 @@ getDataById(e:any){
 
 isItemEditable(item: any): boolean {
   // return this.itemChecked.some(x => x.contractInstallmentId === item.id);
-  return this.itemChecked.some(x => x.contractInstallmentId === item.contractInstallmentId);
+  return this.itemChecked.some(x => x.contractInstallmentId === item.id);
 
 }
 
 
 ChangeSelect(e:any){
-  console.log(e);
+  
 
 }
 
+sendDataSelectedSearch(e:any){
 
+    const row=e
+  this.showPopupSearch=!this.showPopupSearch
+
+
+   this.formDataSearch.patchValue(
+      {
+        financiallyAccountId:row.financiallyAccountId,
+        name:row.name,
+        nationalID:row.nationalID,
+        email:row.email,
+        mobile:row.mobile
+      }
+    )
+
+    
+    this.idSearchOwner=row.id;
+    this.paymentVoucherForm.get('ownerId')?.setValue(row.id);
+    
+    
+    let pagination={
+  "paginationInfo": {
+    "pageIndex": 0,
+    "pageSize": 0
+  }
+}
+    this._ownerPaymentVoucherServices.getDatailsContracts(this.idSearchOwner,pagination).pipe(takeUntilDestroyed(this.destroyRef)).subscribe((res:any)=>{
+ 
+
+  
+
+    this.paymentData = {
+    rows: res.rows.map((item: any) => ({
+      ...item,
+      paidAmount: item.netPaidInThisVoucher || 0,
+      remainingAmount: item.amountDue - (item.netPaidInThisVoucher || 0)
+    }))
+  };
+
+  // ✅ تحديث itemChecked بالقيم الحالية
+  this.itemChecked = this.paymentData.rows
+    .filter((item: any) => item.paidAmount > 0)
+    .map((item: any) => ({
+      contractInstallmentId: item.contractInstallmentId,
+      amount: item.paid
+    }));
+
+  // إعادة حساب المجموعات
+  this.calculateTotals();
+
+
+     
+      this.totalAmount=row.amountDue
+      
+      
+
+      setTimeout(() => {
+        // this.calcTotalRemaining();
+              let TotalAmountDue=0;
+  this.amountDueElement?.forEach((amountDue)=>{
+    TotalAmountDue += Number(amountDue.nativeElement.textContent)
+  })
+  this.TotalAmountDue=TotalAmountDue
+      }, 200);
+    })
+
+
+
+
+
+  
+}
 
 ngOnDestroy(): void {
   //Called once, before the instance is destroyed.

@@ -11,14 +11,14 @@ import { authInterceptor } from './core/interceptors/auth.interceptor';
 import { LoadingComponent } from './shared/components/loading/loading.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CommonModule } from '@angular/common';
+import { PopupSearchComponent } from './shared/ui/popup-search/popup-search.component';
 
 
 
 
 @NgModule({
   declarations: [
-    AppComponent,
-   
+    AppComponent, 
    
     
   
