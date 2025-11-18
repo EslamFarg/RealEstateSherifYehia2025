@@ -147,7 +147,7 @@
    
   </div>
 
-  <div class="btn_add_reset">
+  <div class="btn_add_reset mb-3">
  <button type="button" data-button="send" (click)="onSubmit()" *ngIf="canShowAdd" [ngClass]="{'btnEdit':this.btnAddandUpdate=='update','btnAdd':this.btnAddandUpdate=='add'}">{{this.btnAddandUpdate == 'add' ? 'اضافه':"تعديل"}}</button>
  <!-- <button type="button" data-button="reset">تعديل</button> -->
  <button type="button" data-button="reset" (click)="deletePayrollVoucher()" *ngIf="showCanBtns">حذف</button>

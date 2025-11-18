@@ -177,9 +177,15 @@ export class BuildingComponent {
           .subscribe((res: any) => {
             //  this.resetForm(
             //  console.log(res);
-            this.formProperty.get('PropertyNumber')?.setValue(res.id);
+            // this.formProperty.get('PropertyNumber')?.setValue(res.id);
             this.toastr.show('تم اضافه العقار بنجاح', 'success');
             this.getAllDataProperties();
+            this.formProperty.reset();
+            this.idRemoveFilesArray = [];
+            this.dataFiles = [];
+            this.attachmentsComp?.resetImages();
+            // this.btnAddandUpdate='update';
+            // this.idUpdate=res.id;
           });
       } else {
         // Update

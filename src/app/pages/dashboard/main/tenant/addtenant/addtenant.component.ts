@@ -284,6 +284,7 @@ export class AddtenantComponent {
             this.apartmentsData = [];
             this.btnaddandupdate = 'add';
             this.toastr.show('تم تعديل المستاجر بنجاح', 'success');
+            this.idEdit = 0;
           });
       }
     } else {

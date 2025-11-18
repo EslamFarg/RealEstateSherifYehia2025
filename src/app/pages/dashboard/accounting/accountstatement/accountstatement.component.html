@@ -1,132 +1,93 @@
 <app-page-heading [title]="'المحاسبه'" [subtitle]="'كشف الحساب'"></app-page-heading>
-
-
 <form action="" class="forms_dashboard" [formGroup]="FromSearchData" (ngSubmit)="searchOnData()">
-    <div class="row">
-        <div class="col-sm-12">
-            <div class="mb-3">
-                <label for="accounts" class="form-label">الحساب</label>
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="mb-3">
+        <label for="accounts" class="form-label">الحساب</label>
 
-                <ng-select [items]="accountData" #accountElement bindLabel="name" bindValue="id" [virtualScroll]="true" placeholder="الحساب" formControlName="accountId"></ng-select>
-                 <app-formerror-msg [control]="this.FromSearchData.controls['accountId']" [Messages]="{
+        <ng-select [items]="accountData" #accountElement bindLabel="name" bindValue="id" [virtualScroll]="true"
+          placeholder="الحساب" formControlName="accountId"></ng-select>
+        <app-formerror-msg [control]="this.FromSearchData.controls['accountId']" [Messages]="{
                   required:'الحساب مطلوب'
                }"></app-formerror-msg>
 
-            </div>
-        </div>
-        <div class="col-sm-12 col-lg-6">
-            <div class="mb-3">
-                <label for="fromdate" class="form-label">من</label>
-                <input type="date" class="form-control" id="fromdate" placeholder="التاريخ" formControlName="fromDate">
-                 <app-formerror-msg [control]="this.FromSearchData.controls['fromDate']" [Messages]="{
-                  required:'التاريخ مطلوب'
-               }"></app-formerror-msg>
-            </div>
-        </div>
-        <div class="col-sm-12 col-lg-6">
-            <div class="mb-3">
-                <label for="fromdate" class="form-label">إلي</label>
-                <input type="date" class="form-control" id="fromdate" placeholder="التاريخ" formControlName="toDate">
-                  <app-formerror-msg [control]="this.FromSearchData.controls['toDate']" [Messages]="{
-                  required:'التاريخ مطلوب'
-               }"></app-formerror-msg>
-            </div>
-        </div>
+      </div>
     </div>
-
-
-
-      <div class="btns_add_edit ">
- <button data-type="save" >بحث</button>
-
+    <div class="col-sm-12 col-lg-6">
+      <div class="mb-3">
+        <label for="fromdate" class="form-label">من</label>
+        <input type="date" class="form-control" id="fromdate" placeholder="التاريخ" formControlName="fromDate">
+        <app-formerror-msg [control]="this.FromSearchData.controls['fromDate']" [Messages]="{
+                  required:'التاريخ مطلوب'
+               }"></app-formerror-msg>
+      </div>
+    </div>
+    <div class="col-sm-12 col-lg-6">
+      <div class="mb-3">
+        <label for="fromdate" class="form-label">إلي</label>
+        <input type="date" class="form-control" id="fromdate" placeholder="التاريخ" formControlName="toDate">
+        <app-formerror-msg [control]="this.FromSearchData.controls['toDate']" [Messages]="{
+                  required:'التاريخ مطلوب'
+               }"></app-formerror-msg>
+      </div>
+    </div>
   </div>
-
-
+  <div class="btns_add_edit ">
+    <button data-type="save">بحث</button>
+  </div>
 </form>
 
-
-
-
- <div class="table-responsive">
-<table>
-  <thead>
-    <tr>
-      <th scope="col">م</th>
-      <th scope="col">اسم الحساب</th>
-      <th scope="col">التاريخ</th>
-      <th scope="col">البيان</th>
-      <th scope="col">مدين</th>
-      <th scope="col">دائن</th>
-      <th scope="col">الاجمالي</th>
-      <!-- <th scope="col">Handle</th> -->
-    </tr>
-  </thead>
-  <tbody>
-    @for (item of accountStatement; track $index) {
-<tr>
-<!-- 
-  accountId
-: 
-1
-credit
-: 
-300
-debit
-: 
-0
-id
-: 
-357
-name
-: 
-"sherif yehia"
-notes
-: 
-"string"
-tranDate
-: 
-"2025-11-01T11:50:33.357" -->
-
-      <td scope="row">{{$index + 1}}</td>
-      <td>{{item.name}}</td>
-      <td>{{item.tranDate.split('T')[0]}}</td>
-      <td>{{item.notes}} </td>
-      <td>{{item.debit}}</td>
-      <td>{{item.credit}}</td>
-      <td>{{item.debit + item.credit}}</td>
-
-    </tr>
-    }@empty {
-                      <tr>
-    <td class="empty-cell" colspan="8">
-     <app-emptytable></app-emptytable>
-    </td>
-  </tr>
-    }
-
-    
-  </tbody>
-</table>   
-
- <table class="table2" *ngIf="this.accountStatement.length > 0"> 
-        <tbody>
-            <tr>
-  <td colspan="2">الاجمالي </td>
-  <td></td>
-  <td></td>
-  <td></td>
-  <td><div class="text-center " style="width: 109%;">{{summaryList?.totalDebit}}</div></td>
-  <td><div  style="width: 109%;"> {{summaryList?.totalCredit}}</div></td>
-  <td></td>   
-            </tr>
-        </tbody>
-    </table>
-
-
+<div class="table-responsive">
+  <table>
+    <thead>
+      <tr>
+        <th scope="col">م</th>
+        <th scope="col">اسم الحساب</th>
+        <th scope="col">التاريخ</th>
+        <th scope="col">البيان</th>
+        <th scope="col">مدين</th>
+        <th scope="col">دائن</th>
+        <th scope="col">الاجمالي</th>
+        <!-- <th scope="col">Handle</th> -->
+      </tr>
+    </thead>
+    <tbody>
+      @for (item of accountStatement; track $index) {
+      <tr>
+        <td scope="row">{{$index + 1}}</td>
+        <td>{{item.name}}</td>
+        <td>{{item.tranDate.split('T')[0]}}</td>
+        <td>{{item.notes}} </td>
+        <td>{{item.debit}}</td>
+        <td>{{item.credit}}</td>
+        <td>{{item.debit + item.credit}}</td>
+      </tr>
+      }@empty {
+      <tr>
+        <td class="empty-cell" colspan="8">
+          <app-emptytable></app-emptytable>
+        </td>
+      </tr>
+      }
+    </tbody>
+  </table>
+  <table class="table2" *ngIf="this.accountStatement.length > 0">
+    <tbody>
+      <tr>
+        <td colspan="2">الاجمالي </td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>
+          <div class="text-center " style="width: 109%;">{{summaryList?.totalDebit}}</div>
+        </td>
+        <td>
+          <div style="width: 109%;"> {{summaryList?.totalCredit}}</div>
+        </td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
 </div>
-
-<app-pagination
-  [totalPages]="totalPages"
-  [currentPage]="pageIndex"
-  (pageChange)="onPageChanged($event)">
+<app-pagination [totalPages]="totalPages" [currentPage]="pageIndex" (pageChange)="onPageChanged($event)">
 </app-pagination>

@@ -13,7 +13,7 @@
         </div>
         <div class="col-sm-6">
             <label for="permission" class="form-label">الصفحات</label>
-            <ng-select [items]="getAllDataPages" [bindLabel]="'pageName'" placeholder="اسم الصفحه" [multiple]="true"
+            <ng-select [items]="getAllDataPages" [bindLabel]="'pageName'" placeholder="اسم الصفحه" [multiple]="true" [closeOnSelect]="false"
                 [bindValue]="'id'" formControlName="pageIds"></ng-select>
             <ng-container *ngIf="groupForm.controls['pageIds'].invalid && groupForm.controls['pageIds'].touched">
                 <small class="error_msg_form" *ngIf="groupForm.controls['pageIds'].hasError('required')">اسم الصفحه

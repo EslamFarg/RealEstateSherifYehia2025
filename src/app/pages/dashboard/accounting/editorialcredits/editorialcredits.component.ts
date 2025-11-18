@@ -3,6 +3,7 @@ import { EditorialCreditsService } from './services/editorial-credits.service';
 import { EditorialCredits } from './interfaces/editorial-credits';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ToastrService } from '../../../../shared/ui/toastr/services/toastr.service';
+import { SharedService } from '../../../../shared/services/shared.service';
 
 @Component({
   selector: 'app-editorialcredits',
@@ -15,6 +16,7 @@ export class EditorialcreditsComponent implements OnInit {
   );
   fb = inject(FormBuilder);
   toastr: ToastrService = inject(ToastrService);
+  _sharedServices: SharedService = inject(SharedService);
   editorialForm!: FormGroup;
   pageIndex = 1;
   pageSize = 10;
@@ -30,8 +32,8 @@ export class EditorialcreditsComponent implements OnInit {
     this.editorialForm = this.fb.group({
       financialName: [null],
       accountId: [null],
-      fromDate: [''],
-      toDate: [''],
+      fromDate: [this._sharedServices.getPreviousYearDate()],
+      toDate: [this._sharedServices.getTodayDate()],
     });
     this.dataFilter = [
       {

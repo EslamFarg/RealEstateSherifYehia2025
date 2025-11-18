@@ -16,6 +16,7 @@ export class RefreshSelectComponent {
   @Input() bindValue:any;
   @Input() fc!:FormControl
   @Output() selectedData = new EventEmitter();
+  @Input() isMultiSelect:boolean=false
 
   // searchHandler = input<(name:string) => void>(() => ({}));
   refreshPage() {

@@ -251,6 +251,7 @@ export class OwnerComponent {
         this.toastr.show('تم حذف المالك بنجاح', 'success');
         this.getAllDataOwner();
         this.ownerData.reset();
+        this.resetData();
         this.btnAddAndUpdate = 'add';
       });
   }

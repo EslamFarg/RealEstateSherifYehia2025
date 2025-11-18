@@ -9,7 +9,6 @@
 
 
 <form class="forms_dashboard" [formGroup]="formData" (ngSubmit)="onSubmit()">
-
     <div class="row">
         <div class="col-sm-12 col-lg-6">
             <div class="mb-3">
@@ -27,16 +26,13 @@
                 <div class="d-flex align-content-center gap-3">
                     <input type="date" class="form-control" id="enddate" placeholder="التاريخ"
                         formControlName="endDate">
-
                     <button class="search_btn">بحث</button>
-
                 </div>
                 <app-formerror-msg style="display: block;" [control]="formData.controls['endDate']" [Messages]="{
                                 'required' :'الي تاريخ مطلوب'
                             }"></app-formerror-msg>
             </div>
         </div>
-
     </div>
 </form>
 
@@ -61,7 +57,6 @@
                 <td>{{item.screenName}}</td>
                 <td>{{item.actionType}}</td>
                 <td>{{item.userName}}</td>
-
             </tr>
             }@empty {
             <tr>
@@ -74,7 +69,9 @@
     </table>
 </div>
 
-<app-pagination *ngIf="activityTrackingData?.rows?.length > 0"
-    [totalPages]="activityTrackingData.paginationInfo?.totalPagesCount" [currentPage]="pageIndex"
-    (pageChange)="onPageChanged($event)">
-</app-pagination>
+<div class="mb-3">
+    <app-pagination *ngIf="activityTrackingData?.rows?.length > 0"
+        [totalPages]="activityTrackingData.paginationInfo?.totalPagesCount" [currentPage]="pageIndex"
+        (pageChange)="onPageChanged($event)">
+    </app-pagination>
+</div>

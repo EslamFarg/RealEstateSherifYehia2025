@@ -6,6 +6,7 @@ import regions from '../../../../public/api/regions_lite.json';
 import { environment } from '../../../environments/environment';
 import { PhoneNumber } from '../../pages/dashboard/main/owner/models/phoneNumber';
 import { CountryISO } from 'ngx-intl-tel-input';
+import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root',
 })
@@ -46,6 +47,9 @@ export class SharedService {
 
   getAllGroups() {
     return this.http.get(environment.apiUrl + `/Groups?PageIndex=0&PageSize=0`);
+  }
+  getBanksJson():Observable<any>{
+    return this.http.get('/api/banks.json');
   }
 
   parsePhoneNumber(fullNumber: string): PhoneNumber {

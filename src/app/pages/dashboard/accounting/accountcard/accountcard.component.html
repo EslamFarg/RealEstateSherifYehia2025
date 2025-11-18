@@ -52,7 +52,7 @@
   </div>
 </form>
 
-<div class="table-responsive">
+<div class="table-responsive mb-3">
   <table>
     <thead>
       <tr>
@@ -104,7 +104,7 @@
     </tbody>
   </table>
 </div>
-<div class="mb-3">
+<div class="mb-3" *ngIf="accountCardList.length > 0">
   <app-pagination [totalPages]="total" [currentPage]="pageIndex" (pageChange)="onPageChanged($event)">
   </app-pagination>
 </div>

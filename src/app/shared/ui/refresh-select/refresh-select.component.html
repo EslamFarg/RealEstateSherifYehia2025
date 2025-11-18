@@ -7,6 +7,8 @@
       id="title"
       placeholder="اختر"
       [virtualScroll]="true"
+      [multiple]="isMultiSelect"
+      [closeOnSelect]="!isMultiSelect"
       [formControl]="fc"
       [bindValue]="bindValue"
       (change)="OnDataSelect($event)"

@@ -222,10 +222,11 @@ export class AddSalaryDisbursementComponent {
             this.toastr.show('تم انشاء البيانات بنجاح', 'success');
             this.btnAddandUpdate = 'add';
             this.formExchange.get('voucherNo')?.setValue(res);
-            this.employeesSalary = [];
-            this.formExchange.reset();
+            // this.employeesSalary = [];
+            // this.formExchange.reset();
             this.idUpdateAndDelete = res;
             this.showCanBtns = true;
+            this.canShowAdd = false;
           });
       } else {
         // TODO: Update
@@ -372,6 +373,7 @@ export class AddSalaryDisbursementComponent {
       .subscribe((res: any) => {
         this.toastr.show('تم حذف البيانات بنجاح', 'success');
         this.resetForm();
+        
       });
   }
 

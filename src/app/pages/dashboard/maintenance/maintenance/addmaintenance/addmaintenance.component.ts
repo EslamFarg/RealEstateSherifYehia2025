@@ -131,8 +131,6 @@ export class AddmaintenanceComponent {
     this._behaviorServices.idSubscribe
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((id) => {
-        // console.log(id);
-
         if (id) {
           let ShapeDataFilter = {
             criteriaDto: {
@@ -176,9 +174,9 @@ export class AddmaintenanceComponent {
                 street: res.rows[0]?.street,
               });
 
-              console.log(res.rows[0]);
               this.canShowBtns = true;
               this.btnAddandUpdate = 'update';
+              this.dataFiles = res.rows[0]?.attachments;
             });
         }
 
