@@ -1,19 +1,15 @@
-import { Injectable } from "@angular/core";
-import { BasehttpservicesService } from "../../../../../shared/services/basehttpservices.service";
+import { Injectable } from '@angular/core';
+import { BasehttpservicesService } from '../../../../../shared/services/basehttpservices.service';
 
 @Injectable({
-    providedIn: 'root'
+  providedIn: 'root',
 })
-
 export class AccountstatementService extends BasehttpservicesService {
+  getAllaccountsfinancially(pagination: any) {
+    return this.post(`/FinancialAccount/GetList`, pagination);
+  }
 
-    getAllaccountsfinancially(pagination:any){
-        return this.post(`/FinancialAccount/GetList`,pagination);
-    }
-
-
-    searchAccountsEstatement(data:any){
-        return this.post(`/AccountStatement/GetAccountStatements`,data)
-    }
-
+  searchAccountsEstatement(data: any) {
+    return this.post(`/AccountStatement/GetAccountStatements`, data);
+  }
 }

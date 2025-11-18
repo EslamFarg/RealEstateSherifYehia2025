@@ -79,8 +79,6 @@ export class LinkgrouppagesComponent {
   }
 
   getDataUpdate(id: any) {
-    console.log(id);
-
     this._linkGrouppagesServices
       .getDataById(id)
       .pipe(takeUntilDestroyed(this.destroyRef))
@@ -135,7 +133,6 @@ export class LinkgrouppagesComponent {
       .subscribe((res: any) => {
         this.getAllDataGroupPages = res;
 
-        console.log('res', this.getAllDataGroupPages);
       });
   }
 

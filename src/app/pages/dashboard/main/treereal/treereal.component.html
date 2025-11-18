@@ -3,21 +3,23 @@
 
 
 <form action="" class="forms_dashboard">
-    <div class="row">
-        <div class="col-sm-12 mb-3">
+  <div class="row">
+    <div class="col-sm-12 mb-3">
 
-            <div class="search_container">
-                 <app-searchinforms [backgroundForm]="'red'" [dataFilter]="dataFilter" (selectedDataFilter)="onSeachFilter($event)"></app-searchinforms>
-            </div>
-          
-        </div>
+      <div class="search_container">
+        <app-searchinforms [backgroundForm]="'red'" [dataFilter]="dataFilter"
+          (selectedDataFilter)="onSeachFilter($event)"></app-searchinforms>
+      </div>
+
     </div>
+  </div>
 
 
 
   <div class="row">
     <div class="col-sm-12 col-lg-6">
-        <app-tree-property-package [treeProperty]="AllDataTreeProperty" (sendDataSelect)="getAllDataSelectedUnit($event)"></app-tree-property-package>
+      <app-tree-property-package [treeProperty]="AllDataTreeProperty"
+        (sendDataSelect)="getAllDataSelectedUnit($event)"></app-tree-property-package>
     </div>
 
     <div class="col-sm-12 col-lg-6 box_col" *ngIf="this.getDataSelected">
@@ -28,8 +30,10 @@
           </p>
           <div class="icon">
             <svg width="21" height="21" viewBox="0 0 21 21" fill="none" xmlns="httdiv://www.w3.org/2000/svg">
-<path d="M14.5925 5.08366L10.715 10.5003L14.5917 15.917L13.5759 15.917L9.69753 10.5003L13.5759 5.08366L14.5925 5.08366ZM9.76253 5.08366L5.8842 10.5003L9.76336 15.917L8.7467 15.917L4.86836 10.5003L8.7467 5.08366L9.76253 5.08366Z" fill="#7F7F7F"/>
-</svg>
+              <path
+                d="M14.5925 5.08366L10.715 10.5003L14.5917 15.917L13.5759 15.917L9.69753 10.5003L13.5759 5.08366L14.5925 5.08366ZM9.76253 5.08366L5.8842 10.5003L9.76336 15.917L8.7467 15.917L4.86836 10.5003L8.7467 5.08366L9.76253 5.08366Z"
+                fill="#7F7F7F" />
+            </svg>
 
           </div>
           <p class="hay_title">
@@ -37,18 +41,22 @@
             {{this.getDataSelected.district}}
           </p>
 
-                 <div class="icon">
+          <div class="icon">
             <svg width="21" height="21" viewBox="0 0 21 21" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M14.5925 5.08366L10.715 10.5003L14.5917 15.917L13.5759 15.917L9.69753 10.5003L13.5759 5.08366L14.5925 5.08366ZM9.76253 5.08366L5.8842 10.5003L9.76336 15.917L8.7467 15.917L4.86836 10.5003L8.7467 5.08366L9.76253 5.08366Z" fill="#7F7F7F"/>
-</svg>
+              <path
+                d="M14.5925 5.08366L10.715 10.5003L14.5917 15.917L13.5759 15.917L9.69753 10.5003L13.5759 5.08366L14.5925 5.08366ZM9.76253 5.08366L5.8842 10.5003L9.76336 15.917L8.7467 15.917L4.86836 10.5003L8.7467 5.08366L9.76253 5.08366Z"
+                fill="#7F7F7F" />
+            </svg>
 
           </div>
           <p class="property_title">{{this.getDataSelected.propertyName}}</p>
 
-                 <div class="icon">
+          <div class="icon">
             <svg width="21" height="21" viewBox="0 0 21 21" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M14.5925 5.08366L10.715 10.5003L14.5917 15.917L13.5759 15.917L9.69753 10.5003L13.5759 5.08366L14.5925 5.08366ZM9.76253 5.08366L5.8842 10.5003L9.76336 15.917L8.7467 15.917L4.86836 10.5003L8.7467 5.08366L9.76253 5.08366Z" fill="#7F7F7F"/>
-</svg>
+              <path
+                d="M14.5925 5.08366L10.715 10.5003L14.5917 15.917L13.5759 15.917L9.69753 10.5003L13.5759 5.08366L14.5925 5.08366ZM9.76253 5.08366L5.8842 10.5003L9.76336 15.917L8.7467 15.917L4.86836 10.5003L8.7467 5.08366L9.76253 5.08366Z"
+                fill="#7F7F7F" />
+            </svg>
 
           </div>
           <p class="unit_title">{{this.getDataSelected.name}}</p>
@@ -59,9 +67,9 @@
 
         <div class="body_box">
           <div class="imgs">
-            <div class="img1" style="width: 100%;" >
-                <!-- <img [src]="environmentUrl+item.filePath" alt="Property" srcset=""> -->
-<!-- <swiper-container
+            <div class="img1" style="width: 100%;">
+              <!-- <img [src]="environmentUrl+item.filePath" alt="Property" srcset=""> -->
+              <!-- <swiper-container
   pagination="false"
   navigation="false"
   [loop]="true"
@@ -84,30 +92,14 @@
   </swiper-slide>
 
 </swiper-container> -->
-<swiper-container
-  pagination="false"
-  navigation="false"
-  [loop]="true"
-  effect="coverflow"
-  grabCursor="true"
-  centeredSlides="true"
-  [slidesPerView]="3"
-  [initialSlide]="initialSlide"
-  coverflowEffect='{
-    "rotate": 50,
-    "stretch": 0,
-    "depth": 100,
-    "modifier": 1,
-    "slideShadows": true
-  }'
->
-  <swiper-slide
-    *ngFor="let item of getDataSelected.attachments"
-    style="width: 100%;"
-  >
-    <img [src]="environmentUrl + item.filePath" style="margin: auto;" />
-  </swiper-slide>
-</swiper-container>
+              <swiper-container pagination="false" navigation="false" [loop]="true" effect="coverflow" grabCursor="true"
+                autoplay-delay="2500" autoplay-disable-on-interaction="false" centeredSlides="true" [slidesPerView]="3"
+                [initialSlide]="initialSlide" coverflow-effect-rotate="50" coverflow-effect-stretch="0"
+                coverflow-effect-depth="100" coverflow-effect-modifier="1" coverflow-effect-slide-shadows="false">
+                <swiper-slide *ngFor="let item of getDataSelected.attachments" style="width: 100%;">
+                  <img [src]="environmentUrl + item.filePath" style="margin: auto;" />
+                </swiper-slide>
+              </swiper-container>
 
             </div>
 
@@ -131,28 +123,28 @@
 
           <div class="table_container">
             <div class="box">
-                <h6>الدور</h6>
-                <p>{{this.getDataSelected.floorNumber}}</p>
+              <h6>الدور</h6>
+              <p>{{this.getDataSelected.floorNumber}}</p>
             </div>
             <div class="box">
-                <h6>رقم الوحده</h6>
-                <p>{{this.getDataSelected.id}}</p>
+              <h6>رقم الوحده</h6>
+              <p>{{this.getDataSelected.id}}</p>
             </div>
             <div class="box">
-                <h6>عدد الغرف</h6>
-                <p>{{this.getDataSelected.roomsCount}}</p>
+              <h6>عدد الغرف</h6>
+              <p>{{this.getDataSelected.roomsCount}}</p>
             </div>
             <div class="box">
-                <h6>نوع الوحده</h6>
-                <p>{{this.getDataSelected.unitType}}</p>
+              <h6>نوع الوحده</h6>
+              <p>{{this.getDataSelected.unitType}}</p>
             </div>
             <div class="box">
-                <h6>مساحه الوحده</h6>
-                <p>{{this.getDataSelected.area}}</p>
+              <h6>مساحه الوحده</h6>
+              <p>{{this.getDataSelected.area}}</p>
             </div>
             <div class="box">
-                <h6>تصنيف الوحده</h6>
-                <p>{{this.getDataSelected.unitCategoryName}}</p>
+              <h6>تصنيف الوحده</h6>
+              <p>{{this.getDataSelected.unitCategoryName}}</p>
             </div>
 
           </div>
@@ -160,5 +152,5 @@
       </div>
     </div>
   </div>
-  
+
 </form>

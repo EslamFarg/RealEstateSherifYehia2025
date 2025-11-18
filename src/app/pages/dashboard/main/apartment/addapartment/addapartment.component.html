@@ -63,7 +63,7 @@
 
      <div class="col-sm-12 col-lg-4 mb-3">
         <label for="sizeunit" class="form-label">مساحه الوحده</label>
-        <input type="text" name="" class="form-control" id="sizeunit" placeholder="مساحه الوحده" formControlName="Area" maxlength="6">
+        <input type="text" name="" appNoStringPaste class="form-control" id="sizeunit" placeholder="مساحه الوحده" formControlName="Area" maxlength="6">
         <ng-container *ngIf="unitData.controls['Area'].invalid && unitData.controls['Area'].touched">
 
           <small class="error_msg_form" *ngIf="unitData.controls['Area'].hasError('required')">مساحه الوحده  مطلوب</small>

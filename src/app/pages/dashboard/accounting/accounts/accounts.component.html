@@ -29,10 +29,9 @@
     <div class="col-sm-12 col-lg-4">
         <div class="mb-3">
             <label for="type" class="form-label">البنك</label>
-            <ng-select [items]="typeAccount" bindLabel="name" bindValue="name" placeholder="نوع الحساب" formControlName="type"></ng-select>
+            <ng-select [items]="typeAccount" bindLabel="arabic_name" bindValue="arabic_name" placeholder="نوع الحساب" formControlName="type"></ng-select>
             <ng-container *ngIf="accountData.controls['type'].invalid && accountData.controls['type'].touched">
               <small class="error_msg_form" *ngIf="accountData.controls['type'].hasError('required')">نوع الحساب مطلوب</small>
-
             </ng-container>
         </div>
 
