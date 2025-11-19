@@ -40,7 +40,7 @@
                   </div>
 
             
-                  <div class="auto_complete_container"  [ngClass]="{'active':this.showAutocomplete}">
+                  <div class="auto_complete_container" *ngIf="showAutocompleteSearch"  [ngClass]="{'active':this.showAutocomplete}">
                       <ul>
                         @for (item of filteredList; track $index) {
                         <li (click)="selectedUser(item)">{{item.fullName}}</li>  

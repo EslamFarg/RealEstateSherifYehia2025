@@ -75,6 +75,8 @@ onSubmit(){
       this.NumberVoucher.nativeElement.value=res;
       this.toastr.show('تم اضافه السند بنجاح','success');
       this.paymentVoucherForm.reset();
+      this.getAllDataPaymentVoucher1()
+      
       // this.btnAddandUpdate='add';
       // this.getAllDataReceiptVoucher()
     })
@@ -136,7 +138,7 @@ getAllAccounts() {
 getAllFinancialAccounts() {
   this._ReceiptVoucherService.getAllFinancialAccount().pipe(takeUntilDestroyed(this.destroyRef)).subscribe((res: any) => {
     console.log(res)
-    this.getAllDataFinancialAccount = res
+    this.getAllDataFinancialAccount = res.rows
     // console.log("No",this.getAllDataFinancialAccount)
 
   })
@@ -198,8 +200,8 @@ this.idUpdate=id
       paymentMethod:res.paymentMethod,
       amount:this.taxValue.toFixed(2),
       notes:res.notes,
-      debitAccountId:res.debitAccountNumber,
-      creditAccountId:res.creditAccountNumber
+      debitAccountId:res.creditAccountNumber,
+      creditAccountId:res.debitAccountNumber
     })
   
     this.btnAddandUpdate='update';

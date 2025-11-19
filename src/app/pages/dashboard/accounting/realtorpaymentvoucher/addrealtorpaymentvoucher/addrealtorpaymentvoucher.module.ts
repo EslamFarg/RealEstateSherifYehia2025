@@ -11,6 +11,7 @@ import { FormerrorMsgComponent } from '../../../../../shared/ui/formerror-msg/fo
 import { IntersectionDirective } from "../../../../../shared/directives/intersection.directive";
 import { EmptytableComponent } from '../../../../../shared/ui/emptytable/emptytable.component';
 import { ConfirmDeleteComponent } from '../../../../../shared/components/confirm-delete/confirm-delete.component';
+import { PopupSearchBrokerComponent } from "../../../../../shared/ui/popup-search-broker/popup-search.component";
 
 
 @NgModule({
@@ -27,7 +28,8 @@ import { ConfirmDeleteComponent } from '../../../../../shared/components/confirm
     FormerrorMsgComponent,
     IntersectionDirective,
     EmptytableComponent,
-    ConfirmDeleteComponent
+    ConfirmDeleteComponent,
+    PopupSearchBrokerComponent
 ]
 })
 export class AddrealtorpaymentvoucherModule { }

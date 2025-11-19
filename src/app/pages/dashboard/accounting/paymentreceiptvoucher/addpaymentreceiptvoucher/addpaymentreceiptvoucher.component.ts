@@ -18,6 +18,8 @@ export class AddpaymentreceiptvoucherComponent {
   _accountsServices:AccountService=inject(AccountService)
   _TenantServices:paymentreceiptvoucherService=inject(paymentreceiptvoucherService)
   EditBehaviorServices:EditBehaviorServiceService=inject(EditBehaviorServiceService)
+  showPopupSearch=false;
+  dataArraySearch:any=[]
   dataFilter=[
     {
       id:0,
@@ -62,6 +64,9 @@ tenantReceiptVoucherDetails:this.fb.array([])
   })
 
 
+
+
+  showBtnDelete=false
   
 
 
@@ -91,8 +96,14 @@ deleteId:any
   ngOnInit(): void {
     
     this.EditBehaviorServices.idSubscribe.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((id)=>{
+    
+
       if(id){
-        this.btnAddandUpdate='update';
+
+          if (id !== null && id !== undefined && id !== 0) {
+    this.btnAddandUpdate = 'update';
+    }
+        // this.btnAddandUpdate='update';
         this.idUpdate=id;
         this._TenantServices.searchById(id).pipe(takeUntilDestroyed(this.destroyRef)).subscribe((res:any)=>{
           console.log("REs",res);
@@ -202,8 +213,10 @@ deleteId:any
 
     this._TenantServices.searchContracts(ShapeSearch).pipe(takeUntilDestroyed(this.destroyRef)).subscribe((res:any)=>{
 
+     
 
       if(!res.rows.length || !res.rows || !res){
+        this.toastr.show('هذا المستأجر غير موجود','error')
         this.PaymentReceiptVoucherForm.reset();
         this.formSearchData.reset();
         this.PaymentReceiptVoucherForm.patchValue({
@@ -212,27 +225,14 @@ deleteId:any
         return
       }
 
-      console.log(res);
-      this.PaymentReceiptVoucherForm.patchValue({
-        contractId:res.rows[0].id,
-        creditAccountId:res.rows[0].financialTenantId,
-        tenantId:res.rows[0].tenantId
-      })
 
-      this.formSearchData.patchValue({
-        numbercontract:res.rows[0].id,
-        nameTenant:res.rows[0].tenantName,
-        unitName:res.rows[0].unitName,
-        endDate:res.rows[0].leaseEndDate,
-        propertyName:res.rows[0].propertyName,
-        amountDue:res.rows[0].totalAmount
-      })
+       this.showBtnDelete=true
 
-      console.log(this.PaymentReceiptVoucherForm.value);
+       this.showPopupSearch=true
+       this.dataArraySearch=res.rows;
 
-      this.ContractId=res.rows[0].id
-      this.getAllMonthes();
-
+      //  !!!!!!!!!!!!!!!!!!!
+    
 
     })
 
@@ -358,7 +358,7 @@ toggleActive(index: number, item: any) {
   } else {
     // إضافة
     const newItem = {
-      contractInstallmentId: item.contractInstallmentId,
+      contractInstallmentId: item.contractInstallmentId ?? item.id,
       remainingAmount: item.remainingAmount ?? item.amount ?? 0
     };
 
@@ -404,11 +404,12 @@ onSubmit(){
     }
 
 
+    // debugger
    
 let data={
   voucherNo:this.PaymentReceiptVoucherForm.get('voucherNo')?.value,
   voucherDate:this.PaymentReceiptVoucherForm.get('voucherDate')?.value,
-  paymentMethod: this.PaymentReceiptVoucherForm.get('paymentMethod')?.value,
+  paymentMethod: this.PaymentReceiptVoucherForm.get('paymentMethod')?.value ?? 'Cash',
   amount: this.PaymentReceiptVoucherForm.get('amount')?.value,
   notes: this.PaymentReceiptVoucherForm.get('notes')?.value,
   contractId: this.PaymentReceiptVoucherForm.get('contractId')?.value,
@@ -416,19 +417,27 @@ let data={
   debitAccountId: this.PaymentReceiptVoucherForm.get('debitAccountId')?.value,
   creditAccountId: this.PaymentReceiptVoucherForm.get('creditAccountId')?.value,
   tenantReceiptVoucherDetails: this.activeDataSelected.map(x => ({
-    contractInstallmentId: x.contractInstallmentId,
+    contractInstallmentId: x.contractInstallmentId ?? x.id,
     amount: x.remainingAmount
   }))
 }
 
+
+console.log(data);
+  // debugger
   if(this.PaymentReceiptVoucherForm.valid){
     if(this.btnAddandUpdate == 'add'){
       this._TenantServices.createData(data).pipe(takeUntilDestroyed(this.destroyRef)).subscribe((res:any)=>{
         this.toastr.show('تم حفظ البيانات بنجاح','success');
-        this.idUpdate=res;
+     
         // console.log(this.idUpdate);
         this.numberVoucher.nativeElement.value=res;
+        this.idUpdate=res;
         this.btnAddandUpdate='update';
+        this.showBtnDelete=true
+        // this.resetForm();
+
+
       })
     }else{
       // update 
@@ -439,8 +448,11 @@ let data={
       }
       this._TenantServices.updateData(dataUpdate).pipe(takeUntilDestroyed(this.destroyRef)).subscribe((res:any)=>{
         this.toastr.show('تم تحديث البيانات بنجاح','success');  
+
         // this.PaymentReceiptVoucherForm.reset();
-        
+        // this.btnAddandUpdate='add'
+        // this.showBtnDelete=false
+        // 
       })
     }
     
@@ -587,6 +599,7 @@ deleteConfirmed(e:any){
     this.toastr.show('تم حذف السند بنجاح','success');
     // this.ge();
     this.resetForm();
+    this.showBtnDelete=false;
   })
 
 }
@@ -643,6 +656,35 @@ resetForm() {
 }
 
 
+
+sendDataSelectedSearch(e: any) {
+    const row=e
+  this.showPopupSearch=!this.showPopupSearch
+
+
+    this.PaymentReceiptVoucherForm.patchValue({
+        contractId:row.id,
+        creditAccountId:row.financialTenantId,
+        tenantId:row.tenantId
+      })
+
+      this.formSearchData.patchValue({
+        numbercontract:row.id,
+        nameTenant:row.tenantName,
+        unitName:row.unitName,
+        endDate:row.leaseEndDate,
+        propertyName:row.propertyName,
+        amountDue:row.totalAmount
+      })
+
+      console.log(this.PaymentReceiptVoucherForm.value);
+
+      this.ContractId=row.id
+      this.getAllMonthes();
+
+
+  
+}
 
 ngOnDestroy(): void {
   //Called once, before the instance is destroyed.
