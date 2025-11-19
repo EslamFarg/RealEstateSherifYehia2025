@@ -1,4 +1,14 @@
-import { Component, DestroyRef, ElementRef, inject, QueryList, TemplateRef, ViewChild, ViewChildren, ViewContainerRef } from '@angular/core';
+import {
+  Component,
+  DestroyRef,
+  ElementRef,
+  inject,
+  QueryList,
+  TemplateRef,
+  ViewChild,
+  ViewChildren,
+  ViewContainerRef,
+} from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
@@ -11,310 +21,236 @@ import { AuthLogin } from './models/auth';
 @Component({
   selector: 'app-auth',
   templateUrl: './auth.component.html',
-  styleUrls: ['./auth.component.scss']
+  styleUrls: ['./auth.component.scss'],
 })
 export class AuthComponent {
-
-
-
   //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1 Services!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!111
-  fb:FormBuilder=inject(FormBuilder);
-  router:Router=inject(Router)
-  scription!:Subscription;
-  toastr:ToastrService=inject(ToastrService)
-  _authServices:AuthService=inject(AuthService)
-  destroyRef=inject(DestroyRef);
+  fb: FormBuilder = inject(FormBuilder);
+  router: Router = inject(Router);
+  scription!: Subscription;
+  toastr: ToastrService = inject(ToastrService);
+  _authServices: AuthService = inject(AuthService);
+  destroyRef = inject(DestroyRef);
 
+  // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1 Property
+  otpCodeValue: any;
+  counter = 180;
+  remember: any = true;
+  @ViewChild('login', { read: TemplateRef }) login!: TemplateRef<any>;
+  @ViewChild('otpcodetem', { read: TemplateRef }) otpcodetem!: TemplateRef<any>;
+  @ViewChild('container', { read: ViewContainerRef }) vcr!: ViewContainerRef;
 
-
-// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1 Property
-  otpCodeValue:any
-  counter=180;
-  remember:any=true;
-  @ViewChild('login',{read:TemplateRef}) login!:TemplateRef<any>;
-  @ViewChild('otpcodetem',{read:TemplateRef}) otpcodetem!:TemplateRef<any>;
-  @ViewChild('container',{read:ViewContainerRef}) vcr!:ViewContainerRef
-
-  @ViewChild('resetpassword',{read:TemplateRef}) resetpass!:TemplateRef<any>;
-  @ViewChild('emailForgot',{read:TemplateRef}) emailForgot!:TemplateRef<any>;
+  @ViewChild('resetpassword', { read: TemplateRef })
+  resetpass!: TemplateRef<any>;
+  @ViewChild('emailForgot', { read: TemplateRef })
+  emailForgot!: TemplateRef<any>;
 
   passwordForm: any;
   showNewPassword = false;
   showConfirmPassword = false;
-  emailOtp:any
-  userId:any
+  emailOtp: any;
+  userId: any;
 
-
-    
-ngOnInit() {
-
-
+  ngOnInit() {
     // this.router.navigate(['/dashboard/home']);
-  
 
-  this.passwordForm = this.fb.group({
-    userId:[this.userId ?? ''],
-    newPassword: ['', Validators.required],
-    confirmPassword: ['', Validators.required],
-  });
-}
+    this.passwordForm = this.fb.group({
+      userId: [this.userId ?? ''],
+      newPassword: ['', Validators.required],
+      confirmPassword: ['', Validators.required],
+    });
+  }
 
-
-
-  otpArray = [0, 0, 0, 0,0,0]; // عدد خانات OTP
+  otpArray = [0, 0, 0, 0, 0, 0]; // عدد خانات OTP
 
   @ViewChildren('otpInput') otpInputs!: QueryList<ElementRef>;
 
   // auth:AuthService=inject(AuthService)
-  authForm=this.fb.group({
-    email:[JSON.parse(localStorage.getItem('rememberData')!)?.email ||'',[Validators.required,Validators.minLength(3),Validators.email]],
-    password:[JSON.parse(localStorage.getItem('rememberData')!)?.password || '',Validators.required]
-  })
+  authForm = this.fb.group({
+    email: [
+      JSON.parse(localStorage.getItem('rememberData')!)?.email || '',
+      [Validators.required, Validators.minLength(3), Validators.email],
+    ],
+    password: [
+      JSON.parse(localStorage.getItem('rememberData')!)?.password || '',
+      Validators.required,
+    ],
+  });
 
+  otpForm = this.fb.group({
+    email: ['', Validators.required],
+    otp: ['', Validators.required],
+  });
 
-  otpForm=this.fb.group({
-   
-  email:[''  , Validators.required] ,
-  otp: ['',Validators.required]
+  emailForm = this.fb.group({
+    email: ['', [Validators.required, Validators.email]],
+  });
 
-  })
+  ngAfterViewInit(): void {
+    this.vcr.clear();
 
-  emailForm=this.fb.group({
-    email:['',[Validators.required,Validators.email]]
-  })
+    this.vcr.createEmbeddedView(this.login);
+  }
 
+  goBack() {
+    this.vcr.clear();
+    this.vcr.createEmbeddedView(this.login);
+  }
+  onSubmit() {
+    if (this.authForm.valid) {
+      const data = {
+        email: this.authForm.value.email,
+        password: this.authForm.value.password,
+      };
 
-ngAfterViewInit(): void {
+      this._authServices
+        .authLogin(data)
+        .pipe(takeUntilDestroyed(this.destroyRef))
+        .subscribe((res: any) => {
+          this.router.navigate(['/dashboard']);
 
-this.vcr.clear();
+          localStorage.setItem('payloadUser', JSON.stringify(res));
 
-this.vcr.createEmbeddedView(this.login);
+          if (this.remember) {
+            localStorage.setItem(
+              'rememberData',
+              JSON.stringify({
+                email: data.email,
+                password: data.password,
+              })
+            );
+          } else {
+            localStorage.removeItem('rememberData');
+          }
 
-
-}
-
-
-goBack(){
-
-this.vcr.clear();
-this.vcr.createEmbeddedView(this.login);
-}
-  onSubmit(){
-
-  
-
-    
- if(this.authForm.valid){
-      const data={
-        email:this.authForm.value.email,
-        password:this.authForm.value.password
-      }
-
-      this._authServices.authLogin(data).pipe(takeUntilDestroyed(this.destroyRef)).subscribe((res:any)=>{
-
-        let payloadUser={
-          userId:res.userId,
-          fullName:res.fullName,
-          email:res.email,
-          imgUrl:res.imgUrl,
-          phoneNumber:res.phoneNumber,
-          token:res.token
-        }
-
-        this.router.navigate(['/dashboard'])
-
-        localStorage.setItem('payloadUser',JSON.stringify(payloadUser));  
-        console.log(payloadUser);
-
-        if(this.remember) {
-          localStorage.setItem('rememberData',JSON.stringify({
-            email:data.email,
-            password:data.password
-          }));
-        }else{
-          localStorage.removeItem('rememberData');
-        }
-
-        this.toastr.show('تم تسجيل الدخول بنجاح','success')
-        this.authForm.reset();
-
-
-
-      })
-
-
-
-
-
-    
-    }else{
+          this.toastr.show('تم تسجيل الدخول بنجاح', 'success');
+          this.authForm.reset();
+        });
+    } else {
       this.authForm.markAllAsTouched();
     }
-    
-   
-
   }
 
+  showreset: any = false;
+  showemail: any;
 
-  showreset:any=false;
-  showemail:any
+  sendOtpCode() {
+    if (this.emailForm.valid) {
+      let data = {
+        email: this.emailForm.value.email,
+      };
 
-  sendOtpCode(){
-
-    
-    if(this.emailForm.valid){
-      let data={
-        email:this.emailForm.value.email
-      }
-      
-
-      this._authServices.sendEmailInotp(data).pipe(takeUntilDestroyed(this.destroyRef)).subscribe((res:any)=>{
-        this.vcr.clear();
-       this.vcr.createEmbeddedView(this.otpcodetem);
-        this.toastr.show('تم ارسال رمز التحقق','success');  
-        this.emailOtp=data.email  
-        this.emailForm.reset();
-
-       
-      })
- 
-    }else{
+      this._authServices
+        .sendEmailInotp(data)
+        .pipe(takeUntilDestroyed(this.destroyRef))
+        .subscribe((res: any) => {
+          this.vcr.clear();
+          this.vcr.createEmbeddedView(this.otpcodetem);
+          this.toastr.show('تم ارسال رمز التحقق', 'success');
+          this.emailOtp = data.email;
+          this.emailForm.reset();
+        });
+    } else {
       this.emailForm.markAllAsTouched();
-      
     }
- 
   }
- 
 
-  replaySend(){
-      this.showreset = false;
-      
-  const email = {
-    email: this.emailForm.value.email
-  };
+  replaySend() {
+    this.showreset = false;
 
+    const email = {
+      email: this.emailForm.value.email,
+    };
   }
-submitNewPassword() {
-  if (this.passwordForm.valid) {
-    const { newPassword, confirmPassword } = this.passwordForm.value;
+  submitNewPassword() {
+    if (this.passwordForm.valid) {
+      const { newPassword, confirmPassword } = this.passwordForm.value;
 
-    if (newPassword !== confirmPassword) {
-      this.toastr.show('كلمتا المرور غير متطابقتين', 'error');
-      return;
+      if (newPassword !== confirmPassword) {
+        this.toastr.show('كلمتا المرور غير متطابقتين', 'error');
+        return;
+      }
+
+      const data = {
+        userId: this.userId,
+        newPassword: this.passwordForm.value.newPassword,
+        confirmPassword: this.passwordForm.value.confirmPassword,
+      };
+
+      this._authServices
+        .changePassword(data)
+        .pipe(takeUntilDestroyed(this.destroyRef))
+        .subscribe((res: any) => {
+          this.vcr.clear();
+          this.vcr.createEmbeddedView(this.login);
+          this.toastr.show('تم تغيير كلمة المرور بنجاح', 'success');
+          this.passwordForm.reset();
+        });
+    } else {
+      this.passwordForm.markAllAsTouched();
+      this.toastr.show('يرجى تعبئة الحقول بشكل صحيح', 'error');
     }
-
-    const data={
-      userId:this.userId,
-      newPassword:this.passwordForm.value.newPassword,
-      confirmPassword:this.passwordForm.value.confirmPassword
-    }
-
-
-    this._authServices.changePassword(data).pipe(takeUntilDestroyed(this.destroyRef)).subscribe((res:any)=>{
-      this.vcr.clear();
-      this.vcr.createEmbeddedView(this.login);
-      this.toastr.show('تم تغيير كلمة المرور بنجاح','success')
-      this.passwordForm.reset();
-    })
-
-   
-
-  } else {
-    this.passwordForm.markAllAsTouched();
-    this.toastr.show('يرجى تعبئة الحقول بشكل صحيح', 'error');
   }
-}
 
-
-
-
-  otpcode(){
-    this.vcr.clear()
+  otpcode() {
+    this.vcr.clear();
     this.vcr.createEmbeddedView(this.emailForgot);
   }
 
-
-onSubmitOTP() {
-
-  
-
-  if (!this.otpCodeValue || this.otpCodeValue.length < this.otpArray.length) {
-    this.toastr.show('رجاء إدخال رمز التحقق بالكامل', 'error');
-    return;
-  }
-
-    let data ={
-  email: this.emailOtp,
-  otp: this.otpForm.value.otp
-}  
-
-console.log(data)
-
-
-  // if(this.otpForm.valid){
-
-this._authServices.sendOtp(data)
-  .pipe(takeUntilDestroyed(this.destroyRef))
-  .subscribe({
-    next: (res:any) => {
-      console.log('OTP Response:', res);
-      this.vcr.clear();
-      this.vcr.createEmbeddedView(this.resetpass);
-      this.toastr.show('تم التحقق بنجاح','success');
-      // console.log(res);
-       this.userId=res.userId
-
-
-        console.log(this.userId)
-    },
-    error: (err:any) => {
-      console.error('OTP Error:', err);
-      this.toastr.show('حدث خطأ أثناء التحقق','error');
+  onSubmitOTP() {
+    if (!this.otpCodeValue || this.otpCodeValue.length < this.otpArray.length) {
+      this.toastr.show('رجاء إدخال رمز التحقق بالكامل', 'error');
+      return;
     }
-  });
 
+    let data = {
+      email: this.emailOtp,
+      otp: this.otpForm.value.otp,
+    };
 
-  // }else{
-    
-  // }
- 
+    console.log(data);
 
+    // if(this.otpForm.valid){
 
+    this._authServices
+      .sendOtp(data)
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe({
+        next: (res: any) => {
+          console.log('OTP Response:', res);
+          this.vcr.clear();
+          this.vcr.createEmbeddedView(this.resetpass);
+          this.toastr.show('تم التحقق بنجاح', 'success');
+          // console.log(res);
+          this.userId = res.userId;
 
- 
-}
+          console.log(this.userId);
+        },
+        error: (err: any) => {
+          console.error('OTP Error:', err);
+          this.toastr.show('حدث خطأ أثناء التحقق', 'error');
+        },
+      });
 
+    // }else{
 
-
-
-  onOtpInput(value:any){
-    
-
-      this.otpCodeValue=value;
-        this.otpForm.get('otp')?.setValue(value);
-
-   
-      console.log(this.otpCodeValue);
-
-
+    // }
   }
 
+  onOtpInput(value: any) {
+    this.otpCodeValue = value;
+    this.otpForm.get('otp')?.setValue(value);
 
-
-
-
-  
-
-  rememberme(){
-    this.remember=!this.remember;
-
-    console.log(this.remember)
+    console.log(this.otpCodeValue);
   }
 
+  rememberme() {
+    this.remember = !this.remember;
 
-
-  logs(){
-    console.log('clicked')
+    console.log(this.remember);
   }
 
+  logs() {
+    console.log('clicked');
+  }
 }
