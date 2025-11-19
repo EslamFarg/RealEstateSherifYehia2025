@@ -1,4 +1,4 @@
-import { NgClass, NgFor, NgIf } from '@angular/common';
+import { CommonModule, NgClass, NgFor, NgIf } from '@angular/common';
 import { Component, DestroyRef, ElementRef, EventEmitter, HostListener, inject, Input, Output, ViewChild } from '@angular/core';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ToastrService } from '../toastr/services/toastr.service';
@@ -11,7 +11,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
   templateUrl: './searchinforms.component.html',
   styleUrl: './searchinforms.component.scss',
   standalone:true,
-  imports:[NgClass,FormsModule,ReactiveFormsModule,NgFor,NgIf]
+  imports:[NgClass,FormsModule,ReactiveFormsModule,CommonModule]
 })
 export class SearchinformsComponent {
   searchInFormsServices=inject(SearchinformsService)
@@ -22,6 +22,10 @@ selectIndex:any=0
 @Input() typeDataFilter:any
  @Input() fc!:FormControl;
 @Input() dataFilter:any
+
+@Input() showAutocompleteSearch:any=false;
+
+
 @Output() selectedDataFilter=new EventEmitter()
 DataValue:any
 toastr:ToastrService=inject(ToastrService)

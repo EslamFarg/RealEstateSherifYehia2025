@@ -26,6 +26,8 @@ export class AddrealtorpaymentvoucherComponent {
 cdr: ChangeDetectorRef = inject(ChangeDetectorRef);
 EditBehaviorServices:EditBehaviorServiceService=inject(EditBehaviorServiceService);
 
+showPopupSearch=false
+dataArraySearch:any=[]
   // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! Properties
 
 
@@ -35,7 +37,7 @@ EditBehaviorServices:EditBehaviorServiceService=inject(EditBehaviorServiceServic
   toastr:ToastrService=inject(ToastrService);
   realtorPaymentVoucherForm=this.fb.group({
   voucherNo: ['',[Validators.required,Validators.minLength(3)]],
-  voucherDate: ['',Validators.required],
+  voucherDate: [new Date().toISOString().split('T')[0],Validators.required],
   paymentMethod: ['cash',Validators.required],
   amount: [0,Validators.required],
   notes: [''],
@@ -308,92 +310,6 @@ this._accountsService.getAllData({}).pipe(takeUntilDestroyed(this.destroyRef)).s
 })
 }
 
-
-// loadVoucherData(){
-
-//   // this._realtorPaymentVoucherServices.post().pipe(takeUntilDestroyed(this.destroyRef)).subscribe((res: any) => {
-//   //   this.getAllDataSearch = res.rows;
-//   // })
-// }
-
-
-// searchGetById(val:any){
-//   const id=val.value
-
-//     this.itemsChecked = [];
-//   this.getAllDataSearch = { rows: [] };
-
-//     setTimeout(() => {
-//     if (this.checkAll) this.checkAll.nativeElement.checked = false;
-//   });
-//      this._realtorPaymentVoucherServices.getByIdBrokerPaymentVoucher(id).pipe(takeUntilDestroyed(this.destroyRef)).subscribe((res: any) => {
-//     //  this.getAllDataSearch = res.rows;
-
-//     this.btnAddandUpdate='update'
-//     this.realtorPaymentVoucherForm.patchValue({
-//       voucherNo: res.voucherNo,
-//       voucherDate: res.voucherDate.split('T')[0],
-//       paymentMethod: res.paymentMethod,
-//       amount: res.net,
-//       notes: res.notes,
-//       brokerId: res.brokerId,
-//       debitAccountId: res.debitAccountId,
-//       creditAccountId: res.creditAccountId,
-//       // brokerId: res.brokerId
-//     })
-
-//     this.formDataSearch.patchValue({
-//       // financiallyAccountId: res.debitAccountId
-//       name: res.debitAccountName,
-//       email: res.email,
-//       mobile: res.phoneNumber,
-//       nationalID: res.nationalID
-//     })
-
-
-//     res.brokerPaymentVoucherDetails.forEach((res: any) => {
-//       this.itemsChecked.push({
-//         contractId: res.contractId,
-//         paidAmount: res.paidAmmount || 0,
-//       });
-//     })
-      
-
-//       this.getAllDataSearch={
-//         rows:res.brokerPaymentVoucherDetails.map((item:any)=>({
-//          contractId: item.contractId,
-//     propertyName: item.propertyName,
-//     unitName: item.unitName,
-//     month: item.month,
-//     brokerCommission: item.totalAmount,          // عمولة السمسار الأصلية
-//     brokerPaidAmount: item.paidAmmount,          // المبلغ المدفوع سابقاً ✅
-//     remainingAmount: item.totalAmount - item.paidAmmount // المتبقي ✅
-
-//         })),
-
-       
-//       }
-
-//      this.cdr.detectChanges();
-        
-//       setTimeout(() => {
-//         this.checkAll.nativeElement.checked = true;
-//   this.checkboxes.forEach(checkbox => {
-//     checkbox.nativeElement.checked = true;
-//   });
-// },1000);
-      
-
-
-
- 
-
- 
-//    })
-  
-
-// }
-
 searchGetById(val: any) {
   const id = val.value.trim();
 
@@ -482,6 +398,8 @@ searchGetById(val: any) {
 
 SearchFilter(e:any){
 
+  if(!e || !e.value){return;}
+
 
   let ShapeDataFilter={
   "criteriaDto": {
@@ -511,30 +429,17 @@ SearchFilter(e:any){
 
   this._realtorPaymentVoucherServices.searchBroker(ShapeDataFilter).pipe(takeUntilDestroyed(this.destroyRef)).subscribe((res:any)=>{
     // this.getAllDataSearch=res.rows;
-    const row=res.rows[0];
-
-    if(res.rows && res.rows.length > 0){
-      this.formDataSearch.patchValue(row);
-      this.idSearchRealtor=row.id;
-      this.realtorPaymentVoucherForm.get('brokerId')?.setValue(row.id);
-      // console.log(this.idSearchRealtor)
-      let pagination={
-  paginationInfo: {
-    pageIndex: 0,
-    pageSize: 0
-  }
-}
-
-      this._realtorPaymentVoucherServices.searchBrokerCommissions(this.idSearchRealtor,pagination).pipe(takeUntilDestroyed(this.destroyRef)).subscribe((res:any)=>{
-        this.getAllDataSearch=res
-        // console.log(res)
-        // console.log(this.getAllDataSearch)
-      })
 
 
-    }
+    this.showPopupSearch=true;
+    this.dataArraySearch=res.rows
 
-    console.log(this.getAllDataSearch);
+    // console.log("Search Broker : " ,this.dataArraySearch);
+
+    // console.log(this.dataArraySearch);
+
+
+    // console.log(this.getAllDataSearch);
     
   })
 
@@ -716,6 +621,42 @@ onClose(){
   this.showDelete=false
 }
 
+
+sendDataSelectedSearch(e: any) {
+
+  
+    const row=e
+    this.showPopupSearch=!this.showPopupSearch
+    console.log('rowBroker', row);
+
+    if(row && row.id){
+      this.formDataSearch.patchValue(row);
+      this.idSearchRealtor=row.id;
+      this.realtorPaymentVoucherForm.get('brokerId')?.setValue(row.id);
+      // console.log(this.idSearchRealtor)
+      let pagination={
+  paginationInfo: {
+    pageIndex: 0,
+    pageSize: 0
+  }
+
+  
+}
+
+
+
+// console.log(this.realtorPaymentVoucherForm);
+      this._realtorPaymentVoucherServices.searchBrokerCommissions(this.idSearchRealtor,pagination).pipe(takeUntilDestroyed(this.destroyRef)).subscribe((res:any)=>{
+        this.getAllDataSearch=res
+        // console.log(res)
+        console.log(this.getAllDataSearch)
+      })
+
+
+    }
+
+  
+}
 
 ngOnDestroy(): void {
   //Called once, before the instance is destroyed.

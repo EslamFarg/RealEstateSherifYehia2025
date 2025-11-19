@@ -91,7 +91,7 @@ getAllAccounts() {
 getAllFinancialAccounts() {
   this._ReceiptVoucherService.getAllFinancialAccount().pipe(takeUntilDestroyed(this.destroyRef)).subscribe((res: any) => {
     console.log("RRRRRRRRRRRRRRRRRRRRRRRRRRRr",res)
-    this.getAllDataFinancialAccount = res
+    this.getAllDataFinancialAccount = res.rows
     // console.log("No",this.getAllDataFinancialAccount)
 
   })

@@ -99,7 +99,7 @@
   <tbody>
     @for (item of receiptVouchersData.rows; track $index) {
 <tr>
-      <td scope="row">{{$index + 1}}</td>
+      <td scope="row">{{((pageIndex - 1) * pageSize) + ($index + 1) }}</td>
       <td>{{item.id}}</td>
       <td>{{item.voucherDate.split('T')[0]}}</td>
       <td>{{item.debitAccountName}} </td>

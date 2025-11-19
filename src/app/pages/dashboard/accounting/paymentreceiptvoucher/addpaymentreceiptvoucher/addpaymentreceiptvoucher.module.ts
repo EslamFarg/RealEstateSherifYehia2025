@@ -9,6 +9,8 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FormerrorMsgComponent } from '../../../../../shared/ui/formerror-msg/formerror-msg.component';
 import { ConfirmDeleteComponent } from '../../../../../shared/components/confirm-delete/confirm-delete.component';
+import { PopupSearchComponent } from '../../../../../shared/ui/popup-search/popup-search.component';
+import { PopupSearchTenantComponent } from '../../../../../shared/ui/popup-search-tenant/popup-search.component';
 
 
 @NgModule({
@@ -24,7 +26,9 @@ import { ConfirmDeleteComponent } from '../../../../../shared/components/confirm
     FormsModule,
     ReactiveFormsModule,
     FormerrorMsgComponent,
-    ConfirmDeleteComponent
+    ConfirmDeleteComponent,
+    // PopupSearchTenaComponent
+    PopupSearchTenantComponent
 ]
 })
 export class AddpaymentreceiptvoucherModule { }

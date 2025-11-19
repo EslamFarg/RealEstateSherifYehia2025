@@ -184,8 +184,8 @@
   <div class="btn_add_reset">
  <button data-type="save" data-button="send" type="submit" [ngClass]="{'btnEdit':this.btnAddandUpdate=='update','btnAdd':this.btnAddandUpdate=='add'}" >{{this.btnAddandUpdate == 'add' ? 'اضافه':"تعديل"}}</button>
  <button data-button="reset" type="button" (click)="resetForm()">جديد</button>
- <button data-button="reset" type="button" (click)="showDeletePopup()">حذف</button>
- <button data-button="reset">طباعه </button>
+ <button data-button="reset" type="button" (click)="showDeletePopup()" *ngIf="showBtnDelete">حذف</button>
+ <button data-button="reset" *ngIf="showBtnDelete">طباعه </button>
   </div>
 
 
@@ -197,3 +197,4 @@
 
 
 <app-confirm-delete [isVisible]="showDelete" (onDelete)="deleteConfirmed($event)" [itemId]="this.deleteId" (toggleModal)="onClose()"></app-confirm-delete>
+<app-popup-search-tenant [isVisible]="showPopupSearch" [dataArraySearch]="dataArraySearch" (closePopup)="showPopupSearch = false" (sendDataSelectedSearch)="sendDataSelectedSearch($event)"></app-popup-search-tenant>

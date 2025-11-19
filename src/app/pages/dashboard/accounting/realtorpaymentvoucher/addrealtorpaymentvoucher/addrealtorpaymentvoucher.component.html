@@ -203,3 +203,5 @@
   </div>
 
 <app-confirm-delete [isVisible]="showDelete" (onDelete)="deleteConfirmed($event)" [itemId]="this.deleteId" (toggleModal)="onClose()"></app-confirm-delete>
+
+<app-popup-search-Broker [isVisible]="showPopupSearch" [dataArraySearch]="dataArraySearch" (closePopup)="showPopupSearch = false" (sendDataSelectedSearch)="sendDataSelectedSearch($event)"></app-popup-search-Broker>

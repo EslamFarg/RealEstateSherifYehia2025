@@ -46,6 +46,7 @@ onPageChanged(page: number) {
   this.pageIndex = page;
   // this.fetchEmployees(); // أعد جلب البيانات
   // this.getData()
+  this.getAllData();
 }
 
 
