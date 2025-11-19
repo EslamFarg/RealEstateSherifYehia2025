@@ -33,7 +33,7 @@ export class NewuserComponent {
   showDelete: any = false;
   deleteId: any;
   selectedCountry = CountryISO.Egypt;
-    // pagination
+  // pagination
 
   pageIndex = 1;
   pageSize = 10;
@@ -47,12 +47,10 @@ export class NewuserComponent {
         checkUsername.ValidationUsername(),
       ],
     ],
-    fullName: [
-      JSON.parse(localStorage.getItem('payloadUser')!)?.fullName || 'sherif',
-    ],
+    fullName: [''],
     email: ['', [Validators.required, Validators.email]],
     phoneNumber: [null as any, Validators.required],
-    password: ['Sh12345678Sh'],
+    // password: ['Sh12345678Sh'],
     // groupIds:[[],Validators.required],
     groupIds: this.fb.control<number[]>([]),
     isActive: [true, Validators.required],
@@ -93,10 +91,10 @@ export class NewuserComponent {
 
         let data = {
           userName: this.formData.value.userName,
-          fullName: this.formData.value.fullName,
+          fullName: this.formData.value.userName,
           email: this.formData.value.email,
           phoneNumber: mobile,
-          password: this.formData.value.password,
+          // password: this.formData.value.password,
           isActive: this.formData.value.isActive,
           groupIds: groupIds,
         };
@@ -120,7 +118,7 @@ export class NewuserComponent {
         let data = {
           userId: this.idUpdate,
           userName: this.formData.value.userName,
-          fullName: this.formData.value.fullName,
+          fullName: this.formData.value.userName,
           email: this.formData.value.email,
           phoneNumber: mobile,
           isActive: this.formData.value.isActive,
@@ -144,7 +142,7 @@ export class NewuserComponent {
 
   getAllDataUser() {
     this._newUserServices
-      .getAllDataUser(this.pageIndex , this.pageSize)
+      .getAllDataUser(this.pageIndex, this.pageSize)
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((res: any) => {
         this.getAllData = res.items;
@@ -194,10 +192,8 @@ export class NewuserComponent {
         this.btnAddAndUpdate = 'add';
         this.idUpdate = null;
         this.formData.reset();
-        
       });
   }
-
 
   onPageChanged(page: number) {
     this.pageIndex = page;
@@ -210,7 +206,6 @@ export class NewuserComponent {
       .getAllDataGroup({})
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((res: any) => {
-        console.log(res);
         this.getAllDataGroupName = res.rows;
       });
   }

@@ -5,13 +5,14 @@ import { SidebarComponent } from './sidebar/sidebar.component';
 import { NgbAccordionModule } from '@ng-bootstrap/ng-bootstrap';
 import { RouterModule, RouterOutlet } from '@angular/router';
 import { DirectivesModule } from '../directives/directives.module';
+import { UnauthorizedComponent } from './unauthorized/unauthorized.component';
 
 
 
 
 
 @NgModule({
-  declarations: [HeaderComponent, SidebarComponent ],
+  declarations: [HeaderComponent, SidebarComponent, UnauthorizedComponent ],
   imports: [
     CommonModule,
     NgbAccordionModule,
