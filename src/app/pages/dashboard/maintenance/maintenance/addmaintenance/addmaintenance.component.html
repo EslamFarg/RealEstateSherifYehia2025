@@ -188,4 +188,5 @@
 
     <app-printpage-maintenance [isVisible]="isVisiablePrint" [getDataPopup]="getDataPrint" (closePopup)="isVisiablePrint = false"></app-printpage-maintenance>
 
-    
+    <app-popup-search-maintenance [isVisible]="showPopupSearch" [dataArraySearch]="dataArraySearch"
+  (closePopup)="showPopupSearch = false" (sendDataSelectedSearch)="sendDataSelectedSearch($event)"></app-popup-search-maintenance>
