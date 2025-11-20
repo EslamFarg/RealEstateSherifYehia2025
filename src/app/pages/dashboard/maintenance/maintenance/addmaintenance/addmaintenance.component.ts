@@ -40,6 +40,10 @@ export class AddmaintenanceComponent {
 
   isVisiablePrint=false;
 
+  showPopupSearch=false
+
+  dataArraySearch:any=[];
+
   // !!!!!!!!!!!!!!!!!!!!!!! Property
 
   mainTenanceData = this.fb.group({
@@ -264,6 +268,8 @@ export class AddmaintenanceComponent {
           this.attachmentsComp.imgsArr = this.dataFiles;
 
           console.log('dataFiles', this.dataFiles);
+           this.getDataPrint=res.rows[0];
+
         });
     } else {
       // Update
@@ -399,6 +405,11 @@ export class AddmaintenanceComponent {
   searchControl = new FormControl('');
 
   SelectDataFilterSearch(e: any) {
+
+    if(e.value == '' || e.value == null || e.value==undefined){
+      this.dataArraySearch=[];
+      return;
+    };
     let ShapeSearch = {
       criteriaDto: {
         paginationInfo: {
@@ -419,22 +430,9 @@ export class AddmaintenanceComponent {
         .pipe(takeUntilDestroyed(this.destroyRef))
         .subscribe((res: any) => {
           const row = res.rows[0];
-          console.log(row);
-          this.FormSearch.patchValue({
-            id: row?.id,
-            name: row?.name,
-            propertyName: row?.propertyName,
-            propertyID: row?.propertyID,
-            city: row?.city,
-            district: row?.district,
-            street: row?.street,
-          });
-
-          this.dataItemsSearch = row;
-          this.mainTenanceData.patchValue({
-            TargetId: row?.id,
-            TargetType: '0',
-          });
+          this.showPopupSearch=true;
+          this.dataArraySearch=res
+          console.log(this.dataArraySearch);
         });
     } else if (e.index == 1) {
       ShapeSearch.searchFilter.column = 0;
@@ -442,22 +440,25 @@ export class AddmaintenanceComponent {
         .searchByUnit(ShapeSearch)
         .pipe(takeUntilDestroyed(this.destroyRef))
         .subscribe((res: any) => {
-          const row = res.rows[0]; // لو النتيجة Array (غالبًا كده)
-          this.FormSearch.patchValue({
-            id: row?.id,
-            name: row?.name,
-            propertyName: row?.propertyName,
-            propertyID: row?.propertyID,
-            city: row?.city,
-            district: row?.district,
-            street: row?.street,
-          });
+          // const row = res.rows[0]; // لو النتيجة Array (غالبًا كده)
+          // this.FormSearch.patchValue({
+          //   id: row?.id,
+          //   name: row?.name,
+          //   propertyName: row?.propertyName,
+          //   propertyID: row?.propertyID,
+          //   city: row?.city,
+          //   district: row?.district,
+          //   street: row?.street,
+          // });
 
-          this.dataItemsSearch = row;
-          this.mainTenanceData.patchValue({
-            TargetId: row?.id,
-            TargetType: '0',
-          });
+          // this.dataItemsSearch = row;
+          // this.mainTenanceData.patchValue({
+          //   TargetId: row?.id,
+          //   TargetType: '0',
+          // });
+
+          this.showPopupSearch=true;
+          this.dataArraySearch=res
         });
     } else if (e.index == 2) {
       ShapeSearch.searchFilter.column = 1;
@@ -465,23 +466,26 @@ export class AddmaintenanceComponent {
         .searchByProperty(ShapeSearch)
         .pipe(takeUntilDestroyed(this.destroyRef))
         .subscribe((res: any) => {
-          const row = res.rows[0]; // لو النتيجة Array (غالبًا كده)
-          console.log(res);
-          this.FormSearch.patchValue({
-            id: row?.id,
-            name: row?.name,
-            propertyName: row?.propertyName,
-            propertyID: row?.buildingNumber,
-            city: row?.city,
-            district: row?.district,
-            street: row?.street,
-          });
+          // const row = res.rows[0]; // لو النتيجة Array (غالبًا كده)
+          // console.log(res);
+          // this.FormSearch.patchValue({
+          //   id: row?.id,
+          //   name: row?.name,
+          //   propertyName: row?.propertyName,
+          //   propertyID: row?.buildingNumber,
+          //   city: row?.city,
+          //   district: row?.district,
+          //   street: row?.street,
+          // });
 
-          this.dataItemsSearch = row;
-          this.mainTenanceData.patchValue({
-            TargetId: row?.id,
-            TargetType: '1',
-          });
+          // this.dataItemsSearch = row;
+          // this.mainTenanceData.patchValue({
+          //   TargetId: row?.id,
+          //   TargetType: '1',
+          // });
+
+          this.showPopupSearch=true;
+          this.dataArraySearch=res;
         });
     } else if (e.index == 3) {
       ShapeSearch.searchFilter.column = 0;
@@ -489,23 +493,26 @@ export class AddmaintenanceComponent {
         .searchByProperty(ShapeSearch)
         .pipe(takeUntilDestroyed(this.destroyRef))
         .subscribe((res: any) => {
-          const row = res.rows[0]; // لو النتيجة Array (غالبًا كده)
-          console.log(res);
-          this.FormSearch.patchValue({
-            id: row?.id,
-            name: '-',
-            propertyName: row?.name,
-            propertyID: row?.buildingNumber,
-            city: row?.city,
-            district: row?.district,
-            street: row?.street,
-          });
+          // const row = res.rows[0]; // لو النتيجة Array (غالبًا كده)
+          // console.log(res);
+          // this.FormSearch.patchValue({
+          //   id: row?.id,
+          //   name: '-',
+          //   propertyName: row?.name,
+          //   propertyID: row?.buildingNumber,
+          //   city: row?.city,
+          //   district: row?.district,
+          //   street: row?.street,
+          // });
 
-          this.dataItemsSearch = row;
-          this.mainTenanceData.patchValue({
-            TargetId: row?.id,
-            TargetType: '1',
-          });
+          // this.dataItemsSearch = row;
+          // this.mainTenanceData.patchValue({
+          //   TargetId: row?.id,
+          //   TargetType: '1',
+          // });
+
+          this.showPopupSearch=true;
+          this.dataArraySearch=res;
         });
     }
   }
@@ -609,5 +616,26 @@ export class AddmaintenanceComponent {
     if (this._behaviorServices.clearId) {
       this._behaviorServices.clearId();
     }
+  }
+
+
+  sendDataSelectedSearch(e:any){
+    //  console.log(row);
+    this.showPopupSearch=false;
+          this.FormSearch.patchValue({
+            id: e.id,
+            name: e.name,
+            propertyName: e.propertyName,
+            propertyID: e.propertyID,
+            city: e.city,
+            district: e.district,
+            street: e.street,
+          });
+
+          this.dataItemsSearch = e;
+          this.mainTenanceData.patchValue({
+            TargetId: e.id,
+            TargetType: '0',
+          });
   }
 }

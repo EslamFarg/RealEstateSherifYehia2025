@@ -12,6 +12,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { DirectivesModule } from "../../../../../shared/directives/directives.module";
 import { ConfirmDeleteComponent } from '../../../../../shared/components/confirm-delete/confirm-delete.component';
 import { PrintpageMaintenanceComponent } from '../../../../../shared/components/printpage-maintenance/printpage.component';
+import { PopupSearchMaintenanceComponent } from '../../../../../shared/ui/popup-search-maintenance/popup-search.component';
 
 
 @NgModule({
@@ -28,7 +29,8 @@ import { PrintpageMaintenanceComponent } from '../../../../../shared/components/
     ReactiveFormsModule,
     DirectivesModule,
     ConfirmDeleteComponent,
-    PrintpageMaintenanceComponent
+    PrintpageMaintenanceComponent,
+    PopupSearchMaintenanceComponent
 ]
 })
 export class AddmaintenanceModule { }
