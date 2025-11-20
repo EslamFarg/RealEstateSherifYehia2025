@@ -25,7 +25,8 @@ _salifsService:SalifsService=inject(SalifsService);
 destroyRef:DestroyRef=inject(DestroyRef);
 toastr:ToastrService=inject(ToastrService);
 _behaviorServices:EditBehaviorServiceService=inject(EditBehaviorServiceService);
-
+isVisiablePrint=false
+getDataPrint:any
 
 // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!11 Property
 showPopup=false;
@@ -85,6 +86,8 @@ ngAfterViewInit(): void {
 
         this.btnAddandUpdate='update';
         this.showBtns=true
+
+        this.getDataPrint=res;
       })
     }
   })
@@ -272,8 +275,9 @@ onSearch(searchVal:any){
   })
 
 
-
-
 }
+
+
+
 
 }

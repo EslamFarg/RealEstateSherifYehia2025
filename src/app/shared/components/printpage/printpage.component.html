@@ -1,69 +1,0 @@
-
-<div class="overlay_container">
-<div class="invoice-container" id="printSection">
-
-    <div class="close">
-        <!-- (click)="closeModal()" -->
-        <button class="close_btn" >🗙</button>
-    </div>
-  <header class="invoice-header">
-    <h1>سند دفع</h1>
-    <div class="invoice-info">
-      <div><strong>رقم السند:</strong> 00123</div>
-      <div><strong>التاريخ:</strong> 19-11-2025</div>
-      <div><strong>المالك:</strong> محمد أحمد</div>
-    </div>
-  </header>
-
-  <table class="invoice-table">
-    <thead>
-      <tr>
-        <th>#</th>
-        <th>العقار</th>
-        <th>الشهر</th>
-        <th>المستحق</th>
-        <th>المدفوع</th>
-        <th>المتبقي</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>1</td>
-        <td>عمارة النيل</td>
-        <td>يناير</td>
-        <td>5000</td>
-        <td>3000</td>
-        <td>2000</td>
-      </tr>
-      <tr>
-        <td>2</td>
-        <td>عمارة النيل</td>
-        <td>فبراير</td>
-        <td>5000</td>
-        <td>5000</td>
-        <td>0</td>
-      </tr>
-      <tr>
-        <td>3</td>
-        <td>عمارة القاهرة</td>
-        <td>يناير</td>
-        <td>7000</td>
-        <td>4000</td>
-        <td>3000</td>
-      </tr>
-    </tbody>
-  </table>
-
-  <div class="invoice-totals">
-    <div><strong>إجمالي المستحق:</strong> 17000</div>
-    <div><strong>إجمالي المدفوع:</strong> 12000</div>
-    <div><strong>إجمالي المتبقي:</strong> 5000</div>
-  </div>
-
-  <footer class="invoice-footer">
-    تم إنشاء السند بواسطة نظام الإدارة العقارية
-  </footer>
-
-  <button class="print-btn" onclick="printInvoice()">طباعة السند</button>
-</div>
-</div>

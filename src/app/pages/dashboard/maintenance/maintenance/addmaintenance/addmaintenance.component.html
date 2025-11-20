@@ -181,7 +181,11 @@
               <button type="submit" data-button="send" (click)="onSubmit()" [ngClass]="{'btnEdit':this.btnAddandUpdate=='update','btnAdd':this.btnAddandUpdate=='add'}">{{this.btnAddandUpdate == 'add' ? 'اضافه':"تعديل"}}</button>
         <button type="reset" data-button="reset" (click)="resetForm()">جديد</button>
         <button type="button" *ngIf="canShowBtns" data-button="reset" (click)="ShowDeletePopup()">حذف</button>
-        <button type="button" data-button="reset" *ngIf="canShowBtns">طباعه</button>
+        <button type="button" data-button="reset" *ngIf="canShowBtns" (click)="showPopupPrint()">طباعه</button>
     </div>
 
     <app-confirm-delete [isVisible]="showDelete" (onDelete)="deleteConfirmed($event)" [itemId]="this.deleteId" (toggleModal)="onClose()"></app-confirm-delete>
+
+    <app-printpage-maintenance [isVisible]="isVisiablePrint" [getDataPopup]="getDataPrint" (closePopup)="isVisiablePrint = false"></app-printpage-maintenance>
+
+    

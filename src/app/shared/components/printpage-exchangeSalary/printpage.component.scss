@@ -1,3 +1,6 @@
+@use '../../../../../public/styles/abstracts/vars' as *;
+@use '../../../../../public/styles/abstracts/mixins' as *;
+
 
 .overlay_container{
 position: fixed;
@@ -9,7 +12,16 @@ position: fixed;
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: rgba(0,0,0,0.1);
+    // background-color: rgba(0,0,0,0.1);
+        background-color: rgba(0, 0, 0, 0.7);
+        opacity: 0;
+        visibility: hidden;
+        transition: 0.3s;
+
+        &.active{
+          opacity: 1;
+          visibility: visible;
+        }
   
 }
   .invoice-container {
@@ -45,14 +57,42 @@ position: fixed;
 
   .invoice-header {
     text-align: center;
-    border-bottom: 2px solid #4CAF50;
+    border-bottom: 2px solid $main-color;
     padding-bottom: 10px;
     margin-bottom: 20px;
   }
 
   .invoice-header h1 {
     margin: 0;
-    color: #4CAF50;
+    color: $main-color;
+    font-size: 28px;
+    margin-bottom: 40px !important;
+    position: relative;
+    &::after{
+      content: '';
+      position: absolute;
+      left: 50%;
+      bottom: -15px ;
+      transform: translateX(-50%);
+      width: 80px;
+      height: 2px;
+      background-color: rgb(110, 110, 110);
+    }
+    &::before{
+      content: '';
+      position: absolute;
+      left: 50%;
+      // bottom: -15px;
+
+      border: 1px solid rgb(110, 110, 110) ;
+      background-color: #fff;
+      transform: translateX(-50%);
+    width: 20px;
+    height: 20px;
+    border-radius: 50%; 
+    bottom: -23px;
+    z-index: 2;
+    }
   }
 
   .invoice-info {
@@ -76,8 +116,8 @@ position: fixed;
   }
 
   .invoice-table th {
-    background: #4CAF50;
-    color: #fff;
+    background: $secondary_color;
+    color: #000;
   }
 
   .invoice-totals {
@@ -87,7 +127,7 @@ position: fixed;
   }
 
   .invoice-totals div {
-    margin-bottom: 5px;
+    margin-bottom: 10px;
   }
 
   .invoice-footer {
@@ -100,11 +140,14 @@ position: fixed;
   .print-btn {
     margin-top: 20px;
     padding: 10px 20px;
-    background: #4CAF50;
+    background: $main-color;
+    border-radius: 4px;
     color: #fff;
     border: none;
     cursor: pointer;
     font-size: 16px;
+    display: block;
+    margin-inline:auto ;
   }
 
   .print-btn:hover {

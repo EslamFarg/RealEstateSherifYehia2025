@@ -74,8 +74,8 @@
   <div class="btn_add_reset">
  <button type="submit" data-button="send" [ngClass]="{'btnEdit':this.btnAddandUpdate=='update','btnAdd':this.btnAddandUpdate=='add'}">{{this.btnAddandUpdate == 'add' ? 'اضافه':"تعديل"}}</button>
  <button type="button" data-button="reset" (click)="openDeletePopup()" *ngIf="showBtns">حذف</button>
- <button type="button" data-button="reset" *ngIf="showBtns">طباعه بالسند</button>
- <button  type="button" data-button="reset" (click)="showPopup=!showPopup" *ngIf="showBtns">طباعه بالموظف</button>
+ <button type="button" data-button="reset" *ngIf="showBtns" (click)="this.isVisiablePrint = true">طباعه بالسند</button>
+ <!-- <button  type="button" data-button="reset" (click)="showPopup=!showPopup" *ngIf="showBtns">طباعه بالموظف</button> -->
   </div>
 
     </form>
@@ -84,3 +84,6 @@
 <app-printemployee></app-printemployee>
 
 <app-confirm-delete [isVisible]="showDelete" (onDelete)="deleteConfirmed($event)" [itemId]="this.deleteId" (toggleModal)="onClose()"></app-confirm-delete>
+
+
+<app-printpage-salifs [isVisible]="isVisiablePrint" [getDataPopup]="getDataPrint" (closePopup)="isVisiablePrint = false"></app-printpage-salifs>

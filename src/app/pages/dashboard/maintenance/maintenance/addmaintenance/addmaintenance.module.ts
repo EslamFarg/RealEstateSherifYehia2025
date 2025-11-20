@@ -11,6 +11,7 @@ import { InputAttachmentsComponent } from '../../../../../shared/ui/input-attach
 import { ReactiveFormsModule } from '@angular/forms';
 import { DirectivesModule } from "../../../../../shared/directives/directives.module";
 import { ConfirmDeleteComponent } from '../../../../../shared/components/confirm-delete/confirm-delete.component';
+import { PrintpageMaintenanceComponent } from '../../../../../shared/components/printpage-maintenance/printpage.component';
 
 
 @NgModule({
@@ -26,7 +27,8 @@ import { ConfirmDeleteComponent } from '../../../../../shared/components/confirm
     InputAttachmentsComponent,
     ReactiveFormsModule,
     DirectivesModule,
-    ConfirmDeleteComponent
+    ConfirmDeleteComponent,
+    PrintpageMaintenanceComponent
 ]
 })
 export class AddmaintenanceModule { }

@@ -151,11 +151,13 @@
  <button type="button" data-button="send" (click)="onSubmit()" *ngIf="canShowAdd" [ngClass]="{'btnEdit':this.btnAddandUpdate=='update','btnAdd':this.btnAddandUpdate=='add'}">{{this.btnAddandUpdate == 'add' ? 'اضافه':"تعديل"}}</button>
  <!-- <button type="button" data-button="reset">تعديل</button> -->
  <button type="button" data-button="reset" (click)="deletePayrollVoucher()" *ngIf="showCanBtns">حذف</button>
- <button type="button" data-button="reset" *ngIf="showCanBtns">طباعه بالسند</button>
+ <button type="button" data-button="reset" *ngIf="showCanBtns" (click)="this.isvisiblePrint=true">طباعه بالسند</button>
  <button  type="button" data-button="reset" (click)="showEmployeePopup = !showEmployeePopup" *ngIf="showCanBtns">طباعه بالموظف</button>
   </div>
 
-<app-printemployee [showPopup]="showEmployeePopup"></app-printemployee>
+<app-printemployee [showPopup]="showEmployeePopup" [getDataEmp]="this.getAllEmployee" (closePopup)="this.showEmployeePopup = false"></app-printemployee>
 
 
 <app-confirm-delete [isVisible]="showDelete" (onDelete)="deleteConfirmed($event)" [itemId]="this.deleteId" (toggleModal)="onClose()"></app-confirm-delete>
+
+<app-printpage-exchangeSalary [isVisible]="isvisiblePrint"   [getDataPopup]="getDataPrint" (closePopup)="this.isvisiblePrint = false" ></app-printpage-exchangeSalary>

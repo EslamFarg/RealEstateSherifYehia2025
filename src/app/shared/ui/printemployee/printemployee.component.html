@@ -1,9 +1,9 @@
-<div class="modal_overlay" [class.active]="showPopup">
-  <div class="modal_popup">
+<div class="modal_overlay" [class.active]="showPopup" (click)="close()">
+  <div class="modal_popup" (click)="noCloseModal($event)">
     <div class="head_popup">
       <svg
         width="24"
-        (click)="showPopup = !showPopup"
+        (click)="closeShowPopup()"
         height="24"
         viewBox="0 0 24 24"
         fill="none"
@@ -29,7 +29,7 @@
                 <input
                   type="checkbox"
                   name=""
-                  (change)="toggleAll()"
+                  (change)="toggleAll($event)"
                   class="form-check-input check_box "
                   style="margin-left: 5px;"
                   id=""
@@ -41,7 +41,7 @@
           </thead>
           <tbody>
 
-            @for(item of employees; track $index){
+            @for(item of getDataEmp?.lines; track $index){
             <tr>
               <td>
                
@@ -50,17 +50,20 @@
                   class="form-check-input check_box"
                   [(ngModel)]="item.checked"
                   style="margin-left: 5px;"
+                  (change)="selectData($event,item)"
+                  #checkitems
                 />
 
                  <span>{{$index + 1}}</span>
               </td>
-              <td>{{item.name}}</td>
+              <td>{{item.employeeName}}</td>
             </tr>   
             }
            
           </tbody>
         </table>
       </div>
+      <button class="btn_print" (click)="printData()">طباعه</button>
     </div>
   </div>
   <!-- </svg> -->
