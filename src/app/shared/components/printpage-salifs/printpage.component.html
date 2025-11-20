@@ -1,0 +1,71 @@
+
+<div class="overlay_container" [ngClass]="{'active':isVisible}" (click)="closePopupOverlay($event)">
+<div class="invoice-container" id="printSection" (click)="stopClose($event)">
+
+    <div class="close" (click)="close()">
+        <!-- (click)="closeModal()" -->
+        <button class="close_btn" >🗙</button>
+    </div>
+  <header class="invoice-header">
+    <h1>السلفيات</h1>
+    <div class="invoice-info">
+      <div><strong>الرقم الدفتري :</strong> {{getDataPopup?.bookNumber}}</div>
+      <div><strong>التاريخ:</strong> {{getDataPopup?.advanceDate.split('T')[0]}}</div>
+      <!-- <div><strong>المالك:</strong> محمد أحمد</div> -->
+    </div>
+  </header>
+
+  <div class="table-responsive">
+ <table class="invoice-table">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>اسم الموظف</th>
+        <th>الصندوق / بنك</th>
+        <th>المبلغ</th>
+        <th>البيان</th>
+      </tr>
+    </thead>
+    <tbody>
+     
+      <!-- @for(item of getDataPopup?.lines; track $index){ -->
+
+         <tr >
+        <td>1</td>
+        <td>{{getDataPopup?.employeeName}}</td>
+        <td>{{getDataPopup?.accountName}}</td>
+        <td>{{getDataPopup?.amount}}</td>
+        <td>{{getDataPopup?.description}}</td>
+        <!-- <td>{{item?.salary}}</td>
+        <td>{{item?.accountName}}</td>
+        <td>{{item?.absenceDays}}</td>
+        <td>{{item?.loanRepayment}}</td>
+        <td>{{item?.penalties}}</td>
+        <td>{{item?.rewards}}</td>
+        <td>{{item?.netPay}}</td> -->
+      </tr>
+      <!-- } -->
+     
+    
+      
+      
+      <!-- @empty {
+        <tr>
+          <td colspan="7">لا يوجد بيانات</td>
+        </tr>
+      } -->
+  
+    </tbody>
+  </table>
+  </div>
+ 
+
+
+
+  <footer class="invoice-footer">
+    تم إنشاء السند بواسطة نظام الإدارة العقارية
+  </footer>
+
+  <button class="print-btn" (click)="printData()">طباعة </button>
+</div>
+</div>

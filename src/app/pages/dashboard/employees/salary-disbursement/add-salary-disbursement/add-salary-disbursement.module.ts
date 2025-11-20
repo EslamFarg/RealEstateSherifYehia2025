@@ -9,6 +9,7 @@ import { PrintemployeeComponent } from '../../../../../shared/ui/printemployee/p
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormerrorMsgComponent } from '../../../../../shared/ui/formerror-msg/formerror-msg.component';
 import { ConfirmDeleteComponent } from '../../../../../shared/components/confirm-delete/confirm-delete.component';
+import { PrintpageexchangeSalaryComponent } from '../../../../../shared/components/printpage-exchangeSalary/printpage.component';
 
 
 @NgModule({
@@ -21,7 +22,8 @@ import { ConfirmDeleteComponent } from '../../../../../shared/components/confirm
     PrintemployeeComponent,
     ReactiveFormsModule,
     FormerrorMsgComponent,
-    ConfirmDeleteComponent
+    ConfirmDeleteComponent,
+    PrintpageexchangeSalaryComponent
   ]
 })
 export class AddSalaryDisbursementModule { }

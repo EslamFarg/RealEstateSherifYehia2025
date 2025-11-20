@@ -1,0 +1,125 @@
+
+    // ===== Variables =====
+    $bg: #0f1724;
+    $card: rgba(255,255,255,0.06);
+    $accent: #6EE7B7; // mint
+    $muted: rgba(255,255,255,0.6);
+    $glass: rgba(255,255,255,0.04);
+
+ 
+    // ===== Modal overlay =====
+    .overlay{
+      position:fixed; inset:0; background:rgba(2,6,23,0.6); backdrop-filter: blur(6px);
+      display:flex; align-items:center; justify-content:center; padding:20px; z-index:10000;
+      opacity: 0;
+      visibility: hidden;
+      transition: 0.3s;
+
+      &.active{
+        opacity: 1;
+        visibility: visible;
+      }
+    }
+
+    // ===== Modal card =====
+    .modal{
+      width: min(920px, 96%);
+      border-radius:18px; overflow:hidden; box-shadow:0 10px 40px rgba(2,8,23,0.7);
+      border:1px solid rgba(255,255,255,0.04);
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      display:flex; flex-direction:column;
+    // max-height: 80%;
+    height:57%;
+    min-height: 40%;
+    position: relative;
+    // overflow-y: auto;
+    &::-webkit-scrollbar{
+        width: 2px;
+        display: none;
+    }
+
+    // &::-webkit-scrollbar-track{
+    //     background: transparent;
+    // }
+}
+
+    .modal__header{
+      display:flex; gap:12px; align-items:center; padding:18px 22px; border-bottom:1px solid rgba(255,255,255,0.03);
+      background: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.00));
+    }
+
+    .brand{
+      width:48px; height:48px; border-radius:12px; display:inline-grid; place-items:center;
+      background:linear-gradient(135deg, rgba(110,231,183,0.15), rgba(99,102,241,0.08));
+      font-weight:700; color:$accent; font-size:18px; border:1px solid rgba(110,231,183,0.12);
+      box-shadow:0 6px 18px rgba(9,13,26,0.5);
+    }
+
+    .title{
+      display:flex; flex-direction:column; gap:2px; flex:1;
+    }
+    .title h3{ margin:0; font-size:18px; font-weight:700;  color: #fff;}
+    .title p{ margin:0; color:$muted; font-size:13px; }
+
+    .header-actions{ display:flex; gap:8px; align-items:center; }
+    .btn{ padding:8px 12px; border-radius:10px; font-weight:600; background:$glass; border:1px solid rgba(255,255,255,0.03); cursor:pointer; }
+    .btn--primary{ background:linear-gradient(90deg,$accent, #4ADE80); color:#05221a; border:none; }
+    .btn--ghost{ background:transparent; color:$muted; }
+
+    // ===== Body with table =====
+    .modal__body{ padding:16px 18px; }
+    .table-wrap{ background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.00)); border-radius:12px; padding:12px; border:1px solid rgba(255,255,255,0.02);
+    overflow-y: scroll;
+    //  max-height: 320px;
+        max-height: 296px;
+       
+
+       &::-webkit-scrollbar{
+        width: 2px;
+
+       }
+
+       &::-webkit-scrollbar-thumb{
+        background-color: #fff;
+       }
+
+       &::-webkit-scrollbar-track{
+        background-color: #6EE7B7;
+       }
+    }
+
+    table{ width:100%; border-collapse:collapse; font-size:14px; }
+    thead th{ text-align:right; font-weight:600; color:$muted; padding:12px 10px; font-size:13px;  text-align: center; }
+    tbody td{ padding:12px 10px; border-top:1px dashed rgba(255,255,255,0.03); vertical-align:middle; text-align: center;     color: white;}
+
+    // checkbox column
+    .col-check{ width:56px; text-align:center; }
+
+    // row style
+    tbody tr{ transition: background 180ms cubic-bezier(.2,.9,.3,1), transform 120ms; border-radius:8px; }
+    tbody tr:hover{ background: rgba(255,255,255,0.02); transform:translateY(-2px); }
+
+    // selected state when checkbox checked
+    .row--selected{ background: linear-gradient(90deg, rgba(110,231,183,0.06), rgba(99,102,241,0.03)); box-shadow: inset 0 1px 0 rgba(255,255,255,0.02); }
+
+    // fancy checkbox
+    .custom-checkbox{ display:inline-grid; place-items:center; width:20px; height:20px; border-radius:6px; background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.06); }
+    input[type=checkbox]{ width:18px; height:18px; accent-color: $accent; }
+
+    // responsive
+    @media (max-width:720px){
+      .modal{ width:100%; }
+      thead th:nth-child(3), tbody td:nth-child(3){ display:none; } // hide unit to save space (example)
+    }
+
+    // footer
+    .modal__footer{ display:flex; gap:8px; padding:14px 18px; border-top:1px solid rgba(255,255,255,0.03); align-items:center; justify-content:flex-end; }
+
+    .muted{ color:$muted; font-size:13px; }
+
+    // helper - small pill
+    .pill{ background: rgba(255,255,255,0.03); padding:6px 8px; border-radius:8px; font-weight:600; }
+
+    // subtle entrance
+    .modal{ transform: translateY(8px) scale(.995); animation: pop .28s cubic-bezier(.2,.95,.25,1) forwards; }
+    @keyframes pop{ to{ transform:none; } }

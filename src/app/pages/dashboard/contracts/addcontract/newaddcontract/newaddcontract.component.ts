@@ -25,7 +25,15 @@ export class NewaddcontractComponent {
   destroyRef:DestroyRef=inject(DestroyRef);
   toastr:ToastrService=inject(ToastrService)
   editBehaviorService:EditBehaviorServiceService=inject(EditBehaviorServiceService)
+  showPopupSearchUnit:boolean=false;
+  showPopupSearchTenant:boolean=false;
+  dataArraySearch:any[]=[]
+  dataArraySearchTenant:any[]=[]
 
+
+
+  showPopupSearchBroker:boolean=false;
+  dataArraySearchBroker:any[]=[]
 
 // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1 Property
 paymentMethods:any[]=[
@@ -469,29 +477,13 @@ searchFilterUnit(val:any){
       this.formDataBroker.reset();
       return;
     }
-   console.log(res);
-   this.getAllDataUnitProperty=res.rows[0]
+
+
+    this.showPopupSearchUnit=true
+    this.dataArraySearch=res.rows;
+
+    console.log(this.dataArraySearch);
    
-   this.formDataUnit.patchValue(this.getAllDataUnitProperty)
-   console.log(this.getAllDataUnitProperty);
-
-   // ✅ ثق سعر الوحدة
-let unitPrice = Number(res.rows[0].price);
-
-// ✅ خذ عدد الشهور الحالي
-let months = Number(this.contractsForm.get('LeaseMonths')?.value) || 0;
-
-// ✅ احسب القيمة الجديدة
-let newContractValue = unitPrice * months;
-
-   this.contractsForm.patchValue({
-    PropertyId: res.rows[0].propertyID,
-    UnitId: res.rows[0].id,
-    ContractValue: newContractValue
-   })
-    this.getTaxes();
-    this.getTotal();
-   console.log(this.contractsForm.value);
  })
 }
 
@@ -577,12 +569,13 @@ searchFilterTenant(val:any){
       this.formDataBroker.reset();
       return;
     }
-    this.getTaxes();
-    
-    this.formDataTenant.patchValue(res.rows[0])
-    this.contractsForm.patchValue({
-      TenantId: res.rows[0].id
-    })
+
+
+    this.showPopupSearchTenant=true
+    this.dataArraySearchTenant=res.rows;
+
+    console.log(this.dataArraySearchTenant)
+
 
   
 
@@ -677,24 +670,9 @@ searchFilterBroker(val:any){
       this.formDataBroker.reset();
       return;
     }
-    this.formDataBroker.patchValue({
-      name: res.rows[0].name,
-      mobile: res.rows[0].mobile,
-      nationalID: res.rows[0].nationalID
-    })
 
-
-    this.getTaxes();
-
-    this.getTotal();
-    
-
-    // this.formDataBroker.patchValue(res.rows[0])
-    this.contractsForm.patchValue({
-      BrokerId: res.rows[0].id,
-      BrokerCommission:res.rows[0].bonus
-
-    })
+    this.showPopupSearchBroker=true
+    this.dataArraySearchBroker=res.rows;
 
     
   })
@@ -1077,12 +1055,69 @@ resetAllData() {
 }
 
 
+sendDataSelectedSearchUnit(e:any){
+
+  this.showPopupSearchUnit=!this.showPopupSearchUnit
+
+  
+   this.getAllDataUnitProperty=e
+   
+   this.formDataUnit.patchValue(this.getAllDataUnitProperty)
+   console.log(this.getAllDataUnitProperty);
+
+   // ✅ ثق سعر الوحدة
+let unitPrice = Number(e.price);
+
+// ✅ خذ عدد الشهور الحالي
+let months = Number(this.contractsForm.get('LeaseMonths')?.value) || 0;
+
+// ✅ احسب القيمة الجديدة
+let newContractValue = unitPrice * months;
+
+   this.contractsForm.patchValue({
+    PropertyId: e.propertyID,
+    UnitId: e.id,
+    ContractValue: newContractValue
+   })
+    this.getTaxes();
+    this.getTotal();
+   console.log(this.contractsForm.value);
+
+}
 
 
 
+sendDataSelectedSearchTenant(e:any){
+    this.showPopupSearchTenant=!this.showPopupSearchTenant
+
+    console.log(e);
+    this.getTaxes();
+    
+    this.formDataTenant.patchValue(e)
+    this.contractsForm.patchValue({
+      TenantId: e.id
+    })
+}
+
+sendDataSelectedSearchBroker(e:any){
+  this.showPopupSearchBroker=!this.showPopupSearchBroker
+     this.formDataBroker.patchValue({
+      name:e.name,
+      mobile:e.mobile,
+      nationalID:e.nationalID
+    })
+
+
+    this.getTaxes();
+    this.getTotal();
+    this.contractsForm.patchValue({
+      BrokerId:e.id,
+      BrokerCommission:e.bonus
+
+    })
+}
 ngOnDestroy(): void {
-  //Called once, before the instance is destroyed.
-  //Add 'implements OnDestroy' to the class.
+
   if(this.editBehaviorService.clearId){
     this.editBehaviorService.clearId();
   }

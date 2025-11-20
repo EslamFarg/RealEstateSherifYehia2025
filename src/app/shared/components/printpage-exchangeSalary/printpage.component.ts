@@ -1,92 +1,38 @@
-import { NgClass, NgFor } from '@angular/common';
-import { Component, ElementRef, EventEmitter, inject, Input, Output, QueryList, ViewChildren } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { ToastrService } from '../toastr/services/toastr.service';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { IntersectionDirective } from "../../directives/intersection.directive";
+import { NgClass } from '@angular/common';
 
 @Component({
-  selector: 'app-printemployee',
-  templateUrl: './printemployee.component.html',
-  styleUrl: './printemployee.component.scss',
+  selector: 'app-printpage-exchangeSalary',
+  templateUrl: './printpage.component.html',
+  styleUrl: './printpage.component.scss',
   standalone:true,
-  imports:[NgFor,NgClass,FormsModule]
+  imports: [IntersectionDirective,NgClass]
 })
-export class PrintemployeeComponent {
-
-  @Input() showPopup=false;
-  @Output() closePopup = new EventEmitter();
-  @Input() getDataEmp:any
-  itemsChecked:any=[];
-  toastr:ToastrService=inject(ToastrService);
+export class PrintpageexchangeSalaryComponent {
 
 
-
-   selectCheck=false;
-   @ViewChildren('checkitems') checkitems!:QueryList<ElementRef>
-  toggleAll(e:any){
-
-  let isChecked=e.target.checked
-    
-  if(isChecked){
-this.itemsChecked=this.getDataEmp.lines;
-this.checkitems.forEach((checkbox) => {
-  checkbox.nativeElement.checked=true
-})
-  }else{
-    this.itemsChecked=[]
-    this.checkitems.forEach((checkbox) => {
-      checkbox.nativeElement.checked=false
-    })
-  }
-    
-    console.log(this.itemsChecked);
-
-  }
-
-  closeShowPopup(){
-    this.closePopup.emit();
-  }
-
-
-  CheckedData:any
-
-  selectData(e: any, item: any) {
-  const isChecked = e.target.checked;
-
-  if (isChecked) {
-    // أضف العنصر لو مش موجود
-    const exists = this.itemsChecked.some((emp:any) => emp.id === item.id);
-    if (!exists) {
-      this.itemsChecked.push(item);
-    }
-  } else {
-    this.itemsChecked = this.itemsChecked.filter((emp:any) => emp.id !== item.id);
-  }
-
-  console.log(this.itemsChecked);
-}
-
-
-  printData(){
-     if(this.itemsChecked.length == 0 ){
-        this.toastr.show('يرجى  تحديد موظف علي الاقل', 'error');
-         return
-      }
-      this.closePopup.emit();
-    let openPrint=window.open('','_blank');
-
-
-    if(!openPrint) return;
+  @Input() isVisible=false;
+  @Output() closePopup = new EventEmitter<void>();
+  @Input() getDataPopup:any
 
 
 
-      // if (!openPrint) return;
 
 
-     
+
+
+
+
+printData(){
+   this.closePopup.emit();
+  let printOpen=window.open('','_blank')
+   if (!printOpen) return;
+
      let rowsHtml = '';
 
-      if (this.itemsChecked) {
-    this.itemsChecked.forEach((item: any, index: number) => {
+      if (this.getDataPopup?.lines) {
+    this.getDataPopup.lines.forEach((item: any, index: number) => {
       rowsHtml += `
         <tr>
           <td>${index + 1}</td>
@@ -231,9 +177,9 @@ this.checkitems.forEach((checkbox) => {
 
     <!-- معلومات عامة -->
     <div class="info">
-        <div>الرقم الدفتري :  ${this.getDataEmp.bookNumber}</div>
-        <div> الشهر  :  ${this.getDataEmp.month}</div>
-        <div>التاريخ :  ${this.getDataEmp.date}</div>
+        <div>الرقم الدفتري :  ${this.getDataPopup.bookNumber}</div>
+        <div> الشهر  :  ${this.getDataPopup.month}</div>
+        <div>التاريخ :  ${this.getDataPopup.date}</div>
     </div>
 
     <!-- جدول البيانات -->
@@ -280,20 +226,28 @@ this.checkitems.forEach((checkbox) => {
 
   
   `
-  openPrint?.document.write(html);
-  openPrint?.print();
+  printOpen?.document.write(html);
+  printOpen?.print();
  
-    
 
-  }
+ 
 
-  close(){
-    this.closePopup.emit();
+}
 
-  }
 
-  noCloseModal(e:any){
-    e.stopPropagation();
+close(){
+  this.closePopup.emit();
+}
 
-  }
+closePopupOverlay(e:any){
+  // this.isVisible = false;
+  e.stopPropagation();
+  this.closePopup.emit();
+
+}
+stopClose(e:any){
+  e.stopPropagation();
+
+}
+
 }

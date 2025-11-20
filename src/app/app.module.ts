@@ -12,6 +12,8 @@ import { LoadingComponent } from './shared/components/loading/loading.component'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CommonModule } from '@angular/common';
 import { PopupSearchComponent } from './shared/ui/popup-search/popup-search.component';
+import { PrintemployeeComponent } from "./shared/ui/printemployee/printemployee.component";
+
 
 
 
@@ -31,7 +33,9 @@ import { PopupSearchComponent } from './shared/ui/popup-search/popup-search.comp
     ToastrComponent,
     DirectivesModule,
     BrowserAnimationsModule,
-    LoadingComponent
+    LoadingComponent,
+    PrintemployeeComponent,
+   
 ],
   providers: [
     provideHttpClient(

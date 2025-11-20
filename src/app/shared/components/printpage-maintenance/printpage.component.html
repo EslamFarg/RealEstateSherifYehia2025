@@ -1,0 +1,70 @@
+
+<div class="overlay_container" [ngClass]="{'active':isVisible}" (click)="closePopupOverlay($event)">
+<div class="invoice-container" id="printSection" (click)="stopClose($event)">
+
+    <div class="close" (click)="close()">
+        <!-- (click)="closeModal()" -->
+        <button class="close_btn" >🗙</button>
+    </div>
+  <header class="invoice-header">
+    <h1>الصيانه</h1>
+    <div class="invoice-info">
+      <div><strong>الرقم الدفتري :</strong> {{getDataPopup?.bookNumber}}</div>
+      <div><strong>التاريخ:</strong> {{getDataPopup?.requestDate}}</div>
+      <!-- <div><strong>المالك:</strong> محمد أحمد</div> -->
+    </div>
+  </header>
+
+  <div class="">
+ <table class="invoice-table">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>الوحده</th>
+        <th>العقار</th>
+        <th>رقم المبني</th>
+        <th>المدينه</th>
+        <th>الحي</th>
+        <th>الشارع</th>
+      </tr>
+    </thead>
+    <tbody>
+     
+      <tr >
+        <td>1</td>
+        <td>{{getDataPopup?.unitName}}</td>
+        <td>{{getDataPopup?.buildingName}}</td>
+        <td>{{getDataPopup?.buildingNumber}}</td>
+        <td>{{getDataPopup?.city}}</td>
+        <td>{{getDataPopup?.district}}</td>
+        <td>{{getDataPopup?.street}}</td>
+      </tr>
+    
+      
+      
+      <!-- @empty {
+        <tr>
+          <td colspan="7">لا يوجد بيانات</td>
+        </tr>
+      } -->
+  
+    </tbody>
+  </table>
+  </div>
+ 
+
+  <div class="invoice-totals">
+    <div><strong> نوع الصيانه :</strong> {{getDataPopup?.maintenanceTypeName}}</div>
+    <div><strong> موظف مسئول :</strong> {{getDataPopup?.employeeName}}</div>
+    <div><strong> الحاله :</strong> {{getDataPopup?.status}}</div>
+    <div><strong> الصندوق / البنك :</strong> {{getDataPopup?.accountName}}</div>
+    <div><strong> المبلغ :</strong> {{getDataPopup?.amount}}</div>
+  </div>
+
+  <footer class="invoice-footer">
+    تم إنشاء السند بواسطة نظام الإدارة العقارية
+  </footer>
+
+  <button class="print-btn" (click)="printData()">طباعة </button>
+</div>
+</div>

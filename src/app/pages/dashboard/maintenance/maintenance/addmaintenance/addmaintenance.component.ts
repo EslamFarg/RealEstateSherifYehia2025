@@ -36,6 +36,10 @@ export class AddmaintenanceComponent {
     EditBehaviorServiceService
   );
 
+  getDataPrint:any;
+
+  isVisiablePrint=false;
+
   // !!!!!!!!!!!!!!!!!!!!!!! Property
 
   mainTenanceData = this.fb.group({
@@ -177,6 +181,12 @@ export class AddmaintenanceComponent {
               this.canShowBtns = true;
               this.btnAddandUpdate = 'update';
               this.dataFiles = res.rows[0]?.attachments;
+
+
+              this.getDataPrint=res.rows[0];
+
+
+              console.log("Get DataPrint : ",this.getDataPrint);
             });
         }
 
@@ -586,6 +596,11 @@ export class AddmaintenanceComponent {
         this.btnAddandUpdate = 'update';
         this.canShowBtns = true;
       });
+  }
+
+
+  showPopupPrint(){
+    this.isVisiablePrint=!this.isVisiablePrint
   }
 
   ngOnDestroy(): void {

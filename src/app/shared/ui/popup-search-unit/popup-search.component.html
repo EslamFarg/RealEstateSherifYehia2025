@@ -1,0 +1,60 @@
+
+
+
+  <div class="overlay" role="dialog" aria-modal="true" aria-label="نافذة الأسماء" [ngClass]="{'active':isVisible}">
+    <div class="modal">
+      <div class="modal__header">
+        <div class="brand">ق</div>
+        <div class="title">
+          <h3>قائمة الأسماء</h3>
+          <p>اختر العنصر لتطبيق الإجراء الذي تريده</p>
+        </div>
+
+        <div class="header-actions">
+          <div class="pill muted">عدد العناصر: <strong id="totalCount">{{dataArraySearch?.length}}</strong></div>
+          <button class="btn btn--ghost" id="closeBtn" (click)="close()">إغلاق</button>
+          <!-- <button class="btn btn--primary" id="applyBtn">تنفيذ</button> -->
+        </div>
+      </div>
+
+      <div class="modal__body">
+        <div class="table-wrap">
+        <!-- <div class="table-responsive"> -->
+ <table aria-describedby="tableDesc">
+            <caption id="tableDesc" style="display:none">جدول يحتوي على أسماء وأعمار ويمكنك اختيار الصفوف.</caption>
+            <thead>
+              <tr>
+                <!-- <th class="col-check"><input id="selectAll" class="js-select-all" type="checkbox" aria-label="تحديد الكل"></th> -->
+                <th>اسم الوحده</th>
+                <th>اسم العماره</th>
+                <th>المدينه</th>
+                <th>السعر</th>
+                <!-- <th>العقار</th> -->
+             
+              </tr>
+            </thead>
+            <tbody id="tableBody">
+              <tr *ngFor="let item of dataArraySearch" (click)="selectItem(item)">
+                <td>{{item.name}}</td>
+                <td>{{item.propertyName}}</td>
+                <td>{{item.city}}</td>
+                <td>{{item.price}}</td>
+                <!-- <td>{{item.propertyName}}</td> -->
+               
+              </tr>
+            
+            </tbody>
+          </table>
+        </div>
+         
+        </div>
+      </div>
+
+      <!-- <div class="modal__footer">
+        <div class="muted">العناصر المحددة: <strong id="selectedCount">0</strong></div>
+        <button class="btn btn--ghost" id="cancelBtn">إلغاء</button>
+        <button class="btn btn--primary" id="executeBtn">تنفيذ المحدد</button>
+      </div> -->
+    </div>
+  <!-- </div> -->
+

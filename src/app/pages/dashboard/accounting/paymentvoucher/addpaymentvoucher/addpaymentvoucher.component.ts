@@ -507,93 +507,124 @@ export class AddpaymentvoucherComponent {
         element.nativeElement.checked = true;
       });
 
-      // تحديث itemChecked بشكل صحيح
-      this.itemChecked = this.paymentData.rows.map((item: any) => ({
-        contractInstallmentId: item.contractInstallmentId,
-        amount: item.amount,
-      }));
-    } else {
-      // إلغاء كل الـ checkboxes
-      this.oneCheckElement.forEach((element) => {
-        element.nativeElement.checked = false;
-      });
-      this.itemChecked = [];
-    }
-  }
-
-  calculateTotals() {
-    this.TotalAmountDue = 0;
-    this.PaidTotalAmount = 0;
-    this.RemainingTotalAmount = 0;
-
-    this.paymentData.rows.forEach((item: any) => {
-      item.remainingAmount = (item.amountDue ?? item.amount) - (item.paid ?? item.paidAmount);
-
-      this.TotalAmountDue += item.amountDue ?? item.amount;
-      this.PaidTotalAmount += item.paid ?? item.paidAmount;
-      this.RemainingTotalAmount += item.remainingAmount;
+    // تحديث itemChecked بشكل صحيح
+    this.itemChecked = this.paymentData.rows.map((item: any) => ({
+      contractInstallmentId: item.contractInstallmentId,
+      amount: item.amount
+    }));
+  } else {
+    // إلغاء كل الـ checkboxes
+    this.oneCheckElement.forEach(element => {
+      element.nativeElement.checked = false;
     });
+    this.itemChecked = [];
   }
 
-  getDataById(e: any) {
-    this._ownerPaymentVoucherServices
-      .getDataById(e.value)
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((res: any) => {
-        this.btnAddandUpdate = 'update';
 
-        this.deleteId = res.id;
+}
 
-        this.paymentVoucherForm.patchValue({
-          voucherNo: res.voucherNo,
-          voucherDate: res.voucherDate.split('T')[0],
-          paymentMethod: res.paymentMethod,
-          amount: res.net,
-          notes: res.notes,
-          ownerId: res.ownerId,
-          debitAccountId: res.debitAccountId,
-          creditAccountId: res.creditAccountId,
-        });
 
-        this.formDataSearch.patchValue({
-          financiallyAccountId: res.debitAccountId,
-          name: res.debitAccountName,
-          email: res.email,
-          mobile: res.mobile ?? res.phoneNumber,
-          nationalID: res.nationalID,
-        });
-        
-        // table
-        this.paymentData = {
-          rows: res.listOwnerMonths.map((item: any) => ({
-            contractInstallmentId: item.id,
-            contractId: item.contractId,
-            propertyName: item.propertyName,
-            unitName: item.unitName,
-            monthNumber: item.monthNumber,
-            amount: item.amountDue,
-            paidAmount: item.netPaidInThisVoucher,
-            isInThisVoucher: item.isInThisVoucher,
-            monthIndex: item.monthIndex,
-            // amountDue:item.amountDue,
-            remainingAmount: item.amountDue - (item.netPaidInThisVoucher || 0),
-          })),
-        };
 
-        this.calculateTotals();
+calculateTotals() {
+  this.TotalAmountDue = 0;
+  this.PaidTotalAmount = 0;
+  this.RemainingTotalAmount = 0;
 
-        this.itemChecked = res.listOwnerMonths
-          .filter((item: any) => item.netPaidInThisVoucher > 0)
-          .map((item: any) => ({
-            contractInstallmentId: item.id,
-            amount: item.netPaidInThisVoucher,
-          }));
+  this.paymentData.rows.forEach((item: any) => {
 
-        this.idUpdate = res.id;
-        this.canBtnsShow = true;
+
+    
+    item.remainingAmount = item.amountDue - item.paid;
+
+    this.TotalAmountDue += item.amountDue;
+    this.PaidTotalAmount += item.paid;
+    this.RemainingTotalAmount += item.remainingAmount;
+
+  });
+}
+
+
+getDataById(e:any){
+ 
+  this._ownerPaymentVoucherServices.getDataById(e.value).pipe(takeUntilDestroyed(this.destroyRef)).subscribe((res:any)=>{
+      this.btnAddandUpdate = 'update';
+
+    
+      this.deleteId=res.id;
+
+      this.paymentVoucherForm.patchValue({
+        voucherNo: res.voucherNo,
+        voucherDate: res.voucherDate.split('T')[0],
+        paymentMethod: res.paymentMethod,
+        amount: res.net,
+        notes: res.notes,
+        ownerId: res.ownerId,
+        debitAccountId: res.debitAccountId,
+        creditAccountId: res.creditAccountId,
+
       });
-    // })
-  }
+     
+
+
+
+      this.formDataSearch.patchValue({
+        financiallyAccountId: res.debitAccountId,
+        name: res.debitAccountName,
+        email: res.email,
+        mobile: res.mobile ?? res.phoneNumber,
+        nationalID: res.nationalID
+      })
+      
+      // table
+      this.paymentData = {
+        rows: res.listOwnerMonths.map((item: any) => ({
+ 
+          contractInstallmentId: item.id, 
+          contractId: item.contractId,
+          propertyName: item.propertyName,
+          unitName: item.unitName,
+          monthNumber: item.monthNumber,
+          amount:item.amountDue,
+          paidAmount: item.netPaidInThisVoucher,
+          isInThisVoucher:item.isInThisVoucher,
+          monthIndex: item.monthIndex,
+          // amountDue:item.amountDue,
+          remainingAmount:item.amountDue - (item.netPaidInThisVoucher || 0)
+        }))
+      };
+
+
+   
+
+      this.calculateTotals();
+
+
+
+
+      this.itemChecked = res.listOwnerMonths
+       .filter((item: any) => item.netPaidInThisVoucher > 0)
+  .map((item:any) => ({
+    contractInstallmentId: item.id,
+    amount: item.netPaidInThisVoucher  
+  }));
+
+
+
+
+
+
+
+      
+      this.idUpdate=res.id
+      this.canBtnsShow=true
+
+
+      
+
+    });
+  // })
+}
+
 
   isItemEditable(item: any): boolean {
     // return this.itemChecked.some(x => x.contractInstallmentId === item.id);

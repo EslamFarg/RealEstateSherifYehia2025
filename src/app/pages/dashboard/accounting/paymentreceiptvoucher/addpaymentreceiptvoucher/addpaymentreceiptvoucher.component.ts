@@ -449,10 +449,6 @@ console.log(data);
       this._TenantServices.updateData(dataUpdate).pipe(takeUntilDestroyed(this.destroyRef)).subscribe((res:any)=>{
         this.toastr.show('تم تحديث البيانات بنجاح','success');  
 
-        // this.PaymentReceiptVoucherForm.reset();
-        // this.btnAddandUpdate='add'
-        // this.showBtnDelete=false
-        // 
       })
     }
     
@@ -463,49 +459,6 @@ console.log(data);
 }
 
 
-// searchById(valSearchById:any){
-//   const id=valSearchById.value;
-//   if(id){
-//     this._TenantServices.searchById(id).pipe(takeUntilDestroyed(this.destroyRef)).subscribe((res:any)=>{
-//       console.log(res);
-//       this.PaymentReceiptVoucherForm.patchValue({
-//         voucherNo: res.voucherNo,
-//         voucherDate: res.voucherDate.split('T')[0],
-//         paymentMethod: res.paymentMethod,
-//         amount: res.net,
-//         notes: res.notes,
-//         contractId: res.contractId,
-//         tenantId: res.tenantId,
-//         debitAccountId: res.debitAccountId,
-//         creditAccountId: res.creditAccountId
-//       });
-//       this.activeDataSelected.push(...res.tenantReceiptVoucherDetails);
-//       this.getMonthes=res.tenantReceiptVoucherDetails;
-//       this.PaymentReceiptVoucherForm.get('amount')?.setValue(this.getTotalAmount);
-//       this.getTotalAmount=res.net;
-//       this.PaymentReceiptVoucherForm.get('tenantReceiptVoucherDetails')?.setValue([]);
-//       this.btnAddandUpdate='update';
-//       // this.activeIndexes=this.activeDataSelected.length
-    
-//         this.activeIndexes=[]
-//       this.getMonthes.forEach((monthItem: any, idx: number) => {
-//   const found = this.activeDataSelected.some(
-//     (x: any) => x.contractInstallmentId === monthItem.contractInstallmentId
-//   );
-//   if (found) {
-//     this.activeIndexes.push(idx);
-//   }
-// });
-
-//     })
-
-
-
-//   }else{
-//     this.toastr.show('برجاء ادخال رقم السند','error');
-//   }
-
-// }
 
 
 searchById(valSearchById: any) {

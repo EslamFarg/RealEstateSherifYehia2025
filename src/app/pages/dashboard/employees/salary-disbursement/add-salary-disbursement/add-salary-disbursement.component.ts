@@ -47,7 +47,7 @@ export class AddSalaryDisbursementComponent {
     voucherNo: ['0'],
     bookNumber: ['', [Validators.required, Validators.minLength(3)]],
     month: [null, [Validators.required]],
-    year: ['2025', [Validators.required]],
+    year: [new Date().getFullYear(), [Validators.required]],
     dateTime: [new Date().toISOString().split('T')[0], [Validators.required]],
     note: ['', Validators.required],
     lines: this.fb.array([], Validators.required),
@@ -67,7 +67,8 @@ export class AddSalaryDisbursementComponent {
     AccountName: [''],
     creditAccountId: [null, Validators.required],
     month: [null, Validators.required],
-    year: [2025, Validators.required],
+    // get current year
+    year: [new Date().getFullYear(), Validators.required],
     salary: [0, Validators.required],
     rewards: [0, Validators.required],
     penalties: [0, Validators.required],
@@ -114,13 +115,20 @@ export class AddSalaryDisbursementComponent {
   btnAddandUpdate = 'add';
   idUpdateAndDelete: any;
   canShowAdd = true;
+  getDataPrint:any
 
   //  !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! Methods !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
   ngOnInit(): void {
-    //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
-    //Add 'implements OnInit' to the class.
-    // this.getAllEmployees();
+    
+    this.formExchange.get('dateTime')?.valueChanges.subscribe((res:any)=>{
+      this.formExchange?.patchValue({
+        year:res.split('-')[0]
+      });
+      this.FormLines?.patchValue({
+        year:res.split('-')[0]
+      })
+    })
     this.getAllAccounts();
     // this.calculateNetPay();
     this.FormLines.get('absenceDays')?.valueChanges.subscribe((days) => {
@@ -253,7 +261,7 @@ export class AddSalaryDisbursementComponent {
     // 🔥 FIX: set month & year from main form
     this.FormLines.patchValue({
       month: this.formExchange.get('month')?.value,
-      // year: this.formExchange.get('year')?.value,
+      year: this.formExchange.get('year')?.value,
     });
 
     const lineData = {
@@ -324,6 +332,8 @@ export class AddSalaryDisbursementComponent {
 
   // !!!!!!!!!!!! search
 
+  getAllEmployee:any
+
   searchById(valSearchById: any) {
     const id = valSearchById.value;
 
@@ -348,6 +358,11 @@ export class AddSalaryDisbursementComponent {
         this.formExchange.get('voucherNo')?.patchValue(res.id);
         this.showCanBtns = true;
         this.canShowAdd = false;
+
+        this.getDataPrint=res;
+
+        this.getAllEmployee=res;
+        console.log('GGGGGGG', this.getDataPrint);
       });
   }
 
@@ -386,7 +401,7 @@ export class AddSalaryDisbursementComponent {
       AccountName: '',
       creditAccountId: null,
       month: null,
-      year: 2025,
+  
       salary: 0,
       rewards: 0,
       penalties: 0,
@@ -406,7 +421,7 @@ export class AddSalaryDisbursementComponent {
       voucherNo: '0',
       bookNumber: '',
       month: null,
-      year: '2025',
+     
       dateTime: '',
       note: '',
       lines: [],
@@ -424,5 +439,12 @@ export class AddSalaryDisbursementComponent {
     if (this.editBehaviorServiceService.clearId) {
       this.editBehaviorServiceService.clearId();
     }
+  }
+
+  // !!!!!!!!!!!!!!!!! PrintDistrubute
+
+  isvisiblePrint: boolean = false;
+  isVisiblePrintFn() {
+    this.isvisiblePrint = !this.isvisiblePrint;
   }
 }

@@ -10,6 +10,7 @@ import { PrintemployeeComponent } from '../../../../../shared/ui/printemployee/p
 import { ReactiveFormsModule } from '@angular/forms';
 import { DirectivesModule } from "../../../../../shared/directives/directives.module";
 import { ConfirmDeleteComponent } from '../../../../../shared/components/confirm-delete/confirm-delete.component';
+import { PrintpageSalifsComponent } from '../../../../../shared/components/printpage-salifs/printpage.component';
 
 
 @NgModule({
@@ -25,7 +26,8 @@ import { ConfirmDeleteComponent } from '../../../../../shared/components/confirm
     PrintemployeeComponent,
     ReactiveFormsModule,
     DirectivesModule,
-    ConfirmDeleteComponent
+    ConfirmDeleteComponent,
+    PrintpageSalifsComponent
 ]
 })
 export class AddsalifsModule { }
