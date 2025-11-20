@@ -264,7 +264,7 @@ const routes: Routes = [
           import('./accounting/accounts/accounts.module').then(
             (m) => m.AccountsModule
           ),
-          data: { pageId: 33 },
+          data: { pageId: 36 },
       },
       {
         path: 'accountstatement',

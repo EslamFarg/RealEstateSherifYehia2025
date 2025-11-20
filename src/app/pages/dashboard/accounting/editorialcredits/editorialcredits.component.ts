@@ -85,6 +85,11 @@ export class EditorialcreditsComponent implements OnInit {
     });
   }
 
+  onPageChanged(page: number) {
+    this.pageIndex = page;
+    this.getEditorialCreditsListFilter();
+  }
+
   applyFilter() {
     this.pageIndex = 1; // reset to first page when filtering
     this.getEditorialCreditsListFilter();

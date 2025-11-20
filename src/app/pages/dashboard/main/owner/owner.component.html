@@ -34,7 +34,7 @@
                 <label for="phoneOwner" class="form-label d-block">رقم الجوال</label>
                 <ngx-intl-tel-input [cssClass]="'form-control'" [onlyCountries]="['sa', 'eg']"
                     [selectedCountryISO]="selectedCountry" [enableAutoCountrySelect]="true" [enablePlaceholder]="true"
-                    [selectFirstCountry]="false" [separateDialCode]="true" [maxLength]="14" formControlName="Mobile">
+                    [selectFirstCountry]="false" [separateDialCode]="true" [maxLength]="10" formControlName="Mobile">
                 </ngx-intl-tel-input>
                 <ng-container *ngIf="ownerData.controls['Mobile'].invalid && ownerData.controls['Mobile'].touched">
                     <small class="error_msg_form" *ngIf="ownerData.controls['Mobile'].hasError('required')">

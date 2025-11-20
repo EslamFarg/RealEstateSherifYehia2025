@@ -1,191 +1,213 @@
-<app-page-heading [title]="'المحاسبه'" [subtitle]="' سند الصرف خاص بالمالك '" [AddBtn]="true" [ExplorerRoute]="'/dashboard/paymentvoucher/explorepaymentvoucher'" [TitlePageAddBtn]="'مستكشف سند الصرف'"></app-page-heading>
+<app-page-heading [title]="'المحاسبه'" [subtitle]="' سند الصرف خاص بالمالك '" [AddBtn]="true"
+  [ExplorerRoute]="'/dashboard/paymentvoucher/explorepaymentvoucher'"
+  [TitlePageAddBtn]="'مستكشف سند الصرف'"></app-page-heading>
 
 
 <form action="" class="forms_dashboard" [formGroup]="paymentVoucherForm">
-           <div class="row ">
-<div class=" col-sm-12  col-lg-3 ">
-                 <label for="vouchernumber" class="form-label">رقم السند</label>
-                 <input type="text" class="form-control"  id="vouchernumber" placeholder="رقم السند" readonly value="0" #vouchernumber>
-                
-        </div>
-  <div class="col-sm-12 col-lg-3 mb-3 search_contract" style="margin-top: 8px;">
-        <label  class="form-label" ></label>
-        <div class="search_number_component">
-<input type="text" name="" placeholder="بحث برقم السند"  class="form-control" (keyup.enter)="getDataById(searchVal)" #searchVal>
+  <div class="row ">
+    <div class=" col-sm-12  col-lg-3 ">
+      <label for="vouchernumber" class="form-label">رقم السند</label>
+      <input type="text" class="form-control" id="vouchernumber" placeholder="رقم السند" readonly value="0"
+        #vouchernumber>
 
-<div class="search" (click)="getDataById(searchVal)">
-    <svg width="21" height="20" viewBox="0 0 21 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M10.7501 17.4998C6.37783 17.4998 2.83342 13.9554 2.83342 9.58317C2.83342 5.21092 6.37783 1.6665 10.7501 1.6665C15.1223 1.6665 18.6667 5.21092 18.6667 9.58317C18.6667 13.9554 15.1223 17.4998 10.7501 17.4998Z" stroke="#7F7F7F" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-<path d="M2.00008 18.3332L3.66675 16.6665" stroke="#7F7F7F" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-</svg>
+    </div>
+    <div class="col-sm-12 col-lg-3 mb-3 search_contract" style="margin-top: 8px;">
+      <label class="form-label"></label>
+      <div class="search_number_component">
+        <input type="text" name="" placeholder="بحث برقم السند" class="form-control"
+          (keyup.enter)="getDataById(searchVal)" #searchVal>
 
-</div>
+        <div class="search" (click)="getDataById(searchVal)">
+          <svg width="21" height="20" viewBox="0 0 21 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path
+              d="M10.7501 17.4998C6.37783 17.4998 2.83342 13.9554 2.83342 9.58317C2.83342 5.21092 6.37783 1.6665 10.7501 1.6665C15.1223 1.6665 18.6667 5.21092 18.6667 9.58317C18.6667 13.9554 15.1223 17.4998 10.7501 17.4998Z"
+              stroke="#7F7F7F" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M2.00008 18.3332L3.66675 16.6665" stroke="#7F7F7F" stroke-width="1.5" stroke-linecap="round"
+              stroke-linejoin="round" />
+          </svg>
+
         </div>
-        
+      </div>
+
     </div>
 
     <div class="col-sm-12 col-lg-3">
-        <div class="mb-3">
-            <label for="numbernotes" class="form-label">رقم الدفتري</label>
-            <input type="text" class="form-control" id="numbernotes" placeholder="رقم الدفتري"  formControlName="voucherNo"  style="background-color: #F5F5F5 !important;">
-               <app-formerror-msg [control]="paymentVoucherForm.controls['voucherNo']" [Messages]="{
+      <div class="mb-3">
+        <label for="numbernotes" class="form-label">رقم الدفتري</label>
+        <input type="text" class="form-control" id="numbernotes" placeholder="رقم الدفتري" formControlName="voucherNo"
+          style="background-color: #F5F5F5 !important;">
+        <app-formerror-msg [control]="paymentVoucherForm.controls['voucherNo']" [Messages]="{
                   'required':'الرقم الدفتري مطلوب',
                   'minlength':'الرقم الدفتري يجب ان يكون اكثر من 3 حروف'
                }"></app-formerror-msg>
-          </div>
+      </div>
     </div>
 
     <div class="col-sm-12 col-lg-3">
-        <div class="mb-3">
-            <label for="date" class="form-label">التاريخ</label>
-            <input type="date" class="form-control" id="date" placeholder="التاريخ" formControlName="voucherDate">
-              <app-formerror-msg [control]="paymentVoucherForm.controls['voucherDate']" [Messages]="{
+      <div class="mb-3">
+        <label for="date" class="form-label">التاريخ</label>
+        <input type="date" class="form-control" id="date" placeholder="التاريخ" formControlName="voucherDate">
+        <app-formerror-msg [control]="paymentVoucherForm.controls['voucherDate']" [Messages]="{
                   required:'التاريخ مطلوب'
                }"></app-formerror-msg>
-          </div>
+      </div>
     </div>
     <div class="col-sm-12">
-        <div class="mb-3">
-            <label for="box" class="form-label">صندوق / بنك</label>
-            <ng-select [items]="accountData" bindLabel="name" bindValue="financiallyAccountId"  placeholder="صندوق / بنك" formControlName="creditAccountId" (change)="ChangeSelect($event)"></ng-select>
-               <app-formerror-msg [control]="paymentVoucherForm.controls['creditAccountId']" [Messages]="{
+      <div class="mb-3">
+        <label for="box" class="form-label">صندوق / بنك</label>
+        <ng-select [items]="accountData" bindLabel="name" bindValue="financiallyAccountId" placeholder="صندوق / بنك"
+          formControlName="creditAccountId" (change)="ChangeSelect($event)"></ng-select>
+        <app-formerror-msg [control]="paymentVoucherForm.controls['creditAccountId']" [Messages]="{
                   required:'صندوق / بنك مطلوب'
                }"></app-formerror-msg>
-          </div>
+      </div>
     </div>
     <div class="col-sm-12">
-        <div class="mb-3">
-            <label for="byan" class="form-label">البيان</label>
-            <textarea class="form-control" id="byan" rows="3" placeholder="اكتب المحتوي" style="height: 75px !important;" formControlName="notes"></textarea>
-          </div>
+      <div class="mb-3">
+        <label for="byan" class="form-label">البيان</label>
+        <textarea class="form-control" id="byan" rows="3" placeholder="اكتب المحتوي" style="height: 75px !important;"
+          formControlName="notes"></textarea>
+      </div>
     </div>
-          </div>
+  </div>
 </form>
 
 
 
 <form action="" class="forms_dashboard mt-4" [formGroup]="formDataSearch">
-    <div class="row">
-        <div class="col-sm-12 mb-3">
-            <app-searchinforms [dataFilter]="FilterData" (selectedDataFilter)="searchDataFilter($event)"></app-searchinforms>
-        </div>
-
-        <div class="col-sm-12 col-lg-6 readonly_input mb-3">
-            <label for="" class="form-label">الاسم</label>
-            <input type="text" class="form-control"  readonly style="padding-right: 48px;" formControlName="name">
-        </div>
-        <div class="col-sm-12 col-lg-6 readonly_input mb-3">
-            <label for="" class="form-label">رقم الجوال</label>
-            <input type="text" class="form-control"   readonly  style="padding-right: 80px;" formControlName="mobile">
-        </div>
-        <div class="col-sm-12 col-lg-6 readonly_input mb-3">
-            <label for="" class="form-label">البريد الالكتروني</label>
-            <input type="text" class="form-control"   readonly  style="padding-right: 105px;" formControlName="email">
-        </div>
-        <div class="col-sm-12 col-lg-6 readonly_input mb-3">
-            <label for="" class="form-label">رقم الهويه </label>
-            <input type="text" class="form-control"   readonly style="padding-right: 80px;" formControlName="nationalID">
-        </div>
+  <div class="row">
+    <div class="col-sm-12 mb-3">
+      <app-searchinforms [dataFilter]="FilterData" (selectedDataFilter)="searchDataFilter($event)"></app-searchinforms>
     </div>
 
+    <div class="col-sm-12 col-lg-6 readonly_input mb-3">
+      <label for="" class="form-label">الاسم</label>
+      <input type="text" class="form-control" readonly style="padding-right: 48px;" formControlName="name">
+    </div>
+    <div class="col-sm-12 col-lg-6 readonly_input mb-3">
+      <label for="" class="form-label">رقم الجوال</label>
+      <input type="text" class="form-control" readonly style="padding-right: 80px;" formControlName="mobile">
+    </div>
+    <div class="col-sm-12 col-lg-6 readonly_input mb-3">
+      <label for="" class="form-label">البريد الالكتروني</label>
+      <input type="text" class="form-control" readonly style="padding-right: 105px;" formControlName="email">
+    </div>
+    <div class="col-sm-12 col-lg-6 readonly_input mb-3">
+      <label for="" class="form-label">رقم الهويه </label>
+      <input type="text" class="form-control" readonly style="padding-right: 80px;" formControlName="nationalID">
+    </div>
+  </div>
 
 
 
- <div class="table-responsive">
-<table>
-  <thead>
-    <tr>
-      <th scope="col">
 
-        <div class="d-flex align-items-center justify-content-center">
-        <input type="checkbox" (change)="checkAllData($event)" #checkAll aria-label="Checkbox for following text input" style="width: 16px; height: 16px; margin-left: 8px;">
-        م     
-        </div>
-        
-      </th>
-      <th scope="col">رقم العقد</th>
-      <th scope="col">العقار</th>
-      <th scope="col">الوحده</th>
-      <th scope="col">الشهر</th>
-      <th scope="col">المبلغ</th>
-      <th scope="col">المدفوع</th>
-      
-      <th scope="col">المتبقي</th>
-    </tr>
-  </thead>
-   <tbody>
-    @for (item of paymentData.rows; track $index) {
-<tr>
-      <td scope="row">
-        <div class="d-flex align-items-center justify-content-center">
-<input type="checkbox" aria-label="Checkbox for following text input" #oneCheckElement   [attr.data-id]="item.contractInstallmentId  || item.id"  [checked]="item.isInThisVoucher"
- (change)="checkDataItem($event,item)">
-        {{$index + 1}}
-        </div>
-         
-    </td>
-    <td>{{item.contractId}}</td>
-    <td>{{item.propertyName}}</td>
-    <td>{{item.unitName}} </td>
-    <td>{{this.Months[item.monthIndex] || this.Months[item.monthNumber]}}</td>
-    <td><div #amountDueElement>{{item.amount  || item.amountDue}}</div></td>
-    <!--  -->
-    <td><input type="text" class="form-control"  #paidAmount placeholder="0" appNoStringPaste    [value]="item.paidAmount || item.paid || 0"   (input)="onPaidAmountChange($event,item)"></td>
-  
-    <td><input type="text" class="form-control" [value]="item.totalWithAmount  || item.remainingAmount  || 0" readonly #remainingAmount></td>
-    </tr>
-    }@empty {
-                      <tr>
-    <td class="empty-cell" colspan="10">
-     <app-emptytable></app-emptytable>
-    </td>
-  </tr>
-    }
+  <div class="table-responsive">
+    <table>
+      <thead>
+        <tr>
+          <th scope="col">
 
-    
-  </tbody>
+            <div class="d-flex align-items-center justify-content-center">
+              <input type="checkbox" (change)="checkAllData($event)" #checkAll
+                aria-label="Checkbox for following text input" style="width: 16px; height: 16px; margin-left: 8px;">
+              م
+            </div>
 
-</table>   
+          </th>
+          <th scope="col">رقم العقد</th>
+          <th scope="col">العقار</th>
+          <th scope="col">الوحده</th>
+          <th scope="col">الشهر</th>
+          <th scope="col">المبلغ</th>
+          <th scope="col">المدفوع</th>
 
- <table class="table2" *ngIf="paymentData?.rows?.length > 0">
-        <tbody>
-            <tr>
-   <td></td>
-        <td><p>الاجمالي</p></td>
-        <td></td>
-        <td></td>
+          <th scope="col">المتبقي</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (item of paymentData.rows; track $index) {
+        <tr>
+          <td scope="row">
+            <div class="d-flex align-items-center justify-content-center">
+              <input type="checkbox" aria-label="Checkbox for following text input" #oneCheckElement
+                [attr.data-id]="item.contractInstallmentId  || item.id" [checked]="item.isInThisVoucher"
+                (change)="checkDataItem($event,item)">
+              {{$index + 1}}
+            </div>
+
+          </td>
+          <td>{{item.contractId}}</td>
+          <td>{{item.propertyName}}</td>
+          <td>{{item.unitName}} </td>
+          <td>{{this.Months[item.monthIndex] || this.Months[item.monthNumber]}}</td>
+          <td>
+            <div #amountDueElement>{{item.amount || item.amountDue | number : '1.2-2'}}</div>
+          </td>
+          <!--  -->
+          <td><input type="text" class="form-control" #paidAmount placeholder="0" appNoStringPaste
+              [value]="item.paidAmount || item.paid || 0" (input)="onPaidAmountChange($event,item)"></td>
+
+          <td><input type="text" class="form-control" [value]="item.totalWithAmount  || item.remainingAmount  || 0 | number : '1.2-2'"
+              readonly #remainingAmount></td>
+        </tr>
+        }@empty {
+        <tr>
+          <td class="empty-cell" colspan="10">
+            <app-emptytable></app-emptytable>
+          </td>
+        </tr>
+        }
+
+
+      </tbody>
+
+    </table>
+
+    <table class="table2" *ngIf="paymentData?.rows?.length > 0">
+      <tbody>
+        <tr>
+          <td></td>
+          <td>
+            <p>الاجمالي</p>
+          </td>
+          <td></td>
+          <td></td>
           <td></td>
           <!-- <td>{{this.TotalAmountDue }}</td>
         <td>{{this.PaidTotalAmount}}</td>
         
         <td>{{this.RemainingTotalAmount}}</td> -->
-        <td>{{ TotalAmountDue | number:'1.2-2' }}</td>
-<td>{{ PaidTotalAmount | number:'1.2-2' }}</td>
-<td>{{ RemainingTotalAmount | number:'1.2-2' }}</td>
+          <td>{{ TotalAmountDue | number:'1.2-2' }}</td>
+          <td>{{ PaidTotalAmount | number:'1.2-2' }}</td>
+          <td>{{ RemainingTotalAmount | number:'1.2-2' }}</td>
 
-            </tr>
-        </tbody>
+        </tr>
+      </tbody>
     </table>
 
 
-</div>
-
-
-<!-- <div class="table-responsive table2">
-   
-</div> -->
-
-  
-</form>
-
-
-  <div class="btn_add_reset mb-3">
- <button type="button" data-type="save" data-button="send"  [ngClass]="{'btnEdit':this.btnAddandUpdate=='update','btnAdd':this.btnAddandUpdate=='add'}" (click)="onSubmit()">{{this.btnAddandUpdate == 'add' ? 'اضافه':"تعديل"}}</button>
- <button (click)="resetForm()" data-button="reset" >جديد</button>
- <button data-button="reset" (click)="showDeletePopup()" *ngIf="canBtnsShow">حذف</button>
- <button data-button="reset" *ngIf="canBtnsShow">طباعه </button>
   </div>
 
 
-<app-confirm-delete [isVisible]="showDelete" (onDelete)="deleteConfirmed($event)" [itemId]="this.deleteId" (toggleModal)="onClose()"></app-confirm-delete>
-<app-popup-search [isVisible]="showPopupSearch" [dataArraySearch]="dataArraySearch" (closePopup)="showPopupSearch = false" (sendDataSelectedSearch)="sendDataSelectedSearch($event)"></app-popup-search>
+  <!-- <div class="table-responsive table2">
+   
+</div> -->
+
+
+</form>
+
+
+<div class="btn_add_reset mb-3">
+  <button type="button" data-type="save" data-button="send"
+    [ngClass]="{'btnEdit':this.btnAddandUpdate=='update','btnAdd':this.btnAddandUpdate=='add'}"
+    (click)="onSubmit()">{{this.btnAddandUpdate == 'add' ? 'اضافه':"تعديل"}}</button>
+  <button (click)="resetForm()" data-button="reset">جديد</button>
+  <button data-button="reset" (click)="showDeletePopup()" *ngIf="canBtnsShow">حذف</button>
+  <button data-button="reset" *ngIf="canBtnsShow">طباعه </button>
+</div>
+
+
+<app-confirm-delete [isVisible]="showDelete" (onDelete)="deleteConfirmed($event)" [itemId]="this.deleteId"
+  (toggleModal)="onClose()"></app-confirm-delete>
+<app-popup-search [isVisible]="showPopupSearch" [dataArraySearch]="dataArraySearch"
+  (closePopup)="showPopupSearch = false" (sendDataSelectedSearch)="sendDataSelectedSearch($event)"></app-popup-search>

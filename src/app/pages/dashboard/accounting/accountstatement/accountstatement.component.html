@@ -7,9 +7,12 @@
 
         <ng-select [items]="accountData" #accountElement bindLabel="name" bindValue="id" [virtualScroll]="true"
           placeholder="الحساب" formControlName="accountId"></ng-select>
-        <app-formerror-msg [control]="this.FromSearchData.controls['accountId']" [Messages]="{
-                  required:'الحساب مطلوب'
-               }"></app-formerror-msg>
+        <ng-container
+          *ngIf="FromSearchData.controls['accountId'].invalid && FromSearchData.controls['accountId'].touched">
+          <app-formerror-msg [control]="this.FromSearchData.controls['accountId']" [Messages]="{
+              required:'الحساب مطلوب'
+            }"></app-formerror-msg>
+        </ng-container>
 
       </div>
     </div>
@@ -69,9 +72,20 @@
         </td>
       </tr>
       }
+      <tr *ngIf="accountStatement.length > 0" class="summary-row">
+        <td colspan="3">الاجمالي </td>
+        <td></td>
+        <td>
+          <div class="text-center ">{{summaryList?.totalDebit}}</div>
+        </td>
+        <td>
+          <div> {{summaryList?.totalCredit}}</div>
+        </td>
+        <td></td>
+      </tr>
     </tbody>
   </table>
-  <table class="table2" *ngIf="this.accountStatement.length > 0">
+  <!-- <table class="table2" *ngIf="this.accountStatement.length > 0">
     <tbody>
       <tr>
         <td colspan="2">الاجمالي </td>
@@ -87,7 +101,7 @@
         <td></td>
       </tr>
     </tbody>
-  </table>
+  </table> -->
 </div>
 <app-pagination [totalPages]="totalPages" [currentPage]="pageIndex" (pageChange)="onPageChanged($event)">
 </app-pagination>

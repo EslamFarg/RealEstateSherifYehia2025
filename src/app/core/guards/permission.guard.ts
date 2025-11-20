@@ -26,7 +26,6 @@ export class PermissionGuard implements CanActivate {
     if (requiredPageId == null) {
       return true;
     }
-
     // ✅ ADMIN CASE: both groups and pageGroups are empty → allow all
     const isAdmin =
       Array.isArray(user?.groups) &&

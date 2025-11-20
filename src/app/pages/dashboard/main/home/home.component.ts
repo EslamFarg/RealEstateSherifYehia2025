@@ -1,4 +1,5 @@
 import {
+  AfterViewInit,
   Component,
   ElementRef,
   inject,
@@ -6,6 +7,7 @@ import {
   ViewChild,
 } from '@angular/core';
 import {
+  ArcElement,
   BarController,
   BarElement,
   CategoryScale,
@@ -14,12 +16,17 @@ import {
   ChartData,
   Legend,
   LinearScale,
+  PieController,
   Tooltip,
 } from 'chart.js';
 import { BaseChartDirective } from 'ng2-charts';
+import { HomeService } from './services/home.service';
+import { Home } from './interfaces/home';
 Chart.register(
   BarElement,
   BarController,
+  PieController,
+  ArcElement,
   CategoryScale,
   LinearScale,
   Tooltip,
@@ -31,89 +38,120 @@ Chart.register(
   styleUrls: ['./home.component.scss'],
   // schemas:[CUSTOM_ELEMENTS_SCHEMA]
 })
-export class HomeComponent {
+export class HomeComponent implements AfterViewInit {
   render: Renderer2 = inject(Renderer2);
-  constructor() {}
-
-  ngAfterViewInit(): void {}
-  showMonth = false;
-  showweek = false;
-
-  @ViewChild('month') month!: ElementRef<HTMLInputElement>;
-  @ViewChild('week') week!: ElementRef<HTMLInputElement>;
-  @ViewChild(BaseChartDirective) chart: BaseChartDirective<'bar'> | undefined;
-
-  public barChartOptions: ChartConfiguration<'bar'>['options'] = {
-    // We use these empty structures as placeholders for dynamic theming.
-    scales: {
-      x: {
-        grid: {
-          display: false,
-        },
-      },
-      y: {
-        grid: {
-          display: false,
-        },
-      },
-    },
-    plugins: {
-      legend: {
-        display: false,
-      },
-    },
+  _homeService: HomeService = inject(HomeService);
+  homeObj: Home = {
+    customersCount: 0,
+    ownersCount: 0,
+    propertiesCount: 0,
+    contractsCount: 0,
+    activeContractsCount: 0,
+    expiredContractsCount: 0,
+    latePaymentsCount: 0,
+    terminatedContractsCount: 0,
   };
-  public barChartType = 'bar' as const;
+  ngAfterViewInit(): void {
+    this.getDashboardData();
+  }
+  getDashboardData() {
+    this._homeService.getDashboard().subscribe({
+      next: (res: Home) => {
+        this.homeObj = res;
 
-  public barChartData: ChartData<'bar'> = {
-    labels: [
-      '2006',
-      '2007',
-      '2008',
-      '2009',
-      '2010',
-      '2011',
-      '2012',
-      '2013',
-      '2014',
-    ],
-    datasets: [
-      {
-        data: [25, 30, 40, 56, 80, 55, 40, 30, 20],
-        backgroundColor: [
-          '#C9C9C9',
-          '#FFA6F9',
-          '#C9C9C9',
-          '#B3A5F1',
-          '#99DBFF',
-          '#C9C9C9',
-          '#C9C9C9',
-          '#C9C9C9',
-          '#C9C9C9',
-        ],
-        barThickness: 25, 
-        maxBarThickness: 25,
+        // update chart data (replace object/datasets so change detection notices)
+        this.pieChartData = {
+          labels: this.pieChartLabels, // or set directly in-line
+          datasets: [
+            {
+              data: [
+                this.homeObj.activeContractsCount,
+                this.homeObj.expiredContractsCount,
+                this.homeObj.terminatedContractsCount,
+              ],
+              backgroundColor: ['#99DBFF', '#B3A5F1', '#C9C9C9'],
+            },
+          ],
+        };
+
+        // ask the chart to update (if viewchild available)
+        this.chart?.update();
       },
-    ],
-  };
-  changeClender(type: string) {
-    if (type === 'month') {
-      this.showMonth = true;
-      this.showweek = false;
-    } else if (type === 'week') {
-      this.showweek = true;
-      this.showMonth = false;
-    }
+    });
   }
 
-  openCalendar() {
-    if (this.showMonth) {
-      this.month.nativeElement.showPicker?.(); // Chrome >= 93 يدعمها
-      this.month.nativeElement.focus();
-      // this.month.nativeElement.click();   // يفتح input month
-    } else if (this.showweek) {
-      this.week.nativeElement.showPicker?.(); // Chrome >= 93 يدعمها
-      this.week.nativeElement.focus();
-    }
-  }
+  @ViewChild(BaseChartDirective) chart: BaseChartDirective<'pie'> | undefined;
+
+  // public pieChartOptions: ChartConfiguration<'pie'>['options'] = {
+  //   scales: {
+  //     x: {
+  //       grid: {
+  //         display: false,
+  //       },
+  //       // x axis is hidden
+  //       ticks: {
+  //         display: false,
+  //       },
+  //     },
+  //     y: {
+  //       grid: {
+  //         display: false,
+  //       },
+  //       // y axis is hidden
+  //       ticks: {
+  //         display: false,
+  //       },
+  //     },
+  //   },
+  //   plugins: {
+  //     legend: {
+  //       display: true,
+  //       position: 'right',
+  //       labels: {
+  //         font: {
+  //           size: 14,
+  //         },
+  //         usePointStyle: true,
+  //         pointStyle: 'circle',
+  //         padding: 20,
+  //       },
+  //     },
+  //   },
+
+  //   elements: {
+  //     arc: { borderWidth: 0 },
+  //   },
+  // };
+public pieChartOptions: ChartConfiguration<'pie'>['options'] = {
+  responsive: true,
+  plugins: {
+    legend: {
+      display: true,
+      position: 'bottom',
+      labels: {
+        font: {
+          size: 14,
+        },
+        usePointStyle: true,
+        pointStyle: 'circle',
+        padding: 20,
+      },
+    },
+  },
+  elements: {
+    arc: { borderWidth: 0 },
+  },
+};
+
+  public pieChartLabels: string[] = [
+    'العقود النشطة',
+    'العقود المنتهية',
+    'العقود الملغية',
+  ];
+  pieChartData: ChartData<'pie', number[], string | string[]> = {
+    labels: ['Red', 'Blue', 'Yellow'],
+    datasets: [{ data: [0, 0, 0] }],
+  };
+
+  public pieChartType: string = 'pie';
 }

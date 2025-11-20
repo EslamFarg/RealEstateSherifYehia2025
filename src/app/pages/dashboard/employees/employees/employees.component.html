@@ -43,7 +43,7 @@
                     </ng-container> -->
                 <ngx-intl-tel-input [cssClass]="'form-control'" [onlyCountries]="['sa', 'eg']"
                     [selectedCountryISO]="selectedCountry" [enableAutoCountrySelect]="true" [enablePlaceholder]="true"
-                    [selectFirstCountry]="false" [separateDialCode]="true" [maxLength]="14" formControlName="Mobile">
+                    [selectFirstCountry]="false" [separateDialCode]="true" [maxLength]="10" formControlName="Mobile">
                 </ngx-intl-tel-input>
                 <ng-container
                     *ngIf="employeesData.controls['Mobile'].invalid && employeesData.controls['Mobile'].touched">

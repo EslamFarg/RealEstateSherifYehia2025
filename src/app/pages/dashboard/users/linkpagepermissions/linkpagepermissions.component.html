@@ -15,7 +15,7 @@
         <div class="col-sm-6">
             <label for="permission" class="form-label">الصلاحيات</label>
             <ng-select [items]="getAllPermissionsData" [searchable]="true" [closeOnSelect]="false"
-                [bindLabel]="'actionName'" placeholder="الصلاحيات" [multiple]="true" [bindValue]="'id'"
+                [bindLabel]="'displayNameAr'" placeholder="الصلاحيات" [multiple]="true" [bindValue]="'id'"
                 formControlName="actionIds"></ng-select>
             <ng-container
                 *ngIf="permissionForm.controls['actionIds'].invalid && permissionForm.controls['actionIds'].touched">

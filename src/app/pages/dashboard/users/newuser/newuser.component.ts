@@ -9,6 +9,7 @@ import { Newuser } from './models/newuser';
 import { GroupmessageService } from '../../messages/groupmessage/services/groupmessage.service';
 import { GroupService } from '../group/services/group.service';
 import { CountryISO } from 'ngx-intl-tel-input';
+import { ksaEgyptPhoneValidator } from '../../../../shared/validations/phoneNumber2';
 
 @Component({
   selector: 'app-newuser',
@@ -49,7 +50,7 @@ export class NewuserComponent {
     ],
     fullName: [''],
     email: ['', [Validators.required, Validators.email]],
-    phoneNumber: [null as any, Validators.required],
+    phoneNumber: [null as any, [Validators.required , ksaEgyptPhoneValidator]],
     // password: ['Sh12345678Sh'],
     // groupIds:[[],Validators.required],
     groupIds: this.fb.control<number[]>([]),

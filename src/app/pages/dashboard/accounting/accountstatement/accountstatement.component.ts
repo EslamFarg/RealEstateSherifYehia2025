@@ -18,14 +18,15 @@ import { SharedService } from '../../../../shared/services/shared.service';
 })
 export class AccountstatementComponent {
   // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!11 Services
+  @ViewChild('accountElement') accountElement!: ElementRef;
   fb: FormBuilder = inject(FormBuilder);
   _accountsStatementSer: AccountstatementService = inject(
     AccountstatementService
   );
   destroyRef: DestroyRef = inject(DestroyRef);
   _sharedService: SharedService = inject(SharedService);
-  // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! Property
 
+  // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! Property
   FromSearchData: any = this.fb.group({
     accountId: [null, [Validators.required]],
     fromDate: [
@@ -36,17 +37,12 @@ export class AccountstatementComponent {
   });
 
   accountStatement: any = [];
-
-  // pagination
-
-  pageIndex = 1;
-  pageSize = 10;
-
   accountData: any = [];
-
   summaryList: any;
 
-  @ViewChild('accountElement') accountElement!: ElementRef;
+  // pagination
+  pageIndex = 1;
+  pageSize = 10;
 
   // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! Methods
 
@@ -55,7 +51,7 @@ export class AccountstatementComponent {
     //Add 'implements OnInit' to the class.
 
     this.getAllAccounts();
-    this.searchOnData();
+    // this.searchOnData();
   }
 
   onPageChanged(page: number) {

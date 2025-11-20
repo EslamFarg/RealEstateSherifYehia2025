@@ -68,7 +68,7 @@
                 <ngx-intl-tel-input [cssClass]="'form-control'" [onlyCountries]="['sa', 'eg']"
                      [selectedCountryISO]="selectedCountry"
                     [enableAutoCountrySelect]="true" [enablePlaceholder]="true" 
-                    [selectFirstCountry]="false" [separateDialCode]="true" [maxLength]="14" formControlName="Mobile">
+                    [selectFirstCountry]="false" [separateDialCode]="true" [maxLength]="10" formControlName="Mobile">
                 </ngx-intl-tel-input>
                 <ng-container *ngIf="tenantForm.controls['Mobile'].invalid && tenantForm.controls['Mobile'].touched">
                     <small class="error_msg_form" *ngIf="tenantForm.controls['Mobile'].hasError('required')">
@@ -151,7 +151,7 @@
                      <ngx-intl-tel-input [cssClass]="'form-control'" [onlyCountries]="['sa', 'eg']"
                      [selectedCountryISO]="selectedCountry"
                     [enableAutoCountrySelect]="true" [enablePlaceholder]="true" 
-                    [selectFirstCountry]="false" [separateDialCode]="true" [maxLength]="14" formControlName="phoneNumber">
+                    [selectFirstCountry]="false" [separateDialCode]="true" [maxLength]="10" formControlName="phoneNumber">
                 </ngx-intl-tel-input>
                 <ng-container *ngIf="DependantsForm.controls['phoneNumber'].invalid && DependantsForm.controls['phoneNumber'].touched">
                     <small class="error_msg_form" *ngIf="DependantsForm.controls['phoneNumber'].hasError('required')">
