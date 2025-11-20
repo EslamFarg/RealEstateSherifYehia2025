@@ -703,3 +703,7 @@
 
 
   <app-confirm-delete [isVisible]="showDelete" (onDelete)="deleteConfirmed($event)" [itemId]="this.deleteId" (toggleModal)="onClose()"></app-confirm-delete>
+
+  <app-popup-search-unit [isVisible]="showPopupSearchUnit" [dataArraySearch]="dataArraySearch" (closePopup)="showPopupSearchUnit = false" (sendDataSelectedSearch)="sendDataSelectedSearchUnit($event)"></app-popup-search-unit>
+  <app-popup-search-tenant-contract [isVisible]="showPopupSearchTenant" [dataArraySearch]="dataArraySearchTenant" (closePopup)="showPopupSearchTenant = false" (sendDataSelectedSearch)="sendDataSelectedSearchTenant($event)"></app-popup-search-tenant-contract>
+  <app-popup-search-broker-contract [isVisible]="showPopupSearchBroker" [dataArraySearch]="dataArraySearchBroker" (closePopup)="showPopupSearchBroker = false" (sendDataSelectedSearch)="sendDataSelectedSearchBroker($event)"></app-popup-search-broker-contract>

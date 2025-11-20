@@ -13,6 +13,9 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { FormerrorMsgComponent } from '../../../../../shared/ui/formerror-msg/formerror-msg.component';
 import { ConfirmDeleteComponent } from '../../../../../shared/components/confirm-delete/confirm-delete.component';
 import { DirectivesModule } from "../../../../../shared/directives/directives.module";
+import { PopupSearchUnitComponent } from '../../../../../shared/ui/popup-search-unit/popup-search.component';
+import { PopupSearchTenantContractComponent } from '../../../../../shared/ui/popup-search-tenantcontract/popup-search.component';
+import { PopupSearchBrokerContractComponent } from '../../../../../shared/ui/popup-search-brokercontract/popup-search.component';
 
 
 @NgModule({
@@ -32,7 +35,10 @@ import { DirectivesModule } from "../../../../../shared/directives/directives.mo
     ReactiveFormsModule,
     FormerrorMsgComponent,
     ConfirmDeleteComponent,
-    DirectivesModule
+    DirectivesModule,
+    PopupSearchUnitComponent,
+    PopupSearchTenantContractComponent,
+    PopupSearchBrokerContractComponent
 ]
 })
 export class NewaddcontractModule { }

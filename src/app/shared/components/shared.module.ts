@@ -5,6 +5,7 @@ import { SidebarComponent } from './sidebar/sidebar.component';
 import { NgbAccordionModule } from '@ng-bootstrap/ng-bootstrap';
 import { RouterModule, RouterOutlet } from '@angular/router';
 import { DirectivesModule } from '../directives/directives.module';
+import { PrintpageComponent } from './printpage/printpage.component';
 
 
 

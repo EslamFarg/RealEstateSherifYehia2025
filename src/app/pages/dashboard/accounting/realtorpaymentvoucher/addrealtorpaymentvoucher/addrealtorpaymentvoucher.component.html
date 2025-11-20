@@ -1,4 +1,4 @@
-<app-page-heading [title]="'المحاسبه'" [subtitle]="'سند الصرف'" [AddBtn]="true" [ExplorerRoute]="'/dashboard/realtorpaymentvoucher/explorerrealtorpaymentvoucher'" [TitlePageAddBtn]="'مستكشف سند الصرف'"></app-page-heading>
+<app-page-heading [title]="'المحاسبه'" [subtitle]="'سند الصرف خاص بالسمسار'" [AddBtn]="true" [ExplorerRoute]="'/dashboard/realtorpaymentvoucher/explorerrealtorpaymentvoucher'" [TitlePageAddBtn]="'مستكشف سند الصرف'"></app-page-heading>
 
 
 <form action="" class="forms_dashboard" [formGroup]="realtorPaymentVoucherForm" >
@@ -139,7 +139,7 @@
     class="form-control"
     placeholder="0"
     [value]="item.brokerPaidAmount"
-    (input)="onPaidChange($event, item)"
+     (input)="onPaidInputChange($event, item, rowCheckboxs.toArray()[$index].nativeElement)"
     #paidAmountInput
      [class.border-danger]="item.brokerPaidAmount == 0 && item.isChecked"
   />

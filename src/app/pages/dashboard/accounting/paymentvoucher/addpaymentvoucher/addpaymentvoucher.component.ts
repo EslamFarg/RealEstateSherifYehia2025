@@ -560,32 +560,165 @@ checkAllData(e: any) {
 
 
 
+// calculateTotals() {
+//   this.TotalAmountDue = 0;
+//   this.PaidTotalAmount = 0;
+//   this.RemainingTotalAmount = 0;
+
+//   this.paymentData.rows.forEach((item: any) => {
+
+
+    
+//     item.remainingAmount = item.amountDue - item.paid;
+
+//     this.TotalAmountDue += item.amountDue;
+//     this.PaidTotalAmount += item.paid;
+//     this.RemainingTotalAmount += item.remainingAmount;
+
+//   });
+// }
+
+
+// calculateTotals() {
+//   this.TotalAmountDue = 0;
+//   this.PaidTotalAmount = 0;
+//   this.RemainingTotalAmount = 0;
+
+//   if (!this.paymentData || !this.paymentData.rows) return;
+
+//   this.paymentData.rows.forEach((item: any) => {
+
+//     const amountDue = Number(item.amount ?? item.amountDue) || 0;
+//     const paid = Number(item.paidAmount ?? item.paid ?? 0) || 0;
+
+//     item.remainingAmount = amountDue - paid;
+
+//     this.TotalAmountDue += amountDue;
+//     this.PaidTotalAmount += paid;
+//     this.RemainingTotalAmount += item.remainingAmount;
+//   });
+// }
+
+
 calculateTotals() {
   this.TotalAmountDue = 0;
   this.PaidTotalAmount = 0;
   this.RemainingTotalAmount = 0;
 
+  if (!this.paymentData || !this.paymentData.rows) return;
+
   this.paymentData.rows.forEach((item: any) => {
 
+    const amountDue = Number(item.amountDue ?? item.amount) || 0;
 
-    
-    item.remainingAmount = item.amountDue - item.paid;
+    const paid = Number(item.paidAmount || item.netPaidInThisVoucher || 0);
 
-    this.TotalAmountDue += item.amountDue;
-    this.PaidTotalAmount += item.paid;
+    item.remainingAmount = amountDue - paid;
+
+    this.TotalAmountDue += amountDue;
+    this.PaidTotalAmount += paid;
     this.RemainingTotalAmount += item.remainingAmount;
-
   });
 }
 
 
-getDataById(e:any){
+
+// getDataById(e:any){
  
-  this._ownerPaymentVoucherServices.getDataById(e.value).pipe(takeUntilDestroyed(this.destroyRef)).subscribe((res:any)=>{
-      this.btnAddandUpdate = 'update';
+//   this._ownerPaymentVoucherServices.getDataById(e.value).pipe(takeUntilDestroyed(this.destroyRef)).subscribe((res:any)=>{
+//       this.btnAddandUpdate = 'update';
 
     
-      this.deleteId=res.id;
+//       this.deleteId=res.id;
+
+//       this.paymentVoucherForm.patchValue({
+//         voucherNo: res.voucherNo,
+//         voucherDate: res.voucherDate.split('T')[0],
+//         paymentMethod: res.paymentMethod,
+//         amount: res.net,
+//         notes: res.notes,
+//         ownerId: res.ownerId,
+//         debitAccountId: res.debitAccountId,
+//         creditAccountId: res.creditAccountId,
+
+//       });
+     
+
+
+
+//       this.formDataSearch.patchValue({
+//         financiallyAccountId: res.debitAccountId,
+//         name: res.debitAccountName,
+//         email: res.email,
+//         mobile: res.mobile ?? res.phoneNumber,
+//         nationalID: res.nationalID
+//       })
+      
+//       // table
+//       this.paymentData = {
+//         rows: res.listOwnerMonths.map((item: any) => ({
+ 
+//           contractInstallmentId: item.id, 
+//           contractId: item.contractId,
+//           propertyName: item.propertyName,
+//           unitName: item.unitName,
+//           monthNumber: item.monthNumber,
+//           amount:item.amountDue,
+//           paidAmount: item.netPaidInThisVoucher,
+//           isInThisVoucher:item.isInThisVoucher,
+//           monthIndex: item.monthIndex,
+//           // amountDue:item.amountDue,
+//           remainingAmount:item.amountDue - (item.netPaidInThisVoucher || 0)
+//         }))
+//       };
+
+
+   
+
+//       // this.calculateTotals();
+
+
+      
+//   setTimeout(() => {
+//   this.calculateTotals();
+// }, 4000);
+
+
+
+
+//       this.itemChecked = res.listOwnerMonths
+//        .filter((item: any) => item.netPaidInThisVoucher > 0)
+//   .map((item:any) => ({
+//     contractInstallmentId: item.id,
+//     amount: item.netPaidInThisVoucher  
+//   }));
+
+
+
+
+
+
+
+      
+//       this.idUpdate=res.id
+//       this.canBtnsShow=true
+
+
+      
+
+//     });
+//   // })
+// }
+
+
+getDataById(e:any){
+ 
+  this._ownerPaymentVoucherServices.getDataById(e.value)
+    .pipe(takeUntilDestroyed(this.destroyRef))
+    .subscribe((res:any)=>{
+
+      this.btnAddandUpdate = 'update';
+      this.deleteId = res.id;
 
       this.paymentVoucherForm.patchValue({
         voucherNo: res.voucherNo,
@@ -596,11 +729,7 @@ getDataById(e:any){
         ownerId: res.ownerId,
         debitAccountId: res.debitAccountId,
         creditAccountId: res.creditAccountId,
-
       });
-     
-
-
 
       this.formDataSearch.patchValue({
         financiallyAccountId: res.debitAccountId,
@@ -608,57 +737,52 @@ getDataById(e:any){
         email: res.email,
         mobile: res.mobile ?? res.phoneNumber,
         nationalID: res.nationalID
-      })
-      
-      // table
+      });
+
+      // ▶▶ تعبئة الجدول
       this.paymentData = {
         rows: res.listOwnerMonths.map((item: any) => ({
- 
-          contractInstallmentId: item.id, 
+          contractInstallmentId: item.id,
           contractId: item.contractId,
           propertyName: item.propertyName,
           unitName: item.unitName,
           monthNumber: item.monthNumber,
-          amount:item.amountDue,
+          amount: item.amountDue,
           paidAmount: item.netPaidInThisVoucher,
-          isInThisVoucher:item.isInThisVoucher,
+          isInThisVoucher: item.isInThisVoucher,
           monthIndex: item.monthIndex,
-          // amountDue:item.amountDue,
-          remainingAmount:item.amountDue - (item.netPaidInThisVoucher || 0)
+          remainingAmount: item.amountDue - (item.netPaidInThisVoucher || 0)
         }))
       };
 
 
-   
+     setTimeout(() => {
+  // تعبئة inputs تلقائيًا
+  this.paidAmountElement?.forEach((el, index) => {
+    el.nativeElement.value = this.paymentData.rows[index].paidAmount || 0;
+  });
 
-      this.calculateTotals();
+  // حساب الإجماليات
+  this.calculateTotals();
 
+}, 200);
 
+ 
 
 
       this.itemChecked = res.listOwnerMonths
-       .filter((item: any) => item.netPaidInThisVoucher > 0)
-  .map((item:any) => ({
-    contractInstallmentId: item.id,
-    amount: item.netPaidInThisVoucher  
-  }));
+        .filter((item: any) => item.netPaidInThisVoucher > 0)
+        .map((item:any) => ({
+          contractInstallmentId: item.id,
+          amount: item.netPaidInThisVoucher
+        }));
 
-
-
-
-
-
-
-      
-      this.idUpdate=res.id
-      this.canBtnsShow=true
-
-
-      
+      this.idUpdate = res.id;
+      this.canBtnsShow = true;
 
     });
-  // })
 }
+
 
 
 isItemEditable(item: any): boolean {

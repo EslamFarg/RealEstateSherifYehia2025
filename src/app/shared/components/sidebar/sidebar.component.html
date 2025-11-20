@@ -181,15 +181,22 @@
 		</div> -->
 		<div class="accordion_sidebar">
 			<div ngbAccordion [closeOthers]="true">
+
+				
+
+
 				<div *ngFor="let group of filteredGroups; trackBy: trackByGroup; let gi = index" ngbAccordionItem
 					[collapsed]="group.collapsed ?? true">
 					<h2 ngbAccordionHeader>
 						<button ngbAccordionButton>{{ group.title }}</button>
+						<!-- <button ngbAccordionButton>{{ group.title }}</button> -->
+						
 					</h2>
 
 					<div ngbAccordionCollapse>
 						<div ngbAccordionBody>
 							<ng-template>
+								
 								<a *ngFor="let link of group.links; trackBy: trackByLink" [routerLink]="link.route"
 									[routerLinkActive]="'active'" (click)="handleClick()">
 									{{ link.label }}

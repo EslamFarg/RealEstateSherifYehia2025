@@ -464,28 +464,98 @@ get TotalBrokerCommission(): number {
 
 PaidAmount: number = 0;
 @ViewChildren('paidAmountInput') paidAmountElement!:QueryList<ElementRef>
-onPaidChange(event: any, item: any) {
-   let value = parseFloat(event.target.value) || 0;
+// onPaidChange(event: any, item: any) {
+//    let value = parseFloat(event.target.value) || 0;
+//   if (value > item.brokerCommission) {
+//     // event.target.value = item.brokerCommission;
+//      value = item.brokerCommission;
+//     event.target.value = value;
+//   }
+
+//   // item.remainingAmount = item.brokerCommission - event.target.value;
+
+//     item.brokerPaidAmount = value;
+//   item.remainingAmount = item.brokerCommission - value;
+
+
+//   const exist = this.itemsChecked.find(x => x.contractId === item.contractId);
+//   if (exist) {
+//     exist.paidAmount = value;
+//   }
+
+//   // Tot
+
+// }
+
+
+// onPaidInputChange(event: any, item: any) {
+//   let value = parseFloat(event.target.value) || 0;
+
+//   // تحديد الحد الأقصى حسب العمولة
+//   if (value > item.brokerCommission) {
+//     value = item.brokerCommission;
+//     event.target.value = value;
+//   }
+
+//   // تحديث القيم
+//   item.brokerPaidAmount = value;
+//   item.remainingAmount = item.brokerCommission - value;
+
+//   // تحديث itemsChecked
+//   const exist = this.itemsChecked.find(x => x.contractId === item.contractId);
+//   if (exist) {
+//     exist.paidAmount = value;
+//   } else {
+//     this.itemsChecked.push({
+//       contractId: item.contractId,
+//       paidAmount: value
+//     });
+//   }
+
+//   // تحديث الإجمالي فورًا
+//   this.updateTotalPaid();
+// }
+
+@ViewChildren('rowCheckbox') rowCheckboxs!: QueryList<ElementRef>;
+onPaidInputChange(event: any, item: any, checkbox: HTMLInputElement) {
+  let value = parseFloat(event.target.value) || 0;
+
+  // الحد الأقصى حسب العمولة
   if (value > item.brokerCommission) {
-    // event.target.value = item.brokerCommission;
-     value = item.brokerCommission;
+    value = item.brokerCommission;
     event.target.value = value;
   }
 
-  // item.remainingAmount = item.brokerCommission - event.target.value;
-
-    item.brokerPaidAmount = value;
+  // تحديث المدفوع والمتبقي
+  item.brokerPaidAmount = value;
   item.remainingAmount = item.brokerCommission - value;
 
-
+  // تحديث itemsChecked
   const exist = this.itemsChecked.find(x => x.contractId === item.contractId);
   if (exist) {
     exist.paidAmount = value;
+  } else if(value > 0) {
+    this.itemsChecked.push({
+      contractId: item.contractId,
+      paidAmount: value
+    });
   }
 
-  // Tot
+  // تفعيل الـ checkbox تلقائيًا إذا تم كتابة أي مبلغ
+  if (value > 0) {
+    item.isChecked = true;
+    if (checkbox) checkbox.checked = true;
+  } else {
+    item.isChecked = false;
+    this.itemsChecked = this.itemsChecked.filter(x => x.contractId !== item.contractId);
+    if (checkbox) checkbox.checked = false;
+  }
 
+  // تحديث الإجمالي
+  this.updateTotalPaid();
 }
+
+
 
 
 
@@ -655,8 +725,23 @@ sendDataSelectedSearch(e: any) {
 
     }
 
+    setTimeout(() => {
+  this.updateTotalPaid();
+},500);
   
 }
+
+
+updateTotalPaid() {
+  let total = 0;
+
+  this.paidAmountElement?.forEach((el: ElementRef) => {
+    total += parseFloat(el.nativeElement.value) || 0;
+  });
+
+  this.PaidAmount = total;
+}
+
 
 ngOnDestroy(): void {
   //Called once, before the instance is destroyed.
