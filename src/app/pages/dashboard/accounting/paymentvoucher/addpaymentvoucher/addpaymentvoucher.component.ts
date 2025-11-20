@@ -530,16 +530,19 @@ calculateTotals() {
   this.PaidTotalAmount = 0;
   this.RemainingTotalAmount = 0;
 
+  if (!this.paymentData || !this.paymentData.rows) return;
+
   this.paymentData.rows.forEach((item: any) => {
 
+    const amountDue = Number(item.amountDue ?? item.amount) || 0;
 
-    
-    item.remainingAmount = item.amountDue - item.paid;
+    const paid = Number(item.paidAmount || item.netPaidInThisVoucher || 0);
 
-    this.TotalAmountDue += item.amountDue;
-    this.PaidTotalAmount += item.paid;
+    item.remainingAmount = amountDue - paid;
+
+    this.TotalAmountDue += amountDue;
+    this.PaidTotalAmount += paid;
     this.RemainingTotalAmount += item.remainingAmount;
-
   });
 }
 
