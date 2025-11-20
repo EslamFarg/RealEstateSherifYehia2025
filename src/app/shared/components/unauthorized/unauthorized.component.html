@@ -1,0 +1,23 @@
+<!-- <div class="unauthorized">
+    <h2>ليس لديك صلاحية</h2>
+    <p>عذراً، لا يمكنك الوصول لهذه الصفحة.</p>
+    <a routerLink="/dashboard">العودة للوحة التحكم</a>
+</div> -->
+<div class="container">
+
+
+    <div class="content-side text-center">
+        <div class="graphic-side rounded-4 mb-3">
+            <i class="fas fa-lock lock-icon"></i>
+            <div class="error-code">خطأ 401</div>
+        </div>
+        <h2>ليس لديك صلاحية</h2>
+        <p class="lh-lg">عذراً، لا يمكنك الوصول لهذه الصفحة. يبدو أنك تحاول الوصول إلى منطقة محمية.</p>
+
+        <div class="actions d-flex align-items-center justify-content-center">
+            <a routerLink="/dashboard" class="btn btn-primary">
+                <i class="fas fa-tachometer-alt icon"></i> العودة للوحة التحكم
+            </a>
+        </div>
+    </div>
+</div>

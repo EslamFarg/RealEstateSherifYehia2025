@@ -1,64 +1,101 @@
-import { Component, ElementRef, inject, Renderer2, ViewChild} from '@angular/core';
-// import { ChartType , ChartConfiguration } from 'chart.js';/
-import { Chart, ChartConfiguration, ChartType, registerables } from 'chart.js';
-
-
+import {
+  Component,
+  ElementRef,
+  inject,
+  Renderer2,
+  ViewChild,
+} from '@angular/core';
+import {
+  BarController,
+  BarElement,
+  CategoryScale,
+  Chart,
+  ChartConfiguration,
+  ChartData,
+  Legend,
+  LinearScale,
+  Tooltip,
+} from 'chart.js';
+import { BaseChartDirective } from 'ng2-charts';
+Chart.register(
+  BarElement,
+  BarController,
+  CategoryScale,
+  LinearScale,
+  Tooltip,
+  Legend
+);
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
   // schemas:[CUSTOM_ELEMENTS_SCHEMA]
-
 })
-export class HomeComponent  {
-  render:Renderer2=inject(Renderer2);
- constructor() {
-    // لازم نسجل الـ registerables مرة واحدة
-    Chart.register(...registerables);
-  }
+export class HomeComponent {
+  render: Renderer2 = inject(Renderer2);
+  constructor() {}
 
-    ngAfterViewInit(): void {
-    const ctx = document.getElementById('myBarChart') as HTMLCanvasElement;
-
-    const config: ChartConfiguration = {
-      type: 'bar' as ChartType,
-      data: {
-        labels: [2024,2023,2022,2021,2020,2019,2018,  2017,2016,2015],
-        datasets: [
-          {
-            label: 'المبيعات',
-            data: [65, 59, 80, 81, 56],
-            backgroundColor: 'rgba(75, 192, 192, 0.6)'
-          },
-          {
-            label: 'المصاريف',
-            data: [28, 48, 40, 19, 86],
-            backgroundColor: 'rgba(255, 99, 132, 0.6)'
-          }
-        ]
-      },
-      options: {
-        responsive: true,
-        plugins: {
-          legend: {
-            position: 'top',
-          },
-          title: {
-            display: true,
-            text: 'مقارنة المبيعات والمصاريف'
-          }
-        }
-      }
-    };
-
-    new Chart(ctx, config);
-  }
+  ngAfterViewInit(): void {}
   showMonth = false;
   showweek = false;
 
   @ViewChild('month') month!: ElementRef<HTMLInputElement>;
   @ViewChild('week') week!: ElementRef<HTMLInputElement>;
+  @ViewChild(BaseChartDirective) chart: BaseChartDirective<'bar'> | undefined;
 
+  public barChartOptions: ChartConfiguration<'bar'>['options'] = {
+    // We use these empty structures as placeholders for dynamic theming.
+    scales: {
+      x: {
+        grid: {
+          display: false,
+        },
+      },
+      y: {
+        grid: {
+          display: false,
+        },
+      },
+    },
+    plugins: {
+      legend: {
+        display: false,
+      },
+    },
+  };
+  public barChartType = 'bar' as const;
+
+  public barChartData: ChartData<'bar'> = {
+    labels: [
+      '2006',
+      '2007',
+      '2008',
+      '2009',
+      '2010',
+      '2011',
+      '2012',
+      '2013',
+      '2014',
+    ],
+    datasets: [
+      {
+        data: [25, 30, 40, 56, 80, 55, 40, 30, 20],
+        backgroundColor: [
+          '#C9C9C9',
+          '#FFA6F9',
+          '#C9C9C9',
+          '#B3A5F1',
+          '#99DBFF',
+          '#C9C9C9',
+          '#C9C9C9',
+          '#C9C9C9',
+          '#C9C9C9',
+        ],
+        barThickness: 25, 
+        maxBarThickness: 25,
+      },
+    ],
+  };
   changeClender(type: string) {
     if (type === 'month') {
       this.showMonth = true;
@@ -71,19 +108,12 @@ export class HomeComponent  {
 
   openCalendar() {
     if (this.showMonth) {
-        this.month.nativeElement.showPicker?.(); // Chrome >= 93 يدعمها
+      this.month.nativeElement.showPicker?.(); // Chrome >= 93 يدعمها
       this.month.nativeElement.focus();
       // this.month.nativeElement.click();   // يفتح input month
     } else if (this.showweek) {
-        this.week.nativeElement.showPicker?.(); // Chrome >= 93 يدعمها
+      this.week.nativeElement.showPicker?.(); // Chrome >= 93 يدعمها
       this.week.nativeElement.focus();
     }
   }
-
-
-
-
-
-
-
 }

@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { HomeRoutingModule } from './home-routing.module';
 import { HomeComponent } from './home.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { BaseChartDirective } from 'ng2-charts';
 // import { CalendarModule, DateAdapter } from 'angular-calendar';
 // import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 
@@ -18,6 +19,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     CommonModule,
     HomeRoutingModule,
     FormsModule,
+    BaseChartDirective
     // CalendarModule.forRoot({
     //   provide: DateAdapter,
     //   useFactory: adapterFactory,

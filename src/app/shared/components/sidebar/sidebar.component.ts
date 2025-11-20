@@ -22,6 +22,11 @@ export class SidebarComponent implements OnInit{
     {
       title: 'البيانات الرئيسيه',
       links: [
+        {
+          label: 'لوحه التحكم',
+          route: 'dashboard',
+          id: 41,
+        },
         { label: 'المالك', route: 'owner', id: 1 },
         { label: 'السمسار', route: 'realtor', id: 2 },
         { label: 'المستأجر', route: 'tenant', id: 3 },
@@ -113,7 +118,7 @@ export class SidebarComponent implements OnInit{
     },
   ];
   filteredGroups: SidebarGroup[] = [];
-  ngOnInit(): void {
+  ngOnInit(): void {    
     let md = window.matchMedia('(max-width:992px)');
     md.addEventListener('change', (e: any) => {
       if (e.matches) {
