@@ -54,6 +54,11 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
       })
     : req;
 
+     const skipLoader = authReq.headers.has('skipLoader');
+
+  if (skipLoader) {
+    return next(authReq); // بدون لودر
+  }
   // 🎬 إظهار اللودر
   loader.show();
 

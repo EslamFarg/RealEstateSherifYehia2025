@@ -1,96 +1,115 @@
-@use '../../../../../../public/styles/abstracts/vars' as *;
-@use '../../../../../../public/styles/abstracts/mixins' as *;
-.profile_head_container{
-@include flex_box(flex,null,center,20px);
-position: relative;
-.profile_img{
+@use "../../../../../../public/styles/abstracts/vars" as *;
+@use "../../../../../../public/styles/abstracts/mixins" as *;
+.profile_head_container {
+  @include flex_box(flex, null, center, 20px);
+  position: relative;
+  .profile_img {
     position: relative;
-    
 
-    .icon_change_profile{
-        position: absolute;
-        right: 5px;
-        bottom: 5px;
-        width: 16px;
-        height: 16px;
-        border-radius: 50%;
-        background-color: #BED2BF;
-        @include flex_box(flex,center,center);
-        cursor: pointer;
+    .icon_change_profile {
+      position: absolute;
+      right: 5px;
+      bottom: 5px;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background-color: #bed2bf;
+      @include flex_box(flex, center, center);
+      cursor: pointer;
     }
-
-    
-}
-.profile_content{
-        h5{
-            font-size: 18px;
-            font-weight: 700;
-            color: $main_color;
-            opacity:70% ;
-            margin-bottom: 16px !important;
-
-        }
-        p{
-            font-size: 12px;
-            font-weight: 600;
-            opacity: 70%;
-            font-weight: 600;
-            color: $main_color;
-        }
+  }
+  .profile_content {
+    h5 {
+      font-size: 18px;
+      font-weight: 700;
+      color: $main_color;
+      opacity: 70%;
+      margin-bottom: 16px !important;
     }
-
+    p {
+      font-size: 12px;
+      font-weight: 600;
+      opacity: 70%;
+      font-weight: 600;
+      color: $main_color;
+    }
+  }
 }
 
+.container_profile {
+  @include flex_box(flex, null, flex-start, 16px);
+  margin-top: 20px;
 
-.container_profile{
-@include flex_box(flex,null,flex-start,16px);
-margin-top: 20px;
-
-@include responsive('small'){
+  @include responsive("small") {
     flex-direction: column;
-}
-@include responsive('meduim'){
+  }
+  @include responsive("meduim") {
     flex-direction: column;
-}
+  }
 
-    aside{
+  aside {
     width: 252px;
     min-height: 337px;
     padding: 24px;
-    background-color: #EAF2EA;
-    @include responsive('small'){
-        width: 100%;
-        min-height: 50px;
+    background-color: #eaf2ea;
+    @include responsive("small") {
+      width: 100%;
+      min-height: 50px;
     }
 
-    @include responsive('meduim'){
-        width: 100%;
-         min-height: 50px;
+    @include responsive("meduim") {
+      width: 100%;
+      min-height: 50px;
     }
-    a{
-        width: 100%;
-        height: 43px;
-        line-height: 43px;
-        text-align: center;
-        color: $main_color;
-        font-size: 16px;
-        font-weight: 700;
-        margin-bottom: 10px;
-        
-        &.active{
-  background-color: $main_color;
-  color: $white-color;
+    a {
+      width: 100%;
+      height: 43px;
+      line-height: 43px;
+      text-align: center;
+      color: $main_color;
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom: 10px;
+
+      &.active {
+        background-color: $main_color;
+        color: $white-color;
         // margin-bottom: 10px;
         opacity: 70%;
-        }
-      
-        
-
-
+      }
     }
+  }
+
+  section {
+    width: 100%;
+  }
 }
 
-section{
-    width: 100%;
+
+
+.profile_img {
+  .overlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255,255,255,0.6);
+    border-radius: 4px;
+    .overlay-content {
+      text-align: center;
+      .spinner {
+        width: 34px;
+        height: 34px;
+        border: 4px solid rgba(0,0,0,0.12);
+        border-top-color: rgba(0,0,0,0.6);
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+        margin: 0 auto 6px;
+      }
+      .upload-text { font-size: 12px; color: #222; }
+    }
+  }
 }
-}
+
+@keyframes spin { to { transform: rotate(360deg); } }

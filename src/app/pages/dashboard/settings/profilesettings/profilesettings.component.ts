@@ -1,75 +1,103 @@
 import { Component, DestroyRef, inject } from '@angular/core';
-import { BasehttpservicesService } from '../../../../shared/services/basehttpservices.service';
-import { ProfilesettingsService } from './services/profilesettings.service';
+import { HttpEvent, HttpEventType } from '@angular/common/http';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { EditBehaviorServiceService } from '../../../../shared/services/edit-behavior-service.service';
+import { ProfilesettingsService } from './services/profilesettings.service';
 import { EditProfileImgService } from '../../../../shared/services/edit-profile-img.service';
 
 @Component({
   selector: 'app-profilesettings',
   templateUrl: './profilesettings.component.html',
-  styleUrl: './profilesettings.component.scss'
+  styleUrls: ['./profilesettings.component.scss'],
 })
 export class ProfilesettingsComponent {
+  _profileSettingsServices = inject(ProfilesettingsService);
+  _editBahaviourServices = inject(EditProfileImgService);
+  _destroyRef = inject(DestroyRef);
 
+  // حالة الرفع
+  uploading = false;
+  uploadProgress = -1;
+  remainingTime = 0;
+  private uploadStartTime: number | null = null;
 
-
-  _profileSettingsServices:ProfilesettingsService=inject(ProfilesettingsService)
-  _editBahaviourServices:EditProfileImgService=inject(EditProfileImgService)
-
-
-  _destroyRef:DestroyRef=inject(DestroyRef);
-
-  // !!!!!!!!!!!!11 properties
-
-   uploadProgress: number = -1;
-  remainingTime: number = 0;
-
-  imgFile:any
-
-  getDatausers:any=[]
-
-   
-  // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! Methods
+  imgFile: any;
+  getDatausers: any = [];
 
   ngOnInit(): void {
-    //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
-    //Add 'implements OnInit' to the class.
     this.getAllDataUserProfile();
   }
 
-  onFileSelected(e:any){
-    console.log()
-    let file=e.target.files[0];
-    this.imgFile=URL.createObjectURL(file);
+  onFileSelected(e: any) {
+    const file: File = e.target.files?.[0];
+    if (!file) return;
 
+    // عرض الصورة المؤقتة محليًا
+    this.imgFile = URL.createObjectURL(file);
 
-  
-    var formData=new FormData();
+    const formData = new FormData();
+    formData.append('Img', file);
 
-    formData.append('Img',file);
+    // تهيئة حالة الرفع
+    this.uploading = true;
+    this.uploadProgress = 0;
+    this.remainingTime = 0;
+    this.uploadStartTime = Date.now();
 
-    this._profileSettingsServices.EditProfileImg(formData).pipe(takeUntilDestroyed(this._destroyRef)).subscribe((res:any)=>{
-      // console.log(res);
-      const payloadStr = localStorage.getItem('payloadUser');
-      if (payloadStr) {
-        const payload = JSON.parse(payloadStr);
-        payload.imgUrl = res;
-        this._editBahaviourServices.editImg(res);
-        localStorage.setItem('payloadUser', JSON.stringify(payload));
-      }
-      this.getAllDataUserProfile();
-    })
+    this._profileSettingsServices.EditProfileImg(formData)
+      .pipe(takeUntilDestroyed(this._destroyRef))
+      .subscribe({
+        next: (event: HttpEvent<any>) => {
+          if (event.type === HttpEventType.UploadProgress) {
+            const loaded = event.loaded ?? 0;
+            const total = event.total ?? 0;
+            const percent = total ? Math.round((100 * loaded) / total) : 0;
+            this.uploadProgress = percent;
 
+            // حساب وقت متبقي تقريبي
+            if (this.uploadStartTime && total && loaded) {
+              const elapsedSec = (Date.now() - this.uploadStartTime) / 1000;
+              const rate = loaded / Math.max(elapsedSec, 0.001); // بايت/ثانية
+              const remainingBytes = total - loaded;
+              this.remainingTime = rate > 0 ? Math.ceil(remainingBytes / rate) : 0;
+            }
+          } else if (event.type === HttpEventType.Response) {
+            const res = event.body; // حسب API لديك قد تحتاج event.body.url أو ما شابه
+            // تحديث الـlocalStorage و Behaviour subject كما في كودك
+            const payloadStr = localStorage.getItem('payloadUser');
+            if (payloadStr) {
+              const payload = JSON.parse(payloadStr);
+              // افترض أن API يعيد رابط الصورة في res (اضبط بناءً على استجابة API)
+              payload.imgUrl = res;
+              this._editBahaviourServices.editImg(res);
+              localStorage.setItem('payloadUser', JSON.stringify(payload));
+            }
+
+            // إعادة جلب بيانات المستخدم لتحديث العرض
+            this.getAllDataUserProfile();
+
+            // إعادة حالة الرفع
+            this.uploading = false;
+            this.uploadProgress = -1;
+            this.remainingTime = 0;
+            this.uploadStartTime = null;
+          }
+        },
+        error: (err) => {
+          // إعادة حالة الرفع عند الخطأ
+          this.uploading = false;
+          this.uploadProgress = -1;
+          this.remainingTime = 0;
+          this.uploadStartTime = null;
+          // هنا يمكنك اظهار toastr أو رسالة خطأ
+        }
+      });
   }
 
-
-  getAllDataUserProfile(){
-    this._profileSettingsServices.getDataUserProfile().pipe(takeUntilDestroyed(this._destroyRef)).subscribe((res:any)=>{
-      // console.log(res);
-      this.getDatausers=res
-      console.log(this.getDatausers);
-    })
+  getAllDataUserProfile() {
+    this._profileSettingsServices.getDataUserProfile()
+      .pipe(takeUntilDestroyed(this._destroyRef))
+      .subscribe((res: any) => {
+        this.getDatausers = res;
+      });
   }
-
 }
