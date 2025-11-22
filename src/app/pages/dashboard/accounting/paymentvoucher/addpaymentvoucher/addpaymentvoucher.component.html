@@ -203,7 +203,7 @@
     (click)="onSubmit()">{{this.btnAddandUpdate == 'add' ? 'اضافه':"تعديل"}}</button>
   <button (click)="resetForm()" data-button="reset">جديد</button>
   <button data-button="reset" (click)="showDeletePopup()" *ngIf="canBtnsShow">حذف</button>
-  <button data-button="reset" *ngIf="canBtnsShow">طباعه </button>
+  <button data-button="reset" *ngIf="canBtnsShow" (click)="this.isVisiablePrint=true">طباعه </button>
 </div>
 
 
@@ -211,3 +211,6 @@
   (toggleModal)="onClose()"></app-confirm-delete>
 <app-popup-search [isVisible]="showPopupSearch" [dataArraySearch]="dataArraySearch"
   (closePopup)="showPopupSearch = false" (sendDataSelectedSearch)="sendDataSelectedSearch($event)"></app-popup-search>
+
+
+   <app-printpage-owner [isVisible]="isVisiablePrint" [getDataPopup]="getDataPrint" (closePopup)="isVisiablePrint = false"></app-printpage-owner>

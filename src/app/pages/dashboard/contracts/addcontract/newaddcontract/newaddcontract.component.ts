@@ -30,6 +30,8 @@ export class NewaddcontractComponent {
   dataArraySearch:any[]=[]
   dataArraySearchTenant:any[]=[]
 
+  isVisiablePrint=false;
+getDataPrint:any;
 
 
   showPopupSearchBroker:boolean=false;
@@ -237,8 +239,6 @@ this.contractsForm.patchValue({
   OtherCommission: res.financial?.otherCommission,
   InsuranceValue: res.financial?.insuranceValue,
   NetAmount: res.financial?.netAmount,
-
- 
   PropertyId: res.unit?.propertyID,
   UnitId: res.unit?.id ?? null,
   TenantId: res.tenant?.id,
@@ -256,7 +256,7 @@ this.contractsForm.patchValue({
 
 this.formDataUnit.patchValue({
   PropertyId: res.unit?.name,
-  propertyName: res.unit?.name,
+  propertyName: res.unit?.propertyName ?? null,
   name: res.unit?.name ?? null,
   floorNumber: res.unit?.floorNumber ?? null,
   street: res.unit?.street,
@@ -289,6 +289,10 @@ this.contractsForm.get("Files")?.setValue([]);
 // ✅ لعرض أزرار التحديث والحذف
 this.showBtns = true;
 
+
+this.getDataPrint=res;
+
+console.log('GGGGGGG', this.getDataPrint);
     })
   }
   })
@@ -403,6 +407,8 @@ this.contractsForm.get("Files")?.setValue([]);
 
 // ✅ لعرض أزرار التحديث والحذف
 this.showBtns = true;
+
+this.getDataPrint=res;
 
 
 
@@ -876,6 +882,7 @@ formData.append('NetAmount', String(this.contractsForm.value.NetAmount));
         this.btnAddandUpdate='update';
         this.contractNumber.nativeElement.value=res
         this.showBtns=true
+        this.getDataPrint=res;
         // console.log(res);
       })
       
@@ -926,6 +933,7 @@ files
       // console.log(res);
       this.showBtns=true
       this.btnAddandUpdate='update'
+      this.getDataPrint=res;
     })
     }
 
@@ -1122,5 +1130,12 @@ ngOnDestroy(): void {
     this.editBehaviorService.clearId();
   }
 }
+
+
+printContract(){
+  this.isVisiablePrint=true;
+
+}
+
 
 }

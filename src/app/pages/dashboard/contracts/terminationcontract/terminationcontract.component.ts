@@ -25,6 +25,8 @@ destroyRef:DestroyRef=inject(DestroyRef)
  messageTemplateServices: MessageformsService=inject(MessageformsService);
  toastr:ToastrService=inject(ToastrService)
 
+ isVisiablePrint=false
+ getDataPrint:any
 // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1 Properties
 
 
@@ -159,6 +161,8 @@ street: [''],
         console.log(res);
          if(!res) return ;
           this.contractData = res;  // يجي من الباك API
+
+          this.getDataPrint=res
 
 
           this.generateMonthsBetween(

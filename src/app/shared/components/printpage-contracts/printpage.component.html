@@ -1,0 +1,221 @@
+
+<div class="overlay_container" [ngClass]="{'active':isVisible}" (click)="closePopupOverlay($event)">
+<div class="invoice-container" id="printSection" (click)="stopClose($event)">
+
+    <div class="close" (click)="close()">
+        <!-- (click)="closeModal()" -->
+        <button class="close_btn" >🗙</button>
+    </div>
+  <header class="invoice-header">
+    <h1>العقود</h1>
+    <div class="invoice-info">
+      <div><strong>رقم العقد :</strong> {{getDataPopup?.id}}</div>
+      <div><strong>مكان ابرام العقد :</strong> {{getDataPopup?.contractPlace}}</div>
+      <div><strong>تاريخ ابرام العقد :</strong> {{getDataPopup?.contractDate}}</div>
+      <!-- <div><strong>المالك:</strong> محمد أحمد</div> -->
+    </div>
+  </header>
+  <header class="invoice-header">
+    <h2>العقد</h2>
+    <div class="invoice-info">
+      <div><strong>تاريخ بدايه  مده الايجار :</strong> {{getDataPopup?.leaseStartDate}}</div>
+      <div><strong>تاريخ نهايه مده الايجار :</strong> {{getDataPopup?.leaseEndDate}}</div>
+      <div><strong>شهور الايجار :</strong> {{getDataPopup?.leaseMonths}}</div>
+      <!-- <div><strong>المالك:</strong> محمد أحمد</div> -->
+    </div>
+  </header>
+  <header class="invoice-header border-0 mb-1" >
+    <h2 style="margin-bottom: 5px !important; ">الوحده</h2>
+  
+  </header>
+
+  <div class="">
+ <table class="invoice-table">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>العقار</th>
+        <th>الدور</th>
+        <th>الوحده</th>
+        <th>المدينه</th>
+        <th>الحي</th>
+        <th>الشارع</th>
+      </tr>
+    </thead>
+    <tbody>
+
+     
+      <tr >
+        <td>1</td>
+        <td>{{getDataPopup?.unit.propertyName}}</td>
+        <td>{{getDataPopup?.unit.floorNumber}}</td>
+        <td>{{getDataPopup?.unit.name}}</td>
+        <td>{{getDataPopup?.unit.city}}</td>
+        <td>{{getDataPopup?.unit.district}}</td>
+        <td>{{getDataPopup?.unit.street}}</td>
+      </tr>
+    
+      
+    
+    </tbody>
+  </table>
+  </div>
+  <hr>
+  <header class="invoice-header border-0 mb-1" >
+    <h2 style="margin-bottom: 5px !important;">المستأجر</h2>
+  
+  </header>
+
+  <div class="">
+ <table class="invoice-table">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>الاسم</th>
+        <th>رقم الجوال</th>
+        <th>الجنسيه</th>
+        <th>البريد الالكتروني</th>
+        <th>رقم الهويه </th>
+        <th>عدد المرافقين</th>
+      </tr>
+    </thead>
+    <tbody>
+
+      <tr >
+        <td>1</td>
+        <td>{{getDataPopup?.tenant.name}}</td>
+        <td>{{getDataPopup?.tenant.mobile}}</td>
+        <td>{{getDataPopup?.tenant.nationality}}</td>
+        <td>{{getDataPopup?.tenant.email}}</td>
+        <td>{{getDataPopup?.tenant.nationalID}}</td>
+        <td>{{getDataPopup?.tenant.dependants.length}}</td>
+        <!-- <td>{{getDataPopup?.unit.street}}</td> -->
+      </tr>
+    
+      
+    
+    </tbody>
+  </table>
+  </div>
+ <hr>
+  <header class="invoice-header border-0 mb-1" >
+    <h2 style="margin-bottom: 5px !important;">السمسار</h2>
+  
+  </header>
+
+  <div class="">
+ <table class="invoice-table">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>الاسم</th>
+        <th>رقم الهويه </th>
+        <th>رقم الجوال</th>
+      </tr>
+    </thead>
+    <tbody>
+
+       @if (this.getDataPopup?.broker != null) {
+    
+          <tr >
+        <td>1</td>
+        <td>{{getDataPopup?.broker.name}}</td>
+        <td>{{getDataPopup?.broker.nationalID}}</td>
+        <td>{{getDataPopup?.broker.mobile}}</td>
+        <!-- <td>{{getDataPopup?.unit.street}}</td> -->
+      </tr>
+    
+      }@else{
+        <tr>
+          <td colspan="7">لا يوجد بيانات</td>
+        </tr>    
+      }
+    
+     
+    
+      
+    
+    </tbody>
+  </table>
+  </div>
+  <hr>
+  <header class="invoice-header border-0 mb-1" >
+    <h2 style="margin-bottom: 5px !important;">الماليه</h2>
+  
+  </header>
+
+  <div class="">
+ <table class="invoice-table">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>قيمه العقد</th>
+        <th>الضريبه</th>
+        <th>الاجمالي</th>
+        <th>عموله السمسار</th>
+        <th>عموله اخري</th>
+        <th>قيمه التأمين</th>
+        <th>الصافي</th>
+      </tr>
+    </thead>
+    <tbody>
+
+      <tr >
+        <td>1</td>
+        <td>{{getDataPopup?.financial.contractValue}}</td>
+        <td>{{getDataPopup?.financial.taxAmount}}</td>
+        <td>{{getDataPopup?.financial.totalAmount}}</td>
+        <td>{{getDataPopup?.financial.brokerCommission}}</td>
+        <td>{{getDataPopup?.financial.otherCommission}}</td>
+        <td>{{getDataPopup?.financial.insuranceValue}}</td>
+        <td>{{getDataPopup?.financial.netAmount}}</td>
+        <!-- <td>{{getDataPopup?.unit.street}}</td> -->
+      </tr>
+    
+      
+    
+    </tbody>
+  </table>
+  </div>
+<hr> 
+  <header class="invoice-header border-0 mb-1" >
+    <h2 style="margin-bottom: 5px !important;">الرسائل</h2>
+  
+  </header>
+
+  <div class="">
+ <table class="invoice-table">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>اسم الرساله</th>
+        <th>ارسال قبل موعد السداد بمدة</th>
+        <th>طريقه الارسال</th>
+      </tr>
+    </thead>
+    <tbody>
+
+      <tr >
+        <td>1</td>
+        <td>{{getDataPopup?.messageText}}</td>
+        <td>{{getDataPopup?.sendBeforeAfter}}</td>
+        <td>{{getDataPopup?.useSms ? 'SMS' : getDataPopup?.useEmail ? 'Email' : 'WhatsApp' }}</td>
+        <!-- <td>{{getDataPopup?.unit.street}}</td> -->
+      </tr>
+    
+      
+    
+    </tbody>
+  </table>
+  </div>
+ 
+
+ 
+
+  <footer class="invoice-footer">
+    تم إنشاء السند بواسطة نظام الإدارة العقارية
+  </footer>
+
+  <button class="print-btn" (click)="printData()">طباعة </button>
+</div>
+</div>

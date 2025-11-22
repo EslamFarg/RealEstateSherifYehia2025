@@ -12,6 +12,7 @@ import { IntersectionDirective } from "../../../../../shared/directives/intersec
 import { EmptytableComponent } from '../../../../../shared/ui/emptytable/emptytable.component';
 import { ConfirmDeleteComponent } from '../../../../../shared/components/confirm-delete/confirm-delete.component';
 import { PopupSearchBrokerComponent } from "../../../../../shared/ui/popup-search-broker/popup-search.component";
+import { PrintpageBrokerComponent } from '../../../../../shared/components/printpage-sandbroker/printpage.component';
 
 
 @NgModule({
@@ -29,7 +30,8 @@ import { PopupSearchBrokerComponent } from "../../../../../shared/ui/popup-searc
     IntersectionDirective,
     EmptytableComponent,
     ConfirmDeleteComponent,
-    PopupSearchBrokerComponent
+    PopupSearchBrokerComponent,
+    PrintpageBrokerComponent
 ]
 })
 export class AddrealtorpaymentvoucherModule { }

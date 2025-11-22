@@ -698,7 +698,7 @@
  <button data-type="save" data-button="send" (click)="onSubmit()" [ngClass]="{'btnEdit':this.btnAddandUpdate=='update','btnAdd':this.btnAddandUpdate=='add'}">{{this.btnAddandUpdate == 'add' ? 'اضافه':"تعديل"}}</button>
  <button data-button="reset">جديد</button>
  <button data-button="reset" *ngIf="showBtns" (click)="showPopupDelete()">حذف</button>
- <button data-button="reset" *ngIf="showBtns">طباعه </button>
+ <button data-button="reset" *ngIf="showBtns" (click)="printContract()">طباعه </button>
   </div>
 
 
@@ -707,3 +707,6 @@
   <app-popup-search-unit [isVisible]="showPopupSearchUnit" [dataArraySearch]="dataArraySearch" (closePopup)="showPopupSearchUnit = false" (sendDataSelectedSearch)="sendDataSelectedSearchUnit($event)"></app-popup-search-unit>
   <app-popup-search-tenant-contract [isVisible]="showPopupSearchTenant" [dataArraySearch]="dataArraySearchTenant" (closePopup)="showPopupSearchTenant = false" (sendDataSelectedSearch)="sendDataSelectedSearchTenant($event)"></app-popup-search-tenant-contract>
   <app-popup-search-broker-contract [isVisible]="showPopupSearchBroker" [dataArraySearch]="dataArraySearchBroker" (closePopup)="showPopupSearchBroker = false" (sendDataSelectedSearch)="sendDataSelectedSearchBroker($event)"></app-popup-search-broker-contract>
+
+
+   <app-printpage-contracts [isVisible]="isVisiablePrint" [getDataPopup]="getDataPrint" (closePopup)="isVisiablePrint = false"></app-printpage-contracts>

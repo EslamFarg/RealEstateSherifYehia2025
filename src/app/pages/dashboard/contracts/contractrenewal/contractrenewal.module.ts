@@ -10,6 +10,7 @@ import { FormerrorMsgComponent } from '../../../../shared/ui/formerror-msg/forme
 import { ReactiveFormsModule } from '@angular/forms';
 import { ConfirmDeleteComponent } from '../../../../shared/components/confirm-delete/confirm-delete.component';
 import { InputAttachmentsComponent } from '../../../../shared/ui/input-attachments/input-attachments.component';
+import { PrintpageContractComponent } from '../../../../shared/components/printpage-contracts/printpage.component';
 
 
 @NgModule({
@@ -25,7 +26,8 @@ import { InputAttachmentsComponent } from '../../../../shared/ui/input-attachmen
         ReactiveFormsModule,
         FormerrorMsgComponent,
         ConfirmDeleteComponent,
-       InputAttachmentsComponent
+       InputAttachmentsComponent,
+       PrintpageContractComponent
         
   ]
 })
