@@ -495,6 +495,12 @@
 
   <div class="btns_add_edit">
  <button data-type="save" (click)="EndedContract()">انهاء</button>
- <button>طباعه </button>
+ <button type="button" (click)="this.isVisiablePrint=true">طباعه </button>
 
   </div>
+
+
+  <!-- <app-printpage-contracts []></app-printpage-contracts> -->
+
+  
+   <app-printpage-contracts [isVisible]="isVisiablePrint" [getDataPopup]="getDataPrint" (closePopup)="isVisiablePrint = false"></app-printpage-contracts>

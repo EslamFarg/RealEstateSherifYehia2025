@@ -698,8 +698,9 @@
  <button data-type="save" data-button="send" (click)="onSubmit()">تجديد</button>
  <button data-button="reset">جديد</button>
  <!-- <button data-button="reset" *ngIf="showBtns" (click)="showPopupDelete()">حذف</button> -->
- <button data-button="reset" *ngIf="showBtns">طباعه </button>
+ <button data-button="reset" *ngIf="showBtns" (click)="this.isVisiablePrint=true">طباعه </button>
   </div>
 
 
   <app-confirm-delete [isVisible]="showDelete" (onDelete)="deleteConfirmed($event)" [itemId]="this.deleteId" (toggleModal)="onClose()"></app-confirm-delete>
+    <app-printpage-contracts [isVisible]="isVisiablePrint" [getDataPopup]="getDataPrint" (closePopup)="isVisiablePrint = false"></app-printpage-contracts>

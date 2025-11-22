@@ -105,6 +105,8 @@ export class AddpaymentvoucherComponent {
   idUpdate: any;
   // showPopupSearch=false
   dataArraySearch: any = [];
+  isVisiablePrint: boolean = false;
+  getDataPrint:any
   // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! Methods
   calcTotalPaidAmout() {
     this.PaidTotalAmount = 0;
@@ -554,6 +556,10 @@ getDataById(e:any){
 
     
       this.deleteId=res.id;
+
+      this.getDataPrint=res;
+
+      console.log("GGGEEEEEETTTT",this.getDataPrint);
 
       this.paymentVoucherForm.patchValue({
         voucherNo: res.voucherNo,

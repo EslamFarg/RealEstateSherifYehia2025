@@ -28,6 +28,8 @@ EditBehaviorServices:EditBehaviorServiceService=inject(EditBehaviorServiceServic
 
 showPopupSearch=false
 dataArraySearch:any=[]
+isVisiablePrint=false
+getDataPrint:any
   // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! Properties
 
 
@@ -98,6 +100,8 @@ ngOnInit(){
         
   this.itemsChecked = [];
   this.getAllDataSearch = { rows: [] };
+  this.getDataPrint=res;
+  console.log('getDataPrint',this.getDataPrint);
 
   setTimeout(() => {
     if (this.checkAll) this.checkAll.nativeElement.checked = false;
@@ -389,6 +393,8 @@ searchGetById(val: any) {
         if (this.checkAll) this.checkAll.nativeElement.checked = true;
         this.checkboxes.forEach(cb => cb.nativeElement.checked = true);
       });
+
+      this.getDataPrint=res;
 
     });
 }

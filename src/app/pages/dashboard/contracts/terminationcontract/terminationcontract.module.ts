@@ -8,6 +8,7 @@ import { NgbAccordionModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { ReactiveFormsModule } from '@angular/forms';
 import { DirectivesModule } from "../../../../shared/directives/directives.module";
+import { PrintpageContractComponent } from "../../../../shared/components/printpage-contracts/printpage.component";
 
 
 
@@ -22,7 +23,8 @@ import { DirectivesModule } from "../../../../shared/directives/directives.modul
     NgbAccordionModule,
     NgSelectModule,
     ReactiveFormsModule,
-    DirectivesModule
+    DirectivesModule,
+    PrintpageContractComponent
 ]
 })
 export class TerminationcontractModule { }

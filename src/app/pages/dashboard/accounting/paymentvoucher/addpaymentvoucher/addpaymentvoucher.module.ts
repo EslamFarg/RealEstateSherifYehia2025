@@ -12,6 +12,7 @@ import { EmptytableComponent } from '../../../../../shared/ui/emptytable/emptyta
 import { DirectivesModule } from "../../../../../shared/directives/directives.module";
 import { ConfirmDeleteComponent } from '../../../../../shared/components/confirm-delete/confirm-delete.component';
 import { PopupSearchComponent } from "../../../../../shared/ui/popup-search/popup-search.component";
+import { PrintpageOwnerComponent } from "../../../../../shared/components/printpage-sandowner/printpage.component";
 // import { NgSelectComponent } from "../../../../../../../node_modules/@ng-select/ng-select/lib/ng-select.component";
 
 
@@ -31,7 +32,8 @@ import { PopupSearchComponent } from "../../../../../shared/ui/popup-search/popu
     DirectivesModule,
     ConfirmDeleteComponent,
     FormsModule,
-    PopupSearchComponent
+    PopupSearchComponent,
+    PrintpageOwnerComponent
 ]
 })
 export class AddpaymentvoucherModule { }

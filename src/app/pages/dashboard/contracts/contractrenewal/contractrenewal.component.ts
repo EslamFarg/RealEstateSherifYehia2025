@@ -24,7 +24,8 @@ export class ContractrenewalComponent {
   toastr:ToastrService=inject(ToastrService)
   editBehaviorService:EditBehaviorServiceService=inject(EditBehaviorServiceService)
 
-  
+  isVisiablePrint=false
+  getDataPrint:any
 
 // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1 Property
 
@@ -134,7 +135,7 @@ ngOnInit(): void {
         // this.
       this.addContractServices.getDataById(id).pipe(takeUntilDestroyed(this.destroyRef)).subscribe((res:any)=>{
        this.contractNumber.nativeElement.value=res.id;
-        
+        this.getDataPrint=res
 // this.contractsForm.patchValue({
 
 //   ContractPlace: res.contractPlace,
