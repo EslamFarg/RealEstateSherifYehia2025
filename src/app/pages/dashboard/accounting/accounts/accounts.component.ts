@@ -45,7 +45,7 @@ export class AccountsComponent {
       '',
       [Validators.required, Validators.pattern(/^[0-9]{8,20}$/)],
     ],
-    iban: ['', [Validators.pattern(/^[A-Z]{2}[0-9A-Z]{20,32}$/)]],
+    iban: [null, [Validators.pattern(/^[A-Z]{2}[0-9A-Z]{20,32}$/)]],
     parentId: [null, [Validators.required]],
   });
   btnAddandUpdate = 'add';

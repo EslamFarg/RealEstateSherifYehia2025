@@ -47,7 +47,7 @@
         <tbody>
             @for (item of editotialCreditsList; track $index) {
             <tr>
-                <td>{{$index+1}}</td>
+                <td>{{ ((pageIndex - 1) * pageSize) + ($index + 1) }}</td>
                 <td>{{item.accountName}}</td>
                 <td>{{item.accountId}}</td>
                 <td>

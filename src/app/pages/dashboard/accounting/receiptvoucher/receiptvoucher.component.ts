@@ -39,7 +39,7 @@ pageIndex=1
 pageSize=10
 
 receiptForm=this.fb.group({
-   voucherNo: ['',[Validators.required,Validators.minLength(3)]],
+   voucherNo: [null,[Validators.minLength(3)]],
   voucherDate: [new Date().toISOString().split('T')[0],[Validators.required]],
   paymentMethod: ['نقدي',[Validators.required]],
   amount: [0,[Validators.required]],

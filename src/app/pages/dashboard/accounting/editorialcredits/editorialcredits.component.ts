@@ -62,6 +62,7 @@ export class EditorialcreditsComponent implements OnInit {
         },
       });
   }
+  
   getEditorialCreditsListFilter() {
     const payload: any = {
       criteria: {

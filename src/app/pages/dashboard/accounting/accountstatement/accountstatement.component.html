@@ -61,9 +61,9 @@
         <td>{{item.name}}</td>
         <td>{{item.tranDate.split('T')[0]}}</td>
         <td>{{item.notes}} </td>
-        <td>{{item.debit}}</td>
-        <td>{{item.credit}}</td>
-        <td>{{item.debit + item.credit}}</td>
+        <td>{{item.debit | number : '1.0-2'}}</td>
+        <td>{{item.credit | number : '1.0-2'}}</td>
+        <td>{{item.debit + item.credit | number : '1.0-2'}}</td>
       </tr>
       }@empty {
       <tr>
@@ -76,10 +76,10 @@
         <td colspan="3">الاجمالي </td>
         <td></td>
         <td>
-          <div class="text-center ">{{summaryList?.totalDebit}}</div>
+          <div class="text-center ">{{summaryList?.totalDebit | number : '1.0-2'}}</div>
         </td>
         <td>
-          <div> {{summaryList?.totalCredit}}</div>
+          <div> {{summaryList?.totalCredit | number : '1.0-2'}}</div>
         </td>
         <td></td>
       </tr>

@@ -110,7 +110,7 @@ export class SidebarComponent implements OnInit{
         { label: 'استلام الدفعات', route: 'paymentreceiptvoucher', id: 30 },
         { label: 'سند القبض', route: 'receiptvoucher', id: 31 },
         { label: 'سند الصرف', route: 'paymentvouchernormal', id: 32 },
-        { label: 'الحسابات', route: 'accounts', id: 36 },
+        { label: 'حسابات البنوك', route: 'accounts', id: 36 },
         { label: 'كشف الحساب', route: 'accountstatement', id: 34 },
         { label: 'ارصده افتتاحيه', route: 'editorialcredits', id: 35 },
         { label: 'كارت الحساب', route: 'accountcard', id: 40 },

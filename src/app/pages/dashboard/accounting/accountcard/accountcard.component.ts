@@ -13,7 +13,7 @@ export class AccountcardComponent implements OnInit {
   // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!1 Services
   fb = inject(FormBuilder);
   _accountCardService = inject(AccountCardService);
-  toastr:ToastrService=inject(ToastrService);
+  toastr: ToastrService = inject(ToastrService);
   // !!!!!!!!!!!!!!!!!!!!!!!!!!!!1 Properties
   accountCardForm!: FormGroup;
   btnAddandUpdate = 'add';
@@ -70,15 +70,17 @@ export class AccountcardComponent implements OnInit {
     }
     if (this.btnAddandUpdate == 'update') {
       const payload = {
-        id: this.accountCardForm.value.accountNumber,
-        name: this.accountCardForm.value.name,
-        notes: this.accountCardForm.value.notes,
+        updateFinancialAccountDto: {
+          id: this.accountCardForm.value.accountNumber,
+          name: this.accountCardForm.value.name,
+          notes: this.accountCardForm.value.notes,
+        },
       };
       this._accountCardService.updateFinancialAccount(payload).subscribe({
         next: (res) => {
           this.getFinancialAccounts();
-          this.btnAddandUpdate = 'add';
-          this.toastr.show('تم تعديل الحساب بنجاح','success');
+          // this.btnAddandUpdate = 'add';
+          this.toastr.show('تم تعديل الحساب بنجاح', 'success');
         },
       });
       return;
@@ -92,10 +94,10 @@ export class AccountcardComponent implements OnInit {
       };
       this._accountCardService.createFinancialAccount(payload).subscribe({
         next: (res) => {
+          this.btnAddandUpdate = 'update';
           this.accountCardForm.patchValue({ accountNumber: res });
           this.getFinancialAccounts();
-          this.btnAddandUpdate = 'add';
-          this.toastr.show('تم اضافه الحساب بنجاح','success');
+          this.toastr.show('تم اضافه الحساب بنجاح', 'success');
         },
       });
     }
