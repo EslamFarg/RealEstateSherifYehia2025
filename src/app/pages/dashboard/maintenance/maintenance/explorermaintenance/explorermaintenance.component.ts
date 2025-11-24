@@ -106,10 +106,10 @@ export class ExplorermaintenanceComponent {
         ShapeDataFilter.searchFilter.column = 0;
         break;
       case 1:
-        ShapeDataFilter.searchFilter.column = 4;
+        ShapeDataFilter.searchFilter.column = 7;
         break;
       case 2:
-        ShapeDataFilter.searchFilter.column = 2;
+        ShapeDataFilter.searchFilter.column = 6;
         break;
       default:
         ShapeDataFilter.searchFilter.column = 8;
