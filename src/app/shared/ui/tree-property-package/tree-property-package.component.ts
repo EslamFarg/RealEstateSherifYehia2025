@@ -67,7 +67,7 @@ let searchData=
 
 }
   this.treeRealServices.getDataPropertyTree(searchData).pipe(takeUntilDestroyed(this.destroyRef)).subscribe((res:any)=>{
-    console.log(res);
+    //console.log(res);
 
     this.treeProperty=res.map((item:any)=>{
       return{
@@ -102,7 +102,7 @@ let searchData=
       }
     });
 
-    console.log(this.treeProperty);
+    //console.log(this.treeProperty);
 
     
   })
@@ -110,7 +110,7 @@ let searchData=
 
 
   // getDataUnit(item:any){
-  //   console.log(item);
+  //   //console.log(item);
 
   // }
 
@@ -118,11 +118,11 @@ let searchData=
 
 
   getDataUnit(lonelinees:any){
-    console.log(lonelinees)
+    //console.log(lonelinees)
 
 
     this.treeRealServices.getDataUnitById(lonelinees.id).pipe(takeUntilDestroyed(this.destroyRef)).subscribe((res:any)=>{
-      console.log(res);
+      //console.log(res);
       this.sendDataSelect.emit(res)
     })
   }

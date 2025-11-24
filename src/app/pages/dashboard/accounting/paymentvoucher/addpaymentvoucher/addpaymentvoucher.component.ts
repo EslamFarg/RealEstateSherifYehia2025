@@ -286,7 +286,7 @@ export class AddpaymentvoucherComponent {
   //   const checked=e.target.checked;
   //    const paid = Number(item.paid || 0); // أو من input إذا موجود
 
-  //    console.log(item);
+  //    //console.log(item);
 
   //   if(checked){
   //     // const amountDue = Number(item.amountDue) || 0;
@@ -310,7 +310,7 @@ export class AddpaymentvoucherComponent {
   //       this.itemChecked.push({ contractInstallmentId:item.id, amount: paid });
   //     }
 
-  //     console.log(this.itemChecked);
+  //     //console.log(this.itemChecked);
 
   //   }else{
   //    this.itemChecked = this.itemChecked.filter(
@@ -329,7 +329,7 @@ export class AddpaymentvoucherComponent {
     const checked = e.target.checked;
     const paid = Number(item.paidAmount || 0);
 
-    console.log(item);
+    //console.log(item);
 
     if (checked) {
       const index = this.itemChecked.findIndex(
@@ -355,7 +355,7 @@ export class AddpaymentvoucherComponent {
       );
     }
 
-    console.log(this.itemChecked);
+    //console.log(this.itemChecked);
     this.calculateTotals();
   }
 
@@ -559,7 +559,7 @@ getDataById(e:any){
 
       this.getDataPrint=res;
 
-      console.log("GGGEEEEEETTTT",this.getDataPrint);
+      //console.log("GGGEEEEEETTTT",this.getDataPrint);
 
       this.paymentVoucherForm.patchValue({
         voucherNo: res.voucherNo,

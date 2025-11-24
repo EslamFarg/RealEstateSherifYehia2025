@@ -73,9 +73,9 @@ onSubmit(){
 
 getDataUpdate(id:any){
 
-  // console.log(id);
+  // //console.log(id);
   this.ModifynamepermissionsService.getDatabyid(id).pipe(takeUntilDestroyed(this.destroyRef)).subscribe((res:any)=>{
-    console.log('RRRRRR',res);
+    //console.log('RRRRRR',res);
     this.idUpdate=res.id
     this.modifyPermissionForm.patchValue({displayNameAr:res.displayNameAr,displayNameEn:res.displayNameEn,
       actionName:res.actionName,controller:res.controller,httpType:res.httpType
@@ -101,7 +101,7 @@ onPageChanged(page: number) {
 getAllDataPermissions(){
   this.ModifynamepermissionsService.getAllPermissions(this.pageIndex,this.pageSize).pipe(takeUntilDestroyed(this.destroyRef)).subscribe((res:any)=>{
     this.pagePermissionsData=res
-    console.log(res);
+    //console.log(res);
   })
 }
 

@@ -59,7 +59,7 @@ export class ActivitytrackingComponent {
   }
 
   searchUserId(e: any) {
-    console.log(e);
+    //console.log(e);
     if (!e) {
       return;
     }
@@ -119,7 +119,7 @@ export class ActivitytrackingComponent {
         .subscribe((res: any) => {
           // this.logsData=res
           this.activityTrackingData = res;
-          console.log();
+          //console.log();
         });
     } else {
       this.formData.markAllAsTouched();
@@ -128,7 +128,7 @@ export class ActivitytrackingComponent {
   }
 
   dataSelectedUser(e: any) {
-    console.log(e);
+    //console.log(e);
     // this.formData.patchValue({
     //   userId: e
     // })

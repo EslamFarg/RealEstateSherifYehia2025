@@ -50,13 +50,13 @@ ngOnInit(): void {
 
 
 onSubmit(){
-  console.log(this.permissionForm.value)
+  //console.log(this.permissionForm.value)
 
   if(this.permissionForm.valid){
 
    if(this.btnaddAndUpdate == 'add'){
  this._linkPagePermissionsServices.addPagePermission(this.permissionForm.value).pipe(takeUntilDestroyed(this.destroyRef)).subscribe((res:any)=>{
-      console.log(res)
+      //console.log(res)
       this.toastr.show('تم حفظ البيانات بنجاح','success');
       this.permissionForm.reset();
     })
@@ -66,7 +66,7 @@ onSubmit(){
       ...this.permissionForm.value
     }
     this._linkPagePermissionsServices.updateDataPageActionsById(data).pipe(takeUntilDestroyed(this.destroyRef)).subscribe((res:any)=>{
-      console.log(res)
+      //console.log(res)
       this.toastr.show('تم تعديل البيانات بنجاح','success');
       this.permissionForm.reset();
       this.btnaddAndUpdate='add'
@@ -85,10 +85,10 @@ onSubmit(){
 
 getDataUpdate(id:any){
 
-  console.log(id)
+  //console.log(id)
   
   this._linkPagePermissionsServices.getDatapageActionsById(id).pipe(takeUntilDestroyed(this.destroyRef)).subscribe((res:any)=>{
-    console.log(res);
+    //console.log(res);
     this.idUpdate=res.pageId;
       const actionIds = res.rows[0].actions.map((action: any) => action.actionId);
     this.permissionForm.patchValue({
@@ -137,7 +137,7 @@ getAllDataPageAndPermissions(){
   this._linkPagePermissionsServices.getAllDataPagePermission(this.pageIndex,this.pageSize).pipe(takeUntilDestroyed(this.destroyRef)).subscribe((res:any)=>{
     this.pagePermissionsData=res
 
-    console.log(this.pagePermissionsData)
+    //console.log(this.pagePermissionsData)
   })
 }
 

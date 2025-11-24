@@ -56,14 +56,14 @@ getAllDataVouchers(){
   }
 }
   this._realtorpaymentvoucherService.getAllDataBroker(pagination).pipe(takeUntilDestroyed(this.destroyRef)).subscribe((res: any) => {
-    console.log(res);
+    //console.log(res);
     this.vouchersData=res
   });
 }
 
 // onSelectedFilter(page:any){
-//   // console.log(this.selectedDataFilter)
-//   console.log(page)
+//   // //console.log(this.selectedDataFilter)
+//   //console.log(page)
 //   this.pageSize=page;
 //   this.getAllDataVouchers();
 
@@ -102,7 +102,7 @@ onSelectedFilter(e:any){
     shapeSearch.contractId = e.value;
   }
 
-  console.log("Request Body:", shapeSearch);
+  //console.log("Request Body:", shapeSearch);
 
   this._realtorpaymentvoucherService
     .filterSearch(shapeSearch)

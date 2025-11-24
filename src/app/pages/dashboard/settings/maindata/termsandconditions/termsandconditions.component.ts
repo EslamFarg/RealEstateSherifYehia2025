@@ -62,7 +62,7 @@ export class TermsandconditionsComponent {
 
 getAllDataSystemTerms(){
   this._mainDataServices.getDataSystemTerms().pipe(takeUntilDestroyed(this.destroyRef)).subscribe((res:any)=>{
-    console.log(res);
+    //console.log(res);
     if(res){
       this.termsForm.patchValue(res)
       this.btnAddandUpdate='update'

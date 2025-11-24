@@ -56,20 +56,20 @@ export class GroupmessageComponent implements OnInit {
 
   // selectFilterData(e:any){
 
-  //   console.log(e);
+  //   //console.log(e);
   //   if(e.value == undefined || e.value == '') {
   //     // this.toastr.show('الرجاء املاء قيمه البحث','error');
   //     return;
   //   }
 
   //   if(e.index == 0){
-  //     console.log('اسم الراسل')
+  //     //console.log('اسم الراسل')
   //     this.DataTypeFilter=e.dataType;
   //    this.SearchValue=e.value
 
   //   }else if(e.index == 1){
 
-  //    console.log('رقم التليفون')
+  //    //console.log('رقم التليفون')
   //    this.DataTypeFilter=e.dataType;
   //    this.SearchValue=e.value
 
@@ -119,7 +119,7 @@ export class GroupmessageComponent implements OnInit {
         .searchMessage(paramsData)
         .pipe(takeUntilDestroyed(this.destroyRef))
         .subscribe((res: any) => {
-          console.log(res);
+          //console.log(res);
           this.messagesData = res.items; // البيانات الفعلية
           this.totalItems = Math.ceil(res.total / this.pageSize); // إجمالي العناصر للpagination
           // this.pageIndex = res.page;        // الصفحة الحالية

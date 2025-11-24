@@ -91,17 +91,17 @@ FilterData=[
 ngOnInit(){
   // if
   this.EditBehaviorServices.idSubscribe.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((id:any)=>{
-    // console.log(res);
+    // //console.log(res);
     if(id){
 
 
       this._realtorPaymentVoucherServices.getByIdBrokerPaymentVoucher(id).pipe(takeUntilDestroyed(this.destroyRef)).subscribe((res:any)=>{
-        console.log(res);
+        //console.log(res);
         
   this.itemsChecked = [];
   this.getAllDataSearch = { rows: [] };
   this.getDataPrint=res;
-  console.log('getDataPrint',this.getDataPrint);
+  //console.log('getDataPrint',this.getDataPrint);
 
   setTimeout(() => {
     if (this.checkAll) this.checkAll.nativeElement.checked = false;
@@ -113,7 +113,7 @@ ngOnInit(){
 
       this.btnAddandUpdate = 'update';
 
-      console.log('res', res);
+      //console.log('res', res);
       this.deleteId=res.id;
       this.realtorPaymentVoucherForm.patchValue({
         voucherNo: res.voucherNo,
@@ -134,7 +134,7 @@ ngOnInit(){
         nationalID: res.nationalID
       });
 
-      console.log("Search",this.formDataSearch.value)
+      //console.log("Search",this.formDataSearch.value)
       // fill itemsChecked
       res.brokerCommissionResponseDtos.forEach((d: any) => {
           if (d.isInThisVoucher) {
@@ -163,14 +163,14 @@ ngOnInit(){
       };
 
 
-      console.log(this.getAllDataSearch);
-      console.log('RelatorForm', this.realtorPaymentVoucherForm.value);
+      //console.log(this.getAllDataSearch);
+      //console.log('RelatorForm', this.realtorPaymentVoucherForm.value);
 
       this.cdr.detectChanges();
 
       this.idUpdate=res.id
       this.canShowBtns=true
-      console.log(this.idUpdate)
+      //console.log(this.idUpdate)
       setTimeout(() => {
       //   if (this.checkAll) this.checkAll.nativeElement.checked = true;
       //   this.checkboxes.forEach(cb =>
@@ -249,7 +249,7 @@ this.itemsChecked.forEach((item) => {
   
 })
 
-console.log(data);
+//console.log(data);
 
 
 
@@ -335,7 +335,7 @@ searchGetById(val: any) {
 
       this.btnAddandUpdate = 'update';
 
-      console.log('res', res);
+      //console.log('res', res);
       this.deleteId=res.id;
       this.realtorPaymentVoucherForm.patchValue({
         voucherNo: res.voucherNo,
@@ -356,7 +356,7 @@ searchGetById(val: any) {
         nationalID: res.nationalID
       });
 
-      console.log("Search",this.formDataSearch.value)
+      //console.log("Search",this.formDataSearch.value)
       // fill itemsChecked
       res.brokerPaymentVoucherDetails.forEach((d: any) => {
         this.itemsChecked.push({
@@ -381,14 +381,14 @@ searchGetById(val: any) {
       };
 
 
-      console.log(this.getAllDataSearch);
-      console.log('RelatorForm', this.realtorPaymentVoucherForm.value);
+      //console.log(this.getAllDataSearch);
+      //console.log('RelatorForm', this.realtorPaymentVoucherForm.value);
 
       this.cdr.detectChanges();
 
       this.idUpdate=res.id
       this.canShowBtns=true
-      console.log(this.idUpdate)
+      //console.log(this.idUpdate)
       setTimeout(() => {
         if (this.checkAll) this.checkAll.nativeElement.checked = true;
         this.checkboxes.forEach(cb => cb.nativeElement.checked = true);
@@ -420,7 +420,7 @@ SearchFilter(e:any){
   }
 }
   
-  // console.log(e);
+  // //console.log(e);
 
   if(e.index == 0){
     ShapeDataFilter.searchFilter.column=1
@@ -440,12 +440,12 @@ SearchFilter(e:any){
     this.showPopupSearch=true;
     this.dataArraySearch=res.rows
 
-    // console.log("Search Broker : " ,this.dataArraySearch);
+    // //console.log("Search Broker : " ,this.dataArraySearch);
 
-    // console.log(this.dataArraySearch);
+    // //console.log(this.dataArraySearch);
 
 
-    // console.log(this.getAllDataSearch);
+    // //console.log(this.getAllDataSearch);
     
   })
 
@@ -571,7 +571,7 @@ onPaidInputChange(event: any, item: any, checkbox: HTMLInputElement) {
 checkDataId(event:any,item:any){
    const isChecked = event.target.checked;
 
-   console.log(item)
+   //console.log(item)
 
   if (isChecked) {
     // ✅ لو اتعلم عليه — ضيفه أو حدّثه
@@ -593,7 +593,7 @@ checkDataId(event:any,item:any){
   
 
  
-  console.log(this.itemsChecked);
+  //console.log(this.itemsChecked);
 
 }
 
@@ -601,7 +601,7 @@ checkDataId(event:any,item:any){
 
 selectAllChecked(e:any){
   const isChecked=e.target.checked
-  // console.log(e.target.checked);
+  // //console.log(e.target.checked);
 
   if(isChecked){
     this.itemsChecked=this.getAllDataSearch.rows.map((item:any) => ({
@@ -619,7 +619,7 @@ selectAllChecked(e:any){
     });
   }
 
-  console.log(this.itemsChecked);
+  //console.log(this.itemsChecked);
 
 }
 
@@ -703,13 +703,13 @@ sendDataSelectedSearch(e: any) {
   
     const row=e
     this.showPopupSearch=!this.showPopupSearch
-    console.log('rowBroker', row);
+    //console.log('rowBroker', row);
 
     if(row && row.id){
       this.formDataSearch.patchValue(row);
       this.idSearchRealtor=row.id;
       this.realtorPaymentVoucherForm.get('brokerId')?.setValue(row.id);
-      // console.log(this.idSearchRealtor)
+      // //console.log(this.idSearchRealtor)
       let pagination={
   paginationInfo: {
     pageIndex: 0,
@@ -721,11 +721,11 @@ sendDataSelectedSearch(e: any) {
 
 
 
-// console.log(this.realtorPaymentVoucherForm);
+// //console.log(this.realtorPaymentVoucherForm);
       this._realtorPaymentVoucherServices.searchBrokerCommissions(this.idSearchRealtor,pagination).pipe(takeUntilDestroyed(this.destroyRef)).subscribe((res:any)=>{
         this.getAllDataSearch=res
-        // console.log(res)
-        console.log(this.getAllDataSearch)
+        // //console.log(res)
+        //console.log(this.getAllDataSearch)
       })
 
 

@@ -208,7 +208,6 @@ export class AuthComponent {
       otp: this.otpForm.value.otp,
     };
 
-    console.log(data);
 
     // if(this.otpForm.valid){
 
@@ -217,17 +216,13 @@ export class AuthComponent {
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
         next: (res: any) => {
-          console.log('OTP Response:', res);
           this.vcr.clear();
           this.vcr.createEmbeddedView(this.resetpass);
           this.toastr.show('تم التحقق بنجاح', 'success');
-          // console.log(res);
           this.userId = res.userId;
 
-          console.log(this.userId);
         },
         error: (err: any) => {
-          console.error('OTP Error:', err);
           this.toastr.show('حدث خطأ أثناء التحقق', 'error');
         },
       });
@@ -241,16 +236,13 @@ export class AuthComponent {
     this.otpCodeValue = value;
     this.otpForm.get('otp')?.setValue(value);
 
-    console.log(this.otpCodeValue);
   }
 
   rememberme() {
     this.remember = !this.remember;
 
-    console.log(this.remember);
   }
 
   logs() {
-    console.log('clicked');
   }
 }

@@ -189,7 +189,7 @@ OnSubmitEmail(){
 
 getAllDataUpdate(){
 this._messageSettingsServices.getAllDataUpdate().pipe(takeUntilDestroyed(this.destroyRef)).subscribe((res:any)=>{
-  console.log(res)
+  //console.log(res)
   this.FormSms.patchValue({
       useWhatsApp: res.useWhatsApp,
   useEmail: res.useEmail,

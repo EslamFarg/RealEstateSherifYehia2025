@@ -69,7 +69,7 @@ export class MessageformsComponent implements OnInit {
           .createMessage(data)
           .pipe(takeUntilDestroyed(this.destroyRef))
           .subscribe((res: any) => {
-            // console.log(res);
+            // //console.log(res);
             this.toastr.show('تم ارسال الرسالة بنجاح', 'success');
             this.messageForm.reset({
               subject: 'Hello Marco',

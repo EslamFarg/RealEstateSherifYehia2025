@@ -27,6 +27,6 @@ export class RefreshSelectComponent {
 
   OnDataSelect(data: any) {
     this.selectedData.emit(data);
-    // console.log(data);
+    // //console.log(data);
   }
 }

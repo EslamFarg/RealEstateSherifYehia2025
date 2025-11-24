@@ -59,7 +59,7 @@ export class ExplorersalifsComponent implements OnInit {
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((res: any) => {
         this.salifsData = res;
-        console.log(this.salifsData);
+        //console.log(this.salifsData);
       });
   }
 
@@ -100,7 +100,7 @@ export class ExplorersalifsComponent implements OnInit {
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((res: any) => {
         this.salifsData = res;
-        console.log(res);
+        //console.log(res);
       });
   }
 

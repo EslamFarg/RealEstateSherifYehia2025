@@ -119,7 +119,7 @@ updateDateTime(){
         this.toastr.show('تم ارسال الرساله بنجاح','success');
         this.searchdataCheckRealtor = [];
         this.formEmail.reset();
-        console.log(res);
+        //console.log(res);
       });
   }
 }

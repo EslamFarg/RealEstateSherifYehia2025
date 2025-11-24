@@ -95,8 +95,6 @@ export class AccountstatementComponent {
         .pipe(takeUntilDestroyed(this.destroyRef))
         .subscribe((res: any) => {
           // this.accountData = res;
-          // console.log(this.accountData);
-          console.log(res);
           const selectedAccount = this.accountData.find(
             (a: any) => a.id == this.FromSearchData.value.accountId
           );

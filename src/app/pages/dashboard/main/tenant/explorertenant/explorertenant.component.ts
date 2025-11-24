@@ -71,13 +71,13 @@ export class ExplorertenantComponent {
   }
 
   onSelectedPagination(val: any) {
-    console.log(val);
+    //console.log(val);
     this.pageSize = val;
     this.getAllDataTenant();
   }
 
   getupdateData(id: any) {
-    // console.log(id);
+    // //console.log(id);
     this._editbehaviorServices.setId(id);
     this._router.navigate(['/dashboard/tenant/addtenant']);
   }

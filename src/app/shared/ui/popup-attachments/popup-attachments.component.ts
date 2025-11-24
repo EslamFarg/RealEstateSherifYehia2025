@@ -51,7 +51,7 @@ export class PopupAttachmentsComponent {
   //   let  Reader=new FileReader();
 
     
-  //   console.log(item);
+  //   //console.log(item);
   //   Reader.onload=function(e:any){
   //     let div=document.createElement('div');
 

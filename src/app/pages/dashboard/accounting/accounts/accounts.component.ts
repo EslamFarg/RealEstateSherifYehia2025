@@ -134,7 +134,6 @@ export class AccountsComponent {
           financiallyAccountId: this.financiallyAccountId,
         };
 
-        console.log(data);
         this._accountServices
           .updateData(data)
           .pipe(takeUntilDestroyed(this.destroyRef))

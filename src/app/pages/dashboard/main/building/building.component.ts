@@ -115,14 +115,14 @@ export class BuildingComponent {
     this.districts = this._SharedServices.allDistricts.filter(
       (dist: any) => dist.city_id === data.city_id
     );
-    console.log(this.districts);
+    //console.log(this.districts);
     this.formProperty.get('City')?.patchValue(this.dataSelectCity);
   }
 
   OnSelecteddistricts(data: any) {
-    // console.log(data)
+    // //console.log(data)
     this.dataSelectdistrict = data.name_ar;
-    console.log(this.dataSelectdistrict);
+    //console.log(this.dataSelectdistrict);
     this.formProperty.get('District')?.patchValue(this.dataSelectdistrict);
   }
 
@@ -137,7 +137,7 @@ export class BuildingComponent {
 
   OnSelectedOwners(e: any) {
     this.dataSelectNameOwner = e.id;
-    // console.log(this.dataSelectNameOwner)
+    // //console.log(this.dataSelectNameOwner)
     this.formProperty.get('OwnerID')?.patchValue(this.dataSelectNameOwner);
   }
 
@@ -176,7 +176,7 @@ export class BuildingComponent {
           .pipe(takeUntilDestroyed(this.$destroyRef))
           .subscribe((res: any) => {
             //  this.resetForm(
-            //  console.log(res);
+            //  //console.log(res);
             // this.formProperty.get('PropertyNumber')?.setValue(res.id);
             this.toastr.show('تم اضافه العقار بنجاح', 'success');
             this.getAllDataProperties();
@@ -268,7 +268,7 @@ export class BuildingComponent {
   }
 
   getUpdateData(id: any) {
-    console.log(id);
+    //console.log(id);
     this._BuildingServices
       .getDataUpdate(id)
       .pipe(takeUntilDestroyed(this.$destroyRef))
@@ -304,7 +304,7 @@ export class BuildingComponent {
             this.attachmentsComp.dataImgs.emit(this.dataFiles);
           }
 
-          console.log(this.dataFiles);
+          //console.log(this.dataFiles);
         } else {
           this.dataFiles = [];
         }

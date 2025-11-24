@@ -38,7 +38,7 @@ export class SearchDataComponent {
       this.showFilterData=false;
     }
 
-    // console.log(e);
+    // //console.log(e);
     // if(e.)
   }
 

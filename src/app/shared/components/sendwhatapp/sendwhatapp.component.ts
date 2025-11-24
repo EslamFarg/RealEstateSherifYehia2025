@@ -60,7 +60,7 @@
 
 //     this.searchdataCheckRealtor=val;
 
-//     console.log(this.searchdataCheckRealtor);
+//     //console.log(this.searchdataCheckRealtor);
 
 //   }
 
@@ -94,10 +94,10 @@
 //         this.toastr.show('تم ارسال الرساله بنجاح','success')
 //         this.searchdataCheckRealtor=[];
 //         this.formSms.reset();
-//         console.log(res);
+//         //console.log(res);
 //       })
 
-//   console.log(this.formSms.value);
+//   //console.log(this.formSms.value);
 //     }else{
 //       this.formSms.markAllAsTouched();
 //     }
@@ -285,7 +285,7 @@ export class SendwhatappComponent {
         this.toastr.show('تم ارسال الرساله بنجاح', 'success');
         this.searchdataCheckRealtor = [];
         this.formWhatsApp.reset();
-        console.log(res);
+        //console.log(res);
       });
   }
 }

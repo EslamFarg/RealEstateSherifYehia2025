@@ -119,7 +119,7 @@ export class ClassificationapartmentComponent {
         this.btnaddandupdate = 'update';
         this.idUpdate = res.id;
 
-        // console.log(this.idUpdate)
+        // //console.log(this.idUpdate)
       });
   }
 

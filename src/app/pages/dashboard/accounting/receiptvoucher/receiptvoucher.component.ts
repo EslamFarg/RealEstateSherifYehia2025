@@ -74,7 +74,7 @@ onPageChanged(page: number) {
 
 getAllAccounts() {
   this._accountSer.getAllData({}).pipe(takeUntilDestroyed(this.destroyRef)).subscribe((res: any) => {
-    console.log(res)
+    //console.log(res)
     this.getAllDataAccount = res.rows.map((item: any) => {
       return {
         id: item.id,
@@ -90,9 +90,9 @@ getAllAccounts() {
 
 getAllFinancialAccounts() {
   this._ReceiptVoucherService.getAllFinancialAccount().pipe(takeUntilDestroyed(this.destroyRef)).subscribe((res: any) => {
-    console.log("RRRRRRRRRRRRRRRRRRRRRRRRRRRr",res)
+    //console.log("RRRRRRRRRRRRRRRRRRRRRRRRRRRr",res)
     this.getAllDataFinancialAccount = res.rows
-    // console.log("No",this.getAllDataFinancialAccount)
+    // //console.log("No",this.getAllDataFinancialAccount)
 
   })
 
@@ -101,7 +101,7 @@ getAllFinancialAccounts() {
 
 OnSubmit(){
 
-  console.log(this.receiptForm.value)
+  //console.log(this.receiptForm.value)
   if(this.receiptForm.valid){
 
 if(this.btnAddandUpdate == 'add'){
@@ -112,17 +112,17 @@ if(this.btnAddandUpdate == 'add'){
   }
   
     this._ReceiptVoucherService.createreceiptVoucher(this.receiptForm.value).pipe(takeUntilDestroyed(this.destroyRef)).subscribe((res: any) => {
-      console.log(res)
+      //console.log(res)
       this.NumberVoucher.nativeElement.value=res;
       this.toastr.show('تم اضافه السند بنجاح','success');
       this.receiptForm.reset();
       this.getAllDataReceiptVoucher()
     })
     
-    // console.log(this.receiptForm.value);
+    // //console.log(this.receiptForm.value);
 
    
-    console.log(this.receiptForm.value)
+    //console.log(this.receiptForm.value)
 }else{
 
   let data={
@@ -140,7 +140,7 @@ if(this.btnAddandUpdate == 'add'){
 
 
   this._ReceiptVoucherService.updateDate(data).pipe(takeUntilDestroyed(this.destroyRef)).subscribe((res: any) => {
-    console.log(res)
+    //console.log(res)
     this.toastr.show('تم تعديل السند بنجاح','success');
     this.receiptForm.reset();
     this.btnAddandUpdate='add';
@@ -165,13 +165,13 @@ getAllDataReceiptVoucher(){
     }
   }
   this._ReceiptVoucherService.getAllReceiptVoucher(pagination).pipe(takeUntilDestroyed(this.destroyRef)).subscribe((res: any) => {
-    // console.log(res)
+    // //console.log(res)
 
     // let taxValue=totalTax(res.rows)
     // let totalWithTax=taxValue+res.rows[0].amount
 
     this.receiptVouchersData=res
-    console.log("Receipt",this.receiptVouchersData)
+    //console.log("Receipt",this.receiptVouchersData)
   })
 }
 
@@ -182,7 +182,7 @@ getAllDataReceiptVoucher(){
 //   this.btnAddandUpdate='update';
 
 //   this._ReceiptVoucherService.getDataUpdate(id).pipe(takeUntilDestroyed(this.destroyRef)).subscribe((res: any) => {
-//     console.log(res);
+//     //console.log(res);
 //     this.NumberVoucher.nativeElement.value=res.id
 //         this.taxValue = Number(res.tax) || 0;
 
@@ -201,7 +201,7 @@ getAllDataReceiptVoucher(){
 
 
 
-//     console.log("Update",this.receiptForm.value);
+//     //console.log("Update",this.receiptForm.value);
 
 //     // console
 
@@ -222,7 +222,7 @@ getDataUpdate(id: any) {
   this._ReceiptVoucherService.getDataUpdate(id)
     .pipe(takeUntilDestroyed(this.destroyRef))
     .subscribe((res: any) => {
-      console.log(res);
+      //console.log(res);
 
       this.NumberVoucher.nativeElement.value = res.id;
       this.taxValue = Number(res.tax) || 0;
@@ -240,7 +240,7 @@ getDataUpdate(id: any) {
         creditAccountId: res.creditAccountNumber
       });
 
-      // console.log("Update form value:", this.receiptForm.value);
+      // //console.log("Update form value:", this.receiptForm.value);
        this.btnAddandUpdate = 'update';
     });
 }
@@ -271,13 +271,13 @@ onClose(){
 
 
 onChanges(e:any){
-  console.log(e)
+  //console.log(e)
 
 }
 
 
 changeBank(e:any){
-  console.log(e);
+  //console.log(e);
 
 }
 

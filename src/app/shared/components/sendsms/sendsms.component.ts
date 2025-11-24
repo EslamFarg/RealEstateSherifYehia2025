@@ -76,7 +76,7 @@ export class SendsmsComponent {
   arrDataCheck(val: any) {
     this.searchdataCheckRealtor = val;
 
-    console.log(this.searchdataCheckRealtor);
+    //console.log(this.searchdataCheckRealtor);
   }
 
   onSubmit() {
@@ -110,7 +110,7 @@ export class SendsmsComponent {
           this.formSms.reset();
         });
 
-      console.log(this.formSms.value);
+      //console.log(this.formSms.value);
     } else {
       this.formSms.markAllAsTouched();
     }

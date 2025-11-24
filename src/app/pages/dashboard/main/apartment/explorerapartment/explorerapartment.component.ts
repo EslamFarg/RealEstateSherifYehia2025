@@ -75,7 +75,7 @@ getAllDataUnit(){
   }
   this._unitServices.getAllDataUnit(pagination).subscribe((res:any)=>{
     this.unitsData=res
-    console.log(this.unitsData)
+    //console.log(this.unitsData)
   });
 }
 
@@ -113,7 +113,7 @@ this._unitServices.deleteData(id).subscribe((res:any)=>{
 
 
 onSearchFilter(e:any){
-  console.log(e);
+  //console.log(e);
   let ShapeDataFilter={
   criteriaDto: {
     paginationInfo: {
@@ -141,7 +141,7 @@ if(e.index == 0){
 }
 this._unitServices.searchDataUnit(ShapeDataFilter).pipe(takeUntilDestroyed(this.destroyRef)).subscribe((res:any)=>{
   this.unitsData=res;
-  console.log(res);
+  //console.log(res);
 
 })
 }

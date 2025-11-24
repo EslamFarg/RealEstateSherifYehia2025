@@ -38,7 +38,7 @@ this.checkitems.forEach((checkbox) => {
     })
   }
     
-    console.log(this.itemsChecked);
+    //console.log(this.itemsChecked);
 
   }
 
@@ -62,7 +62,7 @@ this.checkitems.forEach((checkbox) => {
     this.itemsChecked = this.itemsChecked.filter((emp:any) => emp.id !== item.id);
   }
 
-  console.log(this.itemsChecked);
+  //console.log(this.itemsChecked);
 }
 
 

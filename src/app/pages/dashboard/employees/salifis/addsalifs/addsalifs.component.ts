@@ -71,7 +71,7 @@ ngAfterViewInit(): void {
       this.NumberBond.nativeElement.value=id
 
       this._salifsService.getDataById(id).pipe(takeUntilDestroyed(this.destroyRef)).subscribe((res:any)=>{
-        console.log('RES',res);
+        //console.log('RES',res);
         this.idUpdate=res.id
         this.salafisData.patchValue({
           bookNumber:res.bookNumber,
@@ -98,7 +98,7 @@ ngAfterViewInit(): void {
 
 onSubmit(){
 
-  console.log(this.salafisData.value);
+  //console.log(this.salafisData.value);
   if(this.salafisData.valid){
     
     let data={
@@ -113,7 +113,7 @@ onSubmit(){
 }
    if(this.btnAddandUpdate=='add'){
      this._salifsService.createPaymentVoucher(data).pipe(takeUntilDestroyed(this.destroyRef)).subscribe((res:any)=>{
-      console.log(res);
+      //console.log(res);
       this.toastr.show('تم حفظ البيانات بنجاح','success');
       this.idUpdate=res
       this.showBtns=true;
@@ -130,7 +130,7 @@ this.btnAddandUpdate='update'
       ...this.salafisData.value
     }
     this._salifsService.updatePaymentVoucher(data).pipe(takeUntilDestroyed(this.destroyRef)).subscribe((res:any)=>{
-      console.log(res);
+      //console.log(res);
       this.toastr.show('تم تعديل البيانات بنجاح','success');
       this.btnAddandUpdate='add'
       this.salafisData.reset();
@@ -239,9 +239,9 @@ onSearch(searchVal:any){
 }
   this._salifsService.searchData(ShapeDataFilter).pipe(takeUntilDestroyed(this.destroyRef)).subscribe((res:any)=>{
     // this.salafisData.value.accountId=res.rows[0].accountId
-    // console.log(res.rows[0])
+    // //console.log(res.rows[0])
     const row=res?.rows[0];
-    console.log(row)
+    //console.log(row)
 
 
     if(res?.rows && res.rows.length > 0){

@@ -150,7 +150,7 @@ closePopup() {
     }
 
 
-    console.log(this.itemsArr);
+    //console.log(this.itemsArr);
   
  }
  
@@ -173,7 +173,7 @@ closePopup() {
     let idSearchProperties=this.SearchForm.value.property;
     // this.SelectedDistritByProperty(idSearchProperties);
     this._SendMsgSer.getAndPropertyByTenant(idSearchProperties,{}).pipe(takeUntilDestroyed(this.destroyRef)).subscribe((res:any)=>{
-      console.log(res);
+      //console.log(res);
       // this.dataSearch=res.rows
       this.dataSearch=res.rows
     })
@@ -197,7 +197,7 @@ closePopup() {
     this.SearchForm.get('property')?.setValue(null);
     return;
   }
-  // console.log(e);
+  // //console.log(e);
   const id=e.city_id
   if(id){
 this.getDataDistricts=this._sharedServices.allDistricts.filter((item:any)=>item.city_id==id)
@@ -209,7 +209,7 @@ this.getDataDistricts=this._sharedServices.allDistricts.filter((item:any)=>item.
 
 
 SelectedDistritByProperty(e:any){
-  // console.log(e);
+  // //console.log(e);
   if(!e){
     this.getDataProperties=[];
     this.SearchForm.get('property')?.setValue(null);
@@ -229,7 +229,7 @@ SelectedDistritByProperty(e:any){
 }
 
   this._SendMsgSer.getByProperty(ShapeDataFilter).pipe(takeUntilDestroyed(this.destroyRef)).subscribe((res:any)=>{
-    console.log(res);
+    //console.log(res);
     this.getDataProperties=res?.rows
   })
 
@@ -247,7 +247,7 @@ getIdSearch(e:any){
     return
   }
   this.idSearchProperties=e.id
-  console.log(this.idSearchProperties);
+  //console.log(this.idSearchProperties);
 }
 
 

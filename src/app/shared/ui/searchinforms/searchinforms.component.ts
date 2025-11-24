@@ -38,7 +38,7 @@ destroyRef:DestroyRef=inject(DestroyRef)
 @HostListener('document:click',['$event'])
 
 onClick(e:any){
-//  console.log(e);
+//  //console.log(e);
 if(!e.target.closest('.filter_data')){
   this.showFilterData=false;
 }
@@ -49,7 +49,7 @@ if(!e.target.closest('.filter_data')){
 
 selectDataFilter(i:any){
   this.selectIndex = i
-  // console.log(i)
+  // //console.log(i)
   
 }
 
@@ -88,7 +88,7 @@ SearchAboutData(val:any){
     index:this.selectIndex,
     value:value,
   }
-  // console.log(dataSearch);
+  // //console.log(dataSearch);
   this.selectedDataFilter.emit(dataSearch);
   // this.fc.setValue('');
 
@@ -112,7 +112,7 @@ getDatausers:any=[]
 getAllDataUser(){
     this.searchInFormsServices.getAllDataUsers().pipe((takeUntilDestroyed(this.destroyRef))).subscribe((res:any)=>{
       this.getDatausers=res.items;
-      console.log(this.getDatausers);
+      //console.log(this.getDatausers);
     })
 }
 

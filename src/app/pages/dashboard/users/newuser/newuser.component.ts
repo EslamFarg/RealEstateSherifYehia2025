@@ -163,6 +163,7 @@ export class NewuserComponent {
           userName: res.userName,
           email: res.email,
           isActive: res.isActive,
+          groupIds: res.groups.map((group: any) => group.groupId),
         });
         this.selectedCountry = phone.countryCode;
 

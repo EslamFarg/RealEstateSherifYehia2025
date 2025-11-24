@@ -106,7 +106,6 @@ deleteId:any
         // this.btnAddandUpdate='update';
         this.idUpdate=id;
         this._TenantServices.searchById(id).pipe(takeUntilDestroyed(this.destroyRef)).subscribe((res:any)=>{
-          console.log("REs",res);
            this.PaymentReceiptVoucherForm.patchValue({
         voucherNo: res.voucherNo,
         voucherDate: res.voucherDate.split('T')[0],
@@ -183,7 +182,6 @@ deleteId:any
 
 
   selectFilterData(e:any){
-    console.log(e);
     if(!e || !e.value){return;}
 
     let ShapeSearch={
@@ -244,9 +242,7 @@ deleteId:any
   getAllMonthes(){
     if(this.ContractId){
  this._TenantServices.getAllMonths(this.ContractId).pipe(takeUntilDestroyed(this.destroyRef)).subscribe((res: any) => {
-      // console.log(res);
       this.getMonthes=res.rows;
-      console.log("GETMonths",this.getMonthes)
     })
     }
    
@@ -281,10 +277,8 @@ deleteId:any
 //     })
 //     this.activeDataSelected.splice(pos,1)
    
-//     console.log(this.getTotalAmount)
 //   }else {
 //     this.activeIndexes.push(index);
-//     console.log(item);
 //     this.activeDataSelected.push({
 //       contractInstallmentId:item.contractId,
 //       remainingAmount:item.remainingAmount
@@ -339,8 +333,6 @@ getTotalAmount: number = 0;
 //     amount: this.getTotalAmount
 //   });
 
-//   console.log("Selected:", this.activeDataSelected);
-//   console.log("Total:", this.getTotalAmount);
 // }
 
 
@@ -423,14 +415,12 @@ let data={
 }
 
 
-console.log(data);
   // debugger
   if(this.PaymentReceiptVoucherForm.valid){
     if(this.btnAddandUpdate == 'add'){
       this._TenantServices.createData(data).pipe(takeUntilDestroyed(this.destroyRef)).subscribe((res:any)=>{
         this.toastr.show('تم حفظ البيانات بنجاح','success');
      
-        // console.log(this.idUpdate);
         this.numberVoucher.nativeElement.value=res;
         this.idUpdate=res;
         this.btnAddandUpdate='update';
@@ -472,7 +462,6 @@ searchById(valSearchById: any) {
   this._TenantServices.searchById(id)
     .pipe(takeUntilDestroyed(this.destroyRef))
     .subscribe((res: any) => {
-        console.log(res);
       // ✅ تعبئة الفورم
       this.PaymentReceiptVoucherForm.patchValue({
         voucherNo: res.voucherNo,
@@ -605,7 +594,6 @@ resetForm() {
   // ✅ 7) تنظيف ContractId حتى لا يعيد الشهور القديمة
   this.ContractId = null;
 
-  console.log("✅ تم عمل Reset كامل");
 }
 
 
@@ -630,7 +618,6 @@ sendDataSelectedSearch(e: any) {
         amountDue:row.totalAmount
       })
 
-      console.log(this.PaymentReceiptVoucherForm.value);
 
       this.ContractId=row.id
       this.getAllMonthes();

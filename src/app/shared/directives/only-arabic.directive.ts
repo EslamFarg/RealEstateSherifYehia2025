@@ -17,7 +17,7 @@ export class OnlyArabicDirective {
   onKeyDown(e: KeyboardEvent) {
     if (e.key.length === 1 && !this.regex.test(e.key)) {
       e.preventDefault();
-      console.log("❌ الحروف المسموح بها فقط: عربي + مسافة");
+      //console.log("❌ الحروف المسموح بها فقط: عربي + مسافة");
     }
   }
 

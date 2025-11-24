@@ -172,7 +172,7 @@ btnAddandUpdate = 'add';
 
   getAllDataSystemSettings(){
     this._mainDataServices.getDataSystemSettings().pipe(takeUntilDestroyed(this.destroyRef)).subscribe((res:any)=>{
-      console.log(res);
+      //console.log(res);
       if(res){
         const phone = this._sharedServices.parsePhoneNumber(res.mobile);
         this.systemSettings.patchValue(res)

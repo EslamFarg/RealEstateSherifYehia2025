@@ -22,7 +22,7 @@ export class InputAttachmentsComponent {
   rejectedFiles: string[] = []; // أسماء الملفات المرفوضة
 
   ngOnInit() {
-    // console.log()
+    // //console.log()
   }
 
   // onSelectFiles(e: any) {

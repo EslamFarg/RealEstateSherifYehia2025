@@ -19,7 +19,7 @@ arrDataCheck(val:any){
   this.searchdataCheckRealtor=val;
 
 
-  console.log(this.searchdataCheckRealtor);
+  //console.log(this.searchdataCheckRealtor);
 
 }
 
@@ -35,7 +35,7 @@ showMsg(val:any){
   // },0)
  this.cdr.detectChanges(); // 👈 يجبر Angular يعمل تحديث للتبويبات
 
-  // console.log(this.msgDataDescription);
+  // //console.log(this.msgDataDescription);
  
 
 }

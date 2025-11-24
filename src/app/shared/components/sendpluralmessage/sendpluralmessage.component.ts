@@ -64,11 +64,11 @@ showPopupRealtor=false
 
 arrDataCheck(val:any){
 
-  console.log(val);
+  //console.log(val);
   this.searchdataCheckRealtor=val;
 
 
-  // console.log(this.searchdataCheckRealtor);
+  // //console.log(this.searchdataCheckRealtor);
 
 }
 
@@ -112,7 +112,7 @@ ngOnInit(){
     if(id){
       this._sendMessageServices.redirectSearch(id).pipe(takeUntilDestroyed(this.destroyRef)).subscribe((res:any)=>{
 
-        console.log("AllData",res)
+        //console.log("AllData",res)
         this.sendMessageForm.patchValue({
           messageText: res.messageText,
           useEmail: res.useEmail,
@@ -134,10 +134,10 @@ ngOnInit(){
 
         
 
-        console.log(res)
+        //console.log(res)
         this.msgDataDescription1 = res.messageText;
         this.searchdataCheckRealtor=res.contacts
-        console.log(this.searchdataCheckRealtor)
+        //console.log(this.searchdataCheckRealtor)
                 this.getMsgCount();
         
       })
@@ -150,7 +150,7 @@ ngOnInit(){
   })
 
   this.updateDateTime();
-  console.log(this.msgDataDescription1.length);
+  //console.log(this.msgDataDescription1.length);
 
   this.intervalId = setInterval(() => {
       this.updateDateTime();
@@ -208,9 +208,9 @@ onSubmit(){
   useSms: this.sendMessageForm.value.useSms,
   contacts:this.searchdataCheckRealtor
     }
-    // console.log("YEEEEES")
+    // //console.log("YEEEEES")
 
-    console.log(data);
+    //console.log(data);
     this._sendMessageServices.sendDataMessageGroup(data).subscribe((res:any)=>{
       this.toastr.show('تم ارسال الرساله بنجاح','success');
       this.sendMessageForm.reset(
@@ -225,7 +225,7 @@ onSubmit(){
       this.searchdataCheckRealtor=[]
       this.msgDataDescription1=''
       this.getMsgCount();
-      // console.log(res);
+      // //console.log(res);
     
     
     
@@ -259,7 +259,7 @@ onSubmit(){
 //   }
 
 //   const messageCount = this.getMsgCount();
-//   console.log('عدد الرسائل:', messageCount);
+//   //console.log('عدد الرسائل:', messageCount);
 //   // this.getMsgCount();
 
   
@@ -276,7 +276,7 @@ writeMessage(e: any) {
 
   // تحديث عدد الرسائل
   const messageCount = this.getMsgCount();
-  console.log('عدد الرسائل:', messageCount);
+  //console.log('عدد الرسائل:', messageCount);
 }
 
 requiredMsg(){

@@ -45,7 +45,7 @@ chooseMsg(){
 }
 getAllDataMsg(){
   this._msgServices.getAllDataMessageForms(0,0).pipe(takeUntilDestroyed(this.destroyRef)).subscribe((res:any)=>{
-    // console.log(res);
+    // //console.log(res);
     this.msgArrayData=res.items;
   })
 }

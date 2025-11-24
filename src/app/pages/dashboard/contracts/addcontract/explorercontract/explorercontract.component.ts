@@ -57,7 +57,7 @@ getAllDataContracts(){
   }
 }
 this._addContractService.getAllDataContracts(pagination).pipe(takeUntilDestroyed(this.destroyRef)).subscribe(res=>{
-  console.log(res);
+  //console.log(res);
   this.getAllData=res
 })
 
@@ -84,7 +84,7 @@ onSearchFilter(e:any){
     "value": e.value
   }
 }
-  console.log(e);
+  //console.log(e);
 
   if(e.index==0){
     shapeSearch.searchFilter.column= 0;
@@ -96,7 +96,7 @@ onSearchFilter(e:any){
   }
 
   this._addContractService.searchByContract(shapeSearch).pipe(takeUntilDestroyed(this.destroyRef)).subscribe(res=>{
-    console.log(res);
+    //console.log(res);
     this.getAllData=res
   }
   )
@@ -111,7 +111,7 @@ deleteId:any;
 
 showPopupDelete(id:any){
   this.showDelete=true;
-  console.log(id);
+  //console.log(id);
   this.deleteId=id;
 
 }
@@ -132,7 +132,7 @@ onClose(){
 
 
 sendIdToContracts(id:any){
-  console.log(id);
+  //console.log(id);
   // this._addContractService.contractId=id;
   this.editBehaviorService.setId(id);
   this.router.navigate(['/dashboard/addcontract/newaddcontract']);

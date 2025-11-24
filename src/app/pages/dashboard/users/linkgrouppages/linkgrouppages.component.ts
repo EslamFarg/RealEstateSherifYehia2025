@@ -84,7 +84,7 @@ export class LinkgrouppagesComponent {
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((res: any) => {
         7;
-        console.log(res);
+        //console.log(res);
         const pagesIds = res.pages.map((item: any) => item.pageId);
         this.groupForm.patchValue({
           groupId: res.groupId,
@@ -108,7 +108,7 @@ export class LinkgrouppagesComponent {
       .getAllGroups()
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((res: any) => {
-        console.log(res);
+        //console.log(res);
 
         this.getAllDataGroups = res.rows;
       });

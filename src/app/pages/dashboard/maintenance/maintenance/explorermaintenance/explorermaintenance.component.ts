@@ -64,19 +64,19 @@ export class ExplorermaintenanceComponent {
       .getAllDataMaintenaces(pagination)
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((res: any) => {
-        // console.log(res);
+        // //console.log(res);
         this.reportsAllData = res;
       });
   }
 
   onSelectedPagination(e: any) {
-    // console.log(e);
+    // //console.log(e);
     this.pageSize = e;
     this.getAllDataMaintenances();
   }
 
   onSearchFilter(e: any) {
-    // console.log(e);
+    // //console.log(e);
 
     let ShapeDataFilter = {
       criteriaDto: {

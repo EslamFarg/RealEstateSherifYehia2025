@@ -60,7 +60,7 @@ getAllData(){
 
   this._paymentReceiptVoucherService.getAllData(pagination).pipe(takeUntilDestroyed(this.destroyRef)).subscribe((res:any)=>{
     this.receiptsData=res
-    console.log(this.receiptsData);
+    //console.log(this.receiptsData);
   })
 }
 
@@ -80,7 +80,7 @@ onSearchFilter(e:any){
 //  "tenantReceiptVoucherId": 0,
 //   "contractInstallmentId": 0,
 //   "tenantName": "string",
-console.log(e.value);
+//console.log(e.value);
 
 if(e.index == 0){
   ShapeDataFilter.tenantReceiptVoucherId=e.value
@@ -91,7 +91,7 @@ if(e.index == 0){
 }
 this._paymentReceiptVoucherService.searchFilter(ShapeDataFilter).pipe(takeUntilDestroyed(this.destroyRef)).subscribe((res:any)=>{
   this.receiptsData=res;
-  console.log(this.receiptsData);
+  //console.log(this.receiptsData);
 })
 }
 

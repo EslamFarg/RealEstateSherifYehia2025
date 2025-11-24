@@ -244,7 +244,7 @@ export class AddSalaryDisbursementComponent {
     }
 
     // Log payload INCLUDING disabled controls
-    console.log(this.formExchange.getRawValue());
+    //console.log(this.formExchange.getRawValue());
   }
 
   addLine() {
@@ -297,7 +297,7 @@ export class AddSalaryDisbursementComponent {
   }
 
   changeEmployees(e: any) {
-    console.log(e);
+    //console.log(e);
     if (!e) {
       return;
     }
@@ -315,11 +315,11 @@ export class AddSalaryDisbursementComponent {
       netPay: e.salary,
     });
 
-    console.log(this.FormLines.value);
+    //console.log(this.FormLines.value);
   }
 
   changeAccount(e: any) {
-    console.log(e);
+    //console.log(e);
     if (!e) {
       return;
     }
@@ -346,12 +346,12 @@ export class AddSalaryDisbursementComponent {
       .getByIdPayrollVoucher(id)
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((res: any) => {
-        console.log(res);
+        //console.log(res);
         this.formExchange.patchValue({
           ...res,
           dateTime: res.date.split('T')[0],
         });
-        console.log(res);
+        //console.log(res);
         this.employeesSalary = res.lines;
         this.btnAddandUpdate = 'add';
         this.idUpdateAndDelete = res.id;
@@ -362,7 +362,7 @@ export class AddSalaryDisbursementComponent {
         this.getDataPrint=res;
 
         this.getAllEmployee=res;
-        console.log('GGGGGGG', this.getDataPrint);
+        //console.log('GGGGGGG', this.getDataPrint);
       });
   }
 

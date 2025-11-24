@@ -77,7 +77,7 @@ itemSelectedMonths: any[] = [];
     }
 
 
-    // console.log(id)
+    // //console.log(id)
     this.router.navigate(['/dashboard/terminationcontract']);
     this.editBehaviorService.setId({
       contractId:id,
@@ -97,7 +97,7 @@ itemSelectedMonths: any[] = [];
   newingContract(e:any,id:any){
     e.stopPropagation();  
 
-    console.log(id);
+    //console.log(id);
     this.editBehaviorService.setId(id)
 
     this.router.navigate(['/dashboard/contractrenewal']);
@@ -120,7 +120,7 @@ itemSelectedMonths: any[] = [];
     "value": e.value.trim()
   }
 }
-  console.log(e);
+  //console.log(e);
 
   if(e.index==0){
     shapeSearch.searchFilter.column= 0;
@@ -132,13 +132,13 @@ itemSelectedMonths: any[] = [];
   }
 
   this.contractdetailsService.filterSearchContract(shapeSearch).pipe(takeUntilDestroyed(this.destroyRef)).subscribe((res:any)=>{
-    console.log(res);
+    //console.log(res);
     this.getAllDataContract=res;
 
     this.getAllDataContract.rows.forEach((item: any) => {
   item.months = this.generateMonths(item.leaseStartDate, item.leaseMonths);
 });
-    console.log(this.getAllDataContract)
+    //console.log(this.getAllDataContract)
   })
 
   }
@@ -240,7 +240,7 @@ nextMonth(){
 // toggleMonthSelection(item: any, month: any) {
 //   if (!item.selectedMonths) item.selectedMonths = [];
 
-//   // console.log(month);
+//   // //console.log(month);
 
 //   const exists = item.selectedMonths.find(
 //     (m: any) => m.monthIndex === month.monthIndex && m.year === month.year
@@ -257,7 +257,7 @@ nextMonth(){
 //   }
 
 //   this.itemSelectedMonths=item.selectedMonths;
-//   console.log(this.itemSelectedMonths);
+//   //console.log(this.itemSelectedMonths);
 // }
 
 
@@ -282,7 +282,7 @@ toggleMonthSelection(item: any, month: any) {
   // تخزين في متغير خارجي إذا احتجته
   this.itemSelectedMonths = [month];
 
-  console.log("Selected Month:", this.itemSelectedMonths);
+  //console.log("Selected Month:", this.itemSelectedMonths);
 }
 
 
@@ -306,7 +306,7 @@ getAllContracts(){
        this.getAllDataContract.rows.forEach((item: any) => {
         item.months = this.generateMonths(item.leaseStartDate, item.leaseMonths);
       });
-    console.log(this.getAllDataContract)
+    //console.log(this.getAllDataContract)
   })
 }
 

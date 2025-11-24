@@ -174,7 +174,7 @@ export class EmployeesComponent {
   }
 
   fnIdRemoveFiles(ids: any) {
-    // console.log(ids);
+    // //console.log(ids);
     // this.dataFiles=this.dataFiles.filter((el:any)=>!ids.includes(el.id));
     this.dataFiles = this.dataFiles.filter((el: any) => el.id !== ids);
 
@@ -193,7 +193,7 @@ export class EmployeesComponent {
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((res: any) => {
         this.empData = res;
-        console.log(this.empData);
+        //console.log(this.empData);
       });
   }
 

@@ -158,7 +158,7 @@ street: [''],
       this.endYear=res.endYear;
 
       this._terminationContractService.GetRefund(res.contractId,res.endMonthIndex,res.endYear).pipe(takeUntilDestroyed(this.destroyRef)).subscribe((res)=>{
-        console.log(res);
+        //console.log(res);
          if(!res) return ;
           this.contractData = res;  // يجي من الباك API
 
@@ -298,13 +298,13 @@ street: this.contractData?.unit.street,
   }
   
   onSubmit() {
-    console.log("form data: ", this.form.value);
+    //console.log("form data: ", this.form.value);
 
     // Call API
     // this._terminationContractService.submitTermination(this.form.value)
       // .pipe(takeUntilDestroyed(this.destroyRef))
       // .subscribe(res => {
-        // console.log(res);
+        // //console.log(res);
       // });
   }
 
@@ -313,7 +313,7 @@ street: this.contractData?.unit.street,
   accountDataFetch(){
     this.accountServices.getAllData({}).pipe(takeUntilDestroyed(this.destroyRef)).subscribe((res:any)=>{
       this.accountData=res.rows;
-      console.log("accounting",this.accountData);
+      //console.log("accounting",this.accountData);
     })
 
   }
@@ -323,15 +323,15 @@ street: this.contractData?.unit.street,
 
   getMessageTemplateDetails(){
      this.messageTemplateServices.getAllDataMessageForms(0,0).subscribe((res:any)=>{
-    // console.log(res);
+    // //console.log(res);
     this.datamsg=res.items;
-    console.log('datamsg',this.datamsg)
+    //console.log('datamsg',this.datamsg)
   })
   }
   
 
   changeMsg(e:any){
-    console.log(e);
+    //console.log(e);
 
      
   this.form.get('messageText')?.patchValue(e.body);
@@ -386,7 +386,7 @@ street: this.contractData?.unit.street,
 
   financiallyData(selectedAccount: any) {
     // تأكد أنه ليس undefined
-    console.log('selectedAccount', selectedAccount);
+    //console.log('selectedAccount', selectedAccount);
 
     if (!selectedAccount) return;
 

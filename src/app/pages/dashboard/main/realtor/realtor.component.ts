@@ -261,7 +261,7 @@ export class RealtorComponent {
     this.dataFiles = this.dataFiles.filter((el: any) => el.id != id);
     this.idRemoveFiles.push(id);
 
-    console.log(this.idRemoveFiles);
+    //console.log(this.idRemoveFiles);
   }
 
   // showDelete(id:any){
@@ -311,7 +311,7 @@ export class RealtorComponent {
       .getAllfinancialData(pagination)
       .pipe(takeUntilDestroyed(this.$destroyRef))
       .subscribe((res: any) => {
-        console.log(res);
+        //console.log(res);
         this.accountParent = res.rows;
       });
   }

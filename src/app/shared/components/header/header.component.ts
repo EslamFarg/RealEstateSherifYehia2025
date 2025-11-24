@@ -40,7 +40,7 @@ export class HeaderComponent {
   //   this.ShowDropDown=false;
   //  }
 
-  // console.log( );
+  // //console.log( );
 
   if(!event.target.closest('.drop_down_profile')){
     this.ShowDropDown=false;
@@ -68,14 +68,14 @@ export class HeaderComponent {
     //Called before any other lifecycle hook. Use it to inject dependencies, but avoid any serious work here.
     //Add '${implements OnChanges}' to the class.
     
-    console.log(this.fullWidthMode)
+    //console.log(this.fullWidthMode)
   }
 
 
   // getAllDataUserImg(){
 
   //   this._profileSettingsServices.getDataUserProfile().pipe(takeUntilDestroyed(this._destroyRef)).subscribe((res:any)=>{
-  //     console.log(res);
+  //     //console.log(res);
   //     this.getDataUser=res;
     
   //   })

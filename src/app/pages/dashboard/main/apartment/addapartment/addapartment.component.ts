@@ -423,7 +423,7 @@ export class AddapartmentComponent {
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((res: any) => {
         this.getUnitCategories = res.rows;
-        // console.log(this.getUnitCategories)
+        // //console.log(this.getUnitCategories)
       });
   }
 
@@ -432,7 +432,7 @@ export class AddapartmentComponent {
       .getAllDataBuilding({})
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((res: any) => {
-        console.log(res);
+        //console.log(res);
         this.getProperties = res.rows;
       });
   }

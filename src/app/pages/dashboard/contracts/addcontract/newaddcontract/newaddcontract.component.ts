@@ -179,7 +179,7 @@ ngOnInit(): void {
 
 
 
-  // console.log(date);
+  // //console.log(date);
 
   const startDate = new Date(this.contractsForm.get('LeaseStartDate')?.value);
   const endDate = new Date(this.contractsForm.get('LeaseEndDate')?.value);
@@ -292,7 +292,7 @@ this.showBtns = true;
 
 this.getDataPrint=res;
 
-console.log('GGGGGGG', this.getDataPrint);
+//console.log('GGGGGGG', this.getDataPrint);
     })
   }
   })
@@ -488,7 +488,7 @@ searchFilterUnit(val:any){
     this.showPopupSearchUnit=true
     this.dataArraySearch=res.rows;
 
-    console.log(this.dataArraySearch);
+    //console.log(this.dataArraySearch);
    
  })
 }
@@ -580,7 +580,7 @@ searchFilterTenant(val:any){
     this.showPopupSearchTenant=true
     this.dataArraySearchTenant=res.rows;
 
-    console.log(this.dataArraySearchTenant)
+    //console.log(this.dataArraySearchTenant)
 
 
   
@@ -799,7 +799,7 @@ nextMonths(){
   })
 }
   changeMsg(e:any){
-    console.log(e);
+    //console.log(e);
 
     // setTimeout(() => {
   //  this.msgTextarea=e.body;    
@@ -864,7 +864,7 @@ formData.append('TaxAmount', String(this.contractsForm.value.TaxAmount));
 formData.append('TotalAmount', String(this.contractsForm.value.TotalAmount));
 formData.append('NetAmount', String(this.contractsForm.value.NetAmount));
 // formData.append('Files', this.contractsForm.value.Files);
-    // console.log(data);
+    // //console.log(data);
 
     if (this.contractsForm.value.Files && this.contractsForm.value.Files.length) {
   this.contractsForm.value.Files.forEach((file: any) => {
@@ -883,7 +883,7 @@ formData.append('NetAmount', String(this.contractsForm.value.NetAmount));
         this.contractNumber.nativeElement.value=res
         this.showBtns=true
         this.getDataPrint=res;
-        // console.log(res);
+        // //console.log(res);
       })
       
 
@@ -930,7 +930,7 @@ files
 
    this.addContractServices.updateContract(formDataUpdate).pipe((takeUntilDestroyed(this.destroyRef))).subscribe((res:any)=>{
       this.toastr.show('تم تحديث البيانات بنجاح','success');
-      // console.log(res);
+      // //console.log(res);
       this.showBtns=true
       this.btnAddandUpdate='update'
       this.getDataPrint=res;
@@ -962,9 +962,9 @@ getAllMessage(){
     }
   }
   this.messageTemplateServices.getAllDataMessageForms(0,0).subscribe((res:any)=>{
-    // console.log(res);
+    // //console.log(res);
     this.datamsg=res.items;
-    console.log('datamsg',this.datamsg)
+    //console.log('datamsg',this.datamsg)
   })
 }
 
@@ -1071,7 +1071,7 @@ sendDataSelectedSearchUnit(e:any){
    this.getAllDataUnitProperty=e
    
    this.formDataUnit.patchValue(this.getAllDataUnitProperty)
-   console.log(this.getAllDataUnitProperty);
+   //console.log(this.getAllDataUnitProperty);
 
    // ✅ ثق سعر الوحدة
 let unitPrice = Number(e.price);
@@ -1089,7 +1089,7 @@ let newContractValue = unitPrice * months;
    })
     this.getTaxes();
     this.getTotal();
-   console.log(this.contractsForm.value);
+   //console.log(this.contractsForm.value);
 
 }
 
@@ -1098,7 +1098,7 @@ let newContractValue = unitPrice * months;
 sendDataSelectedSearchTenant(e:any){
     this.showPopupSearchTenant=!this.showPopupSearchTenant
 
-    console.log(e);
+    //console.log(e);
     this.getTaxes();
     
     this.formDataTenant.patchValue(e)

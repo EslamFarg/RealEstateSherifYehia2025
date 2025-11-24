@@ -14,7 +14,6 @@
     showAndHideSidebarInDashboard(e:any){
 
 this.showAndHideSidebar=!this.showAndHideSidebar
-      // console.log(e);
       // this.showAndHideSidebar=e
     // if(e==true){this.showAndHideSidebar=false}else{this.showAndHideSidebar=true}
 

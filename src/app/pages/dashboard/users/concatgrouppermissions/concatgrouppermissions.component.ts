@@ -43,7 +43,7 @@ export class ConcatgrouppermissionsComponent {
 
   addPageAndPermission() {
     this.items.push(this.createItem());
-    console.log('Add Data');
+    //console.log('Add Data');
   }
 
   createItem() {
@@ -71,7 +71,7 @@ export class ConcatgrouppermissionsComponent {
         pageActionsId: pageActionsId,
       };
 
-      // console.log(data);
+      // //console.log(data);
 
       this.contactgroupServices
         .addPermission(data)

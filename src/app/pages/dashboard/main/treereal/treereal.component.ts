@@ -47,7 +47,7 @@ initialSlide = 0;
 
 
   getAllDataSelectedUnit(e:any){
-    console.log("Selected",e);
+    //console.log("Selected",e);
 
 
 
@@ -59,7 +59,7 @@ initialSlide = 0;
 
 
   onSeachFilter(e:any){
-    console.log(e);
+    //console.log(e);
 
 
   let shapeSearch={
@@ -88,7 +88,7 @@ if(e.index == 0){
 
 
 this._TreeServices.getDataPropertyTree(shapeSearch).pipe(takeUntilDestroyed(this.destroyRef)).subscribe((res:any)=>{
-  console.log(res);
+  //console.log(res);
  
   this.AllDataTreeProperty=res;
   const total = this.getDataSelected.attachments.length;

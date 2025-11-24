@@ -71,7 +71,7 @@ onSubmit(){
 
     if(this.btnAddandUpdate=='add'){
       this._paymentVoucherService.createpaymentVoucher(this.paymentVoucherForm.value).pipe(takeUntilDestroyed(this.destroyRef)).subscribe((res: any) => {
-      console.log(res)
+      //console.log(res)
       this.NumberVoucher.nativeElement.value=res;
       this.toastr.show('تم اضافه السند بنجاح','success');
       this.paymentVoucherForm.reset();
@@ -94,9 +94,9 @@ onSubmit(){
         creditAccountId: this.paymentVoucherForm.value.creditAccountId
       }
 
-      console.log(data);
+      //console.log(data);
       this._paymentVoucherService.updateData(data).pipe(takeUntilDestroyed(this.destroyRef)).subscribe((res: any) => {
-        console.log(res)
+        //console.log(res)
         this.toastr.show('تم تعديل السند بنجاح','success');
         this.btnAddandUpdate='add';
         this.paymentVoucherForm.reset();
@@ -121,7 +121,7 @@ onPageChanged(page: number) {
 
 getAllAccounts() {
   this._accountSer.getAllData({}).pipe(takeUntilDestroyed(this.destroyRef)).subscribe((res: any) => {
-    console.log(res)
+    //console.log(res)
     this.getAllDataAccount = res.rows.map((item: any) => {
       return {
         id: item.id,
@@ -137,9 +137,9 @@ getAllAccounts() {
 
 getAllFinancialAccounts() {
   this._ReceiptVoucherService.getAllFinancialAccount().pipe(takeUntilDestroyed(this.destroyRef)).subscribe((res: any) => {
-    console.log(res)
+    //console.log(res)
     this.getAllDataFinancialAccount = res.rows
-    // console.log("No",this.getAllDataFinancialAccount)
+    // //console.log("No",this.getAllDataFinancialAccount)
 
   })
 
@@ -156,7 +156,7 @@ getAllDataPaymentVoucher1(){
   }
   this._paymentVoucherService.getAllDataPaymentVoucher(pagination).pipe(takeUntilDestroyed(this.destroyRef)).subscribe((res: any) => {
     this.paymentVouchersData=res
-    console.log(res);
+    //console.log(res);
   })
 }
 

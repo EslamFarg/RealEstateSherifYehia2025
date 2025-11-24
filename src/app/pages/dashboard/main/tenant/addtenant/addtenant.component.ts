@@ -359,8 +359,8 @@ export class AddtenantComponent {
         this.dataDependants.push(data);
         this.apartmentsData.push(data);
         this.tenantForm.get('Dependants')?.setValue(this.dataDependants);
-        // console.log(this.dataDependants);
-        // console.log(this.tenantForm.value)
+        // //console.log(this.dataDependants);
+        // //console.log(this.tenantForm.value)
         this.dependantError = '';
         this.DependantsForm.reset(); // لو حابب تمسح القيم بعد الإضافة
         this.initDependantsFormWatcher();
@@ -437,11 +437,11 @@ export class AddtenantComponent {
   }
 
   fnIdRemoveFiles(id: any) {
-    // console.log(e);
+    // //console.log(e);
 
     this.dataFiles = this.dataFiles.filter((el: any) => el.id != id);
     this.idRemoveFiles.push(id);
-    console.log(this.idRemoveFiles);
+    //console.log(this.idRemoveFiles);
   }
 
   onClose() {

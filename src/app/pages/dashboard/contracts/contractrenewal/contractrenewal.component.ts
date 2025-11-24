@@ -503,7 +503,7 @@ searchFilterUnit(val:any){
       this.formDataBroker.reset();
       return;
     }
-   console.log(res);
+   //console.log(res);
    this.getAllDataUnitProperty=res.rows[0]
 
 
@@ -517,7 +517,7 @@ searchFilterUnit(val:any){
 
    
    this.formDataUnit.patchValue(this.getAllDataUnitProperty)
-   console.log(this.getAllDataUnitProperty);
+   //console.log(this.getAllDataUnitProperty);
    this.contractsForm.patchValue({
     PropertyId: res.rows[0].propertyID,
     UnitId: res.rows[0].id,
@@ -526,7 +526,7 @@ searchFilterUnit(val:any){
    this.unitMonthlyPrice = Number(res.rows[0].price);
     this.getTaxes();
     this.getTotal();
-   console.log(this.contractsForm.value);
+   //console.log(this.contractsForm.value);
  })
 }
 
@@ -850,7 +850,7 @@ nextMonths(){
   })
 }
   changeMsg(e:any){
-    console.log(e);
+    //console.log(e);
 
     // setTimeout(() => {
   //  this.msgTextarea=e.body;    
@@ -915,7 +915,7 @@ formData.append('TaxAmount', String(this.contractsForm.value.TaxAmount));
 formData.append('TotalAmount', String(this.contractsForm.value.TotalAmount));
 formData.append('NetAmount', String(this.contractsForm.value.NetAmount));
 // formData.append('Files', this.contractsForm.value.Files);
-    // console.log(data);
+    // //console.log(data);
 
     if (this.contractsForm.value.Files && this.contractsForm.value.Files.length) {
   this.contractsForm.value.Files.forEach((file: any) => {
@@ -933,7 +933,7 @@ formData.append('NetAmount', String(this.contractsForm.value.NetAmount));
         this.btnAddandUpdate='add';
         this.contractNumber.nativeElement.value=res
         this.showBtns=true
-        // console.log(res);
+        // //console.log(res);
       })
       
 
@@ -983,7 +983,7 @@ formData.append('NetAmount', String(this.contractsForm.value.NetAmount));
 
 //    this.addContractServices.updateContract(formDataUpdate).pipe((takeUntilDestroyed(this.destroyRef))).subscribe((res:any)=>{
 //       this.toastr.show('تم تجديد العقد بنجاح','success');
-//       // console.log(res);
+//       // //console.log(res);
 //       this.showBtns=true
 //       this.btnAddandUpdate='update'
 //     })
@@ -1014,9 +1014,9 @@ getAllMessage(){
     }
   }
   this.messageTemplateServices.getAllDataMessageForms(0,0).subscribe((res:any)=>{
-    // console.log(res);
+    // //console.log(res);
     this.datamsg=res.items;
-    console.log('datamsg',this.datamsg)
+    //console.log('datamsg',this.datamsg)
   })
 }
 

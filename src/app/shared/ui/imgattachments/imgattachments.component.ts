@@ -85,11 +85,11 @@ onFileSelected(event: any) {
   // viewItem(i:any,item:any){
 
   //   const newTap=window.open('','_blank');
-  //   // console.log(item);
+  //   // //console.log(item);
 
   //   if(!newTap) return;
 
-  //   console.log(item);
+  //   //console.log(item);
   //   newTap.document.title=item.name ?? item.fileName;
   //     const styles = `
   //     body {

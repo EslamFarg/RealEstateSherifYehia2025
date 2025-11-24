@@ -107,7 +107,7 @@ export class GroupComponent {
             groupName: res.groupName,
             description: res.description,
           });
-          console.log(res);
+          //console.log(res);
 
           this.idUpdate = res.id;
           this.btnaddAndUpdate = 'update';

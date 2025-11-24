@@ -156,7 +156,7 @@ export class AddmaintenanceComponent {
             .getDataUpdate(ShapeDataFilter)
             .pipe(takeUntilDestroyed(this.destroyRef))
             .subscribe((res: any) => {
-              // console.log(res)
+              // //console.log(res)
               this.idItem = res.rows[0].id;
 
               this.mainTenanceData.patchValue({
@@ -190,7 +190,7 @@ export class AddmaintenanceComponent {
               this.getDataPrint=res.rows[0];
 
 
-              console.log("Get DataPrint : ",this.getDataPrint);
+              //console.log("Get DataPrint : ",this.getDataPrint);
             });
         }
 
@@ -246,7 +246,7 @@ export class AddmaintenanceComponent {
         .pipe(takeUntilDestroyed(this.destroyRef))
         .subscribe((res: any) => {
           this.toastr.show('تم اضافه الصيانه بنجاح', 'success');
-          console.log(res);
+          //console.log(res);
           this.mainTenanceData.patchValue(res);
           this.btnAddandUpdate = 'update';
           this.canShowBtns = true;
@@ -267,7 +267,7 @@ export class AddmaintenanceComponent {
           this.mainTenanceData.get('Files')?.setValue(this.dataFiles);
           this.attachmentsComp.imgsArr = this.dataFiles;
 
-          console.log('dataFiles', this.dataFiles);
+          //console.log('dataFiles', this.dataFiles);
            this.getDataPrint=res.rows[0];
 
         });
@@ -387,7 +387,7 @@ export class AddmaintenanceComponent {
           };
         });
 
-        console.log(this.dataItemsAccounts);
+        //console.log(this.dataItemsAccounts);
       });
   }
 
@@ -432,7 +432,7 @@ export class AddmaintenanceComponent {
           const row = res.rows[0];
           this.showPopupSearch=true;
           this.dataArraySearch=res
-          console.log(this.dataArraySearch);
+          //console.log(this.dataArraySearch);
         });
     } else if (e.index == 1) {
       ShapeSearch.searchFilter.column = 0;
@@ -467,7 +467,7 @@ export class AddmaintenanceComponent {
         .pipe(takeUntilDestroyed(this.destroyRef))
         .subscribe((res: any) => {
           // const row = res.rows[0]; // لو النتيجة Array (غالبًا كده)
-          // console.log(res);
+          // //console.log(res);
           // this.FormSearch.patchValue({
           //   id: row?.id,
           //   name: row?.name,
@@ -494,7 +494,7 @@ export class AddmaintenanceComponent {
         .pipe(takeUntilDestroyed(this.destroyRef))
         .subscribe((res: any) => {
           // const row = res.rows[0]; // لو النتيجة Array (غالبًا كده)
-          // console.log(res);
+          // //console.log(res);
           // this.FormSearch.patchValue({
           //   id: row?.id,
           //   name: '-',
@@ -557,7 +557,7 @@ export class AddmaintenanceComponent {
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((res: any) => {
         // debugger
-        console.log(res);
+        //console.log(res);
         const row = res.rows[0];
         // debugger
         this.mainTenanceData.patchValue({
@@ -573,7 +573,7 @@ export class AddmaintenanceComponent {
           Notes: row?.notes,
         });
 
-        console.log('targetType', row);
+        //console.log('targetType', row);
 
         this.FormSearch.patchValue({
           id: row?.id,
@@ -620,7 +620,7 @@ export class AddmaintenanceComponent {
 
 
   sendDataSelectedSearch(e:any){
-    //  console.log(row);
+    //  //console.log(row);
     this.showPopupSearch=false;
           this.FormSearch.patchValue({
             id: e.id,

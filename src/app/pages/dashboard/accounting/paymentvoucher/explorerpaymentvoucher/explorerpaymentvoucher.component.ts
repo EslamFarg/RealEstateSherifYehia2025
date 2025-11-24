@@ -59,7 +59,7 @@ getAllDataPaymentVoucher(){
     {
       
       this.vouchersData=res;
-      console.log(this.vouchersData);
+      //console.log(this.vouchersData);
 
 
     })
@@ -72,7 +72,7 @@ onSelectedPagination(val:any){
   this.getAllDataPaymentVoucher();
 }
 onSearchFilter(e:any){
-// console.log(e);
+// //console.log(e);
  if (e.value === '' || e.value == null || e.value==undefined) {
     this.getAllDataPaymentVoucher();
     return;
@@ -102,14 +102,14 @@ if(e.index == 0){
 this._ownerPaymentVoucherSer.filterDatailsOwner(shapeSearch).pipe(takeUntilDestroyed(this.destroyRef)).subscribe((res:any)=>
 {
 
-  // console.log(res);
+  // //console.log(res);
 
   // if(!res.rows && res.rows.length==0){
   //   this.vouchersData=[];
   //   return ;
   // }
   this.vouchersData=res;
-  // console.log(this.vouchersData);
+  // //console.log(this.vouchersData);
 })
 
 
