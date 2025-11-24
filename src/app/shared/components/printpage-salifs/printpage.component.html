@@ -7,10 +7,19 @@
         <button class="close_btn" >🗙</button>
     </div>
   <header class="invoice-header">
+
+     <!-- bookNumber: this.salafisData.value.bookNumber,
+  voucherDate: this.salafisData.value.voucherDate,
+  amount: this.salafisData.value.amount,
+  notes: this.salafisData.value.notes,
+  accountId: this.salafisData.value.accountId,
+  employeeId: this.salafisData.value.employeeId,
+  debitAccountId: this.salafisData.value.debitAccountId,
+  creditAccountId: this.salafisData.value.creditAccountId -->
     <h1>السلفيات</h1>
     <div class="invoice-info">
       <div><strong>الرقم الدفتري :</strong> {{getDataPopup?.bookNumber}}</div>
-      <div><strong>التاريخ:</strong> {{getDataPopup?.advanceDate.split('T')[0]}}</div>
+      <div><strong>التاريخ:</strong> {{getDataPopup?.advanceDate.split('T')[0] ?? getDataPopup?.voucherDate}}</div>
       <!-- <div><strong>المالك:</strong> محمد أحمد</div> -->
     </div>
   </header>
@@ -32,10 +41,10 @@
 
          <tr >
         <td>1</td>
-        <td>{{getDataPopup?.employeeName}}</td>
-        <td>{{getDataPopup?.accountName}}</td>
-        <td>{{getDataPopup?.amount}}</td>
-        <td>{{getDataPopup?.description}}</td>
+        <td>{{getDataPopup?.employeeName ?? getDataPopup?.employeeId}}</td>
+        <td>{{getDataPopup?.accountName ?? getDataPopup?.accountId}}</td>
+        <td>{{getDataPopup?.amount ?? getDataPopup?.amount}}</td>
+        <td>{{getDataPopup?.description ?? getDataPopup?.notes}}</td>
         <!-- <td>{{item?.salary}}</td>
         <td>{{item?.accountName}}</td>
         <td>{{item?.absenceDays}}</td>
