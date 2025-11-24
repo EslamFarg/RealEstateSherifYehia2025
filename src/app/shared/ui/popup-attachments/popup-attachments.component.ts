@@ -159,6 +159,10 @@ showFile(item: any) {
       font-size: 1.2rem;
       font-weight: 600;
       color: #333;
+          width: 410px !important;
+    word-wrap: break-word;
+    margin-inline:auto;
+    
     }
     iframe {
       width: 100%;
@@ -183,7 +187,7 @@ showFile(item: any) {
     if (item.fileType?.startsWith('image')) {
       div.innerHTML = `<img src="${fileUrl}" alt="${item.fileName}" /><div class="file-name">${item.fileName}</div>`;
     } else {
-      div.innerHTML = `<iframe src="${fileUrl}"></iframe><div class="file-name">${item.fileName}</div>`;
+      div.innerHTML = `<iframe src="${fileUrl}"></iframe><div class="file-name w-50">${item.fileName}</div>`;
     }
   } else {
     // ملفات من input
@@ -192,7 +196,7 @@ showFile(item: any) {
       if (item.type?.startsWith('image')) {
         div.innerHTML = `<img src="${e.target.result}" alt="${item.name}" /><div class="file-name">${item.name}</div>`;
       } else {
-        div.innerHTML = `<iframe src="${e.target.result}"></iframe><div class="file-name">${item.name}</div>`;
+        div.innerHTML = `<iframe src="${e.target.result}"></iframe><div class="file-name w-50">${item.name}</div>`;
       }
       newTab.document.body.appendChild(div);
     };

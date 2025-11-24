@@ -31,7 +31,7 @@
                     <label for="permission" class="form-label">الصلاحيه</label>
                     <div class="w-100 d-flex">
                         <ng-select [items]="getDataPermissions" #pageActions [bindLabel]="'displayNameAr'" [multiple]="true"
-                            style="width: 85%;" placeholder="اسم الصفحه" [bindValue]="'actionId'"
+                            style="width: 85%;" placeholder="اسم الصفحه" [bindValue]="'id'"
                             formControlName="pageActionsId"></ng-select>
 
                         <!-- <ng-container *ngIf="FormPermissionGroup.controls['items'].controls[i].invalid && FormPermissionGroup.controls['items'].controls[i].touched">
