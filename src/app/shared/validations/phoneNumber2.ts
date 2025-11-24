@@ -2,7 +2,6 @@ import { AbstractControl, ValidationErrors } from '@angular/forms';
 
 
 export function ksaEgyptPhoneValidator(control: AbstractControl): ValidationErrors | null {
-  debugger
   const value = control.value;
   if (!value) return { required: true };
 
