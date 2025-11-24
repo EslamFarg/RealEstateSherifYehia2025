@@ -119,6 +119,25 @@ onSubmit(){
       this.showBtns=true;
       this.NumberBond.nativeElement.value=res
 this.btnAddandUpdate='update'
+// this.getDataPrint=;
+this._salifsService.getDataById(res).pipe(takeUntilDestroyed(this.destroyRef)).subscribe((res:any)=>{
+        //console.log('RES',res);
+        this.idUpdate=res.id
+        this.salafisData.patchValue({
+          bookNumber:res.bookNumber,
+          voucherDate:res.advanceDate.split('T')[0],
+          amount:res.amount,
+          notes:res.description,
+          accountId:res.accountID,
+          employeeId:res.employeeID,
+          debitAccountId:res.debitAccountId,
+          creditAccountId:res.creditAccountId
+        });
+
+        this.getDataPrint=res;
+        
+      })
+     
       
       
     })
