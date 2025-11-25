@@ -27,7 +27,7 @@
             <div class="left">
                 <div class="btns">
                   <!-- !isEnded(item.leaseEndDate) || -->
-                    <button (click)="endingContract($event,item.id)" *ngIf=" item.contractStatus == 0
+                    <button class="endcontract" (click)="endingContract($event,item.id)" *ngIf=" item.contractStatus == 0
                     ">انهاء</button>
                     <!-- isEnded(item.leaseEndDate) &&  -->
                     <button *ngIf="

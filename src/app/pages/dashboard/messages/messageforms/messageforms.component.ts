@@ -71,9 +71,13 @@ export class MessageformsComponent implements OnInit {
           .subscribe((res: any) => {
             // //console.log(res);
             this.toastr.show('تم ارسال الرسالة بنجاح', 'success');
-            this.messageForm.reset({
-              subject: 'Hello Marco',
-            });
+            // this.messageForm.reset({
+            //   subject: 'Hello Marco',
+            // });
+
+            // console.log(res);
+            this.idUpdate=res.id;
+            this.btnAddandUpdate='update'
             this.getAllDataMessageForms();
           });
       } else {
@@ -90,11 +94,11 @@ export class MessageformsComponent implements OnInit {
           .pipe(takeUntilDestroyed(this.destroyRef))
           .subscribe((res: any) => {
             this.toastr.show('تم تعديل الرسالة بنجاح', 'success');
-            this.messageForm.reset({
-              subject: 'Hello Marco',
-            });
+            // this.messageForm.reset({
+            //   subject: 'Hello Marco',
+            // });
             this.getAllDataMessageForms();
-            this.btnAddandUpdate = 'add';
+            this.btnAddandUpdate = 'update';
           });
       }
     } else {

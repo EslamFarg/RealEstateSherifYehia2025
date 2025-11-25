@@ -61,11 +61,13 @@ export class GroupComponent {
           .pipe(takeUntilDestroyed(this.destroyRef))
           .subscribe((res: any) => {
             this.toastr.show('تم اضافه المجموعه بنجاح', 'success');
-            this.groupForm.reset();
+            // this.groupForm.reset();
+
+            this.idUpdate=res.id;
 
             this.getAllDataGroup();
           });
-        this.btnaddAndUpdate = 'add';
+        this.btnaddAndUpdate = 'update';
       } else {
         let data = {
           groupId: this.idUpdate,
@@ -78,8 +80,8 @@ export class GroupComponent {
           .pipe(takeUntilDestroyed(this.destroyRef))
           .subscribe((res: any) => {
             this.toastr.show('تم تعديل المجموعه بنجاح', 'success');
-            this.groupForm.reset();
-            this.btnaddAndUpdate = 'add';
+            // this.groupForm.reset();
+            this.btnaddAndUpdate = 'update';
             this.getAllDataGroup();
           });
       }
@@ -139,5 +141,11 @@ export class GroupComponent {
   }
   onClose() {
     this.showDelete = false;
+  }
+
+
+  resetData(){
+    this.groupForm.reset();
+    this.btnaddAndUpdate = 'add';
   }
 }

@@ -28,16 +28,26 @@
 
     .months{
         position: absolute;
-        left: 50%;
+        left: 56%;
         top: 50%;
         transform: translate(-50%,-50%);
         @include flex_box(flex,space-between,center);
         // width: ;
         flex-direction: row-reverse;
+        @media (max-width:768px) {
+            left: 57% !important;
+            
+        }
 
         .container_months{
             @include flex_box(flex,space-between,center);
-            width: 300px;
+            // width: 300px;
+                width: 447px;
+
+                @media (max-width:768px) {
+                    width: 166px;
+                    
+                }
             overflow-x: scroll;
             &::-webkit-scrollbar {
                 display: none;
@@ -181,8 +191,13 @@
         @include flex_box(flex,center,center,16px);
         margin-top: 16px;
 
+        @media (max-width:768px) {
+            gap: 12px;
+            
+        }
         button{
             width: 100px;
+                
             height: 32px;
             border-radius: 4px;
             border: 0;
@@ -191,6 +206,9 @@
             color: #FFFFFF;
             background-color: #1B803D;
             cursor: pointer;
+
+
+       
 
             &:last-child{
                 background-color: transparent;
@@ -330,4 +348,21 @@ transform: scale(1.05);
 @keyframes fadeIn {
 from { opacity: 0; transform: scale(0.9); }
 to { opacity: 1; transform: scale(1); }
+}
+
+.endcontract{
+    // width: ;
+             
+            @media (max-width:768px) {
+
+                width: 73px !important;
+                
+            }
+}
+
+
+.sarry{
+    @media (max-width:768px) {
+                width: 65px !important;
+    }
 }

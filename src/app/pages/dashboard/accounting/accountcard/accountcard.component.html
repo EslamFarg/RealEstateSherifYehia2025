@@ -21,9 +21,8 @@
       </div>
     </div>
     <div class="col-sm-12 col-lg-4">
-      <div class="mb-3">
+      <!-- <div class="mb-3">
         <label for="numberaccount" class="form-label">اسم حساب الاب</label>
-        <!-- <input type="text" name="" placeholder="رقم الحساب" id="numberaccount" maxlength="40" appNoNumberPaste class="form-control" formControlName="name"> -->
         <ng-select [items]="accountParentList" [bindLabel]="'name'" [bindValue]="'id'" [virtualScroll]="true"
           placeholder="اسم حساب الاب" formControlName="parentId"></ng-select>
         <ng-container
@@ -31,7 +30,12 @@
           <small *ngIf="accountCardForm.controls['parentId'].hasError('required')" class="error_msg_form">اسم حساب الاب
             مطلوب</small>
         </ng-container>
-      </div>
+      </div> -->
+
+      
+                <app-refresh-select [fc]="getFc('parentId')" [titleLabel]="'اسم حساب الاب'" [dataItems]="accountParentList"
+                    [bindLabel]="'name'" [bindValue]="'id'"
+                    (selectedData)="OnSelecteddistricts($event)"></app-refresh-select>
     </div>
     <div class="col-sm-12">
       <div class="mb-3">

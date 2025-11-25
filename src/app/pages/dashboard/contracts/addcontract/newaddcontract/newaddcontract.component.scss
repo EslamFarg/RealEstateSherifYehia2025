@@ -30,12 +30,21 @@
 
     .months{
         position: absolute;
-        left: 50%;
+        left: 56%;
         top: 50%;
         transform: translate(-50%,-50%);
         @include flex_box(flex,space-between,center);
-        width: 452px !important;
+        // width: 452px !important;
+
+            width: 482px !important;
         flex-direction: row-reverse;
+
+
+        @media (max-width:768px) {
+            width: 330px !important;
+            left: 50% !important;
+            
+        }
 
         .container_months{
             @include flex_box(flex,space-between,center);

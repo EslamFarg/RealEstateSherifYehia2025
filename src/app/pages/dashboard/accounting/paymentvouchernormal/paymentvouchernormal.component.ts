@@ -74,7 +74,10 @@ onSubmit(){
       //console.log(res)
       this.NumberVoucher.nativeElement.value=res;
       this.toastr.show('تم اضافه السند بنجاح','success');
-      this.paymentVoucherForm.reset();
+      // this.paymentVoucherForm.reset();
+      this.idUpdate=res;
+      this.btnAddandUpdate='update';
+
       this.getAllDataPaymentVoucher1()
       
       // this.btnAddandUpdate='add';
@@ -98,8 +101,8 @@ onSubmit(){
       this._paymentVoucherService.updateData(data).pipe(takeUntilDestroyed(this.destroyRef)).subscribe((res: any) => {
         //console.log(res)
         this.toastr.show('تم تعديل السند بنجاح','success');
-        this.btnAddandUpdate='add';
-        this.paymentVoucherForm.reset();
+        this.btnAddandUpdate='update';
+        // this.paymentVoucherForm.reset();
         this.getAllDataPaymentVoucher1();
         this.NumberVoucher.nativeElement.value='';
       })

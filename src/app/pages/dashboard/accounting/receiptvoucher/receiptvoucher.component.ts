@@ -115,7 +115,10 @@ if(this.btnAddandUpdate == 'add'){
       //console.log(res)
       this.NumberVoucher.nativeElement.value=res;
       this.toastr.show('تم اضافه السند بنجاح','success');
-      this.receiptForm.reset();
+      // this.receiptForm.reset();
+      this.btnAddandUpdate='update'
+      this.idUpdate=res
+      // console.log(this.idUpdate)
       this.getAllDataReceiptVoucher()
     })
     
@@ -142,10 +145,12 @@ if(this.btnAddandUpdate == 'add'){
   this._ReceiptVoucherService.updateDate(data).pipe(takeUntilDestroyed(this.destroyRef)).subscribe((res: any) => {
     //console.log(res)
     this.toastr.show('تم تعديل السند بنجاح','success');
-    this.receiptForm.reset();
-    this.btnAddandUpdate='add';
+    // this.receiptForm.reset();
+
+    this.btnAddandUpdate='update';
+    
     this.getAllDataReceiptVoucher()
-    this.NumberVoucher.nativeElement.value='';
+    // this.NumberVoucher.nativeElement.value='';
     
   })
 }

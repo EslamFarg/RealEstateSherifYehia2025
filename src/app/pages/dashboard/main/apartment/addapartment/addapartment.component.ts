@@ -267,10 +267,11 @@ export class AddapartmentComponent {
           .pipe(takeUntilDestroyed(this.destroyRef))
           .subscribe((res: any) => {
             this.toastr.show('تم تعديل الوحده بنجاح', 'success');
-            this.resetForm();
-            this.unitNumber.nativeElement.value = '0';
-            this.valSearch.nativeElement.value = '';
-            this.btnaddandupdate = 'add';
+            // this.resetForm();
+            // this.unitNumber.nativeElement.value = '0';
+            // this.valSearch.nativeElement.value = '';
+            // this.
+            this.btnaddandupdate = 'update';
           });
       }
     } else {

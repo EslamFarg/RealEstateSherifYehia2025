@@ -8,6 +8,7 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import { PaginationComponent } from '../../../../shared/ui/pagination/pagination.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { EmptytableComponent } from "../../../../shared/ui/emptytable/emptytable.component";
+import { RefreshSelectComponent } from '../../../../shared/ui/refresh-select/refresh-select.component';
 
 
 @NgModule({
@@ -21,7 +22,8 @@ import { EmptytableComponent } from "../../../../shared/ui/emptytable/emptytable
     NgSelectModule,
     PaginationComponent,
     ReactiveFormsModule,
-    EmptytableComponent
+    EmptytableComponent,
+    RefreshSelectComponent
 ]
 })
 export class AccountcardModule { }

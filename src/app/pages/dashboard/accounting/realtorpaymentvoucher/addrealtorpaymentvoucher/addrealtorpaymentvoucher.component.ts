@@ -262,6 +262,13 @@ this._realtorPaymentVoucherServices.createBrokerPaymentVoucher(data).pipe(takeUn
   this.canShowBtns=true
   this.idUpdate=res
 
+  // this.searchGetById({value:res})
+
+      this._realtorPaymentVoucherServices.getByIdBrokerPaymentVoucher(this.idUpdate).pipe(takeUntilDestroyed(this.destroyRef)).subscribe((res:any)=>{
+        //console.log(res);
+        this.getDataPrint=res;
+      })
+
 })
 
 

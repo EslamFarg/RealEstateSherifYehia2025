@@ -113,9 +113,9 @@
             <input type="text" class="form-control" id="box" >
            </div> -->
              <div class="input_rent_container" >
-                <input type="text"  id="monthsInput"  class="form-control"  placeholder="اختيار الشهر" readonly >
+                <input type="text"  id="monthsInput"  class="form-control"   readonly >
 
-                <div class="months" *ngIf="getMonthes.length > 0">
+                <div class="months" style="    max-width: 358px; width: 100px;" *ngIf="getMonthes.length > 0">
 
                   <div class="prev_month" (click)="prevMonth()">
                     <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">

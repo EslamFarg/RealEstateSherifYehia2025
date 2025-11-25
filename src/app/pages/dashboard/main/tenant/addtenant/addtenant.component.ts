@@ -225,7 +225,7 @@ export class AddtenantComponent {
             // this.dataDependants = [];
             // this.apartmentsData = [];
             this.idEdit=res;
-            console.log(res);
+      
             this.btnaddandupdate = 'update';
             this.toastr.show('تم اضافه المستاجر بنجاح', 'success');
           });
@@ -281,10 +281,7 @@ export class AddtenantComponent {
           .updateData(dataform)
           .pipe(takeUntilDestroyed(this.destoryRef))
           .subscribe((res: any) => {
-            // this.tenantForm.reset();
-            // this.dataDependants = [];
-            // this.apartmentsData = [];
-            console.log(res);
+         
             this.idEdit = res;
             this.btnaddandupdate = 'update';
             this.toastr.show('تم تعديل المستاجر بنجاح', 'success');

@@ -61,9 +61,10 @@ export class TypemaintenanceComponent {
           .pipe(takeUntilDestroyed(this.destroyRef))
           .subscribe((res: any) => {
             this.toastr.show('تم اضافة الصيانه بنجاح', 'success');
-            this.maintenanceData.reset();
+        
+            this.idUpdate=res;
             this.getAllDatamaintenance();
-            this.btnAddandUpdate = 'add';
+            this.btnAddandUpdate = 'update';
           });
       } else {
         // update
@@ -76,9 +77,9 @@ export class TypemaintenanceComponent {
           .pipe(takeUntilDestroyed(this.destroyRef))
           .subscribe((res: any) => {
             this.toastr.show('تم تعديل الصيانه بنجاح', 'success');
-            this.maintenanceData.reset();
+            // this.maintenanceData.reset();
             this.getAllDatamaintenance();
-            this.btnAddandUpdate = 'add';
+            this.btnAddandUpdate = 'update';
           });
       }
     } else {

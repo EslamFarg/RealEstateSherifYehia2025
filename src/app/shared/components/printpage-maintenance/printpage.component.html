@@ -10,7 +10,7 @@
     <h1>الصيانه</h1>
     <div class="invoice-info">
       <div><strong>الرقم الدفتري :</strong> {{getDataPopup?.bookNumber}}</div>
-      <div><strong>التاريخ:</strong> {{getDataPopup?.requestDate}}</div>
+      <div><strong>التاريخ:</strong> {{getDataPopup?.requestDate ?? getDataPopup?.requestDate}}</div>
       <!-- <div><strong>المالك:</strong> محمد أحمد</div> -->
     </div>
   </header>

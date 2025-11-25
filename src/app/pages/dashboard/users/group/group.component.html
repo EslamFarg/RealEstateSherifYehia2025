@@ -18,7 +18,7 @@
         <button type="sumbit" data-button="send"
             [ngClass]="{'btnEdit':this.btnaddAndUpdate=='update','btnAdd':this.btnaddAndUpdate=='add'}">{{btnaddAndUpdate
             == 'add' ? 'اضافه' : 'تعديل'}}</button>
-        <button type="reset" data-button="reset">جديد</button>
+        <button type="button" (click)="resetData()" data-button="reset">جديد</button>
     </div>
 </form>
 

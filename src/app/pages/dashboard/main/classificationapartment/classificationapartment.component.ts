@@ -65,8 +65,10 @@ export class ClassificationapartmentComponent {
           .pipe(takeUntilDestroyed(this.$destroyRef))
           .subscribe((res: any) => {
             this.toastr.show('تم اضافة التصنيف بنجاح', 'success');
-            this.unitCategory.reset();
-            this.btnaddandupdate = 'add';
+            // this.unitCategory.reset();
+            // console.log(res);
+            this.idUpdate=res;
+            this.btnaddandupdate = 'update';
             this.getAllDataUnitCategories();
           });
       } else {
@@ -81,8 +83,8 @@ export class ClassificationapartmentComponent {
           .pipe(takeUntilDestroyed(this.$destroyRef))
           .subscribe((res: any) => {
             this.toastr.show('تم تعديل التصنيف بنجاح', 'success');
-            this.unitCategory.reset();
-            this.btnaddandupdate = 'add';
+            // this.unitCategory.reset();
+            this.btnaddandupdate = 'update';
             this.getAllDataUnitCategories();
           });
       }

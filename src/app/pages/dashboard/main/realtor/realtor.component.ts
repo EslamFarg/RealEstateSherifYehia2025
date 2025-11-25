@@ -131,8 +131,7 @@ export class RealtorComponent {
           .pipe(takeUntilDestroyed(this.$destroyRef))
           .subscribe((res: any) => {
             this.toastr.show('تم اضافه السمسار بنجاح', 'success');
-            // this.BrokerData.reset();
-            console.log(res);
+          
             this.idUpdate=res;
             this.btnAddandUpdate = 'add';
             this.dataFiles = [];

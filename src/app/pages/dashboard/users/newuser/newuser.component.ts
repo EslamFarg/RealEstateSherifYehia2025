@@ -105,11 +105,13 @@ export class NewuserComponent {
           .pipe(takeUntilDestroyed(this.destroyRef))
           .subscribe((res: any) => {
             this._toastrSer.show('تم اضافه المستخدم بنجاح', 'success');
-            this.formData.reset();
+            console.log(res);
+            this.idUpdate=res.userId
+            // this.formData.reset();
             this.getAllDataUser();
           });
 
-        this.btnAddAndUpdate = 'add';
+        this.btnAddAndUpdate = 'update';
       } else {
         const groupIds = Array.isArray(this.formData.value.groupIds)
           ? this.formData.value.groupIds.map((id: any) => Number(id))
@@ -131,8 +133,8 @@ export class NewuserComponent {
           .pipe(takeUntilDestroyed(this.destroyRef))
           .subscribe((res: any) => {
             this._toastrSer.show('تم تعديل المستخدم بنجاح', 'success');
-            this.formData.reset();
-            this.btnAddAndUpdate = 'add';
+            // this.formData.reset();
+            this.btnAddAndUpdate = 'update';
             this.getAllDataUser();
           });
       }
@@ -210,5 +212,14 @@ export class NewuserComponent {
       .subscribe((res: any) => {
         this.getAllDataGroupName = res.rows;
       });
+  }
+
+
+
+  resetData(){
+    this.formData.reset({
+      isActive: true
+    });
+    this.btnAddAndUpdate = 'add';
   }
 }
