@@ -29,7 +29,7 @@ export class PaymentvouchernormalComponent {
 
   // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!111 Properties
   paymentVoucherForm=this.fb.group({
-       voucherNo: ['',[Validators.required,Validators.minLength(3)]],
+       voucherNo: [null,[Validators.minLength(3)]],
       voucherDate: [new Date().toISOString().split('T')[0],[Validators.required]],
       paymentMethod: ['نقدي',[Validators.required]],
       amount: ['',[Validators.required]],

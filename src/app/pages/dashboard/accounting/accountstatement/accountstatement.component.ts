@@ -114,7 +114,7 @@ export class AccountstatementComponent {
             return { ...item, name: selectedAccount.name };
           });
 
-          this.totalPages = res.listAccounts.totalPages || 1;
+          this.totalPages = res.listAccounts.paginationInfo.totalPagesCount || 1;
         });
     } else {
       this.FromSearchData.markAllAsTouched();

@@ -51,7 +51,7 @@ export class AddpaymentreceiptvoucherComponent {
 
   PaymentReceiptVoucherForm=this.fb.group({
     
-  voucherNo: ['',[Validators.required,Validators.minLength(3)]],
+  voucherNo: [null,[Validators.minLength(3)]],
   voucherDate: [new Date().toISOString().split('T')[0],[Validators.required]],
   paymentMethod: ['cash',[Validators.required]],
   amount: [0,[Validators.required]],
@@ -551,7 +551,7 @@ resetForm() {
 
   // ✅ 1) reset الفورم الأساسي
   this.PaymentReceiptVoucherForm.reset({
-    voucherNo: '',
+    voucherNo: null,
     voucherDate: '',
     paymentMethod: 'cash',
     amount: 0,

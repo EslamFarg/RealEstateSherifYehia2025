@@ -38,7 +38,7 @@ getDataPrint:any
 
   toastr:ToastrService=inject(ToastrService);
   realtorPaymentVoucherForm=this.fb.group({
-  voucherNo: ['',[Validators.required,Validators.minLength(3)]],
+  voucherNo: [null,[Validators.minLength(3)]],
   voucherDate: [new Date().toISOString().split('T')[0],Validators.required],
   paymentMethod: ['cash',Validators.required],
   amount: [0,Validators.required],

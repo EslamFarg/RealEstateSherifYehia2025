@@ -4,6 +4,13 @@
   <div class="row">
     <div class="col-sm-12 col-lg-4">
       <div class="mb-3">
+        <label for="numberaccount" class="form-label">رقم الحساب</label>
+        <input type="text" name="" placeholder="رقم الحساب" id="numberaccount" maxlength="40" appNoNumberPaste readonly
+          class="form-control" formControlName="accountNumber">
+      </div>
+    </div>
+    <div class="col-sm-12 col-lg-4">
+      <div class="mb-3">
         <label for="username" class="form-label">اسم الحساب</label>
         <input type="text" name="" placeholder="اسم الحساب" id="username" maxlength="40" appNoNumberPaste
           class="form-control" formControlName="name">
@@ -11,13 +18,6 @@
           <small *ngIf="accountCardForm.controls['name'].hasError('required')" class="error_msg_form">اسم الحساب
             مطلوب</small>
         </ng-container>
-      </div>
-    </div>
-    <div class="col-sm-12 col-lg-4">
-      <div class="mb-3">
-        <label for="numberaccount" class="form-label">رقم الحساب</label>
-        <input type="text" name="" placeholder="رقم الحساب" id="numberaccount" maxlength="40" appNoNumberPaste readonly
-          class="form-control" formControlName="accountNumber">
       </div>
     </div>
     <div class="col-sm-12 col-lg-4">
@@ -69,7 +69,7 @@
 
       @for (accountCardItem of accountCardList; track $index) {
       <tr>
-        <td>{{$index + 1}}</td>
+        <td>{{ ((pageIndex - 1) * pageSize) + ($index + 1) }}</td>
         <td>{{accountCardItem.name}}</td>
         <td>{{accountCardItem.id}}</td>
         <td>
