@@ -45,7 +45,7 @@ export class AddSalaryDisbursementComponent {
 
   formExchange = this.fb.group({
     voucherNo: ['0'],
-    bookNumber: ['', [Validators.required, Validators.minLength(3)]],
+    bookNumber: [null, [ Validators.minLength(3)]],
     month: [null, [Validators.required]],
     year: [new Date().getFullYear(), [Validators.required]],
     dateTime: [new Date().toISOString().split('T')[0], [Validators.required]],
@@ -235,6 +235,8 @@ export class AddSalaryDisbursementComponent {
             this.idUpdateAndDelete = res;
             this.showCanBtns = true;
             this.canShowAdd = false;
+            debugger
+            this.searchById({ value: res });
           });
       } else {
         // TODO: Update
@@ -419,7 +421,7 @@ export class AddSalaryDisbursementComponent {
 
     this.formExchange.reset({
       voucherNo: '0',
-      bookNumber: '',
+      bookNumber: null,
       month: null,
      
       dateTime: '',

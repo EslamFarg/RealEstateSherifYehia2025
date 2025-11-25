@@ -111,10 +111,12 @@ export class EmployeesComponent {
           .pipe(takeUntilDestroyed(this.destroyRef))
           .subscribe((res: any) => {
             this.toastr.show('تم اضافه البيانات بنجاح', 'success');
-            this.employeesData.reset();
-            this.employeesData.get('Files')?.patchValue(null);
-            this.dataFiles = [];
+            // this.employeesData.reset();
+            // this.employeesData.get('Files')?.patchValue(null);
+            // this.dataFiles = [];
             this.getAllData();
+            this.btnAddandUpdate = 'update';
+            this.idUpdate = res;
           });
       } else {
         // Update
@@ -158,10 +160,11 @@ export class EmployeesComponent {
           .pipe(takeUntilDestroyed(this.destroyRef))
           .subscribe((res: any) => {
             this.toastr.show('تم تعديل البيانات بنجاح', 'success');
-            this.employeesData.reset();
-            this.employeesData.get('Files')?.patchValue(null);
-            this.dataFiles = [];
-            this.btnAddandUpdate = 'add';
+            this.getAllData();
+            // this.employeesData.reset();
+            // this.employeesData.get('Files')?.patchValue(null);
+            // this.dataFiles = [];
+            // this.btnAddandUpdate = 'add';
           });
       }
     } else {

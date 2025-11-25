@@ -140,6 +140,10 @@ SearchInVal(e:any){
 
 
   this.showAutocomplete = this.filteredList.length > 0;
+    this.selectedDataFilter.emit({
+    index: this.selectIndex,
+    value: val
+  });
 }
 
 
