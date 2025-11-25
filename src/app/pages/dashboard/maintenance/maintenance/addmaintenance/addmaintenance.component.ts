@@ -47,7 +47,7 @@ export class AddmaintenanceComponent {
   // !!!!!!!!!!!!!!!!!!!!!!! Property
 
   mainTenanceData = this.fb.group({
-    BookNumber: ['', [Validators.required, Validators.minLength(3)]],
+    BookNumber: ['', [ Validators.minLength(3)]],
     RequestDate: [
       new Date().toISOString().split('T')[0],
       [Validators.required],
@@ -267,8 +267,27 @@ export class AddmaintenanceComponent {
           this.mainTenanceData.get('Files')?.setValue(this.dataFiles);
           this.attachmentsComp.imgsArr = this.dataFiles;
 
-          //console.log('dataFiles', this.dataFiles);
-           this.getDataPrint=res.rows[0];
+        //  this.g
+  let ShapeDataFilter = {
+            criteriaDto: {
+              paginationInfo: {
+                pageIndex: 0,
+                pageSize: 0,
+              },
+            },
+            searchFilter: {
+              column: 0,
+              value: String(this.idItem),
+            },
+  }        
+
+          this._maintenanceSer
+            .getDataUpdate(ShapeDataFilter)
+            .pipe(takeUntilDestroyed(this.destroyRef))
+            .subscribe((res: any) => {
+
+                 this.getDataPrint=res.rows[0];
+            })
 
         });
     } else {
@@ -319,10 +338,35 @@ export class AddmaintenanceComponent {
         .pipe(takeUntilDestroyed(this.destroyRef))
         .subscribe((res: any) => {
           this.toastr.show('تم تعديل الوحده بنجاح', 'success');
-          this.dataFiles = [];
-          this.btnAddandUpdate = 'add';
-          this.canShowBtns = false;
-          this.resetForm();
+          // this.dataFiles = [];
+          this.btnAddandUpdate = 'update';
+          // this.getDataPrint=res
+          // this.canShowBtns = false;
+          // this.resetForm();
+          
+          
+        //  this.g
+  let ShapeDataFilter = {
+            criteriaDto: {
+              paginationInfo: {
+                pageIndex: 0,
+                pageSize: 0,
+              },
+            },
+            searchFilter: {
+              column: 0,
+              value: String(this.idItem),
+            },
+  }        
+
+          this._maintenanceSer
+            .getDataUpdate(ShapeDataFilter)
+            .pipe(takeUntilDestroyed(this.destroyRef))
+            .subscribe((res: any) => {
+
+                 this.getDataPrint=res.rows[0];
+            })
+
         });
     }
   }

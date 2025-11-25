@@ -58,7 +58,7 @@ export class SidebarComponent implements OnInit{
         { label: 'المجموعه', route: 'groupusers', id: 13 },
         { label: 'تتبع النشاط', route: 'activitytracking', id: 14 },
         { label: 'ربط الصفحه بالصلاحيه', route: 'linkpagepermission', id: 15 },
-        { label: 'ربط المجموعه بالصفحه', route: 'linkgrouppage', id: 16 },
+       
         {
           label: 'تعديل اسماء الصلاحيه',
           route: 'modifynamepermission',
@@ -206,4 +206,7 @@ export class SidebarComponent implements OnInit{
 
     return ids.size ? ids : null;
   }
+
+
+  //  { label: 'ربط المجموعه بالصفحه', route: 'linkgrouppage', id: 16 },
 }

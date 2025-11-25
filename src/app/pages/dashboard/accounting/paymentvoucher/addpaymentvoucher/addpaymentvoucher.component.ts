@@ -434,6 +434,8 @@ export class AddpaymentvoucherComponent {
             this.canBtnsShow = true;
             this.btnAddandUpdate = 'update';
             this.idUpdate = res;
+
+            this.getDataById({ value: res });
             // this.getAllDataVouchers();
           });
       } else {

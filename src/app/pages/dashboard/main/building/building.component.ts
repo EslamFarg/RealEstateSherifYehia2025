@@ -175,17 +175,15 @@ export class BuildingComponent {
           .createProperty(formData)
           .pipe(takeUntilDestroyed(this.$destroyRef))
           .subscribe((res: any) => {
-            //  this.resetForm(
-            //  //console.log(res);
-            // this.formProperty.get('PropertyNumber')?.setValue(res.id);
+         
             this.toastr.show('تم اضافه العقار بنجاح', 'success');
             this.getAllDataProperties();
-            this.formProperty.reset();
-            this.idRemoveFilesArray = [];
-            this.dataFiles = [];
-            this.attachmentsComp?.resetImages();
-            // this.btnAddandUpdate='update';
-            // this.idUpdate=res.id;
+            // this.formProperty.reset();
+            // this.idRemoveFilesArray = [];
+            // this.dataFiles = [];
+            // this.attachmentsComp?.resetImages();
+            this.btnAddandUpdate='update';
+            this.idUpdate=res.id;
           });
       } else {
         // Update
@@ -224,10 +222,11 @@ export class BuildingComponent {
           .updateData(data)
           .pipe(takeUntilDestroyed(this.$destroyRef))
           .subscribe((res: any) => {
-            this.resetForm();
+            // this.resetForm();
             this.toastr.show('تم تعديل العقار بنجاح', 'success');
-            this.btnAddandUpdate = 'add';
+            this.btnAddandUpdate = 'update';
             this.getAllDataProperties();
+            this.idUpdate=res.id;
             // this.getAllDataProperties();
           });
       }

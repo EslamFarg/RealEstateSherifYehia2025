@@ -1,5 +1,5 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { AccountCardService } from './services/account-card.service';
 import { AccountCard } from './interfaces/account-card';
 import { ToastrService } from '../../../../shared/ui/toastr/services/toastr.service';
@@ -121,5 +121,21 @@ export class AccountcardComponent implements OnInit {
         this.btnAddandUpdate = 'update';
       },
     });
+  }
+
+
+  
+    getFc(name: string) {
+      return this.accountCardForm.get(name) as FormControl;
+    }
+
+
+      OnSelecteddistricts(data: any) {
+
+    
+
+     let dataSelectdistrict = data.id;
+    //console.log(this.dataSelectdistrict);
+    this.accountCardForm.get('parentId')?.patchValue(dataSelectdistrict);
   }
 }
