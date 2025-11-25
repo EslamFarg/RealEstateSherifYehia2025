@@ -262,6 +262,7 @@ this.formDataUnit.patchValue({
   street: res.unit?.street,
   district: res.unit?.district,
   city: res.unit?.city,
+  price: res.unit?.price,
 });
 
 // ✅ Patch للمستأجر
@@ -381,6 +382,7 @@ this.formDataUnit.patchValue({
   street: res.unit?.street,
   district: res.unit?.district,
   city: res.unit?.city,
+  price: res.unit?.price
 });
 
 // ✅ Patch للمستأجر
@@ -431,6 +433,7 @@ dataFilterUnit=['رقم الوحده','اسم الوحده','اسم العقار
     street:[''],
     district:[''],
     city:[''],
+    price:['']
   })
 
 selectDataFilterUnit(i:any){
@@ -1008,7 +1011,8 @@ resetAllData() {
     floorNumber: '',
     street: '',
     district: '',
-    city: ''
+    city: '',
+    price:''
   });
 
   // ✅ Reset نموذج المستأجر

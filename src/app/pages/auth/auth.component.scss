@@ -547,3 +547,26 @@ img{
     }
     }
   }
+
+
+.input_icon_password_login{
+
+  .icon{
+        position: absolute;
+    right: 5px;
+    top: 6px;
+  }
+
+position: relative;
+   .toggle-eye{
+    position: absolute;
+      left: 10px;
+    top: 6px;
+  }
+}
+
+
+.n-o-c{
+  flex-direction: row-reverse !important;
+}
+ 

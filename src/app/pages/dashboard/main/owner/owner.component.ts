@@ -113,11 +113,12 @@ export class OwnerComponent {
           .pipe(takeUntilDestroyed(this.$destroyRef))
           .subscribe((res: any) => {
             this.toastr.show('تم اضافه المالك بنجاح', 'success');
-            this.btnAddAndUpdate = 'add';
+            this.btnAddAndUpdate = 'update';
 
-            this.dataFiles = [];
-            this.idUpdate = null;
-            this.resetData();
+
+            // this.dataFiles = [];
+            this.idUpdate =res;
+            // this.resetData();
             //  this.ownerData.reset({
             //     Name: '',
             //     Mobile: '',
@@ -128,7 +129,7 @@ export class OwnerComponent {
             //     Files: null
             //   });
 
-            this.idRemoveFiles = [];
+            // this.idRemoveFiles = [];
 
             this.getAllDataOwner();
             this.ownerData.markAsPristine();
@@ -170,15 +171,15 @@ export class OwnerComponent {
           .updateData(queryParams, formData)
           .pipe(takeUntilDestroyed(this.$destroyRef))
           .subscribe((res: any) => {
-            this.ownerData.reset();
+            // this.ownerData.reset();
 
             this.toastr.show('تم تعديل المالك بنجاح', 'success');
 
             // ✅ إعادة التهيئة بشكل صحيح
-            this.btnAddAndUpdate = 'add';
-            this.idUpdate = null;
-            this.idRemoveFiles = [];
-            this.dataFiles = [];
+            this.btnAddAndUpdate = 'update';
+            // this.idUpdate = null;
+            // this.idRemoveFiles = [];
+            // this.dataFiles = [];
 
             this.getAllDataOwner();
           });

@@ -34,13 +34,14 @@
         top: 50%;
         transform: translate(-50%,-50%);
         @include flex_box(flex,space-between,center);
-        // width: ;
+        width: 452px !important;
         flex-direction: row-reverse;
 
         .container_months{
             @include flex_box(flex,space-between,center);
-            max-width: 350px !important;
+            // max-width: 350px !important;
             overflow-x: scroll !important;
+                max-width: 468px !important;
 
             &::-webkit-scrollbar{
                 display: none;

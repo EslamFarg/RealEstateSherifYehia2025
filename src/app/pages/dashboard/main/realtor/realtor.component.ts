@@ -81,8 +81,10 @@ export class RealtorComponent {
 
   ngOnInit() {
     this.getAllNationality();
-    this.getAllDataRealtor();
     this.getAllFinicalData();
+    this.getAllDataRealtor();
+    
+    
   }
 
   getAllNationality() {
@@ -97,20 +99,7 @@ export class RealtorComponent {
   onSubmit() {
     if (this.BrokerData.valid) {
       if (this.btnAddandUpdate == 'add') {
-        // let params=new URLSearchParams({
-
-        //  })
-
-        //  let queryData=params.toString();
-
-        // let data={
-        //     Name: this.BrokerData.value.Name ?? '',
-        //   Mobile: this.BrokerData.value.Mobile ?? '',
-        //   Nationality: this.BrokerData.value.Nationality ?? '',
-        //   Bonus: this.BrokerData.value.Bonus ?? '',
-        //   NationalID: this.BrokerData.value.NationalID ?? '',
-        //   Email: this.BrokerData.value.Email ?? ''
-        // }
+     
 
         let formData = new FormData();
 
@@ -142,7 +131,9 @@ export class RealtorComponent {
           .pipe(takeUntilDestroyed(this.$destroyRef))
           .subscribe((res: any) => {
             this.toastr.show('تم اضافه السمسار بنجاح', 'success');
-            this.BrokerData.reset();
+            // this.BrokerData.reset();
+            console.log(res);
+            this.idUpdate=res;
             this.btnAddandUpdate = 'add';
             this.dataFiles = [];
             this.idRemoveFiles = [];
@@ -156,6 +147,11 @@ export class RealtorComponent {
           );
           return;
         }
+
+
+        let FinancialID = this.BrokerData.value.FinanciallyAccountId;
+
+
 
         let formdata = new FormData();
         const mobileControl = this.BrokerData.value.Mobile;
@@ -171,11 +167,12 @@ export class RealtorComponent {
         formdata.append('NationalID', this.BrokerData.value.NationalID || '');
         formdata.append('Email', this.BrokerData.value.Email || '');
         formdata.append('parentId', this.BrokerData.value.parentId || '');
-        formdata.append(
-          'FinanciallyAccountId',
-          this.BrokerData.value.FinanciallyAccountId || ''
-        );
+     
         formdata.append('Id', this.idUpdate || '');
+//         if (FinancialID !== null && FinancialID !== undefined && FinancialID !== '') {
+//   formdata.append('FinanciallyAccountId', FinancialID);
+// }
+        formdata.append('FinanciallyAccountId', this.BrokerData.value.FinanciallyAccountId ?? '');
 
         this.idRemoveFiles.forEach((id: any) => {
           formdata.append('RemovedAttachmentIds', id);
@@ -195,7 +192,9 @@ export class RealtorComponent {
           .subscribe((res: any) => {
             this.toastr.show('تم تعديل السمسار بنجاح', 'success');
             this.BrokerData.reset();
-            this.btnAddandUpdate = 'add';
+            // this.idUpdate=
+            this.idUpdate = res.id || res.Id || res;
+                  this.btnAddandUpdate = 'add';
             this.dataFiles = [];
             this.getAllDataRealtor();
           });
@@ -229,33 +228,68 @@ export class RealtorComponent {
       });
   }
 
+  // getUpdateData(id: any) {
+  //   this._BrokerServices
+  //     .getDataUpdate(id)
+  //     .pipe(takeUntilDestroyed(this.$destroyRef))
+  //     .subscribe((res: any) => {
+  //       const phone = this._sharedServices.parsePhoneNumber(res.mobile);
+  //       this.BrokerData.patchValue({
+        
+  //         Name: res.name,
+  //         Nationality: res.nationality,
+  //         Bonus: res.bonus,
+  //         NationalID: res.nationalID,
+  //         Email: res.email,
+  //         parentId: res.parentId,
+
+  //         FinanciallyAccountId: res.financiallyAccountId,
+  //       });
+  //       this.selectedCountry = phone.countryCode;
+
+  //       setTimeout(() => {
+  //         this.BrokerData.get('Mobile')?.setValue(phone);
+  //       });
+        
+  //       this.dataFiles = res.attachments;
+  //       this.idUpdate = id ?? res.id ?? res.Id;
+
+  //       this.btnAddandUpdate = 'update';
+  //     });
+  // }
+
+
+
   getUpdateData(id: any) {
-    this._BrokerServices
-      .getDataUpdate(id)
-      .pipe(takeUntilDestroyed(this.$destroyRef))
-      .subscribe((res: any) => {
-        const phone = this._sharedServices.parsePhoneNumber(res.mobile);
-        this.BrokerData.patchValue({
-          Name: res.name,
-          Nationality: res.nationality,
-          Bonus: res.bonus,
-          NationalID: res.nationalID,
-          Email: res.email,
-          parentId: res.parentId,
+  this._sharedServices.getAllfinancialData({ paginationInfo: { pageIndex: 0, pageSize: 0 } })
+    .pipe(takeUntilDestroyed(this.$destroyRef))
+    .subscribe((res: any) => {
+      this.accountParent = res.rows;
 
-          FinanciallyAccountId: res.financiallyAccountId,
+      this._BrokerServices.getDataUpdate(id)
+        .pipe(takeUntilDestroyed(this.$destroyRef))
+        .subscribe((res: any) => {
+          const phone = this._sharedServices.parsePhoneNumber(res.mobile);
+          this.BrokerData.patchValue({
+            Name: res.name,
+            Nationality: res.nationality,
+            Bonus: res.bonus,
+            NationalID: res.nationalID,
+            Email: res.email,
+            parentId: res.parentId,
+            FinanciallyAccountId: res.financiallyAccountId,
+          });
+          this.selectedCountry = phone.countryCode;
+          setTimeout(() => {
+            this.BrokerData.get('Mobile')?.setValue(phone);
+          });
+          this.dataFiles = res.attachments;
+          this.idUpdate = id ?? res.id ?? res.Id;
+          this.btnAddandUpdate = 'update';
         });
-        this.selectedCountry = phone.countryCode;
+    });
+}
 
-        setTimeout(() => {
-          this.BrokerData.get('Mobile')?.setValue(phone);
-        });
-        this.dataFiles = res.attachments;
-        this.idUpdate = id ?? res.id ?? res.Id;
-
-        this.btnAddandUpdate = 'update';
-      });
-  }
 
   fnIdRemoveFiles(id: any) {
     this.dataFiles = this.dataFiles.filter((el: any) => el.id != id);

@@ -221,10 +221,12 @@ export class AddtenantComponent {
           .createTenant(formData)
           .pipe(takeUntilDestroyed(this.destoryRef))
           .subscribe((res: any) => {
-            this.tenantForm.reset();
-            this.dataDependants = [];
-            this.apartmentsData = [];
-            this.btnaddandupdate = 'add';
+            // this.tenantForm.reset();
+            // this.dataDependants = [];
+            // this.apartmentsData = [];
+            this.idEdit=res;
+            console.log(res);
+            this.btnaddandupdate = 'update';
             this.toastr.show('تم اضافه المستاجر بنجاح', 'success');
           });
       } else {
@@ -279,12 +281,14 @@ export class AddtenantComponent {
           .updateData(dataform)
           .pipe(takeUntilDestroyed(this.destoryRef))
           .subscribe((res: any) => {
-            this.tenantForm.reset();
-            this.dataDependants = [];
-            this.apartmentsData = [];
-            this.btnaddandupdate = 'add';
+            // this.tenantForm.reset();
+            // this.dataDependants = [];
+            // this.apartmentsData = [];
+            console.log(res);
+            this.idEdit = res;
+            this.btnaddandupdate = 'update';
             this.toastr.show('تم تعديل المستاجر بنجاح', 'success');
-            this.idEdit = 0;
+            
           });
       }
     } else {

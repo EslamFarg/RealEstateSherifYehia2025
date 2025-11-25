@@ -34,7 +34,6 @@ export class AuthComponent {
 
   // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1 Property
   otpCodeValue: any;
-  counter = 180;
   remember: any = true;
   @ViewChild('login', { read: TemplateRef }) login!: TemplateRef<any>;
   @ViewChild('otpcodetem', { read: TemplateRef }) otpcodetem!: TemplateRef<any>;
@@ -51,9 +50,47 @@ export class AuthComponent {
   emailOtp: any;
   userId: any;
 
+  showConfirmPassword1 = false;
+
+  counter: number = 180; // 3 دقائق
+showreset: boolean = false;
+interval: any;
+
+
+get timerDisplay(): string {
+  const minutes = Math.floor(this.counter / 60);
+  const seconds = this.counter % 60;
+
+  return `${this.pad(minutes)}:${this.pad(seconds)}`;
+}
+
+
+
+pad(value: number): string {
+  return value < 10 ? '0' + value : value.toString();
+}
+
+startCounter() {
+  this.showreset = false;
+  this.counter = 180;
+
+  this.interval = setInterval(() => {
+    this.counter--;
+
+    if (this.counter <= 0) {
+      clearInterval(this.interval);
+      this.showreset = true;
+    }
+
+  }, 1000);
+}
+
+// replaySend() {
+//   this.startCounter();
+// }
   ngOnInit() {
     // this.router.navigate(['/dashboard/home']);
-
+  this.startCounter();
     this.passwordForm = this.fb.group({
       userId: [this.userId ?? ''],
       newPassword: ['', Validators.required],
@@ -131,7 +168,7 @@ export class AuthComponent {
     }
   }
 
-  showreset: any = false;
+  // showreset: any = false;
   showemail: any;
 
   sendOtpCode() {
@@ -148,7 +185,7 @@ export class AuthComponent {
           this.vcr.createEmbeddedView(this.otpcodetem);
           this.toastr.show('تم ارسال رمز التحقق', 'success');
           this.emailOtp = data.email;
-          this.emailForm.reset();
+          // this.emailForm.reset();
         });
     } else {
       this.emailForm.markAllAsTouched();
@@ -161,6 +198,22 @@ export class AuthComponent {
     const email = {
       email: this.emailForm.value.email,
     };
+
+
+      this._authServices
+        .sendEmailInotp(email)
+        .pipe(takeUntilDestroyed(this.destroyRef))
+        .subscribe((res: any) => {
+          this.vcr.clear();
+          this.vcr.createEmbeddedView(this.otpcodetem);
+          this.toastr.show('تم ارسال رمز التحقق', 'success');
+          this.emailOtp = email.email;
+          // this.emailForm.reset();
+          this.startCounter();
+        });
+    
+
+    
   }
   submitNewPassword() {
     if (this.passwordForm.valid) {

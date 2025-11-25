@@ -626,7 +626,7 @@ export class AddmaintenanceComponent {
             id: e.id,
             name: e.name,
             propertyName: e.propertyName,
-            propertyID: e.propertyID,
+            propertyID: e.buildingNumber,
             city: e.city,
             district: e.district,
             street: e.street,
