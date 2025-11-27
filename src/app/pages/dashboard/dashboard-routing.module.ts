@@ -347,6 +347,7 @@ const routes: Routes = [
           ),
           data: { pageId: 40 },
       },
+      {path:'permissions',loadChildren:()=>import('./users/permissions/permissions.module').then((m)=>m.PermissionsModule)},
       { path: 'unauthorized', component: UnauthorizedComponent },
     ],
   },

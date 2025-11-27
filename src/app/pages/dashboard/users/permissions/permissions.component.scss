@@ -1,0 +1,158 @@
+@use '../../../../../../public/styles/abstracts/vars' as *;
+@use '../../../../../../public/styles/abstracts/mixins' as *;
+
+.tree{
+    // border:     ;
+    border: 0.5px solid #979797;
+    border-radius: 15px;
+    padding: 15px 25px;
+    min-height: 10vh;
+    max-height: 85vh;
+    overflow-x:scroll ;
+}
+
+
+.tree_permission{
+
+    .parent_tree{
+        margin-bottom: 16px;
+        .content_parent,.content_child_list{
+   width: 100%;
+    height: 61px;
+    background-color:$background_form ;
+    border-radius: 4px;
+    padding: 12px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    .icon{
+        width: 40px;
+        height: 40px;
+        border-radius: 4px;
+          text-align: center;
+    line-height: 37px !important;
+        background-color: $secondary_color;
+        color: #000;
+        font-size: 25px;
+        line-height: 40px;
+
+    }
+
+    h4{
+        font-size: 24px;
+        font-weight: 700;
+        color: #000;
+
+    }
+        }
+
+
+        .child_container{
+  position: relative;
+            &::after{
+                content: '';
+                position: absolute;
+                right:0;
+                top: 0;
+                width: 2px;
+                height: 100%;
+                background-color: #86AC88;
+            }
+             .child_list{
+                
+          
+  .content_child_list{
+              
+                margin-right: 27px;
+                margin-block: 14px;
+                width:calc(100% - 27px);
+  }
+
+
+   .child_permission{
+    width: 400px;
+    // max-height: 0;
+    margin: auto;
+    @include flex_box(flex,null,center,16px);
+    flex-wrap: wrap;
+      position: relative;
+                &::after{
+                    content: '';
+                    position: absolute;
+                    right:-38px;
+                    top: 0;
+                    width: 2px;
+                    height: 100%;
+                    background-color: #86AC88;
+                }
+                    .box_child_permission{
+                        width: 168px;
+                        height: 40px;
+                        border: 0.5px solid #D9D9D9;
+                        border-radius:4px ;
+                        padding: 8px;
+                        @include flex_box(flex,null,center,8px);
+
+                        input{
+                            width: 16px;
+                            height: 16px;
+                        }
+                        
+                        
+                    }
+                }
+
+        }
+        }
+       
+      
+
+
+
+
+
+               
+        
+
+
+
+    }
+ 
+}
+
+.child_container,
+.child_permission {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height .35s ease;
+}
+
+.child_container.open {
+  max-height: 1000px;
+
+}
+
+// .child_permission.open {
+//   max-height: 300px;
+// }
+
+
+.child_list {
+  overflow: hidden;
+  max-height: 0;
+  transition: max-height .35s ease;
+}
+
+.child_list.open {
+  max-height: 500px; /* أو أي رقم كبير يكفي لارتفاع البوكس */
+}
+
+
+.child_list.open {
+  max-height: 1000px;
+}
+
+.child_permission.open {
+  max-height: 800px;
+}

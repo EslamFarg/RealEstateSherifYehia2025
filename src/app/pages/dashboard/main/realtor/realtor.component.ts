@@ -132,7 +132,9 @@ export class RealtorComponent {
           .subscribe((res: any) => {
             this.toastr.show('تم اضافه السمسار بنجاح', 'success');
           
+            
             this.idUpdate=res;
+            this.BrokerData.reset();
             this.btnAddandUpdate = 'add';
             this.dataFiles = [];
             this.idRemoveFiles = [];

@@ -64,11 +64,15 @@ export class SidebarComponent implements OnInit{
           route: 'modifynamepermission',
           id: 38,
         },
+
         {
           label: 'ربط المجموعات بالصلاحيات',
           route: 'concatgrouppermission',
           id: 17,
         },
+
+        // permissions
+        {label:'الصلاحيات',route:'permissions',id:16},
       ],
     },
     {

@@ -36,6 +36,12 @@
                 <app-refresh-select [fc]="getFc('parentId')" [titleLabel]="'اسم حساب الاب'" [dataItems]="accountParentList"
                     [bindLabel]="'name'" [bindValue]="'id'"
                     (selectedData)="OnSelecteddistricts($event)"></app-refresh-select>
+
+                          <ng-container
+          *ngIf="accountCardForm.controls['parentId'].invalid && accountCardForm.controls['parentId'].touched">
+          <small *ngIf="accountCardForm.controls['parentId'].hasError('required')" class="error_msg_form">اسم حساب الاب
+            مطلوب</small>
+        </ng-container>
     </div>
     <div class="col-sm-12">
       <div class="mb-3">

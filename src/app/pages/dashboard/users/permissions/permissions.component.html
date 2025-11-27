@@ -1,1 +1,68 @@
-<p>permissions works!</p>
+<section class="container">
+    <div class="row">
+          <div class="col-lg-6">
+            <div class="tree_permission tree">
+                @for (item of treePages; track $index) {
+                    <div class="parent_tree">
+                    <div class="content_parent" (click)="toggleParent(item)">
+                        <div class="icon">
+                            <!-- + -->
+                             {{ item.isOpen ? '−' : '+' }}
+                        </div>
+
+                        <h4>{{item.name}}</h4>
+
+                    </div>
+
+                     <div class="child_container" [class.open]="item.isOpen">
+                        
+                        @for (child of item.children; track $index) {
+                                 <div class="child_list" [class.open]="item.isOpen">
+                        <div class="content_child_list" (click)="toggleChild(child)">
+                            <div class="icon">
+                                 {{ child.isOpen ? '−' : '+' }}
+                            </div>
+                            <h4>{{child.pageName}}</h4>
+                        </div>
+
+
+                        <div class="child_permission" [class.open]="child.isOpen">
+                            @for(permission of child.permissions; track $index) {
+                            <div class="box_child_permission" >
+                                    <input type="checkbox" id="add">
+                                    <label for="add">{{permission.name}}</label>
+                            </div>     
+                            }
+                           
+                            <!-- <div class="box_child_permission">
+                                    <input type="checkbox" id="edit">
+                                    <label for="edit">تعديل</label>
+                            </div>
+                            <div class="box_child_permission">
+                                    <input type="checkbox" id="delete">
+                                    <label for="delete">حذف</label>
+                            </div>
+                            <div class="box_child_permission">
+                                    <input type="checkbox"  id="getnational">
+                                    <label for="getnational">getNationality</label>
+                            </div> -->
+                        </div>
+                    </div>         
+                        }
+                   
+                    
+                    </div> 
+                </div>
+                }
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="group_permissions tree">
+                <h1>المجموعه</h1>
+
+            </div>
+        </div>
+      
+    </div>
+
+</section>
