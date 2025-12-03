@@ -9,9 +9,19 @@ export class PermissionsService extends BasehttpservicesService{
   // constructor() { }
 
 
+    getAllDataGroup(pagination:any){
+    return this.get(`/Groups?${pagination}`);
+  }
+
 
 
   getAllPages(){
-    return this.get('/pages?PageIndex=0&PageSize=0');
+    return this.get('/Pages/GetAllWithActions?PageIndex=0&PageSize=0');
+  }
+
+
+
+  addPermissions(data:any){
+    return this.post('/GroupActions/AddPermission',data);
   }
 }

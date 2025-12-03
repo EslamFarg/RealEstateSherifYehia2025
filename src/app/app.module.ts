@@ -18,9 +18,11 @@ import { PrintemployeeComponent } from "./shared/ui/printemployee/printemployee.
 
 
 
+
 @NgModule({
   declarations: [
-    AppComponent, 
+    AppComponent,
+  
    
     
   

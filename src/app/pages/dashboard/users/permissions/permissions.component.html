@@ -2,7 +2,8 @@
     <div class="row">
           <div class="col-lg-6">
             <div class="tree_permission tree">
-                @for (item of treePages; track $index) {
+              <div class="tree-inner">
+                  @for (item of treePages; track $index) {
                     <div class="parent_tree">
                     <div class="content_parent" (click)="toggleParent(item)">
                         <div class="icon">
@@ -29,8 +30,11 @@
                         <div class="child_permission" [class.open]="child.isOpen">
                             @for(permission of child.permissions; track $index) {
                             <div class="box_child_permission" >
-                                    <input type="checkbox" id="add">
-                                    <label for="add">{{permission.name}}</label>
+                                    <input type="checkbox"
+                                             [checked]="isActionChecked(item.id, child.pageId, permission.id)"
+
+                                    [id]="permission.id" [attr.data-id]="permission.id" (change)="onChangeChecked($event,item)">
+                                    <label [for]="permission.id">{{permission.actionName}}</label>
                             </div>     
                             }
                            
@@ -54,11 +58,145 @@
                     </div> 
                 </div>
                 }
+              </div>
             </div>
         </div>
         <div class="col-lg-6">
             <div class="group_permissions tree">
-                <h1>المجموعه</h1>
+           <div class="tree-inner">
+                 <h5>المجموعات</h5>
+
+                <form action="" [formGroup]="PermissionGroup">
+                    <div class="select_group">
+                         <ng-select [items]="getDataGroup" [bindLabel]="'groupName'" [bindValue]="'id'" placeholder="اسم المجموعه" formControlName="groupId"></ng-select>
+                         <button type="button" class="btn_add_group" (click)="this.showPopupGroup=!this.showPopupGroup">+</button>
+                    </div>
+
+                    <ng-container *ngIf="this.PermissionGroup.controls['groupId'].invalid && this.PermissionGroup.controls['groupId'].touched">
+                        <small class="error_msg_form" *ngIf="this.PermissionGroup.controls['groupId'].hasError('required')">اسم المجموعه مطلوب</small>
+                    </ng-container>
+                   
+                </form>
+
+
+                <hr class="line_hr">
+
+                <div class="content_Total_Group">
+                    <h4 class="heading">Role Preview</h4>
+
+                    <div class="boxes">
+                        <div class="box">
+                            <p>: sidebar</p>
+                            <div class="content">
+                            @for (item of itemsChecked; track $index) {
+                            <span >
+                               {{item?.name}}
+                            </span>
+                            }
+                               
+                           
+                            </div>
+                        
+                        </div>
+
+                            <div class="box">
+                            <p>الصفحات :</p>
+                            <div class="content">
+                              @for(section of itemsChecked; track section.id) {
+
+  @for(page of section.pages; track page.pageId) {
+    <span>{{ page.pageName }}</span>
+  }
+
+}
+
+                            <!-- <span>نوع الصيانه</span> -->
+                            </div>
+                        
+                        </div>
+                        <div class="box box_permissions">
+                            <p>الصلاحيات :</p>
+                            <div class="content">
+
+                                @for (section of itemsChecked; track $index) {
+                                    @for(page of section.pages; track $index){
+                                      
+                                            
+                                              <ul style="list-style-type: disc !important; ">
+                                        <li>
+                                            {{page.pageName}}
+                                        </li>
+                                        
+                                          @for(permission of page.actions; track $index){
+                                         <ul class="content_permission">
+                                            
+                                                <li>{{permission.actionName}}</li>
+                                             
+                                            </ul>
+                                            }
+                                    </ul>
+                                        
+                                    }
+
+                                    
+
+                                }
+                                  
+                                   
+                            </div>
+                        
+                        </div>
+
+                              <div class="box">
+                            <p>عدد الصلاحيات :</p>
+                            <div class="content " >
+                                  
+                                <span style="border:0 !important;"> 
+{{this.lenPermissions}}
+
+</span>
+
+                                
+                            </div>
+                        
+                        </div>
+                              <div class="box">
+                            <p>عدد الصفحات :</p>
+                            <div class="content " >
+                                <span style="border:0 !important;">
+                                    {{this.lenPages}}
+                                </span>
+                            </div>
+                        
+                        </div>
+                              <div class="box">
+                            <p>عدد sidebar :</p>
+                            <div class="content " >
+                                <span style="border:0 !important;">{{this.lensidebar}}</span>
+                            </div>
+                        
+                        </div>
+                    
+                    </div>
+
+
+                    <h4 class="heading mt-4">Quick Action</h4>
+
+                    <div class="btns_action">
+                        <button type="button" (click)="clearAll()">Clear</button>
+                        <button type="button" (click)="selectAll()">Select ALL</button>
+
+                    </div>
+
+
+                    <button class="save_role" (click)="addPermission()">Save Role Permissions</button>
+
+
+                </div>
+           </div>
+              
+
+
 
             </div>
         </div>
@@ -66,3 +204,5 @@
     </div>
 
 </section>
+
+<app-popup-add-group [showpopupAddGroup]="showPopupGroup" (closePopupEvent)="onClose($event)"></app-popup-add-group>

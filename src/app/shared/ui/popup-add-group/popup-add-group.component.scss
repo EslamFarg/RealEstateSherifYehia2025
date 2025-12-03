@@ -1,0 +1,102 @@
+@use '../../../../../public/styles/abstracts/vars' as *;
+.popup_overlay{
+    // width: 100;
+    position: fixed;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    background-color: rgba($color: #000000, $alpha:0.5);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: 0.3s ease;
+    &.active{
+        visibility: visible;
+        opacity: 1;
+    }
+
+    .popup_group{
+        width: 600px;
+        height: 500px;
+        background-color: #fff;
+        border-radius: 8px;
+        padding: 10px;
+
+        @media (max-width:768px) {
+            width: 95%;
+            
+        }
+
+        .icon{
+            text-align: left;
+            cursor: pointer;
+            width: 20px;
+            height: 20px;
+            margin-right: auto;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+
+        h3{
+            font-size: 16px;
+            font-weight: 700;
+            color: $main_color;
+            text-align: center;
+            margin-bottom: 25px !important;
+
+        }
+
+        .row{
+            align-items: center;
+            label{
+                color: $main_color;
+            }
+
+            input{
+                &.form-control{
+                    height: 32px !important;
+                    padding: 0 10px !important;
+                    font-size: 12px;
+                    font-weight: 400;
+                }
+            }
+
+            .btn_add_reset{
+                margin-top: 0 !important;
+            }
+            .btn{
+          @media (max-width:768px) {
+                        
+                       margin: 10px auto;
+    width: 100%;
+        }
+                button{
+                    width: 103px;
+                    height: 32px;
+                    border-radius: 8px;
+                    background-color: $main_color;
+                    color: #fff;
+                    border: 0;
+                    font-size: 14px;
+                    font-weight: 700;
+                    display: block;
+                    @media (max-width:767px) {
+                        margin-inline: auto;
+                        
+                    }
+           
+                }
+            }
+        }
+    }
+
+}
+
+.table-responsive{
+       min-height: 50px;
+       max-height: 240px;
+}

@@ -1,19 +1,49 @@
 @use '../../../../../../public/styles/abstracts/vars' as *;
 @use '../../../../../../public/styles/abstracts/mixins' as *;
 
-.tree{
-    // border:     ;
+// .tree{
+//     // border:     ;
+//     border: 0.5px solid #979797;
+//     border-radius: 15px;
+//     padding: 15px 25px;
+//     min-height: 50vh;
+//     max-height: 85vh;
+//     // overflow:scroll;
+// }
+
+// .tree .tree-inner {
+//     // overflow-x: auto;
+//     overflow: scroll;
+//     height: 100%;
+// }
+
+.tree {
     border: 0.5px solid #979797;
     border-radius: 15px;
-    padding: 15px 25px;
-    min-height: 10vh;
+    padding: 0; /* مهم جداً */
+    min-height: 50vh;
     max-height: 85vh;
-    overflow-x:scroll ;
+    overflow: hidden; /* أهم خطوة */
+    display: flex;
+    flex-direction: column;
+      @media (max-width:768px) {
+
+        margin-bottom: 15px;
+    } 
 }
+
+.tree-inner {
+    padding: 15px 25px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    flex: 1; /* ده اللي بيملى المساحة */
+}
+
 
 
 .tree_permission{
 
+ 
     .parent_tree{
         margin-bottom: 16px;
         .content_parent,.content_child_list{
@@ -40,8 +70,8 @@
     }
 
     h4{
-        font-size: 24px;
-        font-weight: 700;
+        font-size: 18px;
+        font-weight: 600;
         color: #000;
 
     }
@@ -87,7 +117,7 @@
                     background-color: #86AC88;
                 }
                     .box_child_permission{
-                        width: 168px;
+                        min-width: 168px;
                         height: 40px;
                         border: 0.5px solid #D9D9D9;
                         border-radius:4px ;
@@ -124,7 +154,7 @@
 .child_container,
 .child_permission {
   max-height: 0;
-  overflow: hidden;
+//   overflow: hidden;
   transition: max-height .35s ease;
 }
 
@@ -155,4 +185,181 @@
 
 .child_permission.open {
   max-height: 800px;
+}
+
+
+.group_permissions{
+    h5{
+        color: $main_color;
+        font-size: 14px;
+        font-weight: 600;
+        margin-bottom: 12px !important;
+    }
+}
+
+.select_group{
+
+    @include flex_box(flex,null,null);
+    
+
+    ng-select {
+        width: 100%;
+    }
+    .btn_add_group{
+        width: 32px;
+    height: 32px;
+    background-color: $main_color;
+    color: white;
+    border: 0;
+    outline: 0;
+    border-radius: 4px 0px 0px 4px;
+    }
+
+    .line_hr{
+        margin: 10px  0px !important;
+        width: 100%;
+        height: 2px;
+    }
+}
+
+.content_Total_Group{
+    .heading{
+        color: #16601A;
+        font-size: 20px;
+        font-weight: 700;
+        margin-top: 20px;
+    }
+    .boxes{
+        margin: 12px 0px;
+        .box{
+            @include flex_box(flex,null,flex-start,8px);
+            
+            margin: 15px 0px;
+            p{
+                     border: 1px solid  #78787833;
+
+            min-width: 132px;
+            height: 30px;
+            line-height: 27px;
+            border-radius: 8px;
+            padding:0px 8px;
+            font-size: 14px;
+            font-weight: 600;
+            color: #25a52b;
+            text-align: center;
+            // flex-direction: ;
+            // direction: ltr;
+            }
+
+
+
+            .content{
+                @include flex_box(flex,null,center,8px);
+                flex-wrap: wrap;
+                
+                
+            span{
+                min-width: 55px;
+                height: 22px;
+                border: 1px solid #78787833;
+                border-radius: 8px;
+                padding:0px 8px;
+            
+                font-size: 14px;
+                font-weight: 400;
+                // color: #25a52b;
+                color: #000;
+                text-align: center;
+                line-height:22px;
+                display: block;
+            }
+            }
+        }
+        .box_permissions{
+            @include flex_box(flex,null,center,8px);
+            align-items: flex-start;
+            // margin: 20px 0px;
+            // p{
+            //     border: 1px solid  #78787833;
+            //     min-width: 132px;
+            //     height: 30px;
+            //     line-height: 27px;
+            //     border-radius: 8px;
+            //     padding:0px 8px;
+            //     font-size: 20px;
+            //     font-weight: 600;
+            //     color: #25a52b;
+            //     text-align: center;
+            //     // flex-direction: ;
+            //     direction: ltr;
+            // }
+
+            .content{
+                // @include flex_box(flex,null,center,8px);
+                display: flex;
+                flex-direction: column;
+                    margin-right: 23px;
+                ul{
+                    margin-bottom: 0 !important;
+                    // display: block !important;
+                    // &:first-child{
+                        // margin-right: 23px;
+
+                        // }
+                        margin-right: 6px;
+                    @include flex_box(flex,null,center,8px);
+                    margin-left: auto;
+                    flex-wrap: wrap;
+
+                   
+
+                    li{
+                        font-size: 14px;
+                        font-weight: 500;
+                    }
+                     .content_permission{
+                      
+                        li{
+                              font-size: 12px !important;
+                        }
+                    }
+                }
+            }
+
+            
+        }
+
+     
+    }
+
+       .btns_action{
+            @include flex_box(flex,null,center,8px);
+            margin: 15px 0px;
+
+            button{
+                width: 95px;
+            height: 32px;
+            border: 1px solid $main_color;
+            background-color: transparent;
+            color: $main_color;
+            font-size: 14px;
+            font-weight: 700;
+            border-radius: 8px;
+
+
+            }
+        }
+
+        .save_role{
+            width: 201px;
+            height: 32px;
+            background-color: $main_color;
+            color: #fff;
+            font-size: 14px;
+            font-weight: 700px;
+            border-radius: 8px;
+            border: 0;
+            display: block;
+            margin-right: auto;
+        }
 }
